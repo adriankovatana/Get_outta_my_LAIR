@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="100" tileheight="100" nextobjectid="1">
+ <tileset firstgid="1" source="TileSheet.tsx"/>
+ <tileset firstgid="49" source="EntitySheet.tsx"/>
+ <layer name="Map" width="10" height="10">
+  <data encoding="base64" compression="zlib">
+   eJxjYmBg4MKDhYCYCYoZCeChoo6QWpgaIRrYSwgDAOAwAOM=
+  </data>
+ </layer>
+ <layer name="Entities" width="10" height="10" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJwzYWBgMKEAGwOxFRAbook7ovGt8ZhhSaEbYNgTiW1EoX5SsRXUz5T6BQBJSBSs
+  </data>
+ </layer>
+</map>

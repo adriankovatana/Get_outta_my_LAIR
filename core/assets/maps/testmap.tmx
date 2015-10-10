@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="100" tileheight="100" nextobjectid="12">
+ <tileset firstgid="1" name="TileSheet" tilewidth="100" tileheight="100" tilecount="48">
+  <image source="TileSheet.png" width="800" height="600"/>
+  <tile id="0">
+   <properties>
+    <property name="FLOOR" value="0"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="WALL" value="1"/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="WALL" value="1"/>
+   </properties>
+  </tile>
+  <tile id="17">
+   <properties>
+    <property name="EXIT" value="3"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="49" source="EntitySheet.tsx"/>
+ <layer name="Map" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztmbkSgCAMRJGS0v//WBsLJ2OAcC6wxRvlUPOEQIF3zoXF8S/X4tADC3pgQQ8s6IEFPbCgBxb0wIIeWNADC3pgQQ8s6IEFPbCgBxb0wGI3jxxmx5rjkXPmMzvWk+bV7DhGeVjyqITY92J1Vg95NqqdmabOVLXyX1yy7ftci3ml9U+9R7bH+lvbZnhoVzn+sblRkx+W+1oPKz09tPJJHi3yI7U2ruIh18s7M3aZf7UePfYPLV7Lf7OuV9r+0Wq9Kh3/IOpluYaRHqlxauGxAw8kFw5X
+  </data>
+ </layer>
+ <layer name="Entities" width="50" height="50" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJzt1UEKgCAQhWGvlLlJVy27/4VqIMGkAlFw0H/xYYSLN+lMzhjjAAAAAAAAAAAAAFSzl1VBjhZ19M5Qar/XQ0EWPM8hno1XkKsFn9SU+3rfy5ato5ihz7XdpUj+caEiv5a6pI+tGWcuibzPtXzrUn+5pcbwskfLjFuS5xnmlGYncrr86g==
+  </data>
+ </layer>
+</map>
