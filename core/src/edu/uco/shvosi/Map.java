@@ -21,9 +21,10 @@ public class Map {
     private int tileDimension;
     private int width;
     private int height;
-    public Protagonist bernard = new Protagonist(1,1);
+    public Protagonist bernard;
 
-    public Map(String tmxFileName) {
+    public Map(Protagonist bernard, String tmxFileName) {
+        this.bernard = bernard;
         this.tiledMap = new TmxMapLoader().load(tmxFileName);
         this.renderer = new OrthogonalTiledMapRenderer(this.tiledMap);
         TiledMapTileLayer mapLayer = (TiledMapTileLayer) tiledMap.getLayers().get(0);
@@ -321,7 +322,9 @@ public class Map {
     public void removeEntityFromGrid(Entity entity) {
         if (entity.getGridCode() == Constants.EntityGridCode.ITEM || entity.getGridCode() == Constants.EntityGridCode.TRAP) {
                     entityGrid[entity.getCX()][entity.getCY()] = Constants.EntityGridCode.PLAYER;
-                } else {
+                }
+        else if(entity instanceof DamageEntity){
+        } else {
                     entityGrid[entity.getCX()][entity.getCY()] = Constants.EntityGridCode.NONE;
                 }
     }

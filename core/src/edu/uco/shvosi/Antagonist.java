@@ -15,7 +15,7 @@ public class Antagonist extends Entity {
 
     public Antagonist(Constants.EnemyType enemyType, Texture texture, int cX, int cY) {
         super(Constants.EntityGridCode.ENEMY, texture, cX, cY);
-        this.maxHealth = 100;
+        this.maxHealth = 1;
         this.health = this.maxHealth;
         this.enemyType = enemyType;
         this.turnAction = Constants.TurnAction.NONE;

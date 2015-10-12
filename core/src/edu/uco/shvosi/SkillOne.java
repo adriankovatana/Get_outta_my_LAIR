@@ -5,6 +5,7 @@
  */
 package edu.uco.shvosi;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -14,9 +15,26 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  * @author cody
  */
 class SkillOne extends Skill {
+    
+    public SkillOne() {
+        super(0, 0, TextureLoader.skillOne);
+        this.damage = 10;
+        this.width = 2;
+        
+        this.damageEntities.add(new DamageEntity(0, 0, this.damage));
+        this.damageEntities.add(new DamageEntity(0, 0, this.damage));
+    }
 
-    public SkillOne(int x, int y, Animation mainAnimation, int damage) {
-        super(x, y, mainAnimation);
-        this.damage = damage;
+    public boolean isAnimationFinished() {
+        if (this.animation.isAnimationFinished(this.elapsed)) {
+            this.elapsed = 0f;
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public int getDamage() {
+        return this.damage;
     }
 }

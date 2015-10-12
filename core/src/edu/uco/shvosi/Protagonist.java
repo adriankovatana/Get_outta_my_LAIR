@@ -1,36 +1,64 @@
 package edu.uco.shvosi;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Protagonist extends Entity implements Observable {
-	
-	private int health;
-	private int maxHealth;
-	private Constants.TurnAction turnAction;
-        private Constants.Direction direction;
+
+    private int health;
+    private int maxHealth;
+    private Constants.TurnAction turnAction;
+    private Constants.Direction direction;
+    private Skill activeSkill;
+    private HashMap<String, Skill> skills;
+    private SkillName skillname;
+
     private List<Observer> observers;
 
     public Protagonist(int cX, int cY) {
         super(Constants.EntityGridCode.PLAYER, TextureLoader.BERNARDTEXTURE, cX, cY);
-		this.maxHealth = 100;
-		this.health = this.maxHealth;
-		this.turnAction = Constants.TurnAction.NONE;
-                this.direction = Constants.Direction.NONE;
-		this.observers = new ArrayList();
-                
-                this.name = "Bernard";
+        this.maxHealth = 100;
+        this.health = this.maxHealth;
+        this.turnAction = Constants.TurnAction.NONE;
+        this.direction = Constants.Direction.NONE;
+        this.observers = new ArrayList();
+
+        this.name = "Bernard";
+
+        skillname = SkillName.NONE;
+        skills = new HashMap<String, Skill>();
+        skills.put("Basic Laser", new SkillOne());
     }
-	
-	@Override
-	public void performActions() {
-		this.setTurnFinished(false);
-		switch (this.turnAction) {
+    
+    public void setActiveSkill() {
+        if (this.skillname == SkillName.SKILLONE){
+            this.activeSkill = skills.get("Basic Laser");
+        }
+    }
+
+    public Skill getActiveSkill() {
+        return this.activeSkill;
+    }
+
+    public void setSkill(SkillName skillname) {
+        this.skillname = skillname;
+    }
+
+    public HashMap<String, Skill> getSkills() {
+        return skills;
+    }
+
+    @Override
+    public void performActions() {
+        this.setTurnFinished(false);
+        switch (this.turnAction) {
             case MOVE:
                 moveAction();
                 break;
@@ -46,51 +74,54 @@ public class Protagonist extends Entity implements Observable {
     @Override
     public void draw(Batch batch, float alpha) {
         super.draw(batch, alpha);
-		
-		if (this.isDead()) {
+
+        if (this.isDead()) {
             // Draw death animation
         }
+        else if(this.activeSkill != null){
+            this.activeSkill.draw(batch, alpha, this);
+        }
     }
-	
-	@Override
-	public void performDeath() {
-		this.addAction(sequence(deathAnimation(), finishTurn()));
-	}
-	
-	public int getHealth(){
-		return this.health;
-	}
-	
-	public void takeDamage(int damage){
-		this.health -= damage;
-		if(this.health <= 0){
-			this.health = 0;
-			this.setDead(true);
-		}
-	}
-	
-	public void heal(int value){
-		this.health += value;
-		if(this.health >= maxHealth){
-			this.health = maxHealth;
-		}
-	}
-	
-	public Constants.TurnAction getTurnAction(){
-		return this.turnAction;
-	}
-	
-	public void setTurnAction(Constants.TurnAction turnAction){
-		this.turnAction = turnAction;
-	}
-        
-        public Constants.Direction getDirection() {
-            return this.direction;
+
+    @Override
+    public void performDeath() {
+        this.addAction(sequence(deathAnimation(), finishTurn()));
+    }
+
+    public int getHealth() {
+        return this.health;
+    }
+
+    public void takeDamage(int damage) {
+        this.health -= damage;
+        if (this.health <= 0) {
+            this.health = 0;
+            this.setDead(true);
         }
-        
-        public void setDirection(Constants.Direction direction) {
-            this.direction = direction;
+    }
+
+    public void heal(int value) {
+        this.health += value;
+        if (this.health >= maxHealth) {
+            this.health = maxHealth;
         }
+    }
+
+    public Constants.TurnAction getTurnAction() {
+        return this.turnAction;
+    }
+
+    public void setTurnAction(Constants.TurnAction turnAction) {
+        this.turnAction = turnAction;
+    }
+
+    public Constants.Direction getDirection() {
+        return this.direction;
+    }
+
+    public void setDirection(Constants.Direction direction) {
+        this.direction = direction;
+    }
 
     public void notifyObservers() {
         for (Observer o : observers) {
@@ -105,7 +136,7 @@ public class Protagonist extends Entity implements Observable {
     public void removeObserver(Observer o) {
         this.observers.remove(o);
     }
-    
+
     public void removeAllObservers() {
         this.observers.clear();
     }
@@ -120,30 +151,66 @@ public class Protagonist extends Entity implements Observable {
 
     public void attackAction() {
         //Do Stuffs
+        if (this.skillname == SkillName.SKILLONE) {
+            if (this.textureRegion.isFlipX()) {
+                activeSkill.damageEntities.get(0).setCX(this.getCX() - 1);
+                activeSkill.damageEntities.get(0).setCY(this.getCY());
+                activeSkill.damageEntities.get(1).setCX(this.getCX() - 2);
+                activeSkill.damageEntities.get(1).setCY(this.getCY());
+            } else {
+                activeSkill.damageEntities.get(0).setCX(this.getCX() + 1);
+                activeSkill.damageEntities.get(0).setCY(this.getCY());
+                activeSkill.damageEntities.get(1).setCX(this.getCX() + 2);
+                activeSkill.damageEntities.get(1).setCY(this.getCY());
+            }
+            Gdx.app.log(activeSkill.damageEntities.get(0).name + " 0 ", "" + activeSkill.damageEntities.get(0).getCX() + " , " + activeSkill.damageEntities.get(0).getCY());
+            Gdx.app.log(activeSkill.damageEntities.get(1).name + " 1 ", "" + activeSkill.damageEntities.get(1).getCX() + " , " + activeSkill.damageEntities.get(1).getCY());
+        }
+        this.addAction(sequence(attackAnimation(), finishTurn()));
     }
-	
-	public Action deathAnimation() {
-		return new Action() {
-			@Override
-			public boolean act(float delta){
-                            //Temp death
-                            return true;
-				/*if (this.deathAnimation.isAnimationFinished()) {
-					return true;
-				}*/
-				//return false;
-			}
-		};
-	}
-	
-	public Action finishTurn() {
-		return new Action() {
-			@Override
-			public boolean act(float delta){
-				Protagonist.this.setTurnFinished(true);
-				Protagonist.this.turnAction = Constants.TurnAction.NONE;
-				return true;
-			}
-		};
-	}
+
+    public Action attackAnimation() {
+        return new Action() {
+            @Override
+            public boolean act(float delta) {
+                if(Protagonist.this.activeSkill.isAnimationFinished()){
+                    Protagonist.this.activeSkill = null;
+                    return true;
+                }
+                else
+                    return false;
+            }
+        };
+    }
+
+    public Action deathAnimation() {
+        return new Action() {
+            @Override
+            public boolean act(float delta) {
+                //Temp death
+                return true;
+                /*if (this.deathAnimation.isAnimationFinished()) {
+                 return true;
+                 }*/
+                //return false;
+            }
+        };
+    }
+
+    public Action finishTurn() {
+        return new Action() {
+            @Override
+            public boolean act(float delta) {
+                Protagonist.this.setTurnFinished(true);
+                Protagonist.this.turnAction = Constants.TurnAction.NONE;
+                return true;
+            }
+        };
+    }
+
+    public enum SkillName {
+
+        NONE,
+        SKILLONE;
+    }
 }

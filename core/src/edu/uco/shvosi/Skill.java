@@ -10,73 +10,61 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author cody
  */
-public class Skill extends Entity implements Observable {
+public class Skill{
 
-    protected float skillRunTime;
-    protected Animation mainAnimation;
+    protected float elapsed;
+    protected Animation animation;
     protected int damage;
-    private ArrayList<Observer> observers;
-    protected Rectangle boundingBox;
-
-    public Rectangle getBoundingBox() {
-        return boundingBox;
-    }
+    protected List<DamageEntity> damageEntities;
+    protected int width;
+    protected int height;
     
-    public Skill(int x, int y, Animation mainAnimation) {
-        super(Constants.EntityGridCode.NONE, new Texture(mainAnimation.getKeyFrame(0).getRegionWidth(), mainAnimation.getKeyFrame(0).getRegionHeight(), Pixmap.Format.Alpha), x, y);
-        
-        this.mainAnimation = mainAnimation;
-        skillRunTime = 0f;
-        
-        boundingBox = new Rectangle();
-        observers = new ArrayList<Observer>();
-        
-        this.name = "Skill";
+    public Skill(int x, int y, Animation animation) {
+        this.animation = animation;
+        this.elapsed = 0f;
+        this.damageEntities = new ArrayList<DamageEntity>();
+        this.width = 1;
+        this.height = 1;
     }
 
     public void update() {
-        skillRunTime += Gdx.graphics.getDeltaTime();
+        elapsed += Gdx.graphics.getDeltaTime();
     }
 
     public boolean isAnimationFinished() {
-        if (mainAnimation.isAnimationFinished(skillRunTime)) {
-            skillRunTime = 0f;
+        if (this.animation.isAnimationFinished(this.elapsed)) {
+            this.elapsed = 0f;
             return true;
         } else {
             return false;
         }
     }
     
-    public void draw(Batch batch, float alpha, Protagonist bernard) {
+    public int getDamage() {
+        return this.damage;
     }
     
-    public int getDamage() {
-        return damage;
-    }
-
-    @Override
-    public void notifyObservers() {
-        for(Observer o : observers) {
-            o.observerUpdate(this);
+    public void draw(Batch batch, float alpha, Entity entity) {
+        this.update();
+        if(entity.textureRegion.isFlipX()){
+            TextureRegion temp = animation.getKeyFrame(elapsed);
+            temp.flip(true, false);
+            batch.draw(animation.getKeyFrame(elapsed), entity.getX() - Constants.TILEDIMENSION * width, entity.getY(), Constants.TILEDIMENSION * width, Constants.TILEDIMENSION * height);
+            temp.flip(true, false);
         }
-    }
+        else
+            batch.draw(animation.getKeyFrame(elapsed), entity.getX() + Constants.TILEDIMENSION, entity.getY(), Constants.TILEDIMENSION * width, Constants.TILEDIMENSION * height);
 
-    @Override
-    public void addObserver(Observer o) {
-        observers.add(o);
     }
-
-    @Override
-    public void removeObserver(Observer o) {
-        observers.remove(o);
-    }
-
 }

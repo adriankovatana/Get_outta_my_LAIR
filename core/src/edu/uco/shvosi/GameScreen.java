@@ -29,6 +29,7 @@ public class GameScreen implements Screen {
     private int level = 0;
     private boolean turnsFinished = true;
     private boolean playTurn = false;
+    private Protagonist bernard;
 
     public GameScreen(MyGdxGame game) {
         this.game = game;      
@@ -91,11 +92,15 @@ public class GameScreen implements Screen {
 //            map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
 //        }
 //
-//        if (Gdx.input.isKeyJustPressed(Keys.NUM_1)) {
-//            map.bernard.setPlayTurn(true);
-//            map.bernard.setExecuteSkillOne(true);
-//            map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
-//        }
+        if (Gdx.input.isKeyJustPressed(Keys.NUM_1)) {
+            this.playTurn = true;
+            map.bernard.setSkill(Protagonist.SkillName.SKILLONE);
+            map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
+            map.bernard.setActiveSkill();
+            for(DamageEntity d : map.bernard.getActiveSkill().damageEntities){
+                map.getEntityList().add(d);
+            }
+        }
 //
 //        if (Gdx.input.isKeyJustPressed(Keys.NUM_2)) {
 //            map.bernard.setPlayTurn(true);
@@ -125,6 +130,18 @@ public class GameScreen implements Screen {
         /* -- END INPUT -- */
         
         /* == UPDATE == */
+        //Check if dead
+        for (int i = 0; i < map.getEntityList().size(); i++) {
+                Entity aggressor = map.getEntityList().get(i);
+                
+                if (aggressor.isDead()) {
+                    aggressor.performDeath();
+                    map.removeEntityFromGrid(aggressor);
+                    map.getEntityList().remove(i);
+                }
+            }
+            //Gdx.app.log("EntityListSize", "" + map.getEntityList().size());
+        
         //Play the turn
         if (this.playTurn) {
             this.playTurn = false;
@@ -133,18 +150,23 @@ public class GameScreen implements Screen {
             if (map.bernard.isDead()) {
                 game.setScreen(game.startScreen);
             }
-
+            
             //Main Turn Loop
-            for (int i = 0; i < map.getEntityList().size(); i++) {
+            for (int i = 1; i < map.getEntityList().size(); i++) {
+                map.collision(map.bernard, map.getEntityList().get(i));
+            }
+            map.playTurn(map.bernard);
+            
+            for (int i = 1; i < map.getEntityList().size(); i++) {
                 Entity aggressor = map.getEntityList().get(i);
 
-                //Check if the aggressor is dead, do death stuff and go to next iteration if so
-                if (aggressor.isDead()) {
-                    aggressor.performDeath();
-                    map.removeEntityFromGrid(aggressor);
-                    map.getEntityList().remove(i);
-                    continue;
-                }
+//                //Check if the aggressor is dead, do death stuff and go to next iteration if so
+//                if (aggressor.isDead()) {
+//                    aggressor.performDeath();
+//                    map.removeEntityFromGrid(aggressor);
+//                    map.getEntityList().remove(i);
+//                    continue;
+//                }
 
                 //Check aggressor's collision with all other entities
                 for (int j = 0; j < map.getEntityList().size(); j++) {
@@ -215,11 +237,11 @@ public class GameScreen implements Screen {
     public void initNewLevel() {
         //Test Level
         if (level == 0) {
-            map = new Map("maps/testmap.tmx");
+            map = new Map(this.bernard, "maps/testmap.tmx");
             map.bernard.removeAllObservers();
             level = 1;
         } else if (level == 1) {
-            map = new Map("maps/testmap2.tmx");
+            map = new Map(this.bernard, "maps/testmap2.tmx");
             map.bernard.removeAllObservers();
             level = 0;
         }
@@ -253,6 +275,7 @@ public class GameScreen implements Screen {
         stage = new Stage(fv, batch);
         invent = new Inventory(TextureLoader.INVENTORYTEXTURE, 5, 0);
         healthLabel = new Label("HP: ", skin);
+        bernard = new Protagonist(0,0);
 
         initNewLevel();
     }

@@ -27,7 +27,6 @@ public class StartScreen implements Screen{
 	public StartScreen (MyGdxGame game)
 	{
 		this.game = game;
-                intro.play(Constants.MASTERVOLUME);
 	}
 	
 	@Override
@@ -57,6 +56,8 @@ public class StartScreen implements Screen{
    @Override
 	public void show() {
 		 // called when this screen is set as the screen with game.setScreen();
+            music.stop();
+            intro.play(Constants.MASTERVOLUME);
 		batch = new SpriteBatch();
 		splashT = new Texture(Gdx.files.internal("splash.png"));
 		splash = new Sprite(splashT, 800, 450);

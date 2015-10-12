@@ -19,12 +19,4 @@ public class DetectionSkill extends Skill {
        super(x, y, mainAnimation);
        this.damage = damage;  
     }
-    
-    @Override
-    public void draw(Batch batch, float alpha, Protagonist bernard) {
-        update();
-        
-        batch.draw(mainAnimation.getKeyFrame(skillRunTime), bernard.getX() - 205, bernard.getY() - 205, Constants.TILEDIMENSION * 5, Constants.TILEDIMENSION * 5);
-        
-    }
 }
