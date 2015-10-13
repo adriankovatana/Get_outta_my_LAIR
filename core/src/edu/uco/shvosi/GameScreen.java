@@ -30,6 +30,10 @@ public class GameScreen implements Screen {
     private boolean turnsFinished = true;
     private boolean playTurn = false;
     private Protagonist bernard;
+    
+    private Entity activeEntity;
+    private boolean entityTurnInProg;
+    private int entityTurn;
 
     public GameScreen(MyGdxGame game) {
         this.game = game;      
@@ -40,16 +44,18 @@ public class GameScreen implements Screen {
 
         /* == INPUT == */
         /* Bernard Controls */
-        if (this.turnsFinished) {
+        if (activeEntity.turnFinished && activeEntity instanceof Protagonist) {
             
             //Movement
         if (Gdx.input.isKeyJustPressed(Keys.W) && map.bernardCanMove(Constants.Direction.UP)) {
+            entityTurnInProg = true;
             this.playTurn = true;
             map.bernard.notifyObservers();
             map.bernard.setDirection(Constants.Direction.UP);
             map.bernard.setTurnAction(Constants.TurnAction.MOVE);
             Gdx.app.log("MOVING", "UP");
         } else if (Gdx.input.isKeyJustPressed(Keys.S) && map.bernardCanMove(Constants.Direction.DOWN)) {
+            entityTurnInProg = true;
             this.playTurn = true;
             map.bernard.notifyObservers();
             map.bernard.setDirection(Constants.Direction.DOWN);
@@ -61,6 +67,7 @@ public class GameScreen implements Screen {
                 map.bernard.setDirection(Constants.Direction.LEFT);
             }
             if (map.bernardCanMove(Constants.Direction.LEFT)) {
+                entityTurnInProg = true;
                 this.playTurn = true;
                 map.bernard.notifyObservers();
                 map.bernard.setTurnAction(Constants.TurnAction.MOVE);
@@ -73,6 +80,7 @@ public class GameScreen implements Screen {
             }
 
             if (map.bernardCanMove(Constants.Direction.RIGHT)) {
+                entityTurnInProg = true;
                 this.playTurn = true;
                 map.bernard.notifyObservers();
                 map.bernard.setTurnAction(Constants.TurnAction.MOVE);
@@ -93,6 +101,7 @@ public class GameScreen implements Screen {
 //        }
 //
         if (Gdx.input.isKeyJustPressed(Keys.NUM_1)) {
+            entityTurnInProg = true;
             this.playTurn = true;
             map.bernard.setSkill(Protagonist.SkillName.SKILLONE);
             map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
@@ -131,65 +140,78 @@ public class GameScreen implements Screen {
         
         /* == UPDATE == */
         //Check if dead
-        for (int i = 0; i < map.getEntityList().size(); i++) {
-                Entity aggressor = map.getEntityList().get(i);
-                
-                if (aggressor.isDead()) {
-                    aggressor.performDeath();
-                    map.removeEntityFromGrid(aggressor);
-                    map.getEntityList().remove(i);
-                }
-            }
-            //Gdx.app.log("EntityListSize", "" + map.getEntityList().size());
-        
-        //Play the turn
-        if (this.playTurn) {
-            this.playTurn = false;
-
-            // Temporary back to start screen if bernard is dead
-            if (map.bernard.isDead()) {
-                game.setScreen(game.startScreen);
-            }
-            
-            //Main Turn Loop
-            for (int i = 1; i < map.getEntityList().size(); i++) {
-                map.collision(map.bernard, map.getEntityList().get(i));
-            }
-            map.playTurn(map.bernard);
-            
-            for (int i = 1; i < map.getEntityList().size(); i++) {
-                Entity aggressor = map.getEntityList().get(i);
-
-//                //Check if the aggressor is dead, do death stuff and go to next iteration if so
+//        for (int i = 0; i < map.getEntityList().size(); i++) {
+//                Entity aggressor = map.getEntityList().get(i);
+//                
 //                if (aggressor.isDead()) {
 //                    aggressor.performDeath();
 //                    map.removeEntityFromGrid(aggressor);
 //                    map.getEntityList().remove(i);
-//                    continue;
 //                }
-
-                //Check aggressor's collision with all other entities
-                for (int j = 0; j < map.getEntityList().size(); j++) {
-                    if (i != j) {
-
-                        map.collision(aggressor, map.getEntityList().get(j));
-
-                    }
-                }
-
-                //Play aggressor's turn
-                map.playTurn(aggressor);
-            }
-            
-            if (map.exitReached()) {
-                //Load the next level
-                map.bernard.turnFinished = true;
-                map.bernard.clearActions();
-                stage.clear();
-                map.dispose();
-                initNewLevel();
+//            }
+            //Gdx.app.log("EntityListSize", "" + map.getEntityList().size());
+        
+        //Play the turn
+        
+        if(!entityTurnInProg && activeEntity.turnFinished && !activeEntity.hasActions()){
+            // Add Actions for AI
+            if(!(activeEntity instanceof Protagonist)){
+                entityTurnInProg = true;
             }
         }
+        
+        if(entityTurnInProg && activeEntity.turnFinished && !activeEntity.hasActions()){
+            entityTurnInProg = false;
+            activeEntity = map.getEntityList().get(++entityTurn % map.getEntityList().size());
+        }
+         
+//        if (this.playTurn) {
+//            this.playTurn = false;
+//
+//            // Temporary back to start screen if bernard is dead
+//            if (map.bernard.isDead()) {
+//                game.setScreen(game.startScreen);
+//            }
+//            
+//            //Main Turn Loop
+//            for (int i = 1; i < map.getEntityList().size(); i++) {
+//                map.collision(map.bernard, map.getEntityList().get(i));
+//            }
+//            map.playTurn(map.bernard);
+//            
+//            for (int i = 1; i < map.getEntityList().size(); i++) {
+//                Entity aggressor = map.getEntityList().get(i);
+//
+////                //Check if the aggressor is dead, do death stuff and go to next iteration if so
+////                if (aggressor.isDead()) {
+////                    aggressor.performDeath();
+////                    map.removeEntityFromGrid(aggressor);
+////                    map.getEntityList().remove(i);
+////                    continue;
+////                }
+//
+//                //Check aggressor's collision with all other entities
+//                for (int j = 0; j < map.getEntityList().size(); j++) {
+//                    if (i != j) {
+//
+//                        map.collision(aggressor, map.getEntityList().get(j));
+//
+//                    }
+//                }
+//
+//                //Play aggressor's turn
+//                map.playTurn(aggressor);
+//            }
+//            
+//            if (map.exitReached()) {
+//                //Load the next level
+//                map.bernard.turnFinished = true;
+//                map.bernard.clearActions();
+//                stage.clear();
+//                map.dispose();
+//                initNewLevel();
+//            }
+//        }
 
         //Check if all actions for the turn is finished
         for (int i = 0; i < map.getEntityList().size(); i++) {
@@ -276,7 +298,10 @@ public class GameScreen implements Screen {
         invent = new Inventory(TextureLoader.INVENTORYTEXTURE, 5, 0);
         healthLabel = new Label("HP: ", skin);
         bernard = new Protagonist(0,0);
-
+        activeEntity = bernard;
+        entityTurnInProg = false;
+        entityTurn = 0;
+        
         initNewLevel();
     }
 
