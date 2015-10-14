@@ -22,6 +22,8 @@ public class Map {
     private int width;
     private int height;
     public Protagonist bernard;
+    
+    public List<Entity> miscEntityList;
 
     public Map(Protagonist bernard, String tmxFileName) {
         this.bernard = bernard;
@@ -52,6 +54,7 @@ public class Map {
         }
 
         //Setup entityGrid
+        miscEntityList = new ArrayList<Entity>();
         entityList = new ArrayList<Entity>();
         entityGrid = new Constants.EntityGridCode[entityLayer.getWidth()][entityLayer.getHeight()];
         for (int x = 0; x < entityLayer.getWidth(); x++) {
@@ -160,10 +163,10 @@ public class Map {
     private void initItem(int cX, int cY, Constants.ItemType itemType) {
         switch (itemType) {
             case HEALTH:
-                entityList.add(new ItemHeart(cX, cY));
+                miscEntityList.add(new ItemHeart(cX, cY));
                 break;
             case SHIELD:
-                entityList.add(new ItemShield(cX, cY));
+                miscEntityList.add(new ItemShield(cX, cY));
                 break;
             default:
                 //ERROR
@@ -175,13 +178,13 @@ public class Map {
     private void initTrap(int cX, int cY, Constants.TrapType trapType) {
         switch (trapType) {
             case TRAP1:
-                entityList.add(new TrapType1(cX, cY));
+                miscEntityList.add(new TrapType1(cX, cY));
                 break;
             case TRAP2:
-                entityList.add(new TrapType2(cX, cY));
+                miscEntityList.add(new TrapType2(cX, cY));
                 break;
 //            case TRAP3:
-//                entityList.add(new TrapType3(cX, cY));
+//                miscEntityList.add(new TrapType3(cX, cY));
 //                break;
             default:
                 //ERROR
@@ -198,7 +201,8 @@ public class Map {
          on the mapGrid and will be placed on top of each other. Please
          place them in an empty block
          */
-        tempList.add(new TrapType3(2, 2));
+        miscEntityList.add(new TrapType3(2, 2));
+        this.entityGrid[2][2] = Constants.EntityGridCode.TRAP;
 
         // Populate the cells from the temp list and add to entity list
         for (int i = 0; i < tempList.size(); i++) {

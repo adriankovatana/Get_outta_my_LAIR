@@ -46,7 +46,7 @@ public class ItemHeart extends Entity {
 
     @Override
     public void collision(Entity entity) {
-        if (entity instanceof Protagonist) {
+        if (entity instanceof Protagonist && !this.turnFinished) {
             Protagonist bernard = (Protagonist) entity;
             Integer xCoordinate = bernard.getDCX();
             Integer yCoordinate = bernard.getDCY();
@@ -54,6 +54,7 @@ public class ItemHeart extends Entity {
                 health.play(Constants.MASTERVOLUME);
                 bernard.heal(this.healAmount);
                 activateHeal = true;
+                this.turnFinished = true;
             }
         }
     }

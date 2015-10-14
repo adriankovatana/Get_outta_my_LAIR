@@ -36,6 +36,7 @@ public class GameScreen implements Screen {
     private int entityTurn;
     
     private boolean roundStarted;
+    private Label turnLabel;
 
     public GameScreen(MyGdxGame game) {
         this.game = game;      
@@ -113,8 +114,10 @@ public class GameScreen implements Screen {
             map.bernard.setSkill(Protagonist.SkillName.SKILLONE);
             map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
             map.bernard.setActiveSkill();
+            map.bernard.attackAction();
             for(DamageEntity d : map.bernard.getActiveSkill().damageEntities){
-                map.getEntityList().add(d);
+                map.miscEntityList.add(d);
+                //stage.addActor(d);
             }
         }
 //
@@ -147,16 +150,16 @@ public class GameScreen implements Screen {
         
         /* == UPDATE == */
         //Check if dead
-//        for (int i = 0; i < map.getEntityList().size(); i++) {
-//                Entity aggressor = map.getEntityList().get(i);
-//                
-//                if (aggressor.isDead()) {
-//                    aggressor.performDeath();
-//                    map.removeEntityFromGrid(aggressor);
-//                    map.getEntityList().remove(i);
-//                }
-//            }
-            //Gdx.app.log("EntityListSize", "" + map.getEntityList().size());
+        for (int i = 0; i < map.getEntityList().size(); i++) {
+                Entity aggressor = map.getEntityList().get(i);
+                    
+                if (aggressor.isDead()) {
+                    aggressor.performDeath();
+                    map.removeEntityFromGrid(aggressor);
+                    map.getEntityList().remove(i);
+                }
+        }
+        
         
         // -- Play the turn --
         
@@ -170,14 +173,48 @@ public class GameScreen implements Screen {
                 for (int i = 0; i < map.getEntityList().size(); i++) {
                     map.getEntityList().get(i).setTurnFinished(false);
                 }
+//                for (int i = 0; i < map.miscEntityList.size(); i++) {
+//                    map.miscEntityList.get(i).setTurnFinished(false);
+//                }
             }
         }
-        Gdx.app.log("TURN", activeEntity.getName());
+        
+        for (int i = 0; i < map.miscEntityList.size(); i++) {
+                Entity aggressor = map.miscEntityList.get(i);
+                
+                if (aggressor.isDead()) {
+                    aggressor.performDeath();
+                    map.removeEntityFromGrid(aggressor);
+                    map.miscEntityList.remove(i);
+                }
+                else{
+                    for (int j = 0; j < map.getEntityList().size(); j++) {
+                        aggressor.collision(map.getEntityList().get(j));
+                    }
+                }
+        }
+        
+        //Check collision
+//        for (int i = 0; i < map.miscEntityList.size(); i++) {
+//            map.miscEntityList.get(i).collision(activeEntity);
+//        }
         
         //Add actions to the activeEntity if it just started its turn!
         if(roundStarted && !activeEntity.hasActions()){
             map.playTurn(activeEntity);
+            //Gdx.app.log("TURN", activeEntity.getName());
         }
+        
+        if (map.exitReached()) {
+                //Load the next level
+                activeEntity.clearActions();
+                activeEntity = bernard;
+                entityTurn = 0;
+                roundStarted = false;
+                stage.clear();
+                map.dispose();
+                initNewLevel();
+            }
         
 //        if(!entityTurnInProg && activeEntity.turnFinished && !activeEntity.hasActions()){
 //            // Add Actions for AI
@@ -258,6 +295,15 @@ public class GameScreen implements Screen {
         //temporary inventory display
         invent.setX(map.bernard.getX() - 325);
         invent.setY(map.bernard.getY() + 175);
+        
+        //temporary turn display
+        String temp = "";
+        if(roundStarted)
+            temp = "Turn Underway";
+        turnLabel.setX(map.bernard.getX() + 10);
+        turnLabel.setY(map.bernard.getY() + 240);
+        turnLabel.setText(temp);
+        
 
         /* -- END UPDATE -- */
 
@@ -302,10 +348,14 @@ public class GameScreen implements Screen {
         for (int i = map.getEntityList().size() - 1; i > -1; i--) {
             stage.addActor(map.getEntityList().get(i));
         }
+        for (int i = map.miscEntityList.size() - 1; i > -1; i--) {
+            stage.addActor(map.miscEntityList.get(i));
+        }
 
         //Health Display
         stage.addActor(healthLabel);
         stage.addActor(invent);
+        stage.addActor(turnLabel);
         //bernard.clearActions();
     }
 
@@ -328,6 +378,7 @@ public class GameScreen implements Screen {
         //entityTurnInProg = false;
         entityTurn = 0;
         roundStarted = false;
+        turnLabel = new Label("",skin);
         
         initNewLevel();
     }

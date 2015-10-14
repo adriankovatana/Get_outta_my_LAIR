@@ -17,7 +17,7 @@ public class ItemShield extends Entity {
     
     @Override
     public void collision(Entity entity){
-       if (entity instanceof Protagonist) {
+       if (entity instanceof Protagonist && !this.turnFinished) {
             Protagonist bernard = (Protagonist) entity;
             Integer xCoordinate = bernard.getDCX();
             Integer yCoordinate = bernard.getDCY();
@@ -28,6 +28,7 @@ public class ItemShield extends Entity {
                     invent.play(Constants.MASTERVOLUME);
                     this.dead = true;
                     this.state = 1;
+                    this.turnFinished = true;
 //                }
                 
             }

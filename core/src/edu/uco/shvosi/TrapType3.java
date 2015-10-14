@@ -37,7 +37,7 @@ public class TrapType3 extends Trap {
 
     @Override
     public void collision(Entity entity) {
-        if (entity instanceof Protagonist) {
+        if (entity instanceof Protagonist && !this.turnFinished) {
             Protagonist bernard = (Protagonist) entity;
             Integer xCoordinate = bernard.getDCX();
             Integer yCoordinate = bernard.getDCY();
@@ -56,6 +56,7 @@ public class TrapType3 extends Trap {
 //                        bernard.setBarrierLimit(bernard.getBarrierLimit() - 1);
 //                    } else {
                         bernard.takeDamage(this.damage);
+                        this.turnFinished = true;
 //                    }
 //                }
             }

@@ -116,6 +116,7 @@ public class Entity extends Image{
 	
     public void performDeath() {
             //Add death actions then remove itself from the stage
+        this.turnFinished = true;
         this.remove();
     }
     

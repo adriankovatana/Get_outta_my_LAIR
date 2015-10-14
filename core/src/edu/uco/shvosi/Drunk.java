@@ -120,7 +120,7 @@ public class Drunk extends Antagonist {
                     }
                 }//end
                 tries++;
-                if (tries > 5) {
+                if (tries > 1) {
                     this.setTurnAction(Constants.TurnAction.NONE);
                     this.addAction(this.finishTurn());
                     return;

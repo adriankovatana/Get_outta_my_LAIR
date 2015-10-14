@@ -63,7 +63,7 @@ public class Protagonist extends Entity implements Observable {
                 moveAction();
                 break;
             case ATTACK:
-                attackAction();
+                //attackAction();
                 break;
             default:
                 this.setTurnFinished(true);
@@ -153,18 +153,22 @@ public class Protagonist extends Entity implements Observable {
         //Do Stuffs
         if (this.skillname == SkillName.SKILLONE) {
             if (this.textureRegion.isFlipX()) {
+                activeSkill.damageEntities.get(0).setDead(false);
                 activeSkill.damageEntities.get(0).setCX(this.getCX() - 1);
                 activeSkill.damageEntities.get(0).setCY(this.getCY());
+                activeSkill.damageEntities.get(1).setDead(false);
                 activeSkill.damageEntities.get(1).setCX(this.getCX() - 2);
                 activeSkill.damageEntities.get(1).setCY(this.getCY());
             } else {
+                activeSkill.damageEntities.get(0).setDead(false);
                 activeSkill.damageEntities.get(0).setCX(this.getCX() + 1);
                 activeSkill.damageEntities.get(0).setCY(this.getCY());
+                activeSkill.damageEntities.get(1).setDead(false);
                 activeSkill.damageEntities.get(1).setCX(this.getCX() + 2);
                 activeSkill.damageEntities.get(1).setCY(this.getCY());
             }
-            Gdx.app.log(activeSkill.damageEntities.get(0).name + " 0 ", "" + activeSkill.damageEntities.get(0).getCX() + " , " + activeSkill.damageEntities.get(0).getCY());
-            Gdx.app.log(activeSkill.damageEntities.get(1).name + " 1 ", "" + activeSkill.damageEntities.get(1).getCX() + " , " + activeSkill.damageEntities.get(1).getCY());
+            //Gdx.app.log(activeSkill.damageEntities.get(0).name + " 0 ", "" + activeSkill.damageEntities.get(0).getCX() + " , " + activeSkill.damageEntities.get(0).getCY());
+            //Gdx.app.log(activeSkill.damageEntities.get(1).name + " 1 ", "" + activeSkill.damageEntities.get(1).getCX() + " , " + activeSkill.damageEntities.get(1).getCY());
         }
         this.addAction(sequence(attackAnimation(), finishTurn()));
     }
