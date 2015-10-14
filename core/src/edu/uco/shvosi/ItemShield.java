@@ -33,4 +33,9 @@ public class ItemShield extends Entity {
             }
         }
     }
+    
+    @Override
+    public void performActions(){
+        this.turnFinished = true;
+    }
 }

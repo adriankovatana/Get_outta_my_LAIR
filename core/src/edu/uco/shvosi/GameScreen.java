@@ -27,13 +27,15 @@ public class GameScreen implements Screen {
     private TextureLoader textureLoader = new TextureLoader();
 
     private int level = 0;
-    private boolean turnsFinished = true;
-    private boolean playTurn = false;
+    //private boolean turnsFinished = true;
+    //private boolean playTurn = false;
     private Protagonist bernard;
     
     private Entity activeEntity;
-    private boolean entityTurnInProg;
+    //private boolean entityTurnInProg;
     private int entityTurn;
+    
+    private boolean roundStarted;
 
     public GameScreen(MyGdxGame game) {
         this.game = game;      
@@ -44,19 +46,21 @@ public class GameScreen implements Screen {
 
         /* == INPUT == */
         /* Bernard Controls */
-        if (activeEntity.turnFinished && activeEntity instanceof Protagonist) {
+        if (!roundStarted && activeEntity instanceof Protagonist) {
             
             //Movement
         if (Gdx.input.isKeyJustPressed(Keys.W) && map.bernardCanMove(Constants.Direction.UP)) {
-            entityTurnInProg = true;
-            this.playTurn = true;
+            //entityTurnInProg = true;
+            //this.playTurn = true;
+            roundStarted = true;
             map.bernard.notifyObservers();
             map.bernard.setDirection(Constants.Direction.UP);
             map.bernard.setTurnAction(Constants.TurnAction.MOVE);
             Gdx.app.log("MOVING", "UP");
         } else if (Gdx.input.isKeyJustPressed(Keys.S) && map.bernardCanMove(Constants.Direction.DOWN)) {
-            entityTurnInProg = true;
-            this.playTurn = true;
+            //entityTurnInProg = true;
+            //this.playTurn = true;
+            roundStarted = true;
             map.bernard.notifyObservers();
             map.bernard.setDirection(Constants.Direction.DOWN);
             map.bernard.setTurnAction(Constants.TurnAction.MOVE);
@@ -67,8 +71,9 @@ public class GameScreen implements Screen {
                 map.bernard.setDirection(Constants.Direction.LEFT);
             }
             if (map.bernardCanMove(Constants.Direction.LEFT)) {
-                entityTurnInProg = true;
-                this.playTurn = true;
+                //entityTurnInProg = true;
+                //this.playTurn = true;
+                roundStarted = true;
                 map.bernard.notifyObservers();
                 map.bernard.setTurnAction(Constants.TurnAction.MOVE);
                 Gdx.app.log("MOVING", "LEFT");
@@ -80,8 +85,9 @@ public class GameScreen implements Screen {
             }
 
             if (map.bernardCanMove(Constants.Direction.RIGHT)) {
-                entityTurnInProg = true;
-                this.playTurn = true;
+                //entityTurnInProg = true;
+                //this.playTurn = true;
+                roundStarted = true;
                 map.bernard.notifyObservers();
                 map.bernard.setTurnAction(Constants.TurnAction.MOVE);
                 Gdx.app.log("MOVING", "RIGHT");
@@ -101,8 +107,9 @@ public class GameScreen implements Screen {
 //        }
 //
         if (Gdx.input.isKeyJustPressed(Keys.NUM_1)) {
-            entityTurnInProg = true;
-            this.playTurn = true;
+            //entityTurnInProg = true;
+            //this.playTurn = true;
+            roundStarted = true;
             map.bernard.setSkill(Protagonist.SkillName.SKILLONE);
             map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
             map.bernard.setActiveSkill();
@@ -151,19 +158,38 @@ public class GameScreen implements Screen {
 //            }
             //Gdx.app.log("EntityListSize", "" + map.getEntityList().size());
         
-        //Play the turn
+        // -- Play the turn --
         
-        if(!entityTurnInProg && activeEntity.turnFinished && !activeEntity.hasActions()){
-            // Add Actions for AI
-            if(!(activeEntity instanceof Protagonist)){
-                entityTurnInProg = true;
+        //Sets the next active entity when it is done with its turn
+        if(roundStarted && activeEntity.turnFinished){
+            activeEntity = map.getEntityList().get(++entityTurn % map.getEntityList().size());
+            
+            //If we have reached bernard, the turn is over and set all turnfinished to false;
+            if(activeEntity instanceof Protagonist){
+                roundStarted = false;
+                for (int i = 0; i < map.getEntityList().size(); i++) {
+                    map.getEntityList().get(i).setTurnFinished(false);
+                }
             }
         }
+        Gdx.app.log("TURN", activeEntity.getName());
         
-        if(entityTurnInProg && activeEntity.turnFinished && !activeEntity.hasActions()){
-            entityTurnInProg = false;
-            activeEntity = map.getEntityList().get(++entityTurn % map.getEntityList().size());
+        //Add actions to the activeEntity if it just started its turn!
+        if(roundStarted && !activeEntity.hasActions()){
+            map.playTurn(activeEntity);
         }
+        
+//        if(!entityTurnInProg && activeEntity.turnFinished && !activeEntity.hasActions()){
+//            // Add Actions for AI
+//            if(!(activeEntity instanceof Protagonist)){
+//                entityTurnInProg = true;
+//            }
+//        }
+//        
+//        if(entityTurnInProg && activeEntity.turnFinished && !activeEntity.hasActions()){
+//            entityTurnInProg = false;
+//            activeEntity = map.getEntityList().get(++entityTurn % map.getEntityList().size());
+//        }
          
 //        if (this.playTurn) {
 //            this.playTurn = false;
@@ -213,15 +239,15 @@ public class GameScreen implements Screen {
 //            }
 //        }
 
-        //Check if all actions for the turn is finished
-        for (int i = 0; i < map.getEntityList().size(); i++) {
-            if (!map.getEntityList().get(i).turnFinished()) {
-                //Gdx.app.log(map.getEntityList().get(i).getName(), "Turn not finished...");
-                this.turnsFinished = false;
-                break;
-            }
-            this.turnsFinished = true;
-        }
+//        //Check if all actions for the turn is finished
+//        for (int i = 0; i < map.getEntityList().size(); i++) {
+//            if (!map.getEntityList().get(i).turnFinished()) {
+//                //Gdx.app.log(map.getEntityList().get(i).getName(), "Turn not finished...");
+//                this.turnsFinished = false;
+//                break;
+//            }
+//            this.turnsFinished = true;
+//        }
         
         //temporary health display
         healthpoints = "HP: " + map.bernard.getHealth();
@@ -299,8 +325,9 @@ public class GameScreen implements Screen {
         healthLabel = new Label("HP: ", skin);
         bernard = new Protagonist(0,0);
         activeEntity = bernard;
-        entityTurnInProg = false;
+        //entityTurnInProg = false;
         entityTurn = 0;
+        roundStarted = false;
         
         initNewLevel();
     }

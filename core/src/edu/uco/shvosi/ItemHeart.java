@@ -57,4 +57,9 @@ public class ItemHeart extends Entity {
             }
         }
     }
+    
+    @Override
+    public void performActions(){
+        this.turnFinished = true;
+    }
 }

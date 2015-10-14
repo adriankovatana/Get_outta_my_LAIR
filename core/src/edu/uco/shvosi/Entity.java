@@ -26,7 +26,7 @@ public class Entity extends Image{
         this.setX(this.cX * Constants.TILEDIMENSION);
         this.setY(this.cY * Constants.TILEDIMENSION);
 		this.dead = false;
-		this.turnFinished = true;
+		this.turnFinished = false;
         setBounds(getX(),getY(),texture.getWidth(),texture.getHeight());
         this.gridCode = gridCode;
         textureRegion = new TextureRegion(texture);

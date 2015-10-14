@@ -32,4 +32,9 @@ public class Trap extends Entity{
         
         this.name = "Trap";
     }
+    
+    @Override
+    public void performActions(){
+        this.turnFinished = true;
+    }
 }

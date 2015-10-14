@@ -23,7 +23,7 @@ public class Antagonist extends Entity {
 
     @Override
     public void performActions() {
-        this.setTurnFinished(false);
+        //this.setTurnFinished(false);
         switch (this.turnAction) {
             case MOVE:
                 moveAction();
