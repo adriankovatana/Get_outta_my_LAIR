@@ -7,6 +7,10 @@ public class DamageEntity extends Entity{
     
     private int damage;
 
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
     public DamageEntity(int cX, int cY, int damage) {
         super(Constants.EntityGridCode.NONE, TextureLoader.BLANKTEXTURE, cX, cY);
         this.damage = damage;

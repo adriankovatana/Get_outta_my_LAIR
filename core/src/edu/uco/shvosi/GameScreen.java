@@ -30,16 +30,16 @@ public class GameScreen implements Screen {
     //private boolean turnsFinished = true;
     //private boolean playTurn = false;
     private Protagonist bernard;
-    
+
     private Entity activeEntity;
     //private boolean entityTurnInProg;
     private int entityTurn;
-    
+
     private boolean roundStarted;
     private Label turnLabel;
 
     public GameScreen(MyGdxGame game) {
-        this.game = game;      
+        this.game = game;
     }
 
     @Override
@@ -48,127 +48,137 @@ public class GameScreen implements Screen {
         /* == INPUT == */
         /* Bernard Controls */
         if (!roundStarted && activeEntity instanceof Protagonist) {
-            
-            //Movement
-        if (Gdx.input.isKeyJustPressed(Keys.W) && map.bernardCanMove(Constants.Direction.UP)) {
-            //entityTurnInProg = true;
-            //this.playTurn = true;
-            roundStarted = true;
-            map.bernard.notifyObservers();
-            map.bernard.setDirection(Constants.Direction.UP);
-            map.bernard.setTurnAction(Constants.TurnAction.MOVE);
-            Gdx.app.log("MOVING", "UP");
-        } else if (Gdx.input.isKeyJustPressed(Keys.S) && map.bernardCanMove(Constants.Direction.DOWN)) {
-            //entityTurnInProg = true;
-            //this.playTurn = true;
-            roundStarted = true;
-            map.bernard.notifyObservers();
-            map.bernard.setDirection(Constants.Direction.DOWN);
-            map.bernard.setTurnAction(Constants.TurnAction.MOVE);
-            Gdx.app.log("MOVING", "DOWN");
-        } else if (Gdx.input.isKeyJustPressed(Keys.A)) {
-            if (map.bernard.getDirection() != Constants.Direction.LEFT) {
-                map.bernard.flipTexture(Constants.Direction.LEFT);
-                map.bernard.setDirection(Constants.Direction.LEFT);
-            }
-            if (map.bernardCanMove(Constants.Direction.LEFT)) {
-                //entityTurnInProg = true;
-                //this.playTurn = true;
-                roundStarted = true;
-                map.bernard.notifyObservers();
-                map.bernard.setTurnAction(Constants.TurnAction.MOVE);
-                Gdx.app.log("MOVING", "LEFT");
-            }
-        } else if (Gdx.input.isKeyJustPressed(Keys.D)) {
-            if (map.bernard.getDirection() != Constants.Direction.RIGHT) {
-                map.bernard.flipTexture(Constants.Direction.RIGHT);
-                map.bernard.setDirection(Constants.Direction.RIGHT);
-            }
 
-            if (map.bernardCanMove(Constants.Direction.RIGHT)) {
-                //entityTurnInProg = true;
+            //Movement
+            if (Gdx.input.isKeyJustPressed(Keys.W) && map.bernardCanMove(Constants.Direction.UP)) {
+            //entityTurnInProg = true;
                 //this.playTurn = true;
                 roundStarted = true;
                 map.bernard.notifyObservers();
+                map.bernard.setDirection(Constants.Direction.UP);
                 map.bernard.setTurnAction(Constants.TurnAction.MOVE);
-                Gdx.app.log("MOVING", "RIGHT");
+                Gdx.app.log("MOVING", "UP");
+            } else if (Gdx.input.isKeyJustPressed(Keys.S) && map.bernardCanMove(Constants.Direction.DOWN)) {
+            //entityTurnInProg = true;
+                //this.playTurn = true;
+                roundStarted = true;
+                map.bernard.notifyObservers();
+                map.bernard.setDirection(Constants.Direction.DOWN);
+                map.bernard.setTurnAction(Constants.TurnAction.MOVE);
+                Gdx.app.log("MOVING", "DOWN");
+            } else if (Gdx.input.isKeyJustPressed(Keys.A)) {
+                if (map.bernard.getDirection() != Constants.Direction.LEFT) {
+                    map.bernard.flipTexture(Constants.Direction.LEFT);
+                    map.bernard.setDirection(Constants.Direction.LEFT);
+                }
+                if (map.bernardCanMove(Constants.Direction.LEFT)) {
+                //entityTurnInProg = true;
+                    //this.playTurn = true;
+                    roundStarted = true;
+                    map.bernard.notifyObservers();
+                    map.bernard.setTurnAction(Constants.TurnAction.MOVE);
+                    Gdx.app.log("MOVING", "LEFT");
+                }
+            } else if (Gdx.input.isKeyJustPressed(Keys.D)) {
+                if (map.bernard.getDirection() != Constants.Direction.RIGHT) {
+                    map.bernard.flipTexture(Constants.Direction.RIGHT);
+                    map.bernard.setDirection(Constants.Direction.RIGHT);
+                }
+
+                if (map.bernardCanMove(Constants.Direction.RIGHT)) {
+                //entityTurnInProg = true;
+                    //this.playTurn = true;
+                    roundStarted = true;
+                    map.bernard.notifyObservers();
+                    map.bernard.setTurnAction(Constants.TurnAction.MOVE);
+                    Gdx.app.log("MOVING", "RIGHT");
+                }
             }
-        }
 
         //Use Item
 //        if (Gdx.input.isKeyJustPressed(Keys.Q)) {
 //            map.bernard.useItem();
 //        }
 //
-//        //Skills
-//        if (Gdx.input.isKeyJustPressed(Keys.SPACE)) {
-//            map.bernard.setPlayTurn(true);
-//            map.bernard.setFiring(true);
-//            map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
-//        }
-//
-        if (Gdx.input.isKeyJustPressed(Keys.NUM_1)) {
-            //entityTurnInProg = true;
-            //this.playTurn = true;
-            roundStarted = true;
-            map.bernard.setSkill(Protagonist.SkillName.SKILLONE);
-            map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
-            map.bernard.setActiveSkill();
-            map.bernard.attackAction();
-            for(DamageEntity d : map.bernard.getActiveSkill().damageEntities){
-                map.miscEntityList.add(d);
-                //stage.addActor(d);
+            //Skills
+            if (Gdx.input.isKeyJustPressed(Keys.SPACE)) {
+                roundStarted = true;
+                map.bernard.setSkill(Protagonist.SkillName.REDLASERSKILL);
+                map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
+                map.bernard.setActiveSkill();
+                map.bernard.attackAction();
+                for (DamageEntity d : map.bernard.getActiveSkill().damageEntities) {
+                    map.miscEntityList.add(d);
+                    //stage.addActor(d);
+                }
             }
+
+            if (Gdx.input.isKeyJustPressed(Keys.NUM_1)) {
+            //entityTurnInProg = true;
+                //this.playTurn = true;
+                roundStarted = true;
+                map.bernard.setSkill(Protagonist.SkillName.SKILLONE);
+                map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
+                map.bernard.setActiveSkill();
+                map.bernard.attackAction();
+                for (DamageEntity d : map.bernard.getActiveSkill().damageEntities) {
+                    map.miscEntityList.add(d);
+                    //stage.addActor(d);
+                }
+            }
+
+            if (Gdx.input.isKeyJustPressed(Keys.NUM_2)) {
+                roundStarted = true;
+                map.bernard.setSkill(Protagonist.SkillName.SKILLTWO);
+                map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
+                map.bernard.setActiveSkill();
+                map.bernard.attackAction();
+                for (DamageEntity d : map.bernard.getActiveSkill().damageEntities) {
+                    map.miscEntityList.add(d);
+                    //stage.addActor(d);
+                }
+            }
+
+        if (Gdx.input.isKeyJustPressed(Keys.NUM_3)) {
+                roundStarted = true;
+                map.bernard.setSkill(Protagonist.SkillName.DETECTION);
+                map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
+                map.bernard.setActiveSkill();
+                map.bernard.attackAction();
         }
-//
-//        if (Gdx.input.isKeyJustPressed(Keys.NUM_2)) {
-//            map.bernard.setPlayTurn(true);
-//            map.bernard.setExecuteSkillTwo(true);
-//            map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
-//        }
-//
-//        if (Gdx.input.isKeyJustPressed(Keys.NUM_3)) {
-//            map.bernard.setPlayTurn(true);
-//            map.bernard.setExecuteDetection(true);
-//            map.bernard.notifyObservers();
-//            map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
-//        }
-//
-//        if (Gdx.input.isKeyJustPressed(Keys.NUM_4)) {
-//            map.bernard.setPlayTurn(true);
-//            map.bernard.setExecuteBarrier(true);
-//            map.bernard.setBarrierLimit(2);
-//            map.bernard.notifyObservers();
-//            map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
-//        }
+
+        if (Gdx.input.isKeyJustPressed(Keys.NUM_4)) {
+                roundStarted = true;
+                map.bernard.setSkill(Protagonist.SkillName.BARRIERSKILL);
+                map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
+                map.bernard.setActiveSkill();
+                map.bernard.attackAction();
+        }
 //        if (map.bernard.getBarrierLimit() == 0) {
 //            map.bernard.setHeal(true);
 //        }
         }
-        
+
         /* -- END INPUT -- */
-        
         /* == UPDATE == */
         //Check if dead
         for (int i = 0; i < map.getEntityList().size(); i++) {
-                Entity aggressor = map.getEntityList().get(i);
-                    
-                if (aggressor.isDead()) {
-                    aggressor.performDeath();
-                    map.removeEntityFromGrid(aggressor);
-                    map.getEntityList().remove(i);
-                }
+            Entity aggressor = map.getEntityList().get(i);
+
+            if (aggressor.isDead()) {
+                aggressor.performDeath();
+                map.removeEntityFromGrid(aggressor);
+                map.getEntityList().remove(i);
+            }
         }
-        
-        
+
         // -- Play the turn --
-        
         //Sets the next active entity when it is done with its turn
-        if(roundStarted && activeEntity.turnFinished){
+        if (roundStarted && activeEntity.turnFinished) {
             activeEntity = map.getEntityList().get(++entityTurn % map.getEntityList().size());
-            
+
             //If we have reached bernard, the turn is over and set all turnfinished to false;
-            if(activeEntity instanceof Protagonist){
+            if (activeEntity instanceof Protagonist) {
                 roundStarted = false;
                 for (int i = 0; i < map.getEntityList().size(); i++) {
                     map.getEntityList().get(i).setTurnFinished(false);
@@ -178,44 +188,42 @@ public class GameScreen implements Screen {
 //                }
             }
         }
-        
+
         for (int i = 0; i < map.miscEntityList.size(); i++) {
-                Entity aggressor = map.miscEntityList.get(i);
-                
-                if (aggressor.isDead()) {
-                    aggressor.performDeath();
-                    map.removeEntityFromGrid(aggressor);
-                    map.miscEntityList.remove(i);
+            Entity aggressor = map.miscEntityList.get(i);
+
+            if (aggressor.isDead()) {
+                aggressor.performDeath();
+                map.removeEntityFromGrid(aggressor);
+                map.miscEntityList.remove(i);
+            } else {
+                for (int j = 0; j < map.getEntityList().size(); j++) {
+                    aggressor.collision(map.getEntityList().get(j));
                 }
-                else{
-                    for (int j = 0; j < map.getEntityList().size(); j++) {
-                        aggressor.collision(map.getEntityList().get(j));
-                    }
-                }
+            }
         }
-        
+
         //Check collision
 //        for (int i = 0; i < map.miscEntityList.size(); i++) {
 //            map.miscEntityList.get(i).collision(activeEntity);
 //        }
-        
         //Add actions to the activeEntity if it just started its turn!
-        if(roundStarted && !activeEntity.hasActions()){
+        if (roundStarted && !activeEntity.hasActions()) {
             map.playTurn(activeEntity);
             //Gdx.app.log("TURN", activeEntity.getName());
         }
-        
+
         if (map.exitReached()) {
-                //Load the next level
-                activeEntity.clearActions();
-                activeEntity = bernard;
-                entityTurn = 0;
-                roundStarted = false;
-                stage.clear();
-                map.dispose();
-                initNewLevel();
-            }
-        
+            //Load the next level
+            activeEntity.clearActions();
+            activeEntity = bernard;
+            entityTurn = 0;
+            roundStarted = false;
+            stage.clear();
+            map.dispose();
+            initNewLevel();
+        }
+
 //        if(!entityTurnInProg && activeEntity.turnFinished && !activeEntity.hasActions()){
 //            // Add Actions for AI
 //            if(!(activeEntity instanceof Protagonist)){
@@ -227,7 +235,6 @@ public class GameScreen implements Screen {
 //            entityTurnInProg = false;
 //            activeEntity = map.getEntityList().get(++entityTurn % map.getEntityList().size());
 //        }
-         
 //        if (this.playTurn) {
 //            this.playTurn = false;
 //
@@ -275,7 +282,6 @@ public class GameScreen implements Screen {
 //                initNewLevel();
 //            }
 //        }
-
 //        //Check if all actions for the turn is finished
 //        for (int i = 0; i < map.getEntityList().size(); i++) {
 //            if (!map.getEntityList().get(i).turnFinished()) {
@@ -285,7 +291,6 @@ public class GameScreen implements Screen {
 //            }
 //            this.turnsFinished = true;
 //        }
-        
         //temporary health display
         healthpoints = "HP: " + map.bernard.getHealth();
         healthLabel.setX(map.bernard.getX() + 25);
@@ -295,15 +300,16 @@ public class GameScreen implements Screen {
         //temporary inventory display
         invent.setX(map.bernard.getX() - 325);
         invent.setY(map.bernard.getY() + 175);
-        
+
         //temporary turn display
         String temp = "";
-        if(roundStarted)
+        if (roundStarted) {
             temp = "Turn Underway";
+        }
         turnLabel.setX(map.bernard.getX() + 10);
         turnLabel.setY(map.bernard.getY() + 240);
         turnLabel.setText(temp);
-        
+
 
         /* -- END UPDATE -- */
 
@@ -322,7 +328,7 @@ public class GameScreen implements Screen {
         camera.update();
         /* -- END RENDER -- */
     }
-    
+
     public void centerCameraOn(Entity entity) {
         camera.position.x = entity.getX() + entity.getWidth() / 2;
         camera.position.y = entity.getY() + entity.getHeight() / 2;
@@ -373,27 +379,31 @@ public class GameScreen implements Screen {
         stage = new Stage(fv, batch);
         invent = new Inventory(TextureLoader.INVENTORYTEXTURE, 5, 0);
         healthLabel = new Label("HP: ", skin);
-        bernard = new Protagonist(0,0);
+        bernard = new Protagonist(0, 0);
         activeEntity = bernard;
         //entityTurnInProg = false;
         entityTurn = 0;
         roundStarted = false;
-        turnLabel = new Label("",skin);
-        
+        turnLabel = new Label("", skin);
+
         initNewLevel();
     }
 
     @Override
-    public void resize(int i, int i1) {}
+    public void resize(int i, int i1) {
+    }
 
     @Override
-    public void pause() {}
+    public void pause() {
+    }
 
     @Override
-    public void resume() {}
+    public void resume() {
+    }
 
     @Override
-    public void hide() {}
+    public void hide() {
+    }
 
     @Override
     public void dispose() {

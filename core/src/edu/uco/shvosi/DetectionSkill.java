@@ -15,9 +15,25 @@ import com.badlogic.gdx.graphics.g2d.Batch;
  */
 public class DetectionSkill extends Skill {
 
-    public DetectionSkill(int x, int y, Animation mainAnimation, int damage) {
-       super(x, y, mainAnimation,
+    public DetectionSkill() {
+       super(0, 0, TextureLoader.detectionSkill,
                 Gdx.audio.newSound(Gdx.files.internal("sounds/skill3.mp3")));
-       this.damage = damage;  
+       this.damage = 0;
+       this.width = 3;
+       this.height = 3;
+    }
+    
+        @Override
+        public void draw(Batch batch, float alpha, Entity entity) {
+        this.update();
+        if(entity.textureRegion.isFlipX()){
+            temp = animation.getKeyFrame(elapsed);
+            temp.flip(true, false);
+            batch.draw(animation.getKeyFrame(elapsed), entity.getX() - Constants.TILEDIMENSION, entity.getY() - Constants.TILEDIMENSION, Constants.TILEDIMENSION * width, Constants.TILEDIMENSION * height);
+            temp.flip(true, false);
+        }
+        else
+            batch.draw(animation.getKeyFrame(elapsed), entity.getX() - Constants.TILEDIMENSION, entity.getY() - Constants.TILEDIMENSION, Constants.TILEDIMENSION * width, Constants.TILEDIMENSION * height);
+
     }
 }

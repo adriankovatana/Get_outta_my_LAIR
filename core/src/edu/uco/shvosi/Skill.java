@@ -31,6 +31,7 @@ public class Skill{
     protected List<DamageEntity> damageEntities;
     protected int width;
     protected int height;
+    protected TextureRegion temp;
     
     public Skill(int x, int y, Animation animation, Sound sound) {
         this.animation = animation;
@@ -65,7 +66,7 @@ public class Skill{
     public void draw(Batch batch, float alpha, Entity entity) {
         this.update();
         if(entity.textureRegion.isFlipX()){
-            TextureRegion temp = animation.getKeyFrame(elapsed);
+            temp = animation.getKeyFrame(elapsed);
             temp.flip(true, false);
             batch.draw(animation.getKeyFrame(elapsed), entity.getX() - Constants.TILEDIMENSION * width, entity.getY(), Constants.TILEDIMENSION * width, Constants.TILEDIMENSION * height);
             temp.flip(true, false);

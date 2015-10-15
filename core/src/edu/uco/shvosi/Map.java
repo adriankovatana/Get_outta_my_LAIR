@@ -23,7 +23,7 @@ public class Map {
     private int height;
     public Protagonist bernard;
     
-    public List<Entity> miscEntityList;
+    public static List<Entity> miscEntityList;
 
     public Map(Protagonist bernard, String tmxFileName) {
         this.bernard = bernard;
@@ -349,7 +349,7 @@ public class Map {
             
             if(enemy.getTurnAction() == Constants.TurnAction.MOVE)
                 moveEntity(enemy);
-            else if(enemy.getTurnAction() == Constants.TurnAction.ATTACK){
+            else if(enemy.getTurnAction() == Constants.TurnAction.ATTACK && enemy.getDamageEntities() != null){
                 for(int i = 0; i < enemy.getDamageEntities().length; i++){
                     this.miscEntityList.add(enemy.getDamageEntities()[i]);
                     //Change melee skill and use like bernard instead noob

@@ -33,11 +33,31 @@ public class Protagonist extends Entity implements Observable {
         skillname = SkillName.NONE;
         skills = new HashMap<String, Skill>();
         skills.put("Basic Laser", new SkillOne());
+        skills.put("Rotating Laser", new SkillTwo());
+        skills.put("Red Laser", new RedLaserSkill());
+        skills.put("Detection", new DetectionSkill());
+        skills.put("Barrier", new BarrierSkill());
+
     }
-    
+
     public void setActiveSkill() {
-        if (this.skillname == SkillName.SKILLONE){
-            this.activeSkill = skills.get("Basic Laser");
+        switch (this.skillname) {
+            case SKILLONE:
+                this.activeSkill = skills.get("Basic Laser");
+                break;
+            case REDLASERSKILL:
+                this.activeSkill = skills.get("Red Laser");
+                break;
+            case SKILLTWO:
+                this.activeSkill = skills.get("Rotating Laser");
+                break;
+            case DETECTION:
+                this.activeSkill = skills.get("Detection");
+                break;
+            case BARRIERSKILL:
+                this.activeSkill = skills.get("Barrier");
+                break;
+            default:
         }
         this.activeSkill.playSound();
     }
@@ -76,8 +96,7 @@ public class Protagonist extends Entity implements Observable {
 
         if (this.isDead()) {
             // Draw death animation
-        }
-        else if(this.activeSkill != null){
+        } else if (this.activeSkill != null) {
             this.activeSkill.draw(batch, alpha, this);
         }
     }
@@ -142,25 +161,66 @@ public class Protagonist extends Entity implements Observable {
 
     public void attackAction() {
         //Do Stuffs
-        if (this.skillname == SkillName.SKILLONE) {
-            if (this.textureRegion.isFlipX()) {
-                activeSkill.damageEntities.get(0).setDead(false);
-                activeSkill.damageEntities.get(0).setCX(this.getCX() - 1);
-                activeSkill.damageEntities.get(0).setCY(this.getCY());
-                activeSkill.damageEntities.get(1).setDead(false);
-                activeSkill.damageEntities.get(1).setCX(this.getCX() - 2);
-                activeSkill.damageEntities.get(1).setCY(this.getCY());
-            } else {
-                activeSkill.damageEntities.get(0).setDead(false);
-                activeSkill.damageEntities.get(0).setCX(this.getCX() + 1);
-                activeSkill.damageEntities.get(0).setCY(this.getCY());
-                activeSkill.damageEntities.get(1).setDead(false);
-                activeSkill.damageEntities.get(1).setCX(this.getCX() + 2);
-                activeSkill.damageEntities.get(1).setCY(this.getCY());
-            }
-            //Gdx.app.log(activeSkill.damageEntities.get(0).name + " 0 ", "" + activeSkill.damageEntities.get(0).getCX() + " , " + activeSkill.damageEntities.get(0).getCY());
-            //Gdx.app.log(activeSkill.damageEntities.get(1).name + " 1 ", "" + activeSkill.damageEntities.get(1).getCX() + " , " + activeSkill.damageEntities.get(1).getCY());
+        switch (this.skillname) {
+            case SKILLONE:
+                if (this.textureRegion.isFlipX()) {
+                    activeSkill.damageEntities.get(0).setDead(false);
+                    activeSkill.damageEntities.get(0).setCX(this.getCX() - 1);
+                    activeSkill.damageEntities.get(0).setCY(this.getCY());
+                    activeSkill.damageEntities.get(1).setDead(false);
+                    activeSkill.damageEntities.get(1).setCX(this.getCX() - 2);
+                    activeSkill.damageEntities.get(1).setCY(this.getCY());
+                } else {
+                    activeSkill.damageEntities.get(0).setDead(false);
+                    activeSkill.damageEntities.get(0).setCX(this.getCX() + 1);
+                    activeSkill.damageEntities.get(0).setCY(this.getCY());
+                    activeSkill.damageEntities.get(1).setDead(false);
+                    activeSkill.damageEntities.get(1).setCX(this.getCX() + 2);
+                    activeSkill.damageEntities.get(1).setCY(this.getCY());
+                }
+                break;
+            case REDLASERSKILL:
+                if (this.textureRegion.isFlipX()) {
+                    activeSkill.damageEntities.get(0).setDead(false);
+                    activeSkill.damageEntities.get(0).setCX(this.getCX() - 1);
+                    activeSkill.damageEntities.get(0).setCY(this.getCY());
+                    activeSkill.damageEntities.get(1).setDead(false);
+                    activeSkill.damageEntities.get(1).setCX(this.getCX() - 2);
+                    activeSkill.damageEntities.get(1).setCY(this.getCY());
+                    activeSkill.damageEntities.get(2).setDead(false);
+                    activeSkill.damageEntities.get(2).setCX(this.getCX() - 3);
+                    activeSkill.damageEntities.get(2).setCY(this.getCY());
+                } else {
+                    activeSkill.damageEntities.get(0).setDead(false);
+                    activeSkill.damageEntities.get(0).setCX(this.getCX() + 1);
+                    activeSkill.damageEntities.get(0).setCY(this.getCY());
+                    activeSkill.damageEntities.get(1).setDead(false);
+                    activeSkill.damageEntities.get(1).setCX(this.getCX() + 2);
+                    activeSkill.damageEntities.get(1).setCY(this.getCY());
+                    activeSkill.damageEntities.get(2).setDead(false);
+                    activeSkill.damageEntities.get(2).setCX(this.getCX() + 3);
+                    activeSkill.damageEntities.get(2).setCY(this.getCY());
+                }
+//                Gdx.app.log(activeSkill.damageEntities.get(0).name + " 0 ", "" + activeSkill.damageEntities.get(0).getCX() + " , " + activeSkill.damageEntities.get(0).getCY());
+//                Gdx.app.log(activeSkill.damageEntities.get(1).name + " 1 ", "" + activeSkill.damageEntities.get(1).getCX() + " , " + activeSkill.damageEntities.get(1).getCY());
+//                Gdx.app.log(activeSkill.damageEntities.get(2).name + " 2 ", "" + activeSkill.damageEntities.get(2).getCX() + " , " + activeSkill.damageEntities.get(2).getCY());
+                break;
+            case SKILLTWO:
+                if (this.textureRegion.isFlipX()) {
+                    activeSkill.damageEntities.get(0).setDead(false);
+                    activeSkill.damageEntities.get(0).setCX(this.getCX() - 1);
+                    activeSkill.damageEntities.get(0).setCY(this.getCY());
+                } else {
+                    activeSkill.damageEntities.get(0).setDead(false);
+                    activeSkill.damageEntities.get(0).setCX(this.getCX() + 1);
+                    activeSkill.damageEntities.get(0).setCY(this.getCY());
+
+                }
+                break;
+            default:
+
         }
+
         this.addAction(sequence(attackAnimation(), finishTurn()));
     }
 
@@ -168,12 +228,12 @@ public class Protagonist extends Entity implements Observable {
         return new Action() {
             @Override
             public boolean act(float delta) {
-                if(Protagonist.this.activeSkill.isAnimationFinished()){
+                if (Protagonist.this.activeSkill.isAnimationFinished()) {
                     Protagonist.this.activeSkill = null;
                     return true;
-                }
-                else
+                } else {
                     return false;
+                }
             }
         };
     }
@@ -206,6 +266,10 @@ public class Protagonist extends Entity implements Observable {
     public enum SkillName {
 
         NONE,
-        SKILLONE;
+        SKILLONE,
+        SKILLTWO,
+        DETECTION,
+        BARRIERSKILL,
+        REDLASERSKILL;
     }
 }

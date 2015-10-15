@@ -25,15 +25,6 @@ class SkillOne extends Skill {
         this.damageEntities.add(new DamageEntity(0, 0, this.damage));
         this.damageEntities.add(new DamageEntity(0, 0, this.damage));
     }
-
-    public boolean isAnimationFinished() {
-        if (this.animation.isAnimationFinished(this.elapsed)) {
-            this.elapsed = 0f;
-            return true;
-        } else {
-            return false;
-        }
-    }
     
     public int getDamage() {
         return this.damage;

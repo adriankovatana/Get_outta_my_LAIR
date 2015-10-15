@@ -16,10 +16,15 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  */
 class RedLaserSkill extends Skill {
     
-    public RedLaserSkill(int x, int y, Animation mainAnimation, int damage) {
-        super(x, y, mainAnimation,
+    public RedLaserSkill() {
+        super(0, 0, TextureLoader.redLaser,
                 Gdx.audio.newSound(Gdx.files.internal("sounds/attack.mp3")));
-        this.damage = damage;
+        this.damage = 20;
+        this.width = 3;
+        
+        this.damageEntities.add(new DamageEntity(0, 0, this.damage));
+        this.damageEntities.add(new DamageEntity(0, 0, this.damage));
+        this.damageEntities.add(new DamageEntity(0, 0, this.damage));
     }
 
 }
