@@ -201,8 +201,16 @@ public class Map {
          on the mapGrid and will be placed on top of each other. Please
          place them in an empty block
          */
-        miscEntityList.add(new TrapType3(2, 2));
+        this.miscEntityList.add(new TrapType3(2, 2));
         this.entityGrid[2][2] = Constants.EntityGridCode.TRAP;
+        
+        this.miscEntityList.add(new TrapType4(1, 2));
+        this.entityGrid[1][2] = Constants.EntityGridCode.TRAP;
+        
+        tempList.add(new Wreker(4, 6));
+        tempList.add(new Blues(5, 1));
+        tempList.add(new Suffragette(8,3) ); 
+        tempList.add(new Hammer(5,7) ); 
 
         // Populate the cells from the temp list and add to entity list
         for (int i = 0; i < tempList.size(); i++) {
@@ -352,7 +360,7 @@ public class Map {
             else if(enemy.getTurnAction() == Constants.TurnAction.ATTACK && enemy.getDamageEntities() != null){
                 for(int i = 0; i < enemy.getDamageEntities().length; i++){
                     this.miscEntityList.add(enemy.getDamageEntities()[i]);
-                    //Change melee skill and use like bernard instead noob
+                    //Change melee skill and use like bernard instead Adrian ya nooblet
                 }
             }
         }

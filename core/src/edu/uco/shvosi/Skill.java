@@ -32,6 +32,7 @@ public class Skill{
     protected int width;
     protected int height;
     protected TextureRegion temp;
+    protected Constants.SkillName name;
     
     public Skill(int x, int y, Animation animation, Sound sound) {
         this.animation = animation;
@@ -40,6 +41,7 @@ public class Skill{
         this.damageEntities = new ArrayList<DamageEntity>();
         this.width = 1;
         this.height = 1;
+        this.name = Constants.SkillName.NONE;
     }
 
     public void update() {
@@ -57,6 +59,10 @@ public class Skill{
     
     public int getDamage() {
         return this.damage;
+    }
+    
+    public Constants.SkillName getName() {
+        return this.name;
     }
     
     public void playSound() {

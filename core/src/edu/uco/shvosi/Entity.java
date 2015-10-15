@@ -3,6 +3,7 @@ package edu.uco.shvosi;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 public class Entity extends Image {
@@ -24,8 +25,8 @@ public class Entity extends Image {
         this.cY = cY;
         this.dCX = this.cX;
         this.dCY = this.cY;
-        this.setX(this.cX * Constants.TILEDIMENSION);
-        this.setY(this.cY * Constants.TILEDIMENSION);
+        this.setPosition(this.cX * Constants.TILEDIMENSION,
+                this.cY * Constants.TILEDIMENSION);
         this.dead = false;
         this.turnFinished = false;
         setBounds(getX(), getY(), texture.getWidth(), texture.getHeight());

@@ -5,6 +5,7 @@
  */
 package edu.uco.shvosi;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -20,10 +21,12 @@ public class Trap extends Entity{
     protected boolean activate;
     protected Animation animation;
     protected int damage;
+    protected Sound sound;
 
-    public Trap(Texture texture, int cX, int cY) {
+    public Trap(Texture texture, int cX, int cY, Sound sound) {
         super(Constants.EntityGridCode.TRAP, texture, cX, cY);
         animation = null;
+        this.sound = sound;
         activate = false;
         elapsed = 0f;
         this.damage = 0;

@@ -10,13 +10,12 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class TrapType1 extends Trap {
-    Sound sound;
 
     public TrapType1(int cX, int cY) {
-        super(TextureLoader.TRAPTEXTURE, cX, cY);
+        super(TextureLoader.TRAPTEXTURE, cX, cY,
+                Gdx.audio.newSound(Gdx.files.internal("sounds/trap1.mp3")));
         this.animation = TextureLoader.kunaiTrap;
         this.damage = 25;
-        sound = Gdx.audio.newSound(Gdx.files.internal("sounds/trap1.mp3"));
     }
 
     @Override
@@ -60,9 +59,10 @@ public class TrapType1 extends Trap {
 //                    }
 //                }
             }
-//            if (bernard.getExecuteDetection() == true && bernard.getDetectionCollisionBox().intersects(this.getCX(), this.getCY(), 3, 3)) {
-//                this.setVisible(true);
-//            }
+            if (bernard.getActiveSkill() != null && bernard.getActiveSkill().getName() == Constants.SkillName.DETECTION &&
+                    bernard.getDetectionCollisionBox().intersects(this.getCX(), this.getCY(), 3, 3)) {
+                this.setVisible(true);
+            }
         }
     }
 }

@@ -3,9 +3,12 @@ package edu.uco.shvosi;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +20,10 @@ public class Protagonist extends Entity implements Observable {
     private Constants.Direction direction;
     private Skill activeSkill;
     private HashMap<String, Skill> skills;
-    private SkillName skillname;
+    private Constants.SkillName skillname;
+    ParticleEffect smokeParticle;
+    ParticleEffect poisonParticle;
+    private Label effectLabel;
 
     private List<Observer> observers;
 
@@ -30,14 +36,18 @@ public class Protagonist extends Entity implements Observable {
 
         this.name = "Bernard";
 
-        skillname = SkillName.NONE;
+        skillname = Constants.SkillName.NONE;
         skills = new HashMap<String, Skill>();
         skills.put("Basic Laser", new SkillOne());
         skills.put("Rotating Laser", new SkillTwo());
         skills.put("Red Laser", new RedLaserSkill());
         skills.put("Detection", new DetectionSkill());
         skills.put("Barrier", new BarrierSkill());
-
+        
+        smokeParticle = new ParticleEffect();
+        smokeParticle.load(Gdx.files.internal("traps/smoke.p"), Gdx.files.internal("traps"));
+        
+        this.effectLabel = new Label("", TextureLoader.SKIN);
     }
 
     public void setActiveSkill() {
@@ -66,7 +76,7 @@ public class Protagonist extends Entity implements Observable {
         return this.activeSkill;
     }
 
-    public void setSkill(SkillName skillname) {
+    public void setSkill(Constants.SkillName skillname) {
         this.skillname = skillname;
     }
 
@@ -112,6 +122,7 @@ public class Protagonist extends Entity implements Observable {
 
     public void takeDamage(int damage) {
         this.health -= damage;
+        this.addAction(this.takeDamageAnimation());
         if (this.health <= 0) {
             this.health = 0;
             this.setDead(true);
@@ -131,6 +142,14 @@ public class Protagonist extends Entity implements Observable {
 
     public void setDirection(Constants.Direction direction) {
         this.direction = direction;
+    }
+    
+    public Constants.SkillName getSkillName() {
+        return this.skillname;
+    }
+    
+    public Rectangle2D.Double getDetectionCollisionBox() {
+        return new Rectangle2D.Double(this.getCX(), this.getCY(), 2, 2);
     }
 
     public void notifyObservers() {
@@ -251,6 +270,15 @@ public class Protagonist extends Entity implements Observable {
             }
         };
     }
+    
+    public Action takeDamageAnimation() {
+        return new Action() {
+            @Override
+            public boolean act(float delta) {
+                return true;
+            }
+        };
+    }
 
     public Action finishTurn() {
         return new Action() {
@@ -261,15 +289,5 @@ public class Protagonist extends Entity implements Observable {
                 return true;
             }
         };
-    }
-
-    public enum SkillName {
-
-        NONE,
-        SKILLONE,
-        SKILLTWO,
-        DETECTION,
-        BARRIERSKILL,
-        REDLASERSKILL;
     }
 }

@@ -9,7 +9,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class GameScreen implements Screen {
@@ -21,7 +20,6 @@ public class GameScreen implements Screen {
     private Map map;
     private Stage stage;
     private String healthpoints;
-    private Skin skin;
     private Label healthLabel;
     public static Inventory invent;
     private TextureLoader textureLoader = new TextureLoader();
@@ -103,7 +101,7 @@ public class GameScreen implements Screen {
             //Skills
             if (Gdx.input.isKeyJustPressed(Keys.SPACE)) {
                 roundStarted = true;
-                map.bernard.setSkill(Protagonist.SkillName.REDLASERSKILL);
+                map.bernard.setSkill(Constants.SkillName.REDLASERSKILL);
                 map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
                 map.bernard.setActiveSkill();
                 map.bernard.attackAction();
@@ -117,7 +115,7 @@ public class GameScreen implements Screen {
             //entityTurnInProg = true;
                 //this.playTurn = true;
                 roundStarted = true;
-                map.bernard.setSkill(Protagonist.SkillName.SKILLONE);
+                map.bernard.setSkill(Constants.SkillName.SKILLONE);
                 map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
                 map.bernard.setActiveSkill();
                 map.bernard.attackAction();
@@ -129,7 +127,7 @@ public class GameScreen implements Screen {
 
             if (Gdx.input.isKeyJustPressed(Keys.NUM_2)) {
                 roundStarted = true;
-                map.bernard.setSkill(Protagonist.SkillName.SKILLTWO);
+                map.bernard.setSkill(Constants.SkillName.SKILLTWO);
                 map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
                 map.bernard.setActiveSkill();
                 map.bernard.attackAction();
@@ -141,7 +139,7 @@ public class GameScreen implements Screen {
 
         if (Gdx.input.isKeyJustPressed(Keys.NUM_3)) {
                 roundStarted = true;
-                map.bernard.setSkill(Protagonist.SkillName.DETECTION);
+                map.bernard.setSkill(Constants.SkillName.DETECTION);
                 map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
                 map.bernard.setActiveSkill();
                 map.bernard.attackAction();
@@ -149,7 +147,7 @@ public class GameScreen implements Screen {
 
         if (Gdx.input.isKeyJustPressed(Keys.NUM_4)) {
                 roundStarted = true;
-                map.bernard.setSkill(Protagonist.SkillName.BARRIERSKILL);
+                map.bernard.setSkill(Constants.SkillName.BARRIERSKILL);
                 map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
                 map.bernard.setActiveSkill();
                 map.bernard.attackAction();
@@ -370,7 +368,6 @@ public class GameScreen implements Screen {
         // called when this screen is set as the screen with game.setScreen();
         Gdx.input.setInputProcessor(stage);
         batch = new SpriteBatch();
-        skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
 
         //Initialize Camera
         camera = new OrthographicCamera();
@@ -378,13 +375,13 @@ public class GameScreen implements Screen {
         FitViewport fv = new FitViewport(Constants.SCREENWIDTH, Constants.SCREENHEIGHT, camera);
         stage = new Stage(fv, batch);
         invent = new Inventory(TextureLoader.INVENTORYTEXTURE, 5, 0);
-        healthLabel = new Label("HP: ", skin);
+        healthLabel = new Label("HP: ", TextureLoader.SKIN);
         bernard = new Protagonist(0, 0);
         activeEntity = bernard;
         //entityTurnInProg = false;
         entityTurn = 0;
         roundStarted = false;
-        turnLabel = new Label("", skin);
+        turnLabel = new Label("", TextureLoader.SKIN);
 
         initNewLevel();
     }
@@ -410,6 +407,5 @@ public class GameScreen implements Screen {
         // never called automatically
         //batch.dispose();
         stage.dispose();
-        skin.dispose();
     }
 }

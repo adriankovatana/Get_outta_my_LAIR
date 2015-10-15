@@ -21,6 +21,7 @@ public class DetectionSkill extends Skill {
        this.damage = 0;
        this.width = 3;
        this.height = 3;
+       this.name = Constants.SkillName.DETECTION;
     }
     
         @Override

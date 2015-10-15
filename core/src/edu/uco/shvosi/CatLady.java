@@ -9,8 +9,6 @@ import java.util.List;
 
 public class CatLady extends Antagonist {
     
-    private Animation catLadyWalk;
-    private boolean moving = false;
     private boolean flip = false;
     private float elapsedTime;
     private TextureRegion temp;
@@ -23,7 +21,7 @@ public class CatLady extends Antagonist {
 
     public CatLady(int cX, int cY) {
         super(Constants.EnemyType.CATLADY, TextureLoader.CATLADYTEXTURE, cX, cY);
-        catLadyWalk = TextureLoader.catLadyWalk;
+        this.walkAnimation = TextureLoader.catLadyWalk;
         
         this.name = "CatLady";
 
@@ -52,14 +50,14 @@ public class CatLady extends Antagonist {
             }
                 
             if (flip) {
-                temp = catLadyWalk.getKeyFrame(elapsedTime);
+                temp = this.walkAnimation.getKeyFrame(elapsedTime);
                 temp.flip(true, false);
                 batch.draw(temp, this.getX(),getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
                 temp.flip(true, false);
             } else {
-                batch.draw(catLadyWalk.getKeyFrame(elapsedTime), this.getX(), this.getY(), Constants.TILEDIMENSION , Constants.TILEDIMENSION);
+                batch.draw(this.walkAnimation.getKeyFrame(elapsedTime), this.getX(), this.getY(), Constants.TILEDIMENSION , Constants.TILEDIMENSION);
             }
-            if (catLadyWalk.isAnimationFinished(elapsedTime)) {
+            if (this.walkAnimation.isAnimationFinished(elapsedTime)) {
                 moving = false;
                 elapsedTime = 0f;
             }

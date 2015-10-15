@@ -19,7 +19,14 @@ public final class Constants {
 	NONE,
         WANDERER,
         DRUNK,
-        CATLADY;
+        CATLADY,
+        WREKER,
+        BLUES,
+        FLAPPER,
+        SUFFERAGETTE,
+        HAMMER,
+        BONNIE,
+        CLYDE;
     }
     
     public static enum EnemyAttackType {
@@ -50,5 +57,14 @@ public final class Constants {
     public static enum TurnAction {
         NONE,
         MOVE, ATTACK;
+    }
+    
+    public static enum SkillName {
+        NONE,
+        SKILLONE,
+        SKILLTWO,
+        DETECTION,
+        BARRIERSKILL,
+        REDLASERSKILL;
     }
 }
