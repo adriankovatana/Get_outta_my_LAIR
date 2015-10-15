@@ -11,7 +11,6 @@ public class Antagonist extends Entity {
     protected int health;
     protected int maxHealth;
     protected Constants.EnemyType enemyType;
-    protected Constants.TurnAction turnAction;
 
     public Antagonist(Constants.EnemyType enemyType, Texture texture, int cX, int cY) {
         super(Constants.EntityGridCode.ENEMY, texture, cX, cY);
@@ -60,10 +59,6 @@ public class Antagonist extends Entity {
         return this.enemyType;
     }
 
-    public void setTurnAction(Constants.TurnAction turnAction) {
-        this.turnAction = turnAction;
-    }
-
     public void moveAction() {
         MoveToAction moveAction = new MoveToAction();
         moveAction.setPosition((float) (this.getCX() * Constants.TILEDIMENSION),
@@ -74,6 +69,11 @@ public class Antagonist extends Entity {
 
     public void attackAction() {
         //Do Stuffs
+    }
+    
+    public DamageEntity[] getDamageEntities() {
+        //Return damage entities to the engine to be placed
+        return null;
     }
 
     public Action finishTurn() {

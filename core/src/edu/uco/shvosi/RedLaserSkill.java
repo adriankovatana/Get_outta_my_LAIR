@@ -5,6 +5,7 @@
  */
 package edu.uco.shvosi;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -16,7 +17,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 class RedLaserSkill extends Skill {
     
     public RedLaserSkill(int x, int y, Animation mainAnimation, int damage) {
-        super(x, y, mainAnimation);
+        super(x, y, mainAnimation,
+                Gdx.audio.newSound(Gdx.files.internal("sounds/attack.mp3")));
         this.damage = damage;
     }
 

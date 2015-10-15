@@ -16,7 +16,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 public class DetectionSkill extends Skill {
 
     public DetectionSkill(int x, int y, Animation mainAnimation, int damage) {
-       super(x, y, mainAnimation);
+       super(x, y, mainAnimation,
+                Gdx.audio.newSound(Gdx.files.internal("sounds/skill3.mp3")));
        this.damage = damage;  
     }
 }

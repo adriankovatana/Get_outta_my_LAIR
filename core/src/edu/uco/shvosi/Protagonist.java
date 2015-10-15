@@ -14,7 +14,6 @@ public class Protagonist extends Entity implements Observable {
 
     private int health;
     private int maxHealth;
-    private Constants.TurnAction turnAction;
     private Constants.Direction direction;
     private Skill activeSkill;
     private HashMap<String, Skill> skills;
@@ -26,7 +25,6 @@ public class Protagonist extends Entity implements Observable {
         super(Constants.EntityGridCode.PLAYER, TextureLoader.BERNARDTEXTURE, cX, cY);
         this.maxHealth = 100;
         this.health = this.maxHealth;
-        this.turnAction = Constants.TurnAction.NONE;
         this.direction = Constants.Direction.NONE;
         this.observers = new ArrayList();
 
@@ -41,6 +39,7 @@ public class Protagonist extends Entity implements Observable {
         if (this.skillname == SkillName.SKILLONE){
             this.activeSkill = skills.get("Basic Laser");
         }
+        this.activeSkill.playSound();
     }
 
     public Skill getActiveSkill() {
@@ -105,14 +104,6 @@ public class Protagonist extends Entity implements Observable {
         if (this.health >= maxHealth) {
             this.health = maxHealth;
         }
-    }
-
-    public Constants.TurnAction getTurnAction() {
-        return this.turnAction;
-    }
-
-    public void setTurnAction(Constants.TurnAction turnAction) {
-        this.turnAction = turnAction;
     }
 
     public Constants.Direction getDirection() {

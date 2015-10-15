@@ -346,17 +346,26 @@ public class Map {
 
             //Change this method to however you want enemies to behave
             enemy.calculateTurn(mapGrid, entityGrid, entityList);
+            
+            if(enemy.getTurnAction() == Constants.TurnAction.MOVE)
+                moveEntity(enemy);
+            else if(enemy.getTurnAction() == Constants.TurnAction.ATTACK){
+                for(int i = 0; i < enemy.getDamageEntities().length; i++){
+                    this.miscEntityList.add(enemy.getDamageEntities()[i]);
+                    //Change melee skill and use like bernard instead noob
+                }
+            }
         }
     }
 
     public void playTurn(Entity entity) {
         if(entity instanceof Protagonist){
-            moveEntity(entity);
+            if(entity.getTurnAction() == Constants.TurnAction.MOVE)
+                moveEntity(entity);
             entity.performActions();
         }
         else if(entity instanceof Antagonist){
             calculateAITurn(entity);
-            moveEntity(entity);
             entity.performActions();
         }
         else

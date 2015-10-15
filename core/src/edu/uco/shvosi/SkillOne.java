@@ -17,7 +17,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 class SkillOne extends Skill {
     
     public SkillOne() {
-        super(0, 0, TextureLoader.skillOne);
+        super(0, 0, TextureLoader.skillOne,
+                Gdx.audio.newSound(Gdx.files.internal("sounds/skill1.mp3")));
         this.damage = 10;
         this.width = 2;
         

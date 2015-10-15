@@ -6,6 +6,7 @@
 package edu.uco.shvosi;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -25,13 +26,15 @@ public class Skill{
 
     protected float elapsed;
     protected Animation animation;
+    protected Sound sound;
     protected int damage;
     protected List<DamageEntity> damageEntities;
     protected int width;
     protected int height;
     
-    public Skill(int x, int y, Animation animation) {
+    public Skill(int x, int y, Animation animation, Sound sound) {
         this.animation = animation;
+        this.sound = sound;
         this.elapsed = 0f;
         this.damageEntities = new ArrayList<DamageEntity>();
         this.width = 1;
@@ -53,6 +56,10 @@ public class Skill{
     
     public int getDamage() {
         return this.damage;
+    }
+    
+    public void playSound() {
+        this.sound.play(Constants.MASTERVOLUME);
     }
     
     public void draw(Batch batch, float alpha, Entity entity) {

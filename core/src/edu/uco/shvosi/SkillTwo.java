@@ -18,7 +18,8 @@ class SkillTwo extends Skill {
     private float rotation;
 
     public SkillTwo() {
-        super(0, 0, TextureLoader.skillTwo);
+        super(0, 0, TextureLoader.skillTwo,
+                Gdx.audio.newSound(Gdx.files.internal("sounds/skill2.mp3")));
         this.damage = 10;
         rotation = 0f;
     }
