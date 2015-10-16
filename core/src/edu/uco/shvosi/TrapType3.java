@@ -28,7 +28,7 @@ public class TrapType3 extends Trap {
             if (this.animation.isAnimationFinished(this.elapsed)) {
                 this.activate = false;
                 this.elapsed = 0f;
-                this.state = 1;               
+                this.state = 1;
                 this.dead = true;
             }
         }
@@ -54,13 +54,14 @@ public class TrapType3 extends Trap {
 //                        bernard.setBarrierDamage(this.damage / 2);
 //                        bernard.setBarrierLimit(bernard.getBarrierLimit() - 1);
 //                    } else {
-                        bernard.takeDamage(this.damage);
-                        this.turnFinished = true;
+                bernard.takeDamage(this.damage);
+                this.turnFinished = true;
 //                    }
 //                }
+                bernard.setBlind(true);
             }
-            if (bernard.getActiveSkill() != null && bernard.getActiveSkill().getName() == Constants.SkillName.DETECTION &&
-                    bernard.getDetectionCollisionBox().intersects(this.getCX(), this.getCY(), 3, 3)) {
+            if (bernard.getActiveSkill() != null && bernard.getActiveSkill().getName() == Constants.SkillName.DETECTION
+                    && bernard.getDetectionCollisionBox().intersects(this.getCX(), this.getCY(), 3, 3)) {
                 this.setVisible(true);
             }
         }
