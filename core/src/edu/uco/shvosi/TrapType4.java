@@ -42,7 +42,6 @@ public class TrapType4 extends Trap {
             if (xCoordinate == this.getCX() && yCoordinate == this.getCY()) {
                 this.setVisible(true);
                 this.activate = true;
-                this.sound.play(Constants.MASTERVOLUME);
 //                if (bernard.getShieldFlag() == 1) {
 //                    bernard.setImage(TextureLoader.BERNARDTEXTURE);
 //                    bernard.setShieldFlag(0);
@@ -56,6 +55,7 @@ public class TrapType4 extends Trap {
 //                    }
 //                }
                 if (this.state == 0) {
+                     this.sound.play(Constants.MASTERVOLUME);
                     bernard.takeDamage(this.damage);
                     this.state = 1;
                 }
