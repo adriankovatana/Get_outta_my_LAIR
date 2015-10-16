@@ -26,12 +26,12 @@
  <tileset firstgid="49" source="EntitySheet.tsx"/>
  <layer name="Map" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJztmbkSgCAMRJGS0v//WBsLJ2OAcC6wxRvlUPOEQIF3zoXF8S/X4tADC3pgQQ8s6IEFPbCgBxb0wIIeWNADC3pgQQ8s6IEFPbCgBxb0wGI3jxxmx5rjkXPmMzvWk+bV7DhGeVjyqITY92J1Vg95NqqdmabOVLXyX1yy7ftci3ml9U+9R7bH+lvbZnhoVzn+sblRkx+W+1oPKz09tPJJHi3yI7U2ruIh18s7M3aZf7UePfYPLV7Lf7OuV9r+0Wq9Kh3/IOpluYaRHqlxauGxAw8kFw5X
+   eJztmbsOhDAMBA0lJf//sdfcSciX+JWILGiLEYQg5CFZU7CLyPFw9i/bw6EHFvTAgh5Y0AMLemBBDyzogQU9sKAHFvTAgh5Y0AMLemBBDyzogcXbPCKsrjXicYr/v2d1rTP2FT3u9fBykclRBasu61rF45qVXoa8jPXGrbr0nJXVjIe3x7y9p+et+7Nzv1qt9zjbo3e80loja66S88j5qEc15959h/zX43n0xis9smsz6lHNhx5H+ySqR7Rntp6p8zfqUfl+ZPZS9b1l+1Xv+zGrX1U9dA9v9fQqd3p46zTD4w18ADIYDsM=
   </data>
  </layer>
  <layer name="Entities" width="50" height="50" visible="0">
   <data encoding="base64" compression="zlib">
-   eJzt1UEKgCAQheG5UuUmXbXs/heqgQSTCkLBQf/FhxEt3kPHnIg4AAAAAAAAAAAAAMXm02IgR40erTP8tV3rbiAL7vsQ98YbyFWDTzrl3t63smZrL0aYc2tnKdJ/XCjIb6WXzvEs/dxLqpc5/zoj2jE8fGOl+5Q8j3BPWXYAS7r83Q==
+   eJztzzENACAMAMFaInRDAf4NMaCBpCk33P6fEZEAAAAAAAAA8Ngq0PCjXaDBT5/+DmaBBvoZBRq4DlJ6/CI=
   </data>
  </layer>
 </map>

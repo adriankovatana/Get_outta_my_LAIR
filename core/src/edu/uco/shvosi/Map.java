@@ -201,19 +201,19 @@ public class Map {
          on the mapGrid and will be placed on top of each other. Please
          place them in an empty block
          */
-        this.miscEntityList.add(new TrapType3(2, 2));
-        this.entityGrid[2][2] = Constants.EntityGridCode.TRAP;
+        this.miscEntityList.add(new TrapType3(7, 13));
+        this.entityGrid[7][13] = Constants.EntityGridCode.TRAP;
         
-        this.miscEntityList.add(new TrapType4(1, 2));
-        this.entityGrid[1][2] = Constants.EntityGridCode.TRAP;
+        this.miscEntityList.add(new TrapType4(6, 14));
+        this.entityGrid[6][14] = Constants.EntityGridCode.TRAP;
         
-        this.miscEntityList.add(new ItemWhistle(3,2));
-        this.entityGrid[3][2] = Constants.EntityGridCode.ITEM;
+        this.miscEntityList.add(new ItemWhistle(8,9));
+        this.entityGrid[8][9] = Constants.EntityGridCode.ITEM;
         
-        tempList.add(new Wreker(4, 6));
+        tempList.add(new Wreker(4, 2));
         tempList.add(new Blues(5, 1));
-        tempList.add(new Suffragette(8,3) ); 
-        tempList.add(new Hammer(5,7) ); 
+        tempList.add(new Suffragette(1,14) ); 
+        tempList.add(new Hammer(6,2) ); 
 
         // Populate the cells from the temp list and add to entity list
         for (int i = 0; i < tempList.size(); i++) {
