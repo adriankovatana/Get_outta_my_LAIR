@@ -11,7 +11,7 @@ public class ItemHeart extends Entity {
     private int type;
     private int healAmount;
     private int state = 0;
-    
+
     private boolean activateHeal;
     private float elapsedHeal;
     private Animation heal;
@@ -24,13 +24,12 @@ public class ItemHeart extends Entity {
         heal = TextureLoader.heal;
         activateHeal = false;
         elapsedHeal = 0f;
-        
+
         this.name = "ItemHeart";
     }
 
     @Override
     public void draw(Batch batch, float alpha) {
-        super.draw(batch, alpha);
         if (activateHeal) {
             elapsedHeal += Gdx.graphics.getDeltaTime();
             temp = heal.getKeyFrame(elapsedHeal);
@@ -41,6 +40,8 @@ public class ItemHeart extends Entity {
                 this.state = 1;
                 this.dead = true;
             }
+        } else {
+            super.draw(batch, alpha);
         }
     }
 
@@ -51,17 +52,17 @@ public class ItemHeart extends Entity {
             Integer xCoordinate = bernard.getDCX();
             Integer yCoordinate = bernard.getDCY();
             if (xCoordinate == this.getCX() && yCoordinate == this.getCY() && this.state == 0) {
-              //  if (game.mute == 0)
-                    health.play(Constants.MASTERVOLUME);
+                //  if (game.mute == 0)
+                health.play(Constants.MASTERVOLUME);
                 bernard.heal(this.healAmount);
                 activateHeal = true;
                 this.turnFinished = true;
             }
         }
     }
-    
+
     @Override
-    public void performActions(){
+    public void performActions() {
         this.turnFinished = true;
     }
 }

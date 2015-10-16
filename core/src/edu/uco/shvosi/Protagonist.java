@@ -24,8 +24,16 @@ public class Protagonist extends Entity implements Observable {
     ParticleEffect smokeParticle;
     ParticleEffect poisonParticle;
     private Label effectLabel;
-    private int heldItem =0;
+    private int heldItem = 0;
     public int mute = 0;
+
+    private boolean scaleEffect = false;
+    private boolean blind = false;
+    private boolean poison = false;
+    private int blindCounter = 0;
+    private int poisonCounter = 0;
+
+    private boolean executeDetection;
 
     private List<Observer> observers;
 
@@ -45,10 +53,13 @@ public class Protagonist extends Entity implements Observable {
         skills.put("Red Laser", new RedLaserSkill());
         skills.put("Detection", new DetectionSkill());
         skills.put("Barrier", new BarrierSkill());
-        
+
         smokeParticle = new ParticleEffect();
         smokeParticle.load(Gdx.files.internal("traps/smoke.p"), Gdx.files.internal("traps"));
-        
+        poisonParticle = new ParticleEffect();
+        poisonParticle.load(Gdx.files.internal("traps/poison.p"), Gdx.files.internal("traps"));
+        poisonParticle.scaleEffect(-0.40f);
+
         this.effectLabel = new Label("", TextureLoader.SKIN);
     }
 
@@ -85,15 +96,14 @@ public class Protagonist extends Entity implements Observable {
     public HashMap<String, Skill> getSkills() {
         return skills;
     }
-    
+
     public int getHeldItem() {
         return heldItem;
     }
-     
-     public void setHeldItem(int n) {
+
+    public void setHeldItem(int n) {
         heldItem = n;
     }
-    
 
     @Override
     public void performActions() {
@@ -119,6 +129,42 @@ public class Protagonist extends Entity implements Observable {
             // Draw death animation
         } else if (this.activeSkill != null) {
             this.activeSkill.draw(batch, alpha, this);
+        }
+
+        if (blindCounter >= 2 && blind == true) {
+            smokeParticle.start();
+            smokeParticle.getEmitters().first().setPosition(this.getX() + 50, this.getY() + 35);
+            if (scaleEffect == true) {
+                smokeParticle.scaleEffect(1.40f);
+                scaleEffect = false;
+            }
+
+            smokeParticle.draw(batch, Gdx.graphics.getDeltaTime());
+            if (blindCounter == 7) {
+                blind = false;
+                blindCounter = 0;
+                smokeParticle.reset();
+            }
+        }
+
+        if (poisonCounter >= 2 && poison == true) {
+            poisonParticle.start();
+            poisonParticle.getEmitters().first().setPosition(this.getX() + 50, this.getY() + 35);
+
+            poisonParticle.draw(batch, Gdx.graphics.getDeltaTime());
+            if (poisonCounter == 6) {
+                poison = false;
+                poisonCounter = 0;
+                poisonParticle.reset();
+            }
+        }
+        if (executeDetection == true) {
+            resetStatusCounter();
+            smokeParticle.reset();
+            poisonParticle.reset();
+            poison = false;
+            blind = false;
+            executeDetection = false;
         }
     }
 
@@ -154,11 +200,11 @@ public class Protagonist extends Entity implements Observable {
     public void setDirection(Constants.Direction direction) {
         this.direction = direction;
     }
-    
+
     public Constants.SkillName getSkillName() {
         return this.skillname;
     }
-    
+
     public Rectangle2D.Double getDetectionCollisionBox() {
         return new Rectangle2D.Double(this.getCX(), this.getCY(), 2, 2);
     }
@@ -281,7 +327,7 @@ public class Protagonist extends Entity implements Observable {
             }
         };
     }
-    
+
     public Action takeDamageAnimation() {
         return new Action() {
             @Override
@@ -292,6 +338,16 @@ public class Protagonist extends Entity implements Observable {
     }
 
     public Action finishTurn() {
+        if (blind == true) {
+            blindCounter++;
+            scaleEffect = true;
+        }
+        if (poison == true) {
+            poisonCounter++;
+            if (poisonCounter >= 2) {
+                this.takeDamage(8);
+            }
+        }
         return new Action() {
             @Override
             public boolean act(float delta) {
@@ -304,5 +360,30 @@ public class Protagonist extends Entity implements Observable {
 
     void useItem() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void resetStatusCounter() {
+        blindCounter = 0;
+        poisonCounter = 0;
+    }
+
+    public void setBlind(boolean blind) {
+        this.blind = blind;
+    }
+
+    public boolean getBlind() {
+        return blind;
+    }
+
+    public void setPoison(boolean poison) {
+        this.poison = poison;
+    }
+
+    public boolean getPoison() {
+        return poison;
+    }
+
+    public void setExecuteDetection(boolean executeDetection) {
+        this.executeDetection = executeDetection;
     }
 }

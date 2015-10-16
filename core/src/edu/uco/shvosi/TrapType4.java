@@ -39,10 +39,9 @@ public class TrapType4 extends Trap {
             Integer xCoordinate = bernard.getDCX();
             Integer yCoordinate = bernard.getDCY();
 
-            if (xCoordinate == this.getCX() && yCoordinate == this.getCY() && this.state == 0 && !this.activate) {
+            if (xCoordinate == this.getCX() && yCoordinate == this.getCY()) {
                 this.setVisible(true);
                 this.activate = true;
-                this.sound.play(Constants.MASTERVOLUME);
 //                if (bernard.getShieldFlag() == 1) {
 //                    bernard.setImage(TextureLoader.BERNARDTEXTURE);
 //                    bernard.setShieldFlag(0);
@@ -55,12 +54,17 @@ public class TrapType4 extends Trap {
 //                        bernard.setHealth(bernard.getHealth() - this.damage);
 //                    }
 //                }
-                bernard.takeDamage(this.damage);
+                if (this.state == 0) {
+                     this.sound.play(Constants.MASTERVOLUME);
+                    bernard.takeDamage(this.damage);
+                    this.state = 1;
+                }
                 //bernard.setPoison(true);
                 this.turnFinished = true;
+                bernard.setPoison(true);
             }
-            if (bernard.getActiveSkill() != null && bernard.getActiveSkill().getName() == Constants.SkillName.DETECTION &&
-                    bernard.getDetectionCollisionBox().intersects(this.getCX(), this.getCY(), 3, 3)) {
+            if (bernard.getActiveSkill() != null && bernard.getActiveSkill().getName() == Constants.SkillName.DETECTION
+                    && bernard.getDetectionCollisionBox().intersects(this.getCX(), this.getCY(), 3, 3)) {
                 this.setVisible(true);
             }
         }

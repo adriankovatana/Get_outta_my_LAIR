@@ -23,7 +23,6 @@ public class GameScreen implements Screen {
     private Label healthLabel;
     public static Inventory invent;
     private TextureLoader textureLoader = new TextureLoader();
-    
 
     private int level = 0;
     //private boolean turnsFinished = true;
@@ -50,7 +49,7 @@ public class GameScreen implements Screen {
 
             //Movement
             if (Gdx.input.isKeyJustPressed(Keys.W) && map.bernardCanMove(Constants.Direction.UP)) {
-            //entityTurnInProg = true;
+                //entityTurnInProg = true;
                 //this.playTurn = true;
                 roundStarted = true;
                 map.bernard.notifyObservers();
@@ -58,7 +57,7 @@ public class GameScreen implements Screen {
                 map.bernard.setTurnAction(Constants.TurnAction.MOVE);
                 Gdx.app.log("MOVING", "UP");
             } else if (Gdx.input.isKeyJustPressed(Keys.S) && map.bernardCanMove(Constants.Direction.DOWN)) {
-            //entityTurnInProg = true;
+                //entityTurnInProg = true;
                 //this.playTurn = true;
                 roundStarted = true;
                 map.bernard.notifyObservers();
@@ -71,7 +70,7 @@ public class GameScreen implements Screen {
                     map.bernard.setDirection(Constants.Direction.LEFT);
                 }
                 if (map.bernardCanMove(Constants.Direction.LEFT)) {
-                //entityTurnInProg = true;
+                    //entityTurnInProg = true;
                     //this.playTurn = true;
                     roundStarted = true;
                     map.bernard.notifyObservers();
@@ -85,7 +84,7 @@ public class GameScreen implements Screen {
                 }
 
                 if (map.bernardCanMove(Constants.Direction.RIGHT)) {
-                //entityTurnInProg = true;
+                    //entityTurnInProg = true;
                     //this.playTurn = true;
                     roundStarted = true;
                     map.bernard.notifyObservers();
@@ -94,15 +93,15 @@ public class GameScreen implements Screen {
                 }
             }
 
-        //Use Item
-        if (Gdx.input.isKeyJustPressed(Keys.Q)) {
-            map.bernard.useItem();
-        }
-        
-        //Mute
-        if (Gdx.input.isKeyJustPressed(Keys.M)) {
-            map.bernard.mute = 1;
-        }
+            //Use Item
+            if (Gdx.input.isKeyJustPressed(Keys.Q)) {
+                map.bernard.useItem();
+            }
+
+            //Mute
+            if (Gdx.input.isKeyJustPressed(Keys.M)) {
+                map.bernard.mute = 1;
+            }
 
             //Skills
             if (Gdx.input.isKeyJustPressed(Keys.SPACE)) {
@@ -118,7 +117,7 @@ public class GameScreen implements Screen {
             }
 
             if (Gdx.input.isKeyJustPressed(Keys.NUM_1)) {
-            //entityTurnInProg = true;
+                //entityTurnInProg = true;
                 //this.playTurn = true;
                 roundStarted = true;
                 map.bernard.setSkill(Constants.SkillName.SKILLONE);
@@ -143,21 +142,22 @@ public class GameScreen implements Screen {
                 }
             }
 
-        if (Gdx.input.isKeyJustPressed(Keys.NUM_3)) {
+            if (Gdx.input.isKeyJustPressed(Keys.NUM_3)) {
                 roundStarted = true;
+                map.bernard.setExecuteDetection(true);
                 map.bernard.setSkill(Constants.SkillName.DETECTION);
                 map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
                 map.bernard.setActiveSkill();
                 map.bernard.attackAction();
-        }
+            }
 
-        if (Gdx.input.isKeyJustPressed(Keys.NUM_4)) {
+            if (Gdx.input.isKeyJustPressed(Keys.NUM_4)) {
                 roundStarted = true;
                 map.bernard.setSkill(Constants.SkillName.BARRIERSKILL);
                 map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
                 map.bernard.setActiveSkill();
                 map.bernard.attackAction();
-        }
+            }
 //        if (map.bernard.getBarrierLimit() == 0) {
 //            map.bernard.setHeal(true);
 //        }
@@ -355,13 +355,12 @@ public class GameScreen implements Screen {
 
     public void initStage() {
         // Add the entities to the stage
-        for (int i = map.getEntityList().size() - 1; i > -1; i--) {
-            stage.addActor(map.getEntityList().get(i));
-        }
         for (int i = map.miscEntityList.size() - 1; i > -1; i--) {
             stage.addActor(map.miscEntityList.get(i));
         }
-
+        for (int i = map.getEntityList().size() - 1; i > -1; i--) {
+            stage.addActor(map.getEntityList().get(i));
+        }
         //Health Display
         stage.addActor(healthLabel);
         stage.addActor(invent);
