@@ -51,7 +51,8 @@ public class ItemHeart extends Entity {
             Integer xCoordinate = bernard.getDCX();
             Integer yCoordinate = bernard.getDCY();
             if (xCoordinate == this.getCX() && yCoordinate == this.getCY() && this.state == 0) {
-                health.play(Constants.MASTERVOLUME);
+                if (game.mute == 0)
+                    health.play(Constants.MASTERVOLUME);
                 bernard.heal(this.healAmount);
                 activateHeal = true;
                 this.turnFinished = true;

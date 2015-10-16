@@ -24,6 +24,8 @@ public class Protagonist extends Entity implements Observable {
     ParticleEffect smokeParticle;
     ParticleEffect poisonParticle;
     private Label effectLabel;
+    private int heldItem =0;
+    public int mute = 0;
 
     private List<Observer> observers;
 
@@ -83,6 +85,15 @@ public class Protagonist extends Entity implements Observable {
     public HashMap<String, Skill> getSkills() {
         return skills;
     }
+    
+    public int getHeldItem() {
+        return heldItem;
+    }
+     
+     public void setHeldItem(int n) {
+        heldItem = n;
+    }
+    
 
     @Override
     public void performActions() {
@@ -289,5 +300,9 @@ public class Protagonist extends Entity implements Observable {
                 return true;
             }
         };
+    }
+
+    void useItem() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

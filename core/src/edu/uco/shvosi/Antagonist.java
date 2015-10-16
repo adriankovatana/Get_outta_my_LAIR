@@ -20,6 +20,7 @@ public class Antagonist extends Entity {
     protected float elapsedAttack;
     protected int damage;
 
+
     public Antagonist(Constants.EnemyType enemyType, Texture texture, int cX, int cY) {
         super(Constants.EntityGridCode.ENEMY, texture, cX, cY);
         this.maxHealth = 1;

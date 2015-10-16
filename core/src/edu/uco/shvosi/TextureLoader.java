@@ -95,9 +95,11 @@ public class TextureLoader {
     public static final Texture TRAPKUNAI = new Texture(Gdx.files.internal("traps/kunai.png"));
     public static final Texture TRAPPOWER = new Texture(Gdx.files.internal("traps/powerseal.png"));
     public static final Texture TRAPBLIND = new Texture(Gdx.files.internal("traps/smoke.png"));
-    public static final Texture INVENTORYTEXTURE = new Texture(Gdx.files.internal("Inventory.png"));
-    public static final Texture INVENTORYSHIELDTEXTURE = new Texture(Gdx.files.internal("InventoryShield.png"));
+    public static final Texture INVENTORYTEXTURE = new Texture(Gdx.files.internal("invent/Inventory.png"));
+    public static final Texture INVENTORYSHIELDTEXTURE = new Texture(Gdx.files.internal("invent/InventoryShield.png"));
     public static final Texture SHIELDTEXTURE = new Texture(Gdx.files.internal("items/shield.png"));
+    public static final Texture INVENTORYWHISTLETEXTURE = new Texture(Gdx.files.internal("invent/InventoryWhistle.png"));
+    public static final Texture WHISTLETEXTURE = new Texture(Gdx.files.internal("items/whistle.png"));
     private TextureRegion[] kunaiFrames;
     private TextureRegion[] powerFrames;
     private TextureRegion[] smokeFrames;

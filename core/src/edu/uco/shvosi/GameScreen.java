@@ -23,6 +23,7 @@ public class GameScreen implements Screen {
     private Label healthLabel;
     public static Inventory invent;
     private TextureLoader textureLoader = new TextureLoader();
+    
 
     private int level = 0;
     //private boolean turnsFinished = true;
@@ -94,10 +95,15 @@ public class GameScreen implements Screen {
             }
 
         //Use Item
-//        if (Gdx.input.isKeyJustPressed(Keys.Q)) {
-//            map.bernard.useItem();
-//        }
-//
+        if (Gdx.input.isKeyJustPressed(Keys.Q)) {
+            map.bernard.useItem();
+        }
+        
+        //Mute
+        if (Gdx.input.isKeyJustPressed(Keys.M)) {
+            map.bernard.mute = 1;
+        }
+
             //Skills
             if (Gdx.input.isKeyJustPressed(Keys.SPACE)) {
                 roundStarted = true;

@@ -207,6 +207,9 @@ public class Map {
         this.miscEntityList.add(new TrapType4(1, 2));
         this.entityGrid[1][2] = Constants.EntityGridCode.TRAP;
         
+        this.miscEntityList.add(new ItemWhistle(3,2));
+        this.entityGrid[3][2] = Constants.EntityGridCode.ITEM;
+        
         tempList.add(new Wreker(4, 6));
         tempList.add(new Blues(5, 1));
         tempList.add(new Suffragette(8,3) ); 

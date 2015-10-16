@@ -4,15 +4,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 
-public class ItemShield extends Entity {
+public class ItemWhistle extends Entity {
     private int type;
     private int state = 0;
     Sound invent = Gdx.audio.newSound(Gdx.files.internal("sounds/invent.mp3"));
     
-    public ItemShield(int cX, int cY){
-        super(Constants.EntityGridCode.ITEM, TextureLoader.SHIELDTEXTURE, cX, cY);
+    ItemWhistle(int cX, int cY){
+        super(Constants.EntityGridCode.ITEM, TextureLoader.WHISTLETEXTURE, cX, cY);
         
-        this.name = "ItemShield";
+        this.name = "ItemWhistle";
     }
     
     @Override
@@ -23,8 +23,9 @@ public class ItemShield extends Entity {
             Integer yCoordinate = bernard.getDCY();
             if (xCoordinate == this.getCX() && yCoordinate == this.getCY() && this.state == 0) {
                 if (bernard.getHeldItem() == 0){
+                    Gdx.app.log("HELLLLLLLO", "YO");
                     bernard.setHeldItem(1);
-                    GameScreen.invent.setImage(TextureLoader.INVENTORYSHIELDTEXTURE);
+                    GameScreen.invent.setImage(TextureLoader.INVENTORYWHISTLETEXTURE);
                     invent.play(Constants.MASTERVOLUME);
                     this.dead = true;
                     this.state = 1;

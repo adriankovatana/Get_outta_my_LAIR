@@ -1,18 +1,19 @@
 package edu.uco.shvosi;
 
-public final class Constants {
+public class Constants {
     public static final int TILEDIMENSION = 100;
     public static final int SCREENWIDTH = 800;
     public static final int SCREENHEIGHT = 450;
     public static final float MOVEACTIONDURATION = 0.5f;
     public static float MASTERVOLUME = 0.1f;
     
+    
     public static enum MapGridCode {
         FLOOR, WALL, STRUCTURE, EXIT;
     }
     
     public static enum EntityGridCode {
-        NONE, PLAYER, ENEMY,ITEM, TRAP;
+        NONE, PLAYER, ENEMY, ITEM, TRAP;
     }
     
     public static enum EnemyType {
@@ -37,14 +38,16 @@ public final class Constants {
     public static enum ItemType {
 	NONE,
         HEALTH,
-        SHIELD;
+        SHIELD,
+        WHISTLE;
     }
     
     public static enum TrapType {
         NONE,
         TRAP1,
         TRAP2,
-        TRAP3;
+        TRAP3,
+        TRAP4;
     }
     
     public static enum Direction {

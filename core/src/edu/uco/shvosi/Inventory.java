@@ -3,6 +3,7 @@ package edu.uco.shvosi;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 
 
@@ -35,6 +36,10 @@ public class Inventory extends Entity{
                 (float) (this.getY() * Constants.TILEDIMENSION));
         moveAction.setDuration(Constants.MOVEACTIONDURATION);
         this.addAction(moveAction);
+    }
+
+    void setImage(Texture texture) {
+        this.textureRegion = new TextureRegion(texture);
     }
 
 }
