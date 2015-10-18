@@ -9,10 +9,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 
 public class TextureLoader {
+
     public static final Skin SKIN = new Skin(Gdx.files.internal("ui/uiskin.json"));
 
     //bernard and his powers
     public static final Texture BERNARDTEXTURE = new Texture(Gdx.files.internal("characters/bernard2.png"));
+    public static final Texture DORABERNARDJUMPTEXTURE = new Texture(Gdx.files.internal("characters/doraJump.png"));
     public static final Texture BERNARDSHIELDTEXTURE = new Texture(Gdx.files.internal("characters/bernard_shield.png"));
     public static final Texture BERNARDGLANCETEXTURE = new Texture(Gdx.files.internal("characters/bernard_sheet.png"));
     public static final Texture HEALTHTEXTURE = new Texture(Gdx.files.internal("items/health.png"));
@@ -21,15 +23,19 @@ public class TextureLoader {
     public static final Texture SKILLONETEXTURE = new Texture(Gdx.files.internal("skillOne.png"));
     public static final Texture BARRIERTEXTURE = new Texture(Gdx.files.internal("barrier.png"));
     public static final Texture HEALTEXTURE = new Texture(Gdx.files.internal("heal.png"));
-    
+    public static final Texture LIGHTBARRIERTEXTURE = new Texture(Gdx.files.internal("lightBarrier.png"));
+    public static final Texture LIGHTTEXTURE = new Texture(Gdx.files.internal("lightning.png"));
 
     private TextureRegion[] detectionFrames;
     private TextureRegion[] barrierFrames;
     private TextureRegion[] healFrames;
+    private TextureRegion[] jumpFrames;
+    private TextureRegion[] lightBarrierFrames;
     private Array<TextureRegion> laserFrames;
+    private Array<TextureRegion> lightFrames;
     private Array<TextureRegion> skillOneFrames;
     private Array<TextureRegion> bernardGlanceFrames;
-    
+
     public static Animation bernardGlance;
     public static Animation redLaser;
     public static Animation skillOne;
@@ -37,10 +43,12 @@ public class TextureLoader {
     public static Animation detectionSkill;
     public static Animation barrierSkill;
     public static Animation heal;
-
+    public static Animation jump;
+    public static Animation lightBarrier;
+    public static Animation light;
     //antagonist
-    public static final Texture SUFFERTETEXTURE = new Texture(Gdx.files.internal("characters/blank.png")); 
-    public static final Texture HAMMERTETEXTURE = new Texture(Gdx.files.internal("characters/blank.png")); 
+    public static final Texture SUFFERTETEXTURE = new Texture(Gdx.files.internal("characters/blank.png"));
+    public static final Texture HAMMERTETEXTURE = new Texture(Gdx.files.internal("characters/blank.png"));
     public static final Texture BLUESTEXTURE = new Texture(Gdx.files.internal("characters/blank.png"));
     public static final Texture WREKERTEXTURE = new Texture(Gdx.files.internal("characters/blank.png"));
     public static final Texture MELEETEXTURE = new Texture(Gdx.files.internal("characters/blank.png"));
@@ -58,11 +66,11 @@ public class TextureLoader {
     public static final Texture WANDERATTACKTEXTURE = new Texture(Gdx.files.internal("characters/wander_attack_sheet.png"));
     public static final Texture DRUNKATTACKTEXTURE = new Texture(Gdx.files.internal("characters/drunk_attack_sheet.png"));
     public static final Texture WREKERATTACKTEXTURE = new Texture(Gdx.files.internal("characters/wreker_attack_sheet.png"));
-    public static final Texture SUFFRAGETTETEXTURE = new Texture(Gdx.files.internal("characters/suffragette_sheet.png")); 
+    public static final Texture SUFFRAGETTETEXTURE = new Texture(Gdx.files.internal("characters/suffragette_sheet.png"));
     public static final Texture HAMMERATTACKTETEXTURE = new Texture(Gdx.files.internal("characters/hammer_attack.png"));
-    
-    private Array<TextureRegion>  hammerFrames;
-    private Array<TextureRegion>  blueFrames;
+
+    private Array<TextureRegion> hammerFrames;
+    private Array<TextureRegion> blueFrames;
     private Array<TextureRegion> drunkFrames;
     private Array<TextureRegion> wanderFrames;
     private Array<TextureRegion> catLadyFrames;
@@ -71,8 +79,8 @@ public class TextureLoader {
     private Array<TextureRegion> wanderAttackFrames;
     private Array<TextureRegion> wrekerAttackFrames;
     private Array<TextureRegion> drunkAttackFrames;
-    private Array<TextureRegion> suffragetteFrames; 
-    private Array<TextureRegion> hammerAttackFrames; 
+    private Array<TextureRegion> suffragetteFrames;
+    private Array<TextureRegion> hammerAttackFrames;
     public static Animation blueWalk;
     public static Animation hammerWalk;
     public static Animation catLadyWalk;
@@ -83,10 +91,8 @@ public class TextureLoader {
     public static Animation wanderAttack;
     public static Animation drunkAttack;
     public static Animation wrekerAttack;
-    public static Animation suffragetteWalk; 
+    public static Animation suffragetteWalk;
     public static Animation hammerAttack;
-
-
 
     //traps and items
     public static final Texture TRAPTEXTURE = new Texture(Gdx.files.internal("traps/trap.png"));
@@ -95,6 +101,7 @@ public class TextureLoader {
     public static final Texture TRAPKUNAI = new Texture(Gdx.files.internal("traps/kunai.png"));
     public static final Texture TRAPPOWER = new Texture(Gdx.files.internal("traps/powerseal.png"));
     public static final Texture TRAPBLIND = new Texture(Gdx.files.internal("traps/smoke.png"));
+    public static final Texture TRAPTRANSFORM = new Texture(Gdx.files.internal("traps/transform.png"));
     public static final Texture INVENTORYTEXTURE = new Texture(Gdx.files.internal("invent/Inventory.png"));
     public static final Texture INVENTORYSHIELDTEXTURE = new Texture(Gdx.files.internal("invent/InventoryShield.png"));
     public static final Texture SHIELDTEXTURE = new Texture(Gdx.files.internal("items/shield.png"));
@@ -103,9 +110,11 @@ public class TextureLoader {
     private TextureRegion[] kunaiFrames;
     private TextureRegion[] powerFrames;
     private TextureRegion[] smokeFrames;
+    private TextureRegion[] transformFrames;
     public static Animation kunaiTrap;
     public static Animation powerTrap;
     public static Animation smokeTrap;
+    public static Animation transformTrap;
 
     private static final int FRAME_COLS = 5;
     private static final int FRAME_ROWS = 4;
@@ -116,19 +125,30 @@ public class TextureLoader {
         //bernard
         //Bernard's animation
         bernardGlanceFrames = new Array<TextureRegion>();
-        for(int i = 0; i < 5; i++){
-            
+        for (int i = 0; i < 5; i++) {
+
             bernardGlanceFrames.add(new TextureRegion(BERNARDGLANCETEXTURE, 0, i * 100, 100, 100));
         }
-        
         bernardGlance = new Animation(0.4f, bernardGlanceFrames, PlayMode.NORMAL);
+
         //Big Ass Laser
         laserFrames = new Array<TextureRegion>(15);
         for (int i = 0; i < 15; i++) {
             laserFrames.add(new TextureRegion(REDLASERTEXTURE, 25, i * 156, 731, 156));
         }
-
         redLaser = new Animation(0.05f, laserFrames, PlayMode.NORMAL);
+
+        //Dora's Jump
+        TextureRegion[][] tmp8 = TextureRegion.split(TextureLoader.DORABERNARDJUMPTEXTURE, TextureLoader.DORABERNARDJUMPTEXTURE.getWidth() / 8, TextureLoader.DORABERNARDJUMPTEXTURE.getHeight() / 1);
+        jumpFrames = new TextureRegion[8 * 1];
+        int index8 = 0;
+        for (int i = 0; i < 1; i++) {
+            for (int j = 0; j < 8; j++) {
+                jumpFrames[index8++] = tmp8[i][j];
+            }
+        }
+        jump = new Animation(0.1f, jumpFrames);
+
         //Skill One
         skillOneFrames = new Array<TextureRegion>(6);
         for (int i = 0; i < 6; i++) {
@@ -138,6 +158,13 @@ public class TextureLoader {
 
         //Skill Two
         skillTwo = new Animation(0.05f, skillOneFrames, PlayMode.LOOP);
+
+        //Lightning added
+        lightFrames = new Array<TextureRegion>(6);
+        for (int i = 0; i < 6; i++) {
+            lightFrames.add(new TextureRegion(LIGHTTEXTURE, 25, i * 50, 200, 60));
+        }
+        light = new Animation(0.05f, lightFrames, PlayMode.NORMAL);
 
         //Detection
         TextureRegion[][] tmp3 = TextureRegion.split(TextureLoader.DETECTIONTEXTURE, TextureLoader.DETECTIONTEXTURE.getWidth() / FRAME_COLS, TextureLoader.DETECTIONTEXTURE.getHeight() / FRAME_COLS);
@@ -159,8 +186,20 @@ public class TextureLoader {
                 barrierFrames[index4++] = tmp4[i][j];
             }
         }
-        barrierSkill = new Animation(0.05f, barrierFrames);
+        barrierSkill = new Animation(0.02f, barrierFrames);
         barrierSkill.setPlayMode(PlayMode.LOOP);
+
+        //Light Barrier
+        TextureRegion[][] tmp9 = TextureRegion.split(TextureLoader.LIGHTBARRIERTEXTURE, TextureLoader.LIGHTBARRIERTEXTURE.getWidth() / 4, TextureLoader.LIGHTBARRIERTEXTURE.getHeight() / 4);
+        lightBarrierFrames = new TextureRegion[4 * 4];
+        int index9 = 0;
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                lightBarrierFrames[index9++] = tmp9[i][j];
+            }
+        }
+        lightBarrier = new Animation(0.04f, lightBarrierFrames);
+        lightBarrier.setPlayMode(PlayMode.LOOP);
 
         //Heal
         TextureRegion[][] tmp5 = TextureRegion.split(TextureLoader.HEALTEXTURE, TextureLoader.HEALTEXTURE.getWidth() / FRAME_COLS, TextureLoader.HEALTEXTURE.getHeight() / FRAME_ROWS10);
@@ -187,14 +226,14 @@ public class TextureLoader {
         }
 
         drunkAttack = new Animation(0.10f, drunkAttackFrames, PlayMode.LOOP);
-       
+
         //Antagonist Blues
-                blueFrames = new Array<TextureRegion>(5);
+        blueFrames = new Array<TextureRegion>(5);
         for (int i = 0; i < 5; i++) {
             blueFrames.add(new TextureRegion(BLUETEXTURE, 25, i * 100, 100, 100));
         }
 
-        blueWalk = new Animation(0.50f, blueFrames, PlayMode.LOOP);        
+        blueWalk = new Animation(0.50f, blueFrames, PlayMode.LOOP);
         //
         //Antagonist wnaderer
         wanderFrames = new Array<TextureRegion>(2);
@@ -203,7 +242,7 @@ public class TextureLoader {
         }
 
         wanderWalk = new Animation(0.50f, wanderFrames, PlayMode.LOOP);
-        
+
         wanderAttackFrames = new Array<TextureRegion>(5);
         for (int i = 0; i < 5; i++) {
             wanderAttackFrames.add(new TextureRegion(WANDERATTACKTEXTURE, 25, i * 100, 100, 100));
@@ -217,14 +256,14 @@ public class TextureLoader {
         }
 
         hammerWalk = new Animation(0.50f, hammerFrames, PlayMode.LOOP);
-        
+
         hammerAttackFrames = new Array<TextureRegion>(7);
         for (int i = 0; i < 7; i++) {
             hammerAttackFrames.add(new TextureRegion(HAMMERATTACKTETEXTURE, 25, i * 100, 100, 100));
         }
 
         hammerAttack = new Animation(0.10f, hammerAttackFrames, PlayMode.LOOP);
-        
+
         //
         //sufferagette
         suffragetteFrames = new Array<TextureRegion>(2);
@@ -232,7 +271,7 @@ public class TextureLoader {
             suffragetteFrames.add(new TextureRegion(SUFFRAGETTETEXTURE, 25, i * 100, 100, 100));
         }
 
-        suffragetteWalk = new Animation(0.50f, suffragetteFrames, PlayMode.LOOP);  
+        suffragetteWalk = new Animation(0.50f, suffragetteFrames, PlayMode.LOOP);
         //
         //antagonist wreker
         wrekerFrames = new Array<TextureRegion>(2);
@@ -241,14 +280,14 @@ public class TextureLoader {
         }
 
         wrekerWalk = new Animation(0.50f, wrekerFrames, PlayMode.LOOP);
-        
+
         wrekerAttackFrames = new Array<TextureRegion>(4);
         for (int i = 0; i < 4; i++) {
             wrekerAttackFrames.add(new TextureRegion(WREKERATTACKTEXTURE, 25, i * 100, 100, 100));
         }
 
         wrekerAttack = new Animation(0.10f, wrekerAttackFrames, PlayMode.LOOP);
-        
+
         //
         //Antagonist catlady
         catLadyFrames = new Array<TextureRegion>(3);
@@ -257,7 +296,7 @@ public class TextureLoader {
         }
 
         catLadyWalk = new Animation(0.50f, catLadyFrames, PlayMode.LOOP);
-        
+
         meleeFrames = new Array<TextureRegion>(7);
         for (int i = 0; i < 7; i++) {
             meleeFrames.add(new TextureRegion(MELEEATTACKTEXTURE, 25, i * 100, 100, 100));
@@ -298,11 +337,23 @@ public class TextureLoader {
             }
         }
         smokeTrap = new Animation(0.05f, smokeFrames);
+
+        //Transform Trap
+        TextureRegion[][] tmp7 = TextureRegion.split(TextureLoader.TRAPTRANSFORM, TextureLoader.TRAPTRANSFORM.getWidth() / FRAME_COLS, TextureLoader.TRAPTRANSFORM.getHeight() / FRAME_ROWS);
+        transformFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
+        int index7 = 0;
+        for (int i = 0; i < FRAME_ROWS; i++) {
+            for (int j = 0; j < FRAME_COLS; j++) {
+                transformFrames[index7++] = tmp7[i][j];
+            }
+        }
+        transformTrap = new Animation(0.05f, transformFrames);
     }
 
     public void dispose() {
         SKIN.dispose();
         BERNARDTEXTURE.dispose();
+        DORABERNARDJUMPTEXTURE.dispose();
         WANDERTEXTURE.dispose();
         DRUNKTEXTURE.dispose();
         DRUNKENTEXTURE.dispose();
@@ -313,8 +364,11 @@ public class TextureLoader {
         TRAPKUNAI.dispose();
         TRAPPOWER.dispose();
         TRAPBLIND.dispose();
+        TRAPTRANSFORM.dispose();
         DETECTIONTEXTURE.dispose();
         BARRIERTEXTURE.dispose();
+        LIGHTBARRIERTEXTURE.dispose();
+        LIGHTTEXTURE.dispose();
         HEALTEXTURE.dispose();
         REDLASERTEXTURE.dispose();
         SKILLONETEXTURE.dispose();
@@ -322,7 +376,7 @@ public class TextureLoader {
         CATTYTEXTURE.dispose();
         CATLADYTEXTURE.dispose();
         WANDERATTACKTEXTURE.dispose();
-        SUFFRAGETTETEXTURE.dispose(); 
+        SUFFRAGETTETEXTURE.dispose();
 
     }
 }

@@ -22,7 +22,7 @@ public class Map {
     private int width;
     private int height;
     public Protagonist bernard;
-    
+
     public static List<Entity> miscEntityList;
 
     public Map(Protagonist bernard, String tmxFileName) {
@@ -203,17 +203,20 @@ public class Map {
          */
         this.miscEntityList.add(new TrapType3(7, 13));
         this.entityGrid[7][13] = Constants.EntityGridCode.TRAP;
-        
+
         this.miscEntityList.add(new TrapType4(6, 14));
         this.entityGrid[6][14] = Constants.EntityGridCode.TRAP;
-        
-        this.miscEntityList.add(new ItemWhistle(8,9));
+
+        this.miscEntityList.add(new TrapType5(2, 2));
+        this.entityGrid[2][1] = Constants.EntityGridCode.TRAP;
+
+        this.miscEntityList.add(new ItemWhistle(8, 9));
         this.entityGrid[8][9] = Constants.EntityGridCode.ITEM;
-        
+
         tempList.add(new Wreker(4, 2));
         tempList.add(new Blues(5, 1));
-        tempList.add(new Suffragette(1,14) ); 
-        tempList.add(new Hammer(6,2) ); 
+        tempList.add(new Suffragette(1, 14));
+        tempList.add(new Hammer(6, 2));
 
         // Populate the cells from the temp list and add to entity list
         for (int i = 0; i < tempList.size(); i++) {
@@ -333,15 +336,14 @@ public class Map {
         }
         return true;
     }
-    
+
     public void removeEntityFromGrid(Entity entity) {
         if (entity.getGridCode() == Constants.EntityGridCode.ITEM || entity.getGridCode() == Constants.EntityGridCode.TRAP) {
-                    entityGrid[entity.getCX()][entity.getCY()] = Constants.EntityGridCode.PLAYER;
-                }
-        else if(entity instanceof DamageEntity){
+            entityGrid[entity.getCX()][entity.getCY()] = Constants.EntityGridCode.PLAYER;
+        } else if (entity instanceof DamageEntity) {
         } else {
-                    entityGrid[entity.getCX()][entity.getCY()] = Constants.EntityGridCode.NONE;
-                }
+            entityGrid[entity.getCX()][entity.getCY()] = Constants.EntityGridCode.NONE;
+        }
     }
 
     public boolean exitReached() {
@@ -357,11 +359,11 @@ public class Map {
 
             //Change this method to however you want enemies to behave
             enemy.calculateTurn(mapGrid, entityGrid, entityList);
-            
-            if(enemy.getTurnAction() == Constants.TurnAction.MOVE)
+
+            if (enemy.getTurnAction() == Constants.TurnAction.MOVE) {
                 moveEntity(enemy);
-            else if(enemy.getTurnAction() == Constants.TurnAction.ATTACK && enemy.getDamageEntities() != null){
-                for(int i = 0; i < enemy.getDamageEntities().length; i++){
+            } else if (enemy.getTurnAction() == Constants.TurnAction.ATTACK && enemy.getDamageEntities() != null) {
+                for (int i = 0; i < enemy.getDamageEntities().length; i++) {
                     this.miscEntityList.add(enemy.getDamageEntities()[i]);
                     //Change melee skill and use like bernard instead Adrian ya nooblet
                 }
@@ -370,17 +372,17 @@ public class Map {
     }
 
     public void playTurn(Entity entity) {
-        if(entity instanceof Protagonist){
-            if(entity.getTurnAction() == Constants.TurnAction.MOVE)
+        if (entity instanceof Protagonist) {
+            if (entity.getTurnAction() == Constants.TurnAction.MOVE) {
                 moveEntity(entity);
+            }
             entity.performActions();
-        }
-        else if(entity instanceof Antagonist){
+        } else if (entity instanceof Antagonist) {
             calculateAITurn(entity);
             entity.performActions();
-        }
-        else
+        } else {
             entity.performActions();
+        }
     }
 
     public void dispose() {

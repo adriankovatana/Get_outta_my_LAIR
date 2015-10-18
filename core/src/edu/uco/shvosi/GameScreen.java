@@ -46,121 +46,136 @@ public class GameScreen implements Screen {
         /* == INPUT == */
         /* Bernard Controls */
         if (!roundStarted && activeEntity instanceof Protagonist) {
-
-            //Movement
-            if (Gdx.input.isKeyJustPressed(Keys.W) && map.bernardCanMove(Constants.Direction.UP)) {
-                //entityTurnInProg = true;
-                //this.playTurn = true;
+            if (map.bernard.getTransform() == true) {
                 roundStarted = true;
-                map.bernard.notifyObservers();
-                map.bernard.setDirection(Constants.Direction.UP);
                 map.bernard.setTurnAction(Constants.TurnAction.MOVE);
-                Gdx.app.log("MOVING", "UP");
-            } else if (Gdx.input.isKeyJustPressed(Keys.S) && map.bernardCanMove(Constants.Direction.DOWN)) {
-                //entityTurnInProg = true;
-                //this.playTurn = true;
-                roundStarted = true;
-                map.bernard.notifyObservers();
-                map.bernard.setDirection(Constants.Direction.DOWN);
-                map.bernard.setTurnAction(Constants.TurnAction.MOVE);
-                Gdx.app.log("MOVING", "DOWN");
-            } else if (Gdx.input.isKeyJustPressed(Keys.A)) {
-                if (map.bernard.getDirection() != Constants.Direction.LEFT) {
-                    map.bernard.flipTexture(Constants.Direction.LEFT);
-                    map.bernard.setDirection(Constants.Direction.LEFT);
-                }
-                if (map.bernardCanMove(Constants.Direction.LEFT)) {
+                String c = String.valueOf(map.bernard.getTransformCounter());
+                Gdx.app.log("Lose Turn Counter", c);
+            } else {
+                //Movement
+                if (Gdx.input.isKeyJustPressed(Keys.W) && map.bernardCanMove(Constants.Direction.UP)) {
                     //entityTurnInProg = true;
                     //this.playTurn = true;
                     roundStarted = true;
                     map.bernard.notifyObservers();
+                    map.bernard.setDirection(Constants.Direction.UP);
                     map.bernard.setTurnAction(Constants.TurnAction.MOVE);
-                    Gdx.app.log("MOVING", "LEFT");
-                }
-            } else if (Gdx.input.isKeyJustPressed(Keys.D)) {
-                if (map.bernard.getDirection() != Constants.Direction.RIGHT) {
-                    map.bernard.flipTexture(Constants.Direction.RIGHT);
-                    map.bernard.setDirection(Constants.Direction.RIGHT);
-                }
-
-                if (map.bernardCanMove(Constants.Direction.RIGHT)) {
+                    Gdx.app.log("MOVING", "UP");
+                } else if (Gdx.input.isKeyJustPressed(Keys.S) && map.bernardCanMove(Constants.Direction.DOWN)) {
                     //entityTurnInProg = true;
                     //this.playTurn = true;
                     roundStarted = true;
                     map.bernard.notifyObservers();
+                    map.bernard.setDirection(Constants.Direction.DOWN);
                     map.bernard.setTurnAction(Constants.TurnAction.MOVE);
-                    Gdx.app.log("MOVING", "RIGHT");
+                    Gdx.app.log("MOVING", "DOWN");
+                } else if (Gdx.input.isKeyJustPressed(Keys.A)) {
+                    if (map.bernard.getDirection() != Constants.Direction.LEFT) {
+                        map.bernard.flipTexture(Constants.Direction.LEFT);
+                        map.bernard.setDirection(Constants.Direction.LEFT);
+                    }
+                    if (map.bernardCanMove(Constants.Direction.LEFT)) {
+                        //entityTurnInProg = true;
+                        //this.playTurn = true;
+                        roundStarted = true;
+                        map.bernard.notifyObservers();
+                        map.bernard.setTurnAction(Constants.TurnAction.MOVE);
+                        Gdx.app.log("MOVING", "LEFT");
+                    }
+                } else if (Gdx.input.isKeyJustPressed(Keys.D)) {
+                    if (map.bernard.getDirection() != Constants.Direction.RIGHT) {
+                        map.bernard.flipTexture(Constants.Direction.RIGHT);
+                        map.bernard.setDirection(Constants.Direction.RIGHT);
+                    }
+
+                    if (map.bernardCanMove(Constants.Direction.RIGHT)) {
+                        //entityTurnInProg = true;
+                        //this.playTurn = true;
+                        roundStarted = true;
+                        map.bernard.notifyObservers();
+                        map.bernard.setTurnAction(Constants.TurnAction.MOVE);
+                        Gdx.app.log("MOVING", "RIGHT");
+                    }
+                }
+
+                //Use Item
+                if (Gdx.input.isKeyJustPressed(Keys.Q)) {
+                    map.bernard.useItem();
+                }
+
+                //Mute
+                if (Gdx.input.isKeyJustPressed(Keys.M)) {
+                    map.bernard.mute = 1;
+                }
+
+                //Skills
+                if (Gdx.input.isKeyJustPressed(Keys.SPACE)) {
+                    roundStarted = true;
+                    map.bernard.setSkill(Constants.SkillName.REDLASERSKILL);
+                    map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
+                    map.bernard.setActiveSkill();
+                    map.bernard.attackAction();
+                    for (DamageEntity d : map.bernard.getActiveSkill().damageEntities) {
+                        map.miscEntityList.add(d);
+                        //stage.addActor(d);
+                    }
+                }
+
+                if (Gdx.input.isKeyJustPressed(Keys.NUM_1)) {
+                    //entityTurnInProg = true;
+                    //this.playTurn = true;
+                    roundStarted = true;
+                    map.bernard.setSkill(Constants.SkillName.SKILLONE);
+                    map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
+                    map.bernard.setActiveSkill();
+                    map.bernard.attackAction();
+                    for (DamageEntity d : map.bernard.getActiveSkill().damageEntities) {
+                        map.miscEntityList.add(d);
+                        //stage.addActor(d);
+                    }
+                }
+
+                if (Gdx.input.isKeyJustPressed(Keys.NUM_2)) {
+                    roundStarted = true;
+                    map.bernard.setSkill(Constants.SkillName.SKILLTWO);
+                    map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
+                    map.bernard.setActiveSkill();
+                    map.bernard.attackAction();
+                    for (DamageEntity d : map.bernard.getActiveSkill().damageEntities) {
+                        map.miscEntityList.add(d);
+                        //stage.addActor(d);
+                    }
+                }
+
+                if (Gdx.input.isKeyJustPressed(Keys.NUM_3)) {
+                    roundStarted = true;
+                    map.bernard.setExecuteDetection(true);
+                    map.bernard.setSkill(Constants.SkillName.DETECTION);
+                    map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
+                    map.bernard.setActiveSkill();
+                    map.bernard.attackAction();
+                }
+
+                if (Gdx.input.isKeyJustPressed(Keys.NUM_4)) {
+                    roundStarted = true;
+                    map.bernard.setBarrierLimit(3);
+                    map.bernard.setExecuteBarrier(true);
+                    map.bernard.setSkill(Constants.SkillName.BARRIERSKILL);
+                    map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
+                    map.bernard.setActiveSkill();
+                    map.bernard.attackAction();
+                }
+                
+                if (Gdx.input.isKeyJustPressed(Keys.NUM_5)) {
+                    roundStarted = true;
+                    map.bernard.setLightBarrierLimit(3);
+                    map.bernard.setExecuteLightBarrier(true);
+                    map.bernard.setSkill(Constants.SkillName.LIGHTBARRIERSKILL);
+                    map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
+                    map.bernard.setActiveSkill();
+                    map.bernard.attackAction();
                 }
             }
-
-            //Use Item
-            if (Gdx.input.isKeyJustPressed(Keys.Q)) {
-                map.bernard.useItem();
-            }
-
-            //Mute
-            if (Gdx.input.isKeyJustPressed(Keys.M)) {
-                map.bernard.mute = 1;
-            }
-
-            //Skills
-            if (Gdx.input.isKeyJustPressed(Keys.SPACE)) {
-                roundStarted = true;
-                map.bernard.setSkill(Constants.SkillName.REDLASERSKILL);
-                map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
-                map.bernard.setActiveSkill();
-                map.bernard.attackAction();
-                for (DamageEntity d : map.bernard.getActiveSkill().damageEntities) {
-                    map.miscEntityList.add(d);
-                    //stage.addActor(d);
-                }
-            }
-
-            if (Gdx.input.isKeyJustPressed(Keys.NUM_1)) {
-                //entityTurnInProg = true;
-                //this.playTurn = true;
-                roundStarted = true;
-                map.bernard.setSkill(Constants.SkillName.SKILLONE);
-                map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
-                map.bernard.setActiveSkill();
-                map.bernard.attackAction();
-                for (DamageEntity d : map.bernard.getActiveSkill().damageEntities) {
-                    map.miscEntityList.add(d);
-                    //stage.addActor(d);
-                }
-            }
-
-            if (Gdx.input.isKeyJustPressed(Keys.NUM_2)) {
-                roundStarted = true;
-                map.bernard.setSkill(Constants.SkillName.SKILLTWO);
-                map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
-                map.bernard.setActiveSkill();
-                map.bernard.attackAction();
-                for (DamageEntity d : map.bernard.getActiveSkill().damageEntities) {
-                    map.miscEntityList.add(d);
-                    //stage.addActor(d);
-                }
-            }
-
-            if (Gdx.input.isKeyJustPressed(Keys.NUM_3)) {
-                roundStarted = true;
-                map.bernard.setExecuteDetection(true);
-                map.bernard.setSkill(Constants.SkillName.DETECTION);
-                map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
-                map.bernard.setActiveSkill();
-                map.bernard.attackAction();
-            }
-
-            if (Gdx.input.isKeyJustPressed(Keys.NUM_4)) {
-                roundStarted = true;
-                map.bernard.setSkill(Constants.SkillName.BARRIERSKILL);
-                map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
-                map.bernard.setActiveSkill();
-                map.bernard.attackAction();
-            }
-//        if (map.bernard.getBarrierLimit() == 0) {
-//            map.bernard.setHeal(true);
-//        }
         }
 
         /* -- END INPUT -- */

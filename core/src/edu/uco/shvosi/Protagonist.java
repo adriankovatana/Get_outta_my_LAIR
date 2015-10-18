@@ -2,8 +2,10 @@ package edu.uco.shvosi;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
@@ -30,10 +32,24 @@ public class Protagonist extends Entity implements Observable {
     private boolean scaleEffect = false;
     private boolean blind = false;
     private boolean poison = false;
+    private boolean transform = false;
     private int blindCounter = 0;
     private int poisonCounter = 0;
-
+    private int transformCounter = 0;
+    private Animation jump;
+    private float elapsedJump = 0f;
+    private TextureRegion tempJump;
+    private Animation smoke;
+    private float elapsedSmoke = 0f;
+    private TextureRegion tempSmoke;
+    private boolean smokeStart = true;
     private boolean executeDetection;
+    private boolean executeBarrier;
+    private boolean executeLightBarrier;
+    private int barrierLimit = 3;
+    private int lightBarrierLimit = 3;
+    private int barrierDamage = 0;
+    private boolean healEffect;
 
     private List<Observer> observers;
 
@@ -53,6 +69,7 @@ public class Protagonist extends Entity implements Observable {
         skills.put("Red Laser", new RedLaserSkill());
         skills.put("Detection", new DetectionSkill());
         skills.put("Barrier", new BarrierSkill());
+        skills.put("Light Barrier", new LightBarrierSkill());
 
         smokeParticle = new ParticleEffect();
         smokeParticle.load(Gdx.files.internal("traps/smoke.p"), Gdx.files.internal("traps"));
@@ -61,6 +78,9 @@ public class Protagonist extends Entity implements Observable {
         poisonParticle.scaleEffect(-0.40f);
 
         this.effectLabel = new Label("", TextureLoader.SKIN);
+
+        jump = TextureLoader.jump;
+        smoke = TextureLoader.smokeTrap;
     }
 
     public void setActiveSkill() {
@@ -79,6 +99,9 @@ public class Protagonist extends Entity implements Observable {
                 break;
             case BARRIERSKILL:
                 this.activeSkill = skills.get("Barrier");
+                break;
+            case LIGHTBARRIERSKILL:
+                this.activeSkill = skills.get("Light Barrier");
                 break;
             default:
         }
@@ -123,28 +146,57 @@ public class Protagonist extends Entity implements Observable {
 
     @Override
     public void draw(Batch batch, float alpha) {
-        super.draw(batch, alpha);
+        if (executeLightBarrier == true) {
+            if (lightBarrierLimit >= 3) {
+                TextureLoader.lightBarrier.setFrameDuration(.04f);
+            }
+            if (lightBarrierLimit == 1) {
+                TextureLoader.lightBarrier.setFrameDuration(.09f);
+            }
+            skills.get("Light Barrier").draw(batch, alpha, this);
+        }
+        if (executeBarrier == true) {
+            if (barrierLimit == 3) {
+                TextureLoader.barrierSkill.setFrameDuration(.02f);
+            }
+            if (barrierLimit == 2) {
+                TextureLoader.barrierSkill.setFrameDuration(.05f);
+            }
+            if (barrierLimit == 1) {
+                TextureLoader.barrierSkill.setFrameDuration(.07f);
+            }
+            skills.get("Barrier").draw(batch, alpha, this);
+        }
+
+        if (transformCounter >= 2 && transform == true) {
+            if (smokeStart == true) {
+                elapsedSmoke += Gdx.graphics.getDeltaTime();
+                tempSmoke = smoke.getKeyFrame(elapsedSmoke);
+                batch.draw(smoke.getKeyFrame(elapsedSmoke), this.getX(), this.getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
+                if (smoke.isAnimationFinished(elapsedSmoke)) {
+                    smokeStart = false;
+                }
+            }
+            elapsedJump += Gdx.graphics.getDeltaTime();
+            tempJump = jump.getKeyFrame(elapsedJump);
+            batch.draw(jump.getKeyFrame(elapsedJump), this.getX(), this.getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
+            if (jump.isAnimationFinished(elapsedJump)) {
+                elapsedJump = 0f;
+            }
+            if (transformCounter == 4) {
+                elapsedSmoke = 0f;
+                smokeStart = true;
+                transform = false;
+                transformCounter = 0;
+            }
+        } else {
+            super.draw(batch, alpha);
+        }
 
         if (this.isDead()) {
             // Draw death animation
         } else if (this.activeSkill != null) {
             this.activeSkill.draw(batch, alpha, this);
-        }
-
-        if (blindCounter >= 2 && blind == true) {
-            smokeParticle.start();
-            smokeParticle.getEmitters().first().setPosition(this.getX() + 50, this.getY() + 35);
-            if (scaleEffect == true) {
-                smokeParticle.scaleEffect(1.40f);
-                scaleEffect = false;
-            }
-
-            smokeParticle.draw(batch, Gdx.graphics.getDeltaTime());
-            if (blindCounter == 7) {
-                blind = false;
-                blindCounter = 0;
-                smokeParticle.reset();
-            }
         }
 
         if (poisonCounter >= 2 && poison == true) {
@@ -166,6 +218,23 @@ public class Protagonist extends Entity implements Observable {
             blind = false;
             executeDetection = false;
         }
+
+        if (blindCounter >= 2 && blind == true) {
+            smokeParticle.start();
+            smokeParticle.getEmitters().first().setPosition(this.getX() + 50, this.getY() + 35);
+            if (scaleEffect == true) {
+                smokeParticle.scaleEffect(1.40f);
+                scaleEffect = false;
+            }
+
+            smokeParticle.draw(batch, Gdx.graphics.getDeltaTime());
+            if (blindCounter == 7) {
+                smokeParticle.scaleEffect(.13281f);
+                blind = false;
+                blindCounter = 0;
+                smokeParticle.reset();
+            }
+        }
     }
 
     @Override
@@ -178,7 +247,16 @@ public class Protagonist extends Entity implements Observable {
     }
 
     public void takeDamage(int damage) {
-        this.health -= damage;
+        if (executeBarrier == true) {
+            this.health -= damage / 2;
+            this.barrierDamage += damage / 2;
+            this.barrierLimit -= 1;
+            if (barrierLimit == 0) {
+                healEffect = true;
+            }
+        } else {
+            this.health -= damage;
+        }
         this.addAction(this.takeDamageAnimation());
         if (this.health <= 0) {
             this.health = 0;
@@ -206,7 +284,7 @@ public class Protagonist extends Entity implements Observable {
     }
 
     public Rectangle2D.Double getDetectionCollisionBox() {
-        return new Rectangle2D.Double(this.getCX(), this.getCY(), 2, 2);
+        return new Rectangle2D.Double(this.getCX(), this.getCY(), 3, 3);
     }
 
     public void notifyObservers() {
@@ -348,6 +426,10 @@ public class Protagonist extends Entity implements Observable {
                 this.takeDamage(8);
             }
         }
+        if (transform == true) {
+            transformCounter++;
+        }
+
         return new Action() {
             @Override
             public boolean act(float delta) {
@@ -363,6 +445,8 @@ public class Protagonist extends Entity implements Observable {
     }
 
     public void resetStatusCounter() {
+        poison = false;
+        blind = false;
         blindCounter = 0;
         poisonCounter = 0;
     }
@@ -385,5 +469,57 @@ public class Protagonist extends Entity implements Observable {
 
     public void setExecuteDetection(boolean executeDetection) {
         this.executeDetection = executeDetection;
+    }
+
+    public void setTransform(boolean transform) {
+        this.transform = transform;
+    }
+
+    public boolean getTransform() {
+        return transform;
+    }
+
+    public int getTransformCounter() {
+        return transformCounter;
+    }
+
+    public void setExecuteBarrier(boolean executeBarrier) {
+        this.executeBarrier = executeBarrier;
+    }
+
+    public void setExecuteLightBarrier(boolean executeLightBarrier) {
+        this.executeLightBarrier = executeLightBarrier;
+    }
+
+    public boolean getExecuteBarrier() {
+        return executeBarrier;
+    }
+
+    public void setBarrierLimit(int b) {
+        barrierLimit = b;
+    }
+
+    public void setLightBarrierLimit(int b) {
+        lightBarrierLimit = b;
+    }
+
+    public int getLightBarrierLimit() {
+        return lightBarrierLimit;
+    }
+
+    public int getBarrierDamage() {
+        return barrierDamage;
+    }
+
+    public void resetBarrierDamage() {
+        barrierDamage = 0;
+    }
+
+    public boolean getHealEffect() {
+        return healEffect;
+    }
+
+    public void setHealEffect(boolean heal) {
+        this.healEffect = heal;
     }
 }

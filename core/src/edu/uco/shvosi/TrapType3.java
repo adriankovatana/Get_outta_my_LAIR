@@ -48,16 +48,9 @@ public class TrapType3 extends Trap {
 //                if (bernard.getShieldFlag() == 1) {
 //                    bernard.setImage(TextureLoader.BERNARDTEXTURE);
 //                    bernard.setShieldFlag(0);
-//                } else {
-//                    if (bernard.getExecuteBarrier() == true) {
-//                        bernard.setHealth(bernard.getHealth() - this.damage / 2);
-//                        bernard.setBarrierDamage(this.damage / 2);
-//                        bernard.setBarrierLimit(bernard.getBarrierLimit() - 1);
-//                    } else {
+//                }
                 bernard.takeDamage(this.damage);
                 this.turnFinished = true;
-//                    }
-//                }
                 bernard.setBlind(true);
             }
             if (bernard.getActiveSkill() != null && bernard.getActiveSkill().getName() == Constants.SkillName.DETECTION

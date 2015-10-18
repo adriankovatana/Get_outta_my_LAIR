@@ -45,21 +45,12 @@ public class TrapType4 extends Trap {
 //                if (bernard.getShieldFlag() == 1) {
 //                    bernard.setImage(TextureLoader.BERNARDTEXTURE);
 //                    bernard.setShieldFlag(0);
-//                } else {
-//                    if (bernard.getExecuteBarrier() == true) {
-//                        bernard.setHealth(bernard.getHealth() - this.damage / 2);
-//                        bernard.setBarrierDamage(this.damage / 2);
-//                        bernard.setBarrierLimit(bernard.getBarrierLimit() - 1);
-//                    } else {
-//                        bernard.setHealth(bernard.getHealth() - this.damage);
-//                    }
-//                }
+//                } 
                 if (this.state == 0) {
                      this.sound.play(Constants.MASTERVOLUME);
                     bernard.takeDamage(this.damage);
                     this.state = 1;
                 }
-                //bernard.setPoison(true);
                 this.turnFinished = true;
                 bernard.setPoison(true);
             }

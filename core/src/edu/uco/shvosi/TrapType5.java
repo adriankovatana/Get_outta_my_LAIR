@@ -9,13 +9,13 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-public class TrapType1 extends Trap {
+public class TrapType5 extends Trap {
 
-    public TrapType1(int cX, int cY) {
+    public TrapType5(int cX, int cY) {
         super(TextureLoader.TRAPTEXTURE, cX, cY,
-                Gdx.audio.newSound(Gdx.files.internal("sounds/trap1.mp3")));
-        this.animation = TextureLoader.kunaiTrap;
-        this.damage = 25;
+                Gdx.audio.newSound(Gdx.files.internal("sounds/trap2.mp3")));
+        this.animation = TextureLoader.transformTrap;
+        this.damage = 10;
     }
 
     @Override
@@ -48,9 +48,10 @@ public class TrapType1 extends Trap {
 //                if (bernard.getShieldFlag() == 1) {
 //                    bernard.setImage(TextureLoader.BERNARDTEXTURE);
 //                    bernard.setShieldFlag(0);
-//                } 
+//                }
                 bernard.takeDamage(this.damage);
                 this.turnFinished = true;
+                bernard.setTransform(true);
             }
             if (bernard.getActiveSkill() != null && bernard.getActiveSkill().getName() == Constants.SkillName.DETECTION
                     && bernard.getDetectionCollisionBox().intersects(this.getCX(), this.getCY(), 3, 3)) {
