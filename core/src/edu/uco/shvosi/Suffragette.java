@@ -23,7 +23,7 @@ public class Suffragette extends Antagonist {
     
 
     public Suffragette(int cX, int cY) {
-        super(Constants.EnemyType.SUFFERAGETTE, TextureLoader.SUFFERTETEXTURE, cX, cY);
+        super(Constants.EnemyType.SUFFRAGETTE, TextureLoader.SUFFERTETEXTURE, cX, cY);
         this.walkAnimation = TextureLoader.suffragetteWalk;
         this.begX = cX;
         this.begY = cY;

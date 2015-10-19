@@ -15,7 +15,7 @@ public class TrapType4 extends Trap {
     ParticleEffect poisonParticle;
 
     public TrapType4(int cX, int cY) {
-        super(TextureLoader.TRAPTEXTURE3, cX, cY,
+        super(TextureLoader.TRAPTEXTURE3, cX, cY, Constants.TrapType.TRAP4,
                 Gdx.audio.newSound(Gdx.files.internal("sounds/trap3.mp3")));
         this.damage = 10;
         poisonParticle = new ParticleEffect();

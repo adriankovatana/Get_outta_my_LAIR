@@ -24,7 +24,7 @@ public class Constants {
         WREKER,
         BLUES,
         FLAPPER,
-        SUFFERAGETTE,
+        SUFFRAGETTE,
         HAMMER,
         BONNIE,
         CLYDE;
@@ -47,7 +47,8 @@ public class Constants {
         TRAP1,
         TRAP2,
         TRAP3,
-        TRAP4;
+        TRAP4,
+        TRAP5;
     }
     
     public static enum Direction {

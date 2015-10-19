@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset name="TileSheet" tilewidth="100" tileheight="100" tilecount="48">
+<tileset name="Map" tilewidth="100" tileheight="100" tilecount="48">
  <image source="TileSheet.png" width="800" height="600"/>
  <tile id="0">
   <properties>
@@ -9,6 +9,11 @@
  <tile id="1">
   <properties>
    <property name="WALL" value="1"/>
+  </properties>
+ </tile>
+ <tile id="8">
+  <properties>
+   <property name="NONE" value="10"/>
   </properties>
  </tile>
  <tile id="9">

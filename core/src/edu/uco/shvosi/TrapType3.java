@@ -12,7 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class TrapType3 extends Trap {
 
     public TrapType3(int cX, int cY) {
-        super(TextureLoader.TRAPTEXTURE3, cX, cY,
+        super(TextureLoader.TRAPTEXTURE3, cX, cY, Constants.TrapType.TRAP3,
                 Gdx.audio.newSound(Gdx.files.internal("sounds/trap3.mp3")));
         this.animation = TextureLoader.smokeTrap;
         this.damage = 10;

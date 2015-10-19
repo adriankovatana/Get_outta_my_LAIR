@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="100" tileheight="100" nextobjectid="1">
- <tileset firstgid="1" source="TileSheet.tsx"/>
- <tileset firstgid="49" source="EntitySheet.tsx"/>
- <layer name="Map" width="10" height="10">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="100" tileheight="100" nextobjectid="1">
+ <tileset firstgid="1" source="Map.tsx"/>
+ <tileset firstgid="49" source="Characters.tsx"/>
+ <tileset firstgid="97" source="Items.tsx"/>
+ <tileset firstgid="145" source="Traps.tsx"/>
+ <layer name="Map" width="20" height="20">
   <data encoding="base64" compression="zlib">
-   eJxjYmBg4MKDhYCYCYoZCeChoo6QWpgaIRrYSwgDAOAwAOM=
+   eJxjYmBgYKIyFgJiLgqxEJJ5jFTCo+aNmjdq3qh56OZRy0zk8m+w+5daGADxWwKh
   </data>
  </layer>
- <layer name="Entities" width="10" height="10" visible="0">
+ <layer name="Entities" width="20" height="20" visible="0">
   <data encoding="base64" compression="zlib">
-   eJwzYWBgMKEAGwOxFRAbook7ovGt8ZhhSaEbYNgTiW1EoX5SsRXUz5T6BQBJSBSs
+   eJxjYBj8wGmQmDFYwcoBtHshlPaE0jPpYCcxdkRiEbOC0p5Y5AYSBBKQx+YXbMCRCmbgAxsp1D8RiY3uVmxxMhGLGKmA0ryxEIuYFRYxXMASiz588W2JRcwIiBOJtI/SOCIVAACndQuM
   </data>
  </layer>
 </map>

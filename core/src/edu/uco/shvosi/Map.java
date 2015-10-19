@@ -60,37 +60,67 @@ public class Map {
         for (int x = 0; x < entityLayer.getWidth(); x++) {
             for (int y = 0; y < entityLayer.getHeight(); y++) {
                 TiledMapTileLayer.Cell cell = entityLayer.getCell(x, y);
+                if(cell == null){
+                    entityGrid[x][y] = Constants.EntityGridCode.NONE;
+                    continue;
+                }
                 MapProperties properties = cell.getTile().getProperties();
                 if (properties.get("PLAYER") != null) {
                     entityGrid[x][y] = Constants.EntityGridCode.PLAYER;
                     initBernard(x, y);
                 } else if (properties.get("ENEMY") != null) {
-                    entityGrid[x][y] = Constants.EntityGridCode.ENEMY;
                     if (properties.get("CatLady") != null) {
                         initEnemy(x, y, Constants.EnemyType.CATLADY);
                     } else if (properties.get("Drunk") != null) {
                         initEnemy(x, y, Constants.EnemyType.DRUNK);
                     } else if (properties.get("Wanderer") != null) {
                         initEnemy(x, y, Constants.EnemyType.WANDERER);
+                    } else if (properties.get("Blues") != null) {
+                        initEnemy(x, y, Constants.EnemyType.BLUES);
+                    } else if (properties.get("Wreker") != null) {
+                        initEnemy(x, y, Constants.EnemyType.WREKER);
+                    } else if (properties.get("Hammer") != null) {
+                        initEnemy(x, y, Constants.EnemyType.HAMMER);
+                    } else if (properties.get("Suffragette") != null) {
+                        initEnemy(x, y, Constants.EnemyType.SUFFRAGETTE);
+                    } else {
+                        Gdx.app.log("MAP CREATION", "ENEMY type at entityLayer("+x+")("+y+") is unknown. Creation skipped.");
+                        entityGrid[x][y] = Constants.EntityGridCode.NONE;
+                        continue;
                     }
+                    entityGrid[x][y] = Constants.EntityGridCode.ENEMY;
                 } else if (properties.get("ITEM") != null) {
-                    entityGrid[x][y] = Constants.EntityGridCode.ITEM;
                     if (properties.get("Health") != null) {
                         initItem(x, y, Constants.ItemType.HEALTH);
                     } else if (properties.get("Shield") != null) {
                         initItem(x, y, Constants.ItemType.SHIELD);
+                    } else if (properties.get("Whistle") != null) {
+                        initItem(x, y, Constants.ItemType.WHISTLE);
+                    } else {
+                        Gdx.app.log("MAP CREATION", "ITEM type at entityLayer("+x+")("+y+") is unknown. Creation skipped.");
+                        entityGrid[x][y] = Constants.EntityGridCode.NONE;
+                        continue;
                     }
+                    entityGrid[x][y] = Constants.EntityGridCode.ITEM;
                 } else if (properties.get("TRAP") != null) {
-                    entityGrid[x][y] = Constants.EntityGridCode.TRAP;
                     if (properties.get("Trap1") != null) {
                         initTrap(x, y, Constants.TrapType.TRAP1);
                     } else if (properties.get("Trap2") != null) {
                         initTrap(x, y, Constants.TrapType.TRAP2);
+                    } else if (properties.get("Trap3") != null) {
+                        initTrap(x, y, Constants.TrapType.TRAP3);
+                    } else if (properties.get("Trap4") != null) {
+                        initTrap(x, y, Constants.TrapType.TRAP4);
+                    } else if (properties.get("Trap5") != null) {
+                        initTrap(x, y, Constants.TrapType.TRAP5);
+                    } else {
+                        Gdx.app.log("MAP CREATION", "TRAP type at entityLayer("+x+")("+y+") is unknown. Creation skipped.");
+                        entityGrid[x][y] = Constants.EntityGridCode.NONE;
+                        continue;
                     }
-                    //else if (properties.get("Trap3") != null) {
-                    //  initTrap(x, y, Constants.TrapType.TRAP3);
-                    //  }
+                    entityGrid[x][y] = Constants.EntityGridCode.TRAP;
                 } else {
+                    Gdx.app.log("MAP CREATION", "Unknown property at entityLayer("+x+")("+y+"). Creation skipped.");
                     entityGrid[x][y] = Constants.EntityGridCode.NONE;
                 }
 
@@ -153,6 +183,18 @@ public class Map {
             case WANDERER:
                 entityList.add(new Wanderer(cX, cY));
                 break;
+            case BLUES:
+                entityList.add(new Blues(cX, cY));
+                break;
+            case WREKER:
+                entityList.add(new Wreker(cX, cY));
+                break;
+            case HAMMER:
+                entityList.add(new Hammer(cX, cY));
+                break;
+            case SUFFRAGETTE:
+                entityList.add(new Suffragette(cX, cY));
+                break;
             default:
                 //ERROR
                 Gdx.app.log("ERROR", "Enemy type not found. Not added to entity grid.");
@@ -167,6 +209,9 @@ public class Map {
                 break;
             case SHIELD:
                 miscEntityList.add(new ItemShield(cX, cY));
+                break;
+            case WHISTLE:
+                miscEntityList.add(new ItemWhistle(cX, cY));
                 break;
             default:
                 //ERROR
@@ -183,9 +228,15 @@ public class Map {
             case TRAP2:
                 miscEntityList.add(new TrapType2(cX, cY));
                 break;
-//            case TRAP3:
-//                miscEntityList.add(new TrapType3(cX, cY));
-//                break;
+            case TRAP3:
+                miscEntityList.add(new TrapType3(cX, cY));
+                break;
+            case TRAP4:
+                miscEntityList.add(new TrapType4(cX, cY));
+                break;
+            case TRAP5:
+                miscEntityList.add(new TrapType5(cX, cY));
+                break;
             default:
                 //ERROR
                 Gdx.app.log("ERROR", "Trap type not found. Not added to entity grid.");
@@ -201,22 +252,22 @@ public class Map {
          on the mapGrid and will be placed on top of each other. Please
          place them in an empty block
          */
-        this.miscEntityList.add(new TrapType3(7, 13));
-        this.entityGrid[7][13] = Constants.EntityGridCode.TRAP;
-
-        this.miscEntityList.add(new TrapType4(6, 14));
-        this.entityGrid[6][14] = Constants.EntityGridCode.TRAP;
-
-        this.miscEntityList.add(new TrapType5(2, 2));
-        this.entityGrid[2][1] = Constants.EntityGridCode.TRAP;
-
-        this.miscEntityList.add(new ItemWhistle(8, 9));
-        this.entityGrid[8][9] = Constants.EntityGridCode.ITEM;
-
-        tempList.add(new Wreker(4, 2));
-        tempList.add(new Blues(5, 1));
-        tempList.add(new Suffragette(1, 14));
-        tempList.add(new Hammer(6, 2));
+//        this.miscEntityList.add(new TrapType3(7, 13));
+//        this.entityGrid[7][13] = Constants.EntityGridCode.TRAP;
+//
+//        this.miscEntityList.add(new TrapType4(6, 14));
+//        this.entityGrid[6][14] = Constants.EntityGridCode.TRAP;
+//
+//        this.miscEntityList.add(new TrapType5(2, 2));
+//        this.entityGrid[2][1] = Constants.EntityGridCode.TRAP;
+//
+//        this.miscEntityList.add(new ItemWhistle(8, 9));
+//        this.entityGrid[8][9] = Constants.EntityGridCode.ITEM;
+//
+//        tempList.add(new Wreker(4, 2));
+//        tempList.add(new Blues(5, 1));
+//        tempList.add(new Suffragette(1, 14));
+//        tempList.add(new Hammer(6, 2));
 
         // Populate the cells from the temp list and add to entity list
         for (int i = 0; i < tempList.size(); i++) {

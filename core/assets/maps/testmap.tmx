@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="100" tileheight="100" nextobjectid="12">
- <tileset firstgid="1" name="TileSheet" tilewidth="100" tileheight="100" tilecount="48">
+ <tileset firstgid="1" name="Map" tilewidth="100" tileheight="100" tilecount="48">
   <image source="TileSheet.png" width="800" height="600"/>
   <tile id="0">
    <properties>
@@ -23,15 +23,123 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="49" source="EntitySheet.tsx"/>
+ <tileset firstgid="49" name="Characters" tilewidth="100" tileheight="100" tilecount="48">
+  <image source="EntitySheet.png" width="800" height="600"/>
+  <tile id="0">
+   <properties>
+    <property name="NONE" value="0"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="PLAYER" value="1"/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="CatLady" value="0"/>
+    <property name="ENEMY" value="2"/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="ENEMY" value="2"/>
+    <property name="Hammer" value="5"/>
+   </properties>
+  </tile>
+  <tile id="16">
+   <properties>
+    <property name="Drunk" value="1"/>
+    <property name="ENEMY" value="2"/>
+   </properties>
+  </tile>
+  <tile id="17">
+   <properties>
+    <property name="ENEMY" value="2"/>
+    <property name="Suffragette" value="6"/>
+   </properties>
+  </tile>
+  <tile id="24">
+   <properties>
+    <property name="ENEMY" value="2"/>
+    <property name="Wanderer" value="2"/>
+   </properties>
+  </tile>
+  <tile id="32">
+   <properties>
+    <property name="Blues" value="3"/>
+    <property name="ENEMY" value="2"/>
+   </properties>
+  </tile>
+  <tile id="40">
+   <properties>
+    <property name="ENEMY" value="2"/>
+    <property name="Wreker" value="4"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="97" name="Items" tilewidth="100" tileheight="100" tilecount="48">
+  <image source="ItemSheet.png" width="800" height="600"/>
+  <tile id="0">
+   <properties>
+    <property name="Health" value="0"/>
+    <property name="ITEM" value="3"/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="ITEM" value="3"/>
+    <property name="Shield" value="1"/>
+   </properties>
+  </tile>
+  <tile id="16">
+   <properties>
+    <property name="ITEM" value="3"/>
+    <property name="Whistle" value="2"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="145" name="Traps" tilewidth="100" tileheight="100" tilecount="48">
+  <image source="TrapSheet.png" width="800" height="600"/>
+  <tile id="0">
+   <properties>
+    <property name="TRAP" value="4"/>
+    <property name="Trap1" value="0"/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="TRAP" value="4"/>
+    <property name="Trap2" value="1"/>
+   </properties>
+  </tile>
+  <tile id="16">
+   <properties>
+    <property name="TRAP" value="4"/>
+    <property name="Trap3" value="2"/>
+   </properties>
+  </tile>
+  <tile id="24">
+   <properties>
+    <property name="TRAP" value="4"/>
+    <property name="Trap4" value="3"/>
+   </properties>
+  </tile>
+  <tile id="32">
+   <properties>
+    <property name="TRAP" value="4"/>
+    <property name="Trap5" value="4"/>
+   </properties>
+  </tile>
+ </tileset>
  <layer name="Map" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJztmbsOhDAMBA0lJf//sdfcSciX+JWILGiLEYQg5CFZU7CLyPFw9i/bw6EHFvTAgh5Y0AMLemBBDyzogQU9sKAHFvTAgh5Y0AMLemBBDyzogcXbPCKsrjXicYr/v2d1rTP2FT3u9fBykclRBasu61rF45qVXoa8jPXGrbr0nJXVjIe3x7y9p+et+7Nzv1qt9zjbo3e80loja66S88j5qEc15959h/zX43n0xis9smsz6lHNhx5H+ySqR7Rntp6p8zfqUfl+ZPZS9b1l+1Xv+zGrX1U9dA9v9fQqd3p46zTD4w18ADIYDsM=
+   eJztmbsOgCAMRZHR0f//WBcHc2NbizZczR1OjBQLR14DvbW2fpx+sHwceXAhDy7kwYU8uJAHF/LgQh5cyIMLeXAhDy7kwYU8uJAHF/LgQh5cyIOL/jNm34vpXi03r6rnoNcvrwxjWzBuSxDfWjw/Md4hP/YLY+fvKverKA/GvfrZ2AwP63nmaoy8GKvHSNtVHtZ7pcfdvSRbd9RjdH1Y+9VVX7z9araH9Q2uKW/9ve0xcn6wrQ88u6yyCg/Mj3lXKMf3p/8wMxczbVp1n+SMPP7ADvTyEIM=
   </data>
  </layer>
  <layer name="Entities" width="50" height="50" visible="0">
   <data encoding="base64" compression="zlib">
-   eJztzzENACAMAMFaInRDAf4NMaCBpCk33P6fEZEAAAAAAAAA8Ngq0PCjXaDBT5/+DmaBBvoZBRq4DlJ6/CI=
+   eJzt1TEKAjEQBdCcyU477Swtt9zS0qNYWlpu6Q13wCbIgCia4PoefBiS5gcGUgoAAAAAAADA8oy9C3zIUt7xzK53gcS2mg8Pd0M17xt0IbdOzjbNW/CLxiSZc+QSuUamyK1JO2qr3gXecIocy31/XvEvf/63zXLFCbQ=
   </data>
  </layer>
 </map>

@@ -16,6 +16,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  */
 public class Trap extends Entity{
     
+    protected Constants.TrapType type;
     protected int state;
     protected float elapsed;
     protected boolean activate;
@@ -23,8 +24,9 @@ public class Trap extends Entity{
     protected int damage;
     protected Sound sound;
 
-    public Trap(Texture texture, int cX, int cY, Sound sound) {
+    public Trap(Texture texture, int cX, int cY, Constants.TrapType type, Sound sound) {
         super(Constants.EntityGridCode.TRAP, texture, cX, cY);
+        this.type = type;
         animation = null;
         this.sound = sound;
         activate = false;
