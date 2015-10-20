@@ -11,8 +11,10 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
                 config.useGL30 = false;
                 config.title = "Get Out of My Lair!";
-                config.width = 800;
-                config.height = 450;
+                config.width = 1024;
+                config.height = 576;
+                config.x = 50;
+                config.y = 50;
                 new LwjglApplication(new MyGdxGame(), config);         
          
         }
