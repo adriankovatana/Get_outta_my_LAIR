@@ -317,6 +317,13 @@ public class Protagonist extends Entity implements Observable {
         //Do Stuffs
         switch (this.skillname) {
             case SKILLONE:
+                if (executeLightBarrier == true) {
+                    activeSkill.damageEntities.get(0).setDamage(activeSkill.damage + activeSkill.damage / 2);
+                    activeSkill.damageEntities.get(1).setDamage(activeSkill.damage + activeSkill.damage / 2);
+                } else {
+                    activeSkill.damageEntities.get(0).setDamage(activeSkill.damage);
+                    activeSkill.damageEntities.get(1).setDamage(activeSkill.damage);
+                }
                 if (this.textureRegion.isFlipX()) {
                     activeSkill.damageEntities.get(0).setDead(false);
                     activeSkill.damageEntities.get(0).setCX(this.getCX() - 1);
@@ -334,6 +341,15 @@ public class Protagonist extends Entity implements Observable {
                 }
                 break;
             case REDLASERSKILL:
+                if (executeLightBarrier == true) {
+                    activeSkill.damageEntities.get(0).setDamage(activeSkill.damage + activeSkill.damage / 2);
+                    activeSkill.damageEntities.get(1).setDamage(activeSkill.damage + activeSkill.damage / 2);
+                    activeSkill.damageEntities.get(2).setDamage(activeSkill.damage + activeSkill.damage / 2);
+                } else {
+                    activeSkill.damageEntities.get(0).setDamage(activeSkill.damage);
+                    activeSkill.damageEntities.get(1).setDamage(activeSkill.damage);
+                    activeSkill.damageEntities.get(2).setDamage(activeSkill.damage);
+                }
                 if (this.textureRegion.isFlipX()) {
                     activeSkill.damageEntities.get(0).setDead(false);
                     activeSkill.damageEntities.get(0).setCX(this.getCX() - 1);
@@ -360,6 +376,11 @@ public class Protagonist extends Entity implements Observable {
 //                Gdx.app.log(activeSkill.damageEntities.get(2).name + " 2 ", "" + activeSkill.damageEntities.get(2).getCX() + " , " + activeSkill.damageEntities.get(2).getCY());
                 break;
             case SKILLTWO:
+                if (executeLightBarrier == true) {
+                    activeSkill.damageEntities.get(0).setDamage(activeSkill.damage + activeSkill.damage / 2);
+                } else {
+                    activeSkill.damageEntities.get(0).setDamage(activeSkill.damage);
+                }
                 if (this.textureRegion.isFlipX()) {
                     activeSkill.damageEntities.get(0).setDead(false);
                     activeSkill.damageEntities.get(0).setCX(this.getCX() - 1);
