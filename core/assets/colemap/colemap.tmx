@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="38" height="63" tilewidth="100" tileheight="100" nextobjectid="12">
+ <tileset firstgid="1" name="RedMap" tilewidth="100" tileheight="100" tilecount="48">
+  <image source="RedmapTileSheet.png" width="800" height="600"/>
+ </tileset>
+ <tileset firstgid="49" name="EntitySheet" tilewidth="100" tileheight="100" tilecount="48">
+  <image source="../maps/EntitySheet.png" width="800" height="600"/>
+ </tileset>
+ <tileset firstgid="97" name="ItemSheet" tilewidth="100" tileheight="100" tilecount="48">
+  <image source="../maps/ItemSheet.png" width="800" height="600"/>
+ </tileset>
+ <tileset firstgid="145" name="TrapSheet" tilewidth="100" tileheight="100" tilecount="48">
+  <image source="../maps/TrapSheet.png" width="800" height="600"/>
+ </tileset>
+ <layer name="Map" width="38" height="63">
+  <data encoding="base64" compression="zlib">
+   eJztmbEOwyAMRNOMHfv/H9spUoRq3Z1tjIk6eChQeLHPBpLzOI6zqb0NQ/2qMfN9buNehqF+1dj5nsJl6aAL16iXLlzeOP+5fFzRfMvmYnVZzZU17yyuy2/qOpYOvP9nnx+tO+5Z7HOifRFxWeOflvfVXEgvrJ6iurX04z1nWbrLrhNZ8d2di21XuaJ10KpTq7lmxbErl7VvrOaK6r6aS/XfLK6o/7pyqfOp66jtVVxo/13FxepkbEfcq7iqdG/pqgvXGB+Lu0pfrD/YfayaC/UjQ7qZzWWd56/x3nsn62/kl6h5uZBfVnGx86pWxaXeKy29qVzeepwd51252LqVrS/2HITqlvo+Qo2HNy/Yebz1chYX8mtUF2pdYcehOrSaKytf2fXYvK7iYvaBX99ro7+jcUR50o2LjWM0j6Ncal2f9b3CWzez82U3Lra+sHqKcqn3HfY8Gr0PVdnuXB3tC5oyExk=
+  </data>
+ </layer>
+ <layer name="Entities" width="38" height="63">
+  <data encoding="base64" compression="zlib">
+   eJzt2TEOgCAMBVCupRtujoyO3v8SrsRAgvqhv/jfRIyBpm2ISAiCcBqtuxmta21veCd1j4IHqv+Oyhgpr12sPPdkBc2zgOaxECvj3nrlzGo//yPVUJCe1F09InelnmDqE7bvJLZ4LHztD0QOmXpURPzT3u6bh38KHmJkMPK/yhvaK9p4yBN7r8l4qTDudUcwK8RdAeKcx343lueJoccYYtD5fn6qsch8LlJ6DdI=
+  </data>
+ </layer>
+</map>
