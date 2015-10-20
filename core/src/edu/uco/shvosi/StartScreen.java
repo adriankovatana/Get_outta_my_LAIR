@@ -60,14 +60,15 @@ public class StartScreen implements Screen{
             intro.play(Constants.MASTERVOLUME);
 		batch = new SpriteBatch();
 		splashT = new Texture(Gdx.files.internal("splash.png"));
-		splash = new Sprite(splashT, 800, 450);
+		splash = new Sprite(splashT, 1024, 576);
 		splash.setPosition(0, 0);
 		startT = new Texture(Gdx.files.internal("startButtonS.png"));
 		startBut = new Sprite(startT, 100, 50);
-		startBut.setPosition(550, 15);
+		startBut.setPosition(800, 15);
 		quitT = new Texture(Gdx.files.internal("quitButton.png"));
 		quitBut = new Sprite(quitT, 100, 50);
-		quitBut.setPosition(650, 15);
+		quitBut.setPosition(900, 15);
+                
 	}
 
 
