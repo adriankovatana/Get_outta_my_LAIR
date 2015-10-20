@@ -46,8 +46,8 @@ public class Protagonist extends Entity implements Observable {
     private boolean executeDetection;
     private boolean executeBarrier;
     private boolean executeLightBarrier;
-    private int barrierLimit = 3;
-    private int lightBarrierLimit = 3;
+    private int barrierLimit = 0;
+    private int lightBarrierLimit = 0;
     private int barrierDamage = 0;
     private boolean healEffect;
 

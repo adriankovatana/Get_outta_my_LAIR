@@ -47,7 +47,14 @@ class RedLaserSkill extends Skill {
             Protagonist bernard = (Protagonist) entity;
             if (bernard.getLightBarrierLimit() > 0 && elapsed >= 0.25f) {
                 elapsedLight += Gdx.graphics.getDeltaTime();
-                batch.draw(light.getKeyFrame(elapsedLight), bernard.getX() + Constants.TILEDIMENSION, bernard.getY(), Constants.TILEDIMENSION * width, Constants.TILEDIMENSION * height);
+                if (bernard.textureRegion.isFlipX()) {
+                    temp = light.getKeyFrame(elapsedLight);
+                    temp.flip(true, false);
+                    batch.draw(light.getKeyFrame(elapsedLight), entity.getX() - Constants.TILEDIMENSION * width, entity.getY(), Constants.TILEDIMENSION * width, Constants.TILEDIMENSION * height);
+                    temp.flip(true, false);
+                } else {
+                    batch.draw(light.getKeyFrame(elapsedLight), bernard.getX() + Constants.TILEDIMENSION, bernard.getY(), Constants.TILEDIMENSION * width, Constants.TILEDIMENSION * height);
+                }
                 if (light.isAnimationFinished(elapsedLight)) {
                     bernard.setLightBarrierLimit(bernard.getLightBarrierLimit() - 1);
 //                    String l = String.valueOf(bernard.getLightBarrierLimit());

@@ -162,7 +162,7 @@ public class TextureLoader {
         //Lightning added
         lightFrames = new Array<TextureRegion>(6);
         for (int i = 0; i < 6; i++) {
-            lightFrames.add(new TextureRegion(LIGHTTEXTURE, 25, i * 50, 200, 60));
+            lightFrames.add(new TextureRegion(LIGHTTEXTURE, 25, i * 50, 180, 60));
         }
         light = new Animation(0.05f, lightFrames, PlayMode.NORMAL);
 
