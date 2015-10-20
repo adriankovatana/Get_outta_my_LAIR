@@ -495,6 +495,10 @@ public class Protagonist extends Entity implements Observable {
         return executeBarrier;
     }
 
+    public boolean getExecuteLightBarrier() {
+        return executeLightBarrier;
+    }
+
     public void setBarrierLimit(int b) {
         barrierLimit = b;
     }
