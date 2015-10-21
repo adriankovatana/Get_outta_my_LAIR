@@ -39,6 +39,8 @@ public class Protagonist extends Entity implements Observable {
     private boolean blind = false;
     private boolean poison = false;
     private boolean transform = false;
+    private boolean sliding = false;
+    private boolean stopped = false;
     private int blindCounter = 0;
     private int poisonCounter = 0;
     private int transformCounter = 0;
@@ -334,7 +336,13 @@ public class Protagonist extends Entity implements Observable {
         moveAction.setPosition((float) (this.getCX() * Constants.TILEDIMENSION),
                 (float) (this.getCY() * Constants.TILEDIMENSION));
         moveAction.setDuration(Constants.MOVEACTIONDURATION);
-        this.addAction(sequence(moveAction, finishTurn()));
+        if(!sliding){
+            this.addAction(sequence(moveAction, finishTurn()));
+        }
+        else{
+            this.addAction(moveAction);
+            sliding = false;
+        }
     }
 
     public void attackAction() {
@@ -474,7 +482,6 @@ public class Protagonist extends Entity implements Observable {
         if (transform == true) {
             transformCounter++;
         }
-
         return new Action() {
             @Override
             public boolean act(float delta) {
@@ -570,5 +577,9 @@ public class Protagonist extends Entity implements Observable {
 
     public void setHealEffect(boolean heal) {
         this.healEffect = heal;
+    }
+
+    void setSliding(boolean b) {
+        this.sliding = b;
     }
 }
