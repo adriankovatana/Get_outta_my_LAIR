@@ -48,7 +48,8 @@ public class Constants {
         TRAP2,
         TRAP3,
         TRAP4,
-        TRAP5;
+        TRAP5,
+        TRAP6;
     }
     
     public static enum Direction {

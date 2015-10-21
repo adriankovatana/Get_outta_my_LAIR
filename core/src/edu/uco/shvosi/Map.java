@@ -113,6 +113,8 @@ public class Map {
                         initTrap(x, y, Constants.TrapType.TRAP4);
                     } else if (properties.get("Trap5") != null) {
                         initTrap(x, y, Constants.TrapType.TRAP5);
+                    } else if (properties.get("Trap6") != null) {
+                        initTrap(x, y, Constants.TrapType.TRAP6);
                     } else {
                         Gdx.app.log("MAP CREATION", "TRAP type at entityLayer("+x+")("+y+") is unknown. Creation skipped.");
                         entityGrid[x][y] = Constants.EntityGridCode.NONE;
@@ -258,8 +260,8 @@ public class Map {
 //        this.miscEntityList.add(new TrapType4(6, 14));
 //        this.entityGrid[6][14] = Constants.EntityGridCode.TRAP;
 //
-//        this.miscEntityList.add(new TrapType5(2, 2));
-//        this.entityGrid[2][1] = Constants.EntityGridCode.TRAP;
+        this.miscEntityList.add(new TrapType6(32, 2));
+        this.entityGrid[32][2] = Constants.EntityGridCode.TRAP;
 //
 //        this.miscEntityList.add(new ItemWhistle(8, 9));
 //        this.entityGrid[8][9] = Constants.EntityGridCode.ITEM;

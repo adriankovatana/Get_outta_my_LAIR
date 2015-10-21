@@ -101,6 +101,7 @@ public class TextureLoader {
     public static final Texture TRAPKUNAI = new Texture(Gdx.files.internal("traps/kunai.png"));
     public static final Texture TRAPPOWER = new Texture(Gdx.files.internal("traps/powerseal.png"));
     public static final Texture TRAPBLIND = new Texture(Gdx.files.internal("traps/smoke.png"));
+    public static final Texture TRAPSLIDE = new Texture(Gdx.files.internal("colemap/leftarrow.png"));
     public static final Texture TRAPTRANSFORM = new Texture(Gdx.files.internal("traps/transform.png"));
     public static final Texture INVENTORYTEXTURE = new Texture(Gdx.files.internal("invent/Inventory.png"));
     public static final Texture INVENTORYSHIELDTEXTURE = new Texture(Gdx.files.internal("invent/InventoryShield.png"));
