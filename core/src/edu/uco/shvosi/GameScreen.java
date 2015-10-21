@@ -22,6 +22,7 @@ public class GameScreen implements Screen {
     private String healthpoints;
     private Label healthLabel;
     public static Inventory invent;
+    public static int turnCount;
     private TextureLoader textureLoader = new TextureLoader();
 
     private int level = 0;
@@ -109,7 +110,7 @@ public class GameScreen implements Screen {
                 }
 
                 //Skills
-                if (Gdx.input.isKeyJustPressed(Keys.SPACE)) {
+                if (Gdx.input.isKeyJustPressed(Keys.SPACE) && map.bernard.redLaserCooldown <= 0) {
                     roundStarted = true;
                     map.bernard.setSkill(Constants.SkillName.REDLASERSKILL);
                     map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
@@ -201,6 +202,9 @@ public class GameScreen implements Screen {
                 roundStarted = false;
                 for (int i = 0; i < map.getEntityList().size(); i++) {
                     map.getEntityList().get(i).setTurnFinished(false);
+                    if(i == map.getEntityList().size() - 1) {
+                        turnCount++;
+                    }
                 }
 //                for (int i = 0; i < map.miscEntityList.size(); i++) {
 //                    map.miscEntityList.get(i).setTurnFinished(false);
@@ -358,10 +362,12 @@ public class GameScreen implements Screen {
         if (level == 0) {
             map = new Map(this.bernard, "maps/testmap.tmx");
             map.bernard.removeAllObservers();
+            map.bernard.setCurrentMap(map.getMapGrid());
             level = 1;
         } else if (level == 1) {
             map = new Map(this.bernard, "maps/testmap2.tmx");
             map.bernard.removeAllObservers();
+            map.bernard.setCurrentMap(map.getMapGrid());
             level = 0;
         }
 
@@ -404,6 +410,8 @@ public class GameScreen implements Screen {
         turnLabel = new Label("", TextureLoader.SKIN);
 
         initNewLevel();
+        
+        turnCount = 0;
     }
 
     @Override
@@ -426,6 +434,7 @@ public class GameScreen implements Screen {
     public void dispose() {
         // never called automatically
         //batch.dispose();
+        textureLoader.dispose();
         stage.dispose();
     }
 }

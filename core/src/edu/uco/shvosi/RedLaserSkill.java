@@ -67,4 +67,15 @@ class RedLaserSkill extends Skill {
             }
         }
     }
+
+    @Override
+    public boolean isAnimationFinished() {
+        if (this.animation.isAnimationFinished(this.elapsed)) {
+            this.elapsed = 0f;
+            this.width = 3;
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

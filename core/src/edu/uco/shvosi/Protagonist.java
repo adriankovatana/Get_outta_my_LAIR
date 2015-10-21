@@ -28,6 +28,12 @@ public class Protagonist extends Entity implements Observable {
     private Label effectLabel;
     private int heldItem = 0;
     public int mute = 0;
+    public int redLaserCooldown = 0;
+    private Constants.MapGridCode[][] currentMap;
+
+    public void setCurrentMap(Constants.MapGridCode[][] currentMap) {
+        this.currentMap = currentMap;
+    }
 
     private boolean scaleEffect = false;
     private boolean blind = false;
@@ -90,6 +96,23 @@ public class Protagonist extends Entity implements Observable {
                 break;
             case REDLASERSKILL:
                 this.activeSkill = skills.get("Red Laser");
+
+                if (this.textureRegion.isFlipX()) {
+                    for (int i = 1; i <= this.activeSkill.getWidth(); i++) {
+                        if (currentMap[this.getCX() - i][this.getCY()] != Constants.MapGridCode.FLOOR) {
+                            activeSkill.setWidth(i - 1);
+                            break;
+                        }
+                    }
+                } else {
+                    for (int i = 1; i <= this.activeSkill.getWidth(); i++) {
+                        if (currentMap[this.getCX() + i][this.getCY()] != Constants.MapGridCode.FLOOR) {
+                            activeSkill.setWidth(i - 1);
+                            break;
+                        }
+                    }
+                }
+                this.redLaserCooldown = 5;
                 break;
             case SKILLTWO:
                 this.activeSkill = skills.get("Rotating Laser");
@@ -142,6 +165,7 @@ public class Protagonist extends Entity implements Observable {
                 this.setTurnFinished(true);
                 break;
         }
+        redLaserCooldown--;
     }
 
     @Override
