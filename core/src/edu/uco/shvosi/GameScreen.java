@@ -360,13 +360,15 @@ public class GameScreen implements Screen {
     public void initNewLevel() {
         //Test Level
         if (level == 0) {
-            map = new Map(this.bernard, "maps/testmap.tmx");
+//            map = new Map(this.bernard, "maps/testmap.tmx");
+            map = new Map(this.bernard, "colemap/colemap.tmx");
             level = 1;
         } else if (level == 1) {
             map = new Map(this.bernard, "maps/testmap2.tmx");
             level = 2;
         } else if (level == 2) {
-            map = new Map(this.bernard, "colemap/colemap.tmx");
+//            map = new Map(this.bernard, "colemap/colemap.tmx");
+            map = new Map(this.bernard, "maps/testmap.tmx");
             level = 0;
         }
         map.bernard.removeAllObservers();

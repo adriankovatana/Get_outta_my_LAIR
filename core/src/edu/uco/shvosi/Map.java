@@ -83,6 +83,30 @@ public class Map {
                         initEnemy(x, y, Constants.EnemyType.HAMMER);
                     } else if (properties.get("Suffragette") != null) {
                         initEnemy(x, y, Constants.EnemyType.SUFFRAGETTE);
+                    } else if (properties.get("GreyGate") != null) {
+                        if (properties.get("Left") != null) {
+                            initGreyGate(x, y, Constants.GateType.LEFT);
+                        } 
+                        else if (properties.get("Right") != null){
+                            initGreyGate(x, y, Constants.GateType.RIGHT);
+                        }
+                        else {
+                             Gdx.app.log("MAP CREATION", "ENEMY type at entityLayer("+x+")("+y+") is unknown. Creation skipped.");
+                            entityGrid[x][y] = Constants.EntityGridCode.NONE;
+                            continue;
+                        }
+                    } else if (properties.get("RedGate") != null) {
+                        if (properties.get("Left") != null) {
+                            initRedGate(x, y, Constants.GateType.LEFT);
+                        } 
+                        else if (properties.get("Right") != null){
+                            initRedGate(x, y, Constants.GateType.RIGHT);
+                        }
+                        else {
+                             Gdx.app.log("MAP CREATION", "ENEMY type at entityLayer("+x+")("+y+") is unknown. Creation skipped.");
+                            entityGrid[x][y] = Constants.EntityGridCode.NONE;
+                            continue;
+                        }
                     } else {
                         Gdx.app.log("MAP CREATION", "ENEMY type at entityLayer("+x+")("+y+") is unknown. Creation skipped.");
                         entityGrid[x][y] = Constants.EntityGridCode.NONE;
@@ -96,6 +120,10 @@ public class Map {
                         initItem(x, y, Constants.ItemType.SHIELD);
                     } else if (properties.get("Whistle") != null) {
                         initItem(x, y, Constants.ItemType.WHISTLE);
+                    } else if (properties.get("RedKey") != null) {
+                        initItem(x, y, Constants.ItemType.REDKEY);
+                    } else if (properties.get("GreyKey") != null) {
+                        initItem(x, y, Constants.ItemType.GREYKEY);
                     } else {
                         Gdx.app.log("MAP CREATION", "ITEM type at entityLayer("+x+")("+y+") is unknown. Creation skipped.");
                         entityGrid[x][y] = Constants.EntityGridCode.NONE;
@@ -114,15 +142,21 @@ public class Map {
                     } else if (properties.get("Trap5") != null) {
                         initTrap(x, y, Constants.TrapType.TRAP5);
                     } else if (properties.get("SlideTile") != null) {
-                        if(properties.get("Left") != null){
-                            initSlideTile(x, y, Constants.Direction.LEFT);
-                        } else if(properties.get("Right") != null){
-                            initSlideTile(x, y, Constants.Direction.RIGHT);
-                        } else if(properties.get("Up") != null){
-                            initSlideTile(x, y, Constants.Direction.UP);
-                        } else if(properties.get("Down") != null){
-                            initSlideTile(x, y, Constants.Direction.DOWN);
+                        if (properties.get("Up") != null) {
+                            initArrowTrap(x, y, Constants.ArrowType.UP);
+                        } else if (properties.get("Down") != null) {
+                            initArrowTrap(x, y, Constants.ArrowType.DOWN);
+                        } else if (properties.get("Left") != null) {
+                            initArrowTrap(x, y, Constants.ArrowType.LEFT);
+                        } else if (properties.get("Right") != null) {
+                            initArrowTrap(x, y, Constants.ArrowType.RIGHT);
+                        } else {
+                            Gdx.app.log("MAP CREATION", "ARROW type at entityLayer("+x+")("+y+") is unknown. Creation skipped.");
+                            entityGrid[x][y] = Constants.EntityGridCode.NONE;
+                            continue;
                         }
+                    } else if (properties.get("Blocker") != null) {
+                        initTrap(x, y, Constants.TrapType.BLOCKER);
                     } else {
                         Gdx.app.log("MAP CREATION", "TRAP type at entityLayer("+x+")("+y+") is unknown. Creation skipped.");
                         entityGrid[x][y] = Constants.EntityGridCode.NONE;
@@ -205,6 +239,10 @@ public class Map {
             case SUFFRAGETTE:
                 entityList.add(new Suffragette(cX, cY));
                 break;
+            case GREYGATE:
+                break;
+            case REDGATE:
+                break;
             default:
                 //ERROR
                 Gdx.app.log("ERROR", "Enemy type not found. Not added to entity grid.");
@@ -222,6 +260,12 @@ public class Map {
                 break;
             case WHISTLE:
                 miscEntityList.add(new ItemWhistle(cX, cY));
+                break;
+            case REDKEY:
+                miscEntityList.add(new RedKey(cX, cY));
+                break;
+            case GREYKEY:
+                miscEntityList.add(new GreyKey(cX, cY));
                 break;
             default:
                 //ERROR
@@ -247,6 +291,11 @@ public class Map {
             case TRAP5:
                 miscEntityList.add(new TrapType5(cX, cY));
                 break;
+            case SLIDETILE:
+                break;
+            case BLOCKER:
+                miscEntityList.add(new Blocker(cX, cY));
+                break;
             default:
                 //ERROR
                 Gdx.app.log("ERROR", "Trap type not found. Not added to entity grid.");
@@ -254,23 +303,56 @@ public class Map {
         }
     }
     
-    private void initSlideTile(int cX, int cY, Constants.Direction direction) {
-        switch (direction) {
-            case LEFT:
-                miscEntityList.add(new SlideTile(cX, cY, direction, TextureLoader.SLIDELEFT));
-                break;
-            case RIGHT:
-                miscEntityList.add(new SlideTile(cX, cY, direction, TextureLoader.SLIDERIGHT));
-                break;
+    private void initArrowTrap(int cX, int cY, Constants.ArrowType arrowType) {
+        switch (arrowType) {
             case UP:
-                miscEntityList.add(new SlideTile(cX, cY, direction, TextureLoader.SLIDEUP));
+                miscEntityList.add(new SlideTile(cX, cY, Constants.Direction.UP, TextureLoader.SLIDEUP));
                 break;
             case DOWN:
-                miscEntityList.add(new SlideTile(cX, cY, direction, TextureLoader.SLIDEDOWN));
+                miscEntityList.add(new SlideTile(cX, cY, Constants.Direction.DOWN, TextureLoader.SLIDEDOWN));
                 break;
+            case LEFT:
+                miscEntityList.add(new SlideTile(cX, cY, Constants.Direction.LEFT, TextureLoader.SLIDELEFT));
+                break;
+            case RIGHT:
+                miscEntityList.add(new SlideTile(cX, cY, Constants.Direction.RIGHT, TextureLoader.SLIDERIGHT));
+                break;
+       
             default:
                 //ERROR
-                Gdx.app.log("ERROR", "Slide Tile direction not found. Not added to entity grid.");
+                Gdx.app.log("ERROR", "Arrow type not found. Not added to entity grid.");
+                break;
+        }
+    }
+    
+    private void initGreyGate(int cX, int cY, Constants.GateType gateType) {
+        switch (gateType) {
+            case LEFT:
+                miscEntityList.add(new GreyGate(cX, cY, Constants.Direction.LEFT));
+                break;
+            case RIGHT:
+                miscEntityList.add(new GreyGate(cX, cY, Constants.Direction.RIGHT));
+                break;
+       
+            default:
+                //ERROR
+                Gdx.app.log("ERROR", "Gate type not found. Not added to entity grid.");
+                break;
+        }
+    }
+    
+    private void initRedGate(int cX, int cY, Constants.GateType gateType) {
+        switch (gateType) {
+            case LEFT:
+                miscEntityList.add(new RedGate(cX, cY, Constants.Direction.LEFT));
+                break;
+            case RIGHT:
+                miscEntityList.add(new RedGate(cX, cY, Constants.Direction.RIGHT));
+                break;
+       
+            default:
+                //ERROR
+                Gdx.app.log("ERROR", "Gate type not found. Not added to entity grid.");
                 break;
         }
     }

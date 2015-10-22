@@ -1,111 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="38" height="63" tilewidth="100" tileheight="100" nextobjectid="12">
- <tileset firstgid="1" name="RedMap" tilewidth="100" tileheight="100" tilecount="48">
-  <image source="RedmapTileSheet.png" width="800" height="600"/>
-  <tile id="0">
-   <properties>
-    <property name="FLOOR" value="0"/>
-   </properties>
-  </tile>
-  <tile id="1">
-   <properties>
-    <property name="WALL" value="1"/>
-   </properties>
-  </tile>
-  <tile id="9">
-   <properties>
-    <property name="WALL" value="1"/>
-   </properties>
-  </tile>
-  <tile id="17">
-   <properties>
-    <property name="EXIT" value="3"/>
-   </properties>
-  </tile>
- </tileset>
- <tileset firstgid="49" name="EntitySheet" tilewidth="100" tileheight="100" tilecount="48">
-  <image source="../maps/EntitySheet.png" width="800" height="600"/>
-  <tile id="1">
-   <properties>
-    <property name="PLAYER" value=""/>
-   </properties>
-  </tile>
-  <tile id="8">
-   <properties>
-    <property name="CatLady" value=""/>
-    <property name="ENEMY" value=""/>
-   </properties>
-  </tile>
-  <tile id="9">
-   <properties>
-    <property name="ENEMY" value=""/>
-    <property name="Hammer" value=""/>
-   </properties>
-  </tile>
-  <tile id="16">
-   <properties>
-    <property name="Drunk" value=""/>
-    <property name="ENEMY" value=""/>
-   </properties>
-  </tile>
-  <tile id="17">
-   <properties>
-    <property name="ENEMY" value=""/>
-    <property name="Suffragette" value=""/>
-   </properties>
-  </tile>
-  <tile id="24">
-   <properties>
-    <property name="ENEMY" value=""/>
-    <property name="Wanderer" value=""/>
-   </properties>
-  </tile>
-  <tile id="32">
-   <properties>
-    <property name="Blues" value=""/>
-    <property name="ENEMY" value=""/>
-   </properties>
-  </tile>
-  <tile id="40">
-   <properties>
-    <property name="ENEMY" value=""/>
-    <property name="Wreker" value=""/>
-   </properties>
-  </tile>
- </tileset>
- <tileset firstgid="97" name="ItemSheet" tilewidth="100" tileheight="100" tilecount="48">
-  <image source="../maps/ItemSheet.png" width="800" height="600"/>
-  <tile id="0">
-   <properties>
-    <property name="Health" value=""/>
-    <property name="ITEM" value=""/>
-   </properties>
-  </tile>
-  <tile id="8">
-   <properties>
-    <property name="ITEM" value=""/>
-    <property name="Shield" value=""/>
-   </properties>
-  </tile>
-  <tile id="16">
-   <properties>
-    <property name="ITEM" value=""/>
-    <property name="Whistle" value=""/>
-   </properties>
-  </tile>
- </tileset>
- <tileset firstgid="145" name="TrapSheet" tilewidth="100" tileheight="100" tilecount="48">
-  <image source="../maps/TrapSheet.png" width="800" height="600"/>
- </tileset>
+ <tileset firstgid="1" source="RedMap.tsx"/>
+ <tileset firstgid="49" source="Traps.tsx"/>
+ <tileset firstgid="97" source="Items.tsx"/>
+ <tileset firstgid="145" source="Characters.tsx"/>
  <tileset firstgid="193" source="../maps/Map.tsx"/>
+ <tileset firstgid="241" source="DarkRedmapTileSheet.tsx"/>
+ <tileset firstgid="289" source="Gates.tsx"/>
  <layer name="Map" width="38" height="63">
   <data encoding="base64" compression="zlib">
-   eJztmbEOwyAMRNOMHfv/H9spUoRq3Z1tjIk6eChQeLHPBpLzOI6zqb0NQ/2qMfN9buNehqF+1dj5nsJl6aAL16iXLlzeOP+5fFzRfMvmYnVZzZU17yyuy2/qOpYOvP9nnx+tO+5Z7HOifRFxWeOflvfVXEgvrJ6iurX04z1nWbrLrhNZ8d2di21XuaJ10KpTq7lmxbErl7VvrOaK6r6aS/XfLK6o/7pyqfOp66jtVVxo/13FxepkbEfcq7iqdG/pqgvXGB+Lu0pfrD/YfayaC/UjQ7qZzWWd56/x3nsn62/kl6h5uZBfVnGx86pWxaXeKy29qVzeepwd51252LqVrS/2HITqlvo+Qo2HNy/Yebz1chYX8mtUF2pdYcehOrSaKytf2fXYvK7iYvaBX99ro7+jcUR50o2LjWM0j6Ncal2f9b3CWzez82U3Lra+sHqKcqn3HfY8Gr0PVdnuXB3tC5oyExk=
+   eJzdmb0OgzAMhGnHjn3/l4SxU4VUJGTh+OxzgtPhJArGfI1/QsJzWZZnUb0UWde9Qvy9T3YPRdZ1r1B//8Kl5UEVLpkTVbiqxrE6VzS/2HrL5pJ9rApXlt8qXFZ/it6f9VytP8nf8n5rXrT8aPbV+vdsXBuprLyVcd99f4LaLvyi+WON7+57/R2vJ0m7K5ut4bcnlzzuwaWdZ7nYPqj1qbu5kDjKXGqdG8Gl6TwumrR5g+Vq9YGDq2XTqx5b0noGIu/4Wf8LFfucWbiy4uztk3dxWXWZXa9s/DU7632iCteovNfyqgqXtr8huXvXo3c80HlsNJd13ZKVN725tPXhYR9dd2bXTVQsV3RfsDcXm3fROme5vPv3Wr5F88sbh+w4z8qF9q3s/ELfg6y+5d2P8MYjWheoH3R8R3FZ48rmhbevoHZWH7qbK6te0eehdT2KC5kHrr7Xsr/ZOFp1Uo0LjSNbxyyXt6/3+l4R7ZvZ9TIbF9pf0HxiubzrHfR9lF0PjdLsXBX1BWH5gkc=
   </data>
  </layer>
  <layer name="Entities" width="38" height="63" visible="0">
   <data encoding="base64" compression="zlib">
-   eJzt2TEOgCAMBVCuhJtuuDk6Onr/S7g2xiiED23lv0UGBdJWAhoCIZxK465K42rbMu6JzWdhB6r+ZMwOUJ9vYyTRzsmpRQuonxnUjwaZx57vXauYaa3nI2pVL8zhmEryzhqhu6easFQn1va1XvdtSLX1gYihpRolIv+4tvvm4ZuCtf2MVen7FlVcK/J4qHcPc6S+dtGOtyvlQfwrQJzzrOdNxqnVf6gSqHhNFc/yfP9/zDHR/1wE8Qy0
+   eJztmTtuwzAMhtmjtEALtGPGdPOo0TeoxhynR+ioUzaDibAsJepByUrgAD8Q6MUvJCPR8gUALoea9bWT3Z9E3/vT/n459F/BeD3MPbdpVWxZ29ckcR26H4UJGCy1gp6Lrfs59dl5kzbntGmUH2q5Xq/nypvB2eIgvS84ptg6yyarOI7gmim+NM4l42fkisX7I5GvfI4W19H+suIq9bt1XO+FC/OBnhM96vtaf/VWDVfowIE+z91Hc/y1RtbjbU6Y61g7nZPKj9I48vEL/D1/HRmXWofzana0ugjHYz3gmQ387hW2Ui5ef/D8lLgWQa31VQtXjMkL64zgonbPjI/2SVxa/KhWyOfCNsqFbCdBLVySYvsMzy/KJLHV2m/h8nD7P3rGO/q5gvLE8t2Bvk+kFBp9KQnglkejfIWCHWy28jxfa+qXAXeMvevDGr/AZFwjNOvvnZVLq6fCBIwWsjpfrON4cB1ckhzk3d9ZcgVDLu0uone9VxvfHK4cP5Vy8fbPTaP8RfXdwJV7B5XzfoPLG8fRct7sXHy+Y8IPb+fiMZ6Jq6e/Yv3aR7rXeEQuVOy5Vevv/R6K3q/lcMXGPbJ+ATgoldo=
   </data>
  </layer>
 </map>

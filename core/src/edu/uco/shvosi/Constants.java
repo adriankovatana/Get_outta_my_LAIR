@@ -4,7 +4,7 @@ public class Constants {
     public static final int TILEDIMENSION = 100;
     public static final int SCREENWIDTH = 1024;
     public static final int SCREENHEIGHT = 576;
-    public static final float MOVEACTIONDURATION = 0.5f;
+    public static final float MOVEACTIONDURATION = 0.1f;
     public static float MASTERVOLUME = 0.1f;
     
     
@@ -27,7 +27,9 @@ public class Constants {
         SUFFRAGETTE,
         HAMMER,
         BONNIE,
-        CLYDE;
+        CLYDE,
+        GREYGATE,
+        REDGATE;
     }
     
     public static enum EnemyAttackType {
@@ -39,7 +41,9 @@ public class Constants {
 	NONE,
         HEALTH,
         SHIELD,
-        WHISTLE;
+        WHISTLE,
+        REDKEY,
+        GREYKEY;
     }
     
     public static enum TrapType {
@@ -49,7 +53,8 @@ public class Constants {
         TRAP3,
         TRAP4,
         TRAP5,
-        SLIDETILE;
+        SLIDETILE,
+        BLOCKER;
     }
     
     public static enum Direction {
@@ -57,6 +62,20 @@ public class Constants {
         UP, DOWN, LEFT, RIGHT,
         UP_LEFT, UP_RIGHT,
         DOWN_LEFT, DOWN_RIGHT;
+    }
+    
+    public static enum ArrowType {
+        NONE,
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT;
+    }
+    
+    public static enum GateType {
+	NONE,
+        LEFT,
+        RIGHT;
     }
     
     public static enum TurnAction {

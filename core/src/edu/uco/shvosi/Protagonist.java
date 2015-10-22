@@ -58,6 +58,8 @@ public class Protagonist extends Entity implements Observable {
     private int lightBarrierLimit = 0;
     private int barrierDamage = 0;
     private boolean healEffect;
+    private boolean greyKey;
+    private boolean redKey;
 
     private List<Observer> observers;
 
@@ -89,6 +91,9 @@ public class Protagonist extends Entity implements Observable {
 
         jump = TextureLoader.jump;
         smoke = TextureLoader.smokeTrap;
+        
+        greyKey = false;
+        redKey = false;
     }
 
     public void setActiveSkill() {
@@ -340,6 +345,7 @@ public class Protagonist extends Entity implements Observable {
             this.addAction(sequence(moveAction, finishTurn()));
         }
         else{
+            moveAction.setDuration(Constants.MOVEACTIONDURATION * 10);
             this.addAction(moveAction);
             sliding = false;
         }
@@ -582,4 +588,22 @@ public class Protagonist extends Entity implements Observable {
     void setSliding(boolean b) {
         this.sliding = b;
     }
+    
+    boolean getSliding() {
+        return sliding;
+    }
+
+    void setRedKey(boolean b) {
+        redKey = b;
+    }
+    void setGreyKey(boolean b) {
+        greyKey = b;
+    }
+    boolean getRedKey() {
+        return redKey;
+    }
+    boolean getGreyKey() {
+        return greyKey;
+    }
+    
 }

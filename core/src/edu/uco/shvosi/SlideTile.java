@@ -15,7 +15,6 @@ public class SlideTile extends Trap {
         this.damage = 0;
         this.direction = direction;
         this.setVisible(true);
- //       dir = direction;
         
     }
 
@@ -33,30 +32,33 @@ public class SlideTile extends Trap {
 
             if (xCoordinate == this.getCX() && yCoordinate == this.getCY() && this.state == 0) {
                 this.sound.play(Constants.MASTERVOLUME);
-                bernard.setSliding(true);
                 
-                if (direction == Constants.Direction.RIGHT){
-                    bernard.setCX(bernard.getCX() + 1);
-                    //bernard.setDirection(Constants.Direction.RIGHT);
-                }
-                else if (direction == Constants.Direction.UP){
-                    bernard.setCY(bernard.getCY() + 1);
-                    //bernard.setDirection(Constants.Direction.UP);
-                }
-                else if (direction == Constants.Direction.DOWN){
-                    bernard.setCY(bernard.getCY() - 1);
-                    //bernard.setDirection(Constants.Direction.DOWN);
-                }
-                else if (direction == Constants.Direction.LEFT){
-                    bernard.setCX(bernard.getCX() - 1);
-                    //bernard.setDirection(Constants.Direction.LEFT);
-                }
-                else {
-                    Gdx.app.log("Slide Tile", "Could not move bernard " + direction.toString());
-                }
-                bernard.moveAction();
+                    bernard.setSliding(true);
                 
-                this.turnFinished();
+                    if (direction == Constants.Direction.RIGHT){
+                        bernard.setDCX(bernard.getCX() + 1);
+                        bernard.setCX(bernard.getCX() + 1);
+                        bernard.setDirection(Constants.Direction.RIGHT);
+                    }
+                    else if (direction == Constants.Direction.UP){
+                        bernard.setDCY(bernard.getCY() + 1);
+                        bernard.setCY(bernard.getCY() + 1);
+                        bernard.setDirection(Constants.Direction.UP);
+                    }
+                    else if (direction == Constants.Direction.DOWN){
+                        bernard.setDCY(bernard.getCY() - 1);
+                        bernard.setCY(bernard.getCY() - 1);
+                        bernard.setDirection(Constants.Direction.DOWN);
+                    }
+                    else if (direction == Constants.Direction.LEFT){
+                        bernard.setDCX(bernard.getCX() - 1);
+                        bernard.setCX(bernard.getCX() - 1);
+                        bernard.setDirection(Constants.Direction.LEFT);
+                    }
+                    bernard.moveAction();
+                    bernard.finishTurn();
+                
+                    this.turnFinished();
                 
             }
             

@@ -46,6 +46,7 @@ public class TextureLoader {
     public static Animation jump;
     public static Animation lightBarrier;
     public static Animation light;
+    
     //antagonist
     public static final Texture SUFFERTETEXTURE = new Texture(Gdx.files.internal("characters/blank.png"));
     public static final Texture HAMMERTETEXTURE = new Texture(Gdx.files.internal("characters/blank.png"));
@@ -68,6 +69,11 @@ public class TextureLoader {
     public static final Texture WREKERATTACKTEXTURE = new Texture(Gdx.files.internal("characters/wreker_attack_sheet.png"));
     public static final Texture SUFFRAGETTETEXTURE = new Texture(Gdx.files.internal("characters/suffragette_sheet.png"));
     public static final Texture HAMMERATTACKTETEXTURE = new Texture(Gdx.files.internal("characters/hammer_attack.png"));
+    public static final Texture GREYGATELTEXTURE = new Texture(Gdx.files.internal("colemap/greygatel.png"));
+    public static final Texture GREYGATERTEXTURE = new Texture(Gdx.files.internal("colemap/greygater.png"));
+    public static final Texture REDGATELTEXTURE = new Texture(Gdx.files.internal("colemap/redgatel.png"));
+    public static final Texture REDGATERTEXTURE = new Texture(Gdx.files.internal("colemap/redgater.png"));
+    
 
     private Array<TextureRegion> hammerFrames;
     private Array<TextureRegion> blueFrames;
@@ -102,11 +108,18 @@ public class TextureLoader {
     public static final Texture TRAPPOWER = new Texture(Gdx.files.internal("traps/powerseal.png"));
     public static final Texture TRAPBLIND = new Texture(Gdx.files.internal("traps/smoke.png"));
     public static final Texture TRAPTRANSFORM = new Texture(Gdx.files.internal("traps/transform.png"));
+    public static final Texture SHIELDTEXTURE = new Texture(Gdx.files.internal("items/shield.png"));
+    public static final Texture WHISTLETEXTURE = new Texture(Gdx.files.internal("items/whistle.png"));
+    public static final Texture REDKEYTEXTURE = new Texture(Gdx.files.internal("colemap/redkey.png"));
+    public static final Texture GREYKEYTEXTURE = new Texture(Gdx.files.internal("colemap/greykey.png"));
+    public static final Texture BLOCKERTEXTURE = new Texture(Gdx.files.internal("colemap/stop.png"));
+    
     public static final Texture INVENTORYTEXTURE = new Texture(Gdx.files.internal("invent/Inventory.png"));
     public static final Texture INVENTORYSHIELDTEXTURE = new Texture(Gdx.files.internal("invent/InventoryShield.png"));
-    public static final Texture SHIELDTEXTURE = new Texture(Gdx.files.internal("items/shield.png"));
     public static final Texture INVENTORYWHISTLETEXTURE = new Texture(Gdx.files.internal("invent/InventoryWhistle.png"));
-    public static final Texture WHISTLETEXTURE = new Texture(Gdx.files.internal("items/whistle.png"));
+    public static final Texture INVENTORYREDKEYTEXTURE = new Texture(Gdx.files.internal("invent/InventoryRedKey.png"));
+    public static final Texture INVENTORYGREYKEYTEXTURE = new Texture(Gdx.files.internal("invent/InventoryGreyKey.png"));
+    
     private TextureRegion[] kunaiFrames;
     private TextureRegion[] powerFrames;
     private TextureRegion[] smokeFrames;
