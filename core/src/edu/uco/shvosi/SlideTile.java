@@ -1,17 +1,19 @@
 package edu.uco.shvosi;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
-public class TrapType6 extends Trap {
+public class SlideTile extends Trap {
 
-    private Constants.Direction dir = Constants.Direction.LEFT;
+    private Constants.Direction direction;
     
     
-    public TrapType6(int cX, int cY) {
-        super(TextureLoader.TRAPSLIDE, cX, cY, Constants.TrapType.TRAP6,
+    public SlideTile(int cX, int cY, Constants.Direction direction, Texture texture) {
+        super(texture, cX, cY, Constants.TrapType.SLIDETILE,
         Gdx.audio.newSound(Gdx.files.internal("sounds/trap2.mp3")));
         this.damage = 0;
+        this.direction = direction;
         this.setVisible(true);
  //       dir = direction;
         
@@ -33,21 +35,24 @@ public class TrapType6 extends Trap {
                 this.sound.play(Constants.MASTERVOLUME);
                 bernard.setSliding(true);
                 
-                if (dir == Constants.Direction.RIGHT){
+                if (direction == Constants.Direction.RIGHT){
                     bernard.setCX(bernard.getCX() + 1);
-                    bernard.setDirection(Constants.Direction.RIGHT);
+                    //bernard.setDirection(Constants.Direction.RIGHT);
                 }
-                else if (dir == Constants.Direction.UP){
+                else if (direction == Constants.Direction.UP){
                     bernard.setCY(bernard.getCY() + 1);
-                    bernard.setDirection(Constants.Direction.UP);
+                    //bernard.setDirection(Constants.Direction.UP);
                 }
-                else if (dir == Constants.Direction.DOWN){
+                else if (direction == Constants.Direction.DOWN){
                     bernard.setCY(bernard.getCY() - 1);
-                    bernard.setDirection(Constants.Direction.DOWN);
+                    //bernard.setDirection(Constants.Direction.DOWN);
+                }
+                else if (direction == Constants.Direction.LEFT){
+                    bernard.setCX(bernard.getCX() - 1);
+                    //bernard.setDirection(Constants.Direction.LEFT);
                 }
                 else {
-                    bernard.setCX(bernard.getCX() - 1);
-                    bernard.setDirection(Constants.Direction.LEFT);
+                    Gdx.app.log("Slide Tile", "Could not move bernard " + direction.toString());
                 }
                 bernard.moveAction();
                 

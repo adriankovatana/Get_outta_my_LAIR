@@ -113,8 +113,16 @@ public class Map {
                         initTrap(x, y, Constants.TrapType.TRAP4);
                     } else if (properties.get("Trap5") != null) {
                         initTrap(x, y, Constants.TrapType.TRAP5);
-                    } else if (properties.get("Trap6") != null) {
-                        initTrap(x, y, Constants.TrapType.TRAP6);
+                    } else if (properties.get("SlideTile") != null) {
+                        if(properties.get("Left") != null){
+                            initSlideTile(x, y, Constants.Direction.LEFT);
+                        } else if(properties.get("Right") != null){
+                            initSlideTile(x, y, Constants.Direction.RIGHT);
+                        } else if(properties.get("Up") != null){
+                            initSlideTile(x, y, Constants.Direction.UP);
+                        } else if(properties.get("Down") != null){
+                            initSlideTile(x, y, Constants.Direction.DOWN);
+                        }
                     } else {
                         Gdx.app.log("MAP CREATION", "TRAP type at entityLayer("+x+")("+y+") is unknown. Creation skipped.");
                         entityGrid[x][y] = Constants.EntityGridCode.NONE;
@@ -245,6 +253,27 @@ public class Map {
                 break;
         }
     }
+    
+    private void initSlideTile(int cX, int cY, Constants.Direction direction) {
+        switch (direction) {
+            case LEFT:
+                miscEntityList.add(new SlideTile(cX, cY, direction, TextureLoader.SLIDELEFT));
+                break;
+            case RIGHT:
+                miscEntityList.add(new SlideTile(cX, cY, direction, TextureLoader.SLIDERIGHT));
+                break;
+            case UP:
+                miscEntityList.add(new SlideTile(cX, cY, direction, TextureLoader.SLIDEUP));
+                break;
+            case DOWN:
+                miscEntityList.add(new SlideTile(cX, cY, direction, TextureLoader.SLIDEDOWN));
+                break;
+            default:
+                //ERROR
+                Gdx.app.log("ERROR", "Slide Tile direction not found. Not added to entity grid.");
+                break;
+        }
+    }
 
     private void populateMapForTesting() {
         List<Entity> tempList = new ArrayList<Entity>();
@@ -259,9 +288,6 @@ public class Map {
 //
 //        this.miscEntityList.add(new TrapType4(6, 14));
 //        this.entityGrid[6][14] = Constants.EntityGridCode.TRAP;
-//
-        this.miscEntityList.add(new TrapType6(32, 2));
-        this.entityGrid[32][2] = Constants.EntityGridCode.TRAP;
 //
 //        this.miscEntityList.add(new ItemWhistle(8, 9));
 //        this.entityGrid[8][9] = Constants.EntityGridCode.ITEM;

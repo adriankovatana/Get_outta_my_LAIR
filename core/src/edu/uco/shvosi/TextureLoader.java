@@ -101,7 +101,6 @@ public class TextureLoader {
     public static final Texture TRAPKUNAI = new Texture(Gdx.files.internal("traps/kunai.png"));
     public static final Texture TRAPPOWER = new Texture(Gdx.files.internal("traps/powerseal.png"));
     public static final Texture TRAPBLIND = new Texture(Gdx.files.internal("traps/smoke.png"));
-    public static final Texture TRAPSLIDE = new Texture(Gdx.files.internal("colemap/leftarrow.png"));
     public static final Texture TRAPTRANSFORM = new Texture(Gdx.files.internal("traps/transform.png"));
     public static final Texture INVENTORYTEXTURE = new Texture(Gdx.files.internal("invent/Inventory.png"));
     public static final Texture INVENTORYSHIELDTEXTURE = new Texture(Gdx.files.internal("invent/InventoryShield.png"));
@@ -116,6 +115,12 @@ public class TextureLoader {
     public static Animation powerTrap;
     public static Animation smokeTrap;
     public static Animation transformTrap;
+    
+    //slide tiles
+    public static final Texture SLIDELEFT = new Texture(Gdx.files.internal("traps/slidetiles/leftarrow.png"));
+    public static final Texture SLIDERIGHT = new Texture(Gdx.files.internal("traps/slidetiles/rightarrow.png"));
+    public static final Texture SLIDEUP = new Texture(Gdx.files.internal("traps/slidetiles/uparrow.png"));
+    public static final Texture SLIDEDOWN = new Texture(Gdx.files.internal("traps/slidetiles/downarrow.png"));
 
     private static final int FRAME_COLS = 5;
     private static final int FRAME_ROWS = 4;
