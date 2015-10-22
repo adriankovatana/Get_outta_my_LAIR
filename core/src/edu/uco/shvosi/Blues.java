@@ -20,11 +20,12 @@ public class Blues extends Antagonist {
     private int xdis; 
     private int ydis; 
     private boolean active = false;
+    private BluesSkill bluesSkill;
     
     public Blues(int cX, int cY) {
         super(Constants.EnemyType.BLUES, TextureLoader.BLUESTEXTURE, cX, cY);
         this.walkAnimation = TextureLoader.blueWalk;
-       // drunkAttack = TextureLoader.drunkAttack;
+        BluesSkill bluesSkill = new BluesSkill();
     }
 
     @Override
@@ -48,30 +49,19 @@ public class Blues extends Antagonist {
                     temp.flip(true, false);
                     batch.draw(temp, this.getX(),getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
                     temp.flip(true, false);
+                    
                 } else {
                     batch.draw(this.walkAnimation.getKeyFrame(elapsedTime), this.getX(), this.getY(), Constants.TILEDIMENSION , Constants.TILEDIMENSION);
                 }
-//                if (blueWalk.isAnimationFinished(elapsedTime)) {
-//                    moving = false;
-//                    elapsedTime = 0f;
-                 //   }
-                    
-//            if (random == 1)
-//            {
-//                if (flip) {
-//                    temp = drunkAttack.getKeyFrame(elapsedTime);
-//                    temp.flip(true, false);
-//                    batch.draw(temp, this.getX(),getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
-//                    temp.flip(true, false);
-//                } else {
-//                    batch.draw(drunkAttack.getKeyFrame(elapsedTime), this.getX(), this.getY(), Constants.TILEDIMENSION , Constants.TILEDIMENSION);
-//                }
-//                if (drunkAttack.isAnimationFinished(elapsedTime)) {
-//                    moving = false;
-//                    elapsedTime = 0f;
-//                    }
-//            }
-        //}//end switch
+                TextureLoader.blueSkill.setFrameDuration(0.5f);
+                
+                
+                //bluesSkill.draw(batch, alpha, this);
+                
+                //batch.draw(this.bluesSkill.animation.getKeyFrame(elapsedTime), this.cX, this.cY, Constants.TILEDIMENSION*3 , Constants.TILEDIMENSION*3);
+                batch.draw(TextureLoader.blueSkill.getKeyFrame(elapsedTime), this.getX()-150, this.getY()-150, Constants.TILEDIMENSION*4 , Constants.TILEDIMENSION*4);
+
+
     }
 
     @Override
@@ -102,6 +92,7 @@ public class Blues extends Antagonist {
                 if(xdis < 3 && ydis < 3)
                 {
                     random = (int) (Math.random() * entityGrid.length);
+                    
                     switch (random % 4) {
                         case 1:
                             d = Constants.Direction.UP;

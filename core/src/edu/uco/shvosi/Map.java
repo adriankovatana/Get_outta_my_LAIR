@@ -374,7 +374,7 @@ public class Map {
 //        this.miscEntityList.add(new ItemWhistle(8, 9));
 //        this.entityGrid[8][9] = Constants.EntityGridCode.ITEM;
 //
-//        tempList.add(new Wreker(4, 2));
+           tempList.add(new Blues(9, 2));
 //        tempList.add(new Blues(5, 1));
 //        tempList.add(new Suffragette(1, 14));
 //        tempList.add(new Hammer(6, 2));
