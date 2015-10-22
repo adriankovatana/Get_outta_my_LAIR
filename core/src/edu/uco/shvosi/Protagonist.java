@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
@@ -30,6 +31,8 @@ public class Protagonist extends Entity implements Observable {
     public int mute = 0;
     public int redLaserCooldown = 0;
     private Constants.MapGridCode[][] currentMap;
+    
+    private SequenceAction seqAction;
 
     public void setCurrentMap(Constants.MapGridCode[][] currentMap) {
         this.currentMap = currentMap;
@@ -94,6 +97,8 @@ public class Protagonist extends Entity implements Observable {
         
         greyKey = false;
         redKey = false;
+        
+        seqAction = new SequenceAction();
     }
 
     public void setActiveSkill() {
@@ -342,11 +347,13 @@ public class Protagonist extends Entity implements Observable {
                 (float) (this.getCY() * Constants.TILEDIMENSION));
         moveAction.setDuration(Constants.MOVEACTIONDURATION);
         if(!sliding){
-            this.addAction(sequence(moveAction, finishTurn()));
+            seqAction.addAction(moveAction);
+            seqAction.addAction(finishTurn());
+            this.addAction(seqAction);
         }
         else{
-            moveAction.setDuration(Constants.MOVEACTIONDURATION * 10);
-            this.addAction(moveAction);
+            moveAction.setDuration(Constants.MOVEACTIONDURATION);
+            seqAction.addAction(moveAction);
             sliding = false;
         }
     }
