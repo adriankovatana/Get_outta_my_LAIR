@@ -101,7 +101,7 @@ public class GameScreen implements Screen {
 
                 //Use Item
                 if (Gdx.input.isKeyJustPressed(Keys.Q)) {
-                    map.bernard.useItem();
+                    //map.bernard.useItem();
                 }
 
                 //Mute
