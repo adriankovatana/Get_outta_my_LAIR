@@ -90,6 +90,8 @@ public class Constants {
         DETECTION,
         BARRIERSKILL,
         LIGHTBARRIERSKILL,
-        REDLASERSKILL;
+        REDLASERSKILL,
+        MELEESKILL,
+        BLUESSKILL;
     }
 }

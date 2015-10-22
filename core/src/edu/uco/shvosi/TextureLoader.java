@@ -99,6 +99,15 @@ public class TextureLoader {
     public static Animation wrekerAttack;
     public static Animation suffragetteWalk;
     public static Animation hammerAttack;
+    
+    //skills
+    public static final Texture MELEESKILLTEXTURE = new Texture(Gdx.files.internal("melee_sheet.png"));
+    public static final Texture BLUESKILLTEXTURE = new Texture(Gdx.files.internal("blue_skill_sheet.png"));
+    private Array<TextureRegion> blueSkillFrames;
+    private Array<TextureRegion> meleeSkillFrames;
+    public static Animation blueSkill;
+    public static Animation meleeSkill;    
+    //end skills
 
     //traps and items
     public static final Texture TRAPTEXTURE = new Texture(Gdx.files.internal("traps/trap.png"));
@@ -326,7 +335,24 @@ public class TextureLoader {
         }
 
         meleeAttack = new Animation(0.03f, meleeFrames, PlayMode.NORMAL);
+        
+        //skills
+        //blue
+         blueSkillFrames = new Array<TextureRegion>(12);
+        for (int i = 0; i < 12; i++) {
+            blueSkillFrames.add(new TextureRegion(BLUESKILLTEXTURE, 0, i * 600, 600, 600));
+        }
 
+        blueSkill = new Animation(0.03f, blueSkillFrames, PlayMode.LOOP);
+        //melee
+        meleeSkillFrames = new Array<TextureRegion>(7);
+        for (int i = 0; i < 7; i++) {
+            meleeSkillFrames.add(new TextureRegion(MELEESKILLTEXTURE, 25, i * 100, 100, 100));
+        }
+
+        meleeSkill = new Animation(0.03f, meleeSkillFrames, PlayMode.NORMAL);
+        
+        
         //traps and items
         //Kunai Trap
         TextureRegion[][] tmp = TextureRegion.split(TextureLoader.TRAPKUNAI, TextureLoader.TRAPKUNAI.getWidth() / FRAME_COLS, TextureLoader.TRAPKUNAI.getHeight() / FRAME_ROWS);
@@ -400,6 +426,8 @@ public class TextureLoader {
         CATLADYTEXTURE.dispose();
         WANDERATTACKTEXTURE.dispose();
         SUFFRAGETTETEXTURE.dispose();
+        MELEESKILLTEXTURE.dispose();
+        BLUESKILLTEXTURE.dispose();
 
     }
 }
