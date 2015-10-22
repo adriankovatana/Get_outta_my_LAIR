@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="38" height="63" tilewidth="100" tileheight="100" nextobjectid="12">
+ <tileset firstgid="1" source="RedMap.tsx"/>
+ <tileset firstgid="49" source="Traps.tsx"/>
+ <tileset firstgid="97" source="Items.tsx"/>
+ <tileset firstgid="145" source="Characters.tsx"/>
+ <tileset firstgid="193" source="../maps/Map.tsx"/>
+ <tileset firstgid="241" source="DarkRedmapTileSheet.tsx"/>
+ <tileset firstgid="289" source="Gates.tsx"/>
+ <layer name="Map" width="38" height="63">
+  <data encoding="base64" compression="zlib">
+   eJztmb1uwzAMhN2MHfv+L+mMnYoOBoSDjnek6B8UHQ6II5n6LFInOXlt2/Z6qD6JVHtWTryvod8HkWrPyom3Q78dNMbBNqYVrjEOcrE4yIli9ysu9lxVLqyJFS7VL8PF8vDPFXNV6wvj3s2FPnYVl+slq8+bud9RlYv5k8ul9jvFxXyR+dNx/+hXMy61L2Ic5ouMy91j3DyquG4enbVV4VL15nK9F6XqzuXCvP/G/i5q5FL1lvGfg2uftLN8jH3ek35d/hNx4eczuNj3q1wqvuJCXzqu7+Zy8oi1FH13BRfTOC9Ms3NtB1fkAwdX1Oes9RhpVmvR2WYU2x9dLtXOxmX7CN7XzaXmw+GKxsleMy7kY1ysrrq4WE4ZFzvPMf/s4lLz5Z672LiK25krlX+n3+p6zNaxqquncGF+sL+7Lrq51HyofewuLtWu5PrRWVzs/fAYj8272g8VF7tWcdz3ui4u9rvgijq42DO7dVdd55n+4zOremPCPKzWF9aQ6x9V/RUuVS9n1Vfk97O6YuuW/R5R5YraZ+fh1by483sVl5rXDPeMy+XM9lM+dDdXNY/V8dx1fRWXsw/M/q91/avK5e7tVf9a4aqsXzePWf/p5sJzl3tu6OaKON2YUdwzzoVP4FJ+79ZTF1fkL059zepyvO56T8M8dqibq1Mu1xP1AyRyWfY=
+  </data>
+ </layer>
+ <layer name="Entities" width="38" height="63">
+  <data encoding="base64" compression="zlib">
+   eJztmTtuwzAMhtmjtEALtGPGdPOo0TeoxhynR+ioUzaDibAsJepByUrgAD8Q6MUvJCPR8gUALoea9bWT3Z9E3/vT/n459F/BeD3MPbdpVWxZ29ckcR26H4UJGCy1gp6Lrfs59dl5kzbntGmUH2q5Xq/nypvB2eIgvS84ptg6yyarOI7gmim+NM4l42fkisX7I5GvfI4W19H+suIq9bt1XO+FC/OBnhM96vtaf/VWDVfowIE+z91Hc/y1RtbjbU6Y61g7nZPKj9I48vEL/D1/HRmXWofzana0ugjHYz3gmQ387hW2Ui5ef/D8lLgWQa31VQtXjMkL64zgonbPjI/2SVxa/KhWyOfCNsqFbCdBLVySYvsMzy/KJLHV2m/h8nD7P3rGO/q5gvLE8t2Bvk+kFBp9KQnglkejfIWCHWy28jxfa+qXAXeMvevDGr/AZFwjNOvvnZVLq6fCBIwWsjpfrON4cB1ckhzk3d9ZcgVDLu0uone9VxvfHK4cP5Vy8fbPTaP8RfXdwJV7B5XzfoPLG8fRct7sXHy+Y8IPb+fiMZ6Jq6e/Yv3aR7rXeEQuVOy5Vevv/R6K3q/lcMXGPbJ+ATgoldo=
+  </data>
+ </layer>
+</map>
