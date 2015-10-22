@@ -164,7 +164,7 @@ public class Map {
                     }
                     entityGrid[x][y] = Constants.EntityGridCode.TRAP;
                 } else {
-                    Gdx.app.log("MAP CREATION", "Unknown property at entityLayer("+x+")("+y+"). Creation skipped.");
+                //    Gdx.app.log("MAP CREATION", "Unknown property at entityLayer("+x+")("+y+"). Creation skipped.");
                     entityGrid[x][y] = Constants.EntityGridCode.NONE;
                 }
 
