@@ -2,6 +2,8 @@ package edu.uco.shvosi;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
@@ -19,11 +21,12 @@ public class Antagonist extends Entity {
     protected Animation attackAnimation;
     protected float elapsedAttack;
     protected int damage;
-
+    protected TextureRegion healthbarBackground;
+    protected TextureRegion healthbarFill;
 
     public Antagonist(Constants.EnemyType enemyType, Texture texture, int cX, int cY) {
         super(Constants.EntityGridCode.ENEMY, texture, cX, cY);
-        this.maxHealth = 1;
+        this.maxHealth = 50;
         this.health = this.maxHealth;
         this.enemyType = enemyType;
         this.damage = 0;
@@ -31,6 +34,15 @@ public class Antagonist extends Entity {
         this.moving = false;
         this.elapsedWalk = 0f;
         this.elapsedAttack = 0f;
+        this.healthbarBackground = new TextureRegion(TextureLoader.HPBARBACKGROUND);
+        this.healthbarFill = new TextureRegion(TextureLoader.HPBARFILL);
+    }
+    
+    @Override
+    public void draw(Batch batch, float alpha) {
+        super.draw(batch, alpha);
+        batch.draw(healthbarBackground, this.getX()+10, this.getY());
+        batch.draw(healthbarFill, this.getX()+11, this.getY()+1, healthbarFill.getRegionWidth()*((float)health/(float)maxHealth), healthbarFill.getRegionHeight());
     }
 
     @Override

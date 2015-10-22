@@ -135,6 +135,10 @@ public class TextureLoader {
     public static final Texture SLIDEUP = new Texture(Gdx.files.internal("traps/slidetiles/uparrow.png"));
     public static final Texture SLIDEDOWN = new Texture(Gdx.files.internal("traps/slidetiles/downarrow.png"));
 
+    //UI
+    public static final Texture HPBARBACKGROUND = new Texture(Gdx.files.internal("ui/healthbarbackground.png"));
+    public static final Texture HPBARFILL = new Texture(Gdx.files.internal("ui/healthbarfill.png"));
+    
     private static final int FRAME_COLS = 5;
     private static final int FRAME_ROWS = 4;
     private static final int FRAME_ROWS3 = 3;

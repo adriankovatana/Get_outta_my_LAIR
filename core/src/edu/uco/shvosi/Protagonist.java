@@ -33,6 +33,8 @@ public class Protagonist extends Entity implements Observable {
     private Constants.MapGridCode[][] currentMap;
     
     private SequenceAction seqAction;
+    private TextureRegion healthbarBackground;
+    private TextureRegion healthbarFill;
 
     public void setCurrentMap(Constants.MapGridCode[][] currentMap) {
         this.currentMap = currentMap;
@@ -99,6 +101,8 @@ public class Protagonist extends Entity implements Observable {
         redKey = false;
         
         seqAction = new SequenceAction();
+        healthbarBackground = new TextureRegion(TextureLoader.HPBARBACKGROUND);
+        healthbarFill = new TextureRegion(TextureLoader.HPBARFILL);
     }
 
     public void setActiveSkill() {
@@ -271,6 +275,10 @@ public class Protagonist extends Entity implements Observable {
                 smokeParticle.reset();
             }
         }
+        
+        //HP BAR
+        batch.draw(healthbarBackground, this.getX()+10, this.getY());
+        batch.draw(healthbarFill, this.getX()+11, this.getY()+1, healthbarFill.getRegionWidth()*((float)health/(float)maxHealth), healthbarFill.getRegionHeight());
     }
 
     @Override
