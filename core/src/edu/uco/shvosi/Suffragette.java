@@ -24,13 +24,14 @@ public class Suffragette extends Antagonist {
 
     public Suffragette(int cX, int cY) {
         super(Constants.EnemyType.SUFFRAGETTE, TextureLoader.SUFFERTETEXTURE, cX, cY);
+        this.name = "Suffragette";
         this.walkAnimation = TextureLoader.suffragetteWalk;
         this.begX = cX;
         this.begY = cY;
         this.setBoundingBox(120);
         this.damage = 0;
         this.health = 1000;
-
+        this.maxHealth = this.health;
     }
 
     @Override
@@ -198,50 +199,6 @@ public class Suffragette extends Antagonist {
     
     @Override
     public void collision(Entity entity) {
-    }
-
-
-    private boolean canMove(Constants.Direction direction, Constants.MapGridCode[][] mapGrid, Constants.EntityGridCode[][] entityGrid) {
-        if (direction == Constants.Direction.UP) {
-            if (this.getCY() == mapGrid[0].length - 1) {
-                return false;
-            }
-            if (mapGrid[this.getCX()][this.getCY() + 1] == Constants.MapGridCode.FLOOR
-                    && entityGrid[this.getCX()][this.getCY() + 1] == Constants.EntityGridCode.NONE) {
-                this.setDCY(this.getCY() + 1);
-                return true;
-            }
-        } else if (direction == Constants.Direction.DOWN) {
-            if (this.getCY() == 0) {
-                return false;
-            }
-            if (mapGrid[this.getCX()][this.getCY() - 1] == Constants.MapGridCode.FLOOR
-                    && entityGrid[this.getCX()][this.getCY() - 1] == Constants.EntityGridCode.NONE) {
-                this.setDCY(this.getCY() - 1);
-                return true;
-            }
-        } else if (direction == Constants.Direction.LEFT) {
-            if (this.getCX() == 0) {
-                return false;
-            }
-            if (mapGrid[this.getCX() - 1][this.getCY()] == Constants.MapGridCode.FLOOR
-                    && entityGrid[this.getCX() - 1][this.getCY()] == Constants.EntityGridCode.NONE) {
-                this.setDCX(this.getCX() - 1);
-                return true;
-            }
-        } else if (direction == Constants.Direction.RIGHT) {
-            if (this.getCX() == mapGrid.length - 1) {
-                return false;
-            }
-            if (mapGrid[this.getCX() + 1][this.getCY()] == Constants.MapGridCode.FLOOR
-                    && entityGrid[this.getCX() + 1][this.getCY()] == Constants.EntityGridCode.NONE) {
-                this.setDCX(this.getCX() + 1);
-                return true;
-            }
-        } else {
-            // No direction
-        }
-        return false;
     }
 }
 

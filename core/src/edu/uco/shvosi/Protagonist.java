@@ -32,7 +32,7 @@ public class Protagonist extends Entity implements Observable {
     public int redLaserCooldown = 0;
     private Constants.MapGridCode[][] currentMap;
     
-    private SequenceAction seqAction;
+    public SequenceAction seqAction;
     private TextureRegion healthbarBackground;
     private TextureRegion healthbarFill;
 
@@ -354,15 +354,15 @@ public class Protagonist extends Entity implements Observable {
         moveAction.setPosition((float) (this.getCX() * Constants.TILEDIMENSION),
                 (float) (this.getCY() * Constants.TILEDIMENSION));
         moveAction.setDuration(Constants.MOVEACTIONDURATION);
-        if(!sliding){
-            seqAction.addAction(moveAction);
-            seqAction.addAction(finishTurn());
-            this.addAction(seqAction);
-        }
-        else{
-            moveAction.setDuration(Constants.MOVEACTIONDURATION);
+        if(sliding){
             seqAction.addAction(moveAction);
             sliding = false;
+        }
+        else{
+            seqAction.addAction(moveAction);
+            //seqAction.addAction(finishTurn());
+            this.addAction(seqAction);
+            this.addAction(finishTurn());
         }
     }
 
@@ -506,6 +506,8 @@ public class Protagonist extends Entity implements Observable {
         return new Action() {
             @Override
             public boolean act(float delta) {
+                if(Protagonist.this.getActions().size > 1)
+                    return false;
                 Protagonist.this.setTurnFinished(true);
                 Protagonist.this.turnAction = Constants.TurnAction.NONE;
                 return true;

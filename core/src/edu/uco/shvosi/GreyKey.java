@@ -19,8 +19,8 @@ public class GreyKey extends Entity {
     public void collision(Entity entity){
        if (entity instanceof Protagonist && !this.turnFinished) {
             Protagonist bernard = (Protagonist) entity;
-            Integer xCoordinate = bernard.getDCX();
-            Integer yCoordinate = bernard.getDCY();
+            Integer xCoordinate = bernard.getCX();
+            Integer yCoordinate = bernard.getCY();
             if (xCoordinate == this.getCX() && yCoordinate == this.getCY() && this.state == 0) {
                   this.dead = true;
                   this.state = 1;                 

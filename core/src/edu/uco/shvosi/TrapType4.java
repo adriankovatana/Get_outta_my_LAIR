@@ -36,8 +36,8 @@ public class TrapType4 extends Trap {
     public void collision(Entity entity) {
         if (entity instanceof Protagonist) {
             Protagonist bernard = (Protagonist) entity;
-            Integer xCoordinate = bernard.getDCX();
-            Integer yCoordinate = bernard.getDCY();
+            Integer xCoordinate = bernard.getCX();
+            Integer yCoordinate = bernard.getCY();
 
             if (xCoordinate == this.getCX() && yCoordinate == this.getCY()) {
                 this.setVisible(true);

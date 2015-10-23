@@ -208,9 +208,9 @@ public class Map {
     private void initBernard(int cX, int cY) {
         bernard.clearActions();
         bernard.setCX(cX);
-        bernard.setDCX(cX);
         bernard.setCY(cY);
-        bernard.setDCY(cY);
+        bernard.setPCX(cX);
+        bernard.setPCY(cY);
         bernard.setX(bernard.getCX() * Constants.TILEDIMENSION);
         bernard.setY(bernard.getCY() * Constants.TILEDIMENSION);
         entityList.add(bernard);
@@ -358,32 +358,44 @@ public class Map {
     }
 
     private void populateMapForTesting() {
-        List<Entity> tempList = new ArrayList<Entity>();
-
-        //Add entities to tempList below
-		/*	Be aware that entities placed on testmap.tmx will be overriden
-         on the mapGrid and will be placed on top of each other. Please
-         place them in an empty block
+        List<Entity> tempAntagList = new ArrayList<Entity>();
+        List<Entity> tempMiscList = new ArrayList<Entity>();
+        
+        /*  ADDING ENTITIES NOT ON TILE SHEETS TO THE MAP
+            INSTRCTIONS BELOW
+            - Add antagonists to tempAntagList
+            - Add items,traps, or non moving entities to tempMiscList
+            - Be aware that entities placed on any map.tmx will hold priority
+            at its location on the entityGrid. Entities created here will be ignored
+            if placed on the same tile as an entity from any map.tmx. Please
+            place them in an empty block
+            - An error message will appear if it is not created for the above reason
          */
-//        this.miscEntityList.add(new TrapType3(7, 13));
-//        this.entityGrid[7][13] = Constants.EntityGridCode.TRAP;
-//
-//        this.miscEntityList.add(new TrapType4(6, 14));
-//        this.entityGrid[6][14] = Constants.EntityGridCode.TRAP;
-//
-//        this.miscEntityList.add(new ItemWhistle(8, 9));
-//        this.entityGrid[8][9] = Constants.EntityGridCode.ITEM;
-//
-           tempList.add(new Blues(9, 2));
-//        tempList.add(new Blues(5, 1));
-//        tempList.add(new Suffragette(1, 14));
-//        tempList.add(new Hammer(6, 2));
 
-        // Populate the cells from the temp list and add to entity list
-        for (int i = 0; i < tempList.size(); i++) {
-            Entity entity = tempList.get(i);
-            this.entityGrid[entity.getCX()][entity.getCY()] = entity.getGridCode();
-            entityList.add(entity);
+        // Populate the cells from tempAntagList and add to entity list
+        for (int i = 0; i < tempAntagList.size(); i++) {
+            Entity entity = tempAntagList.get(i);
+            if(this.entityGrid[entity.getCX()][entity.getCY()] == Constants.EntityGridCode.NONE){
+                this.entityGrid[entity.getCX()][entity.getCY()] = entity.getGridCode();
+                entityList.add(entity);
+            } else {
+                Gdx.app.log("ENTITY PLACEMENT ERROR", "["+entity.getName()+
+                        "] could not be placed at ("+entity.getCX()+","+entity.getCY()
+                        +") because another entity exist there. Please choose a different coordinate.");
+            }
+            
+        }
+        // Populate the cells from tempMiscList and add to entity list
+        for (int i = 0; i < tempMiscList.size(); i++) {
+            Entity entity = tempMiscList.get(i);
+            if(this.entityGrid[entity.getCX()][entity.getCY()] == Constants.EntityGridCode.NONE){
+                this.entityGrid[entity.getCX()][entity.getCY()] = entity.getGridCode();
+                miscEntityList.add(entity);
+            } else {
+                Gdx.app.log("ENTITY PLACEMENT ERROR", "["+entity.getName()+
+                        "] could not be placed at ("+entity.getCX()+","+entity.getCY()
+                        +") because another entity exist there. Please choose a different coordinate.");
+            }
         }
     }
 
@@ -394,7 +406,7 @@ public class Map {
             }
             if (mapGrid[bernard.getCX()][bernard.getCY() + 1] == Constants.MapGridCode.EXIT || (mapGrid[bernard.getCX()][bernard.getCY() + 1] == Constants.MapGridCode.FLOOR
                     && entityGrid[bernard.getCX()][bernard.getCY() + 1] != Constants.EntityGridCode.ENEMY)) {
-                bernard.setDCY(bernard.getCY() + 1);
+                bernard.setCY(bernard.getCY() + 1);
                 return true;
             }
         } else if (direction == Constants.Direction.DOWN) {
@@ -403,7 +415,7 @@ public class Map {
             }
             if (mapGrid[bernard.getCX()][bernard.getCY() - 1] == Constants.MapGridCode.EXIT || (mapGrid[bernard.getCX()][bernard.getCY() - 1] == Constants.MapGridCode.FLOOR
                     && entityGrid[bernard.getCX()][bernard.getCY() - 1] != Constants.EntityGridCode.ENEMY)) {
-                bernard.setDCY(bernard.getCY() - 1);
+                bernard.setCY(bernard.getCY() - 1);
                 return true;
             }
         } else if (direction == Constants.Direction.LEFT) {
@@ -412,7 +424,7 @@ public class Map {
             }
             if (mapGrid[bernard.getCX() - 1][bernard.getCY()] == Constants.MapGridCode.EXIT || (mapGrid[bernard.getCX() - 1][bernard.getCY()] == Constants.MapGridCode.FLOOR
                     && entityGrid[bernard.getCX() - 1][bernard.getCY()] != Constants.EntityGridCode.ENEMY)) {
-                bernard.setDCX(bernard.getCX() - 1);
+                bernard.setCX(bernard.getCX() - 1);
                 return true;
             }
         } else if (direction == Constants.Direction.RIGHT) {
@@ -421,7 +433,7 @@ public class Map {
             }
             if (mapGrid[bernard.getCX() + 1][bernard.getCY()] == Constants.MapGridCode.EXIT || (mapGrid[bernard.getCX() + 1][bernard.getCY()] == Constants.MapGridCode.FLOOR
                     && entityGrid[bernard.getCX() + 1][bernard.getCY()] != Constants.EntityGridCode.ENEMY)) {
-                bernard.setDCX(bernard.getCX() + 1);
+                bernard.setCX(bernard.getCX() + 1);
                 return true;
             }
         } else {
@@ -437,7 +449,7 @@ public class Map {
             }
             if (mapGrid[entity.getCX()][entity.getCY() + 1] == Constants.MapGridCode.FLOOR
                     && entityGrid[entity.getCX()][entity.getCY() + 1] == Constants.EntityGridCode.NONE) {
-                entity.setDCY(entity.getCY() + 1);
+                entity.setCY(entity.getCY() + 1);
                 return true;
             }
         } else if (direction == Constants.Direction.DOWN) {
@@ -446,7 +458,7 @@ public class Map {
             }
             if (mapGrid[entity.getCX()][entity.getCY() - 1] == Constants.MapGridCode.FLOOR
                     && entityGrid[entity.getCX()][entity.getCY() - 1] == Constants.EntityGridCode.NONE) {
-                entity.setDCY(entity.getCY() - 1);
+                entity.setCY(entity.getCY() - 1);
                 return true;
             }
         } else if (direction == Constants.Direction.LEFT) {
@@ -455,7 +467,7 @@ public class Map {
             }
             if (mapGrid[entity.getCX() - 1][entity.getCY()] == Constants.MapGridCode.FLOOR
                     && entityGrid[entity.getCX() - 1][entity.getCY()] == Constants.EntityGridCode.NONE) {
-                entity.setDCX(entity.getCX() - 1);
+                entity.setCX(entity.getCX() - 1);
                 return true;
             }
         } else if (direction == Constants.Direction.RIGHT) {
@@ -464,7 +476,7 @@ public class Map {
             }
             if (mapGrid[entity.getCX() + 1][entity.getCY()] == Constants.MapGridCode.FLOOR
                     && entityGrid[entity.getCX() + 1][entity.getCY()] == Constants.EntityGridCode.NONE) {
-                entity.setDCX(entity.getCX() + 1);
+                entity.setCX(entity.getCX() + 1);
                 return true;
             }
         } else {
@@ -474,10 +486,10 @@ public class Map {
     }
 
     public void moveEntity(Entity entity) {
-        entityGrid[entity.getCX()][entity.getCY()] = Constants.EntityGridCode.NONE;
-        entityGrid[entity.getDCX()][entity.getDCY()] = entity.getGridCode();
-        entity.setCX(entity.getDCX());
-        entity.setCY(entity.getDCY());
+        entityGrid[entity.getPCX()][entity.getPCY()] = Constants.EntityGridCode.NONE;
+        entityGrid[entity.getCX()][entity.getCY()] = entity.getGridCode();
+        entity.setPCX(entity.getCX());
+        entity.setPCY(entity.getCY());
     }
 
     public boolean collision(Entity aggressor, Entity receiver) {

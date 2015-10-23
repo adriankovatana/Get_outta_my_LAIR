@@ -49,8 +49,8 @@ public class ItemHeart extends Entity {
     public void collision(Entity entity) {
         if (entity instanceof Protagonist && !this.turnFinished) {
             Protagonist bernard = (Protagonist) entity;
-            Integer xCoordinate = bernard.getDCX();
-            Integer yCoordinate = bernard.getDCY();
+            Integer xCoordinate = bernard.getCX();
+            Integer yCoordinate = bernard.getCY();
             if (xCoordinate == this.getCX() && yCoordinate == this.getCY() && this.state == 0) {
                 //  if (game.mute == 0)
                 health.play(Constants.MASTERVOLUME);

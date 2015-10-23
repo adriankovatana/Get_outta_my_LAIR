@@ -10,8 +10,8 @@ public class Entity extends Image {
 
     protected int cX; // Coordinate X
     protected int cY; // Coordinate Y
-    protected int dCX; // Destination Coordinate X
-    protected int dCY; // Destination Coordinate Y
+    protected int pCX; // Previous Coordinate X
+    protected int pCY; // Previous Coordinate Y
     protected boolean dead; // Life state
     protected boolean turnFinished; // Used to check if all actions are finished
     protected Constants.EntityGridCode gridCode; //NONE if not on grid, has type otherwise
@@ -23,8 +23,8 @@ public class Entity extends Image {
     public Entity(Constants.EntityGridCode gridCode, Texture texture, int cX, int cY) {
         this.cX = cX;
         this.cY = cY;
-        this.dCX = this.cX;
-        this.dCY = this.cY;
+        this.pCX = this.cX;
+        this.pCY = this.cY;
         this.setPosition(this.cX * Constants.TILEDIMENSION,
                 this.cY * Constants.TILEDIMENSION);
         this.dead = false;
@@ -55,20 +55,20 @@ public class Entity extends Image {
         this.cY = cY;
     }
 
-    public int getDCX() {
-        return this.dCX;
+    public int getPCX() {
+        return this.pCX;
     }
 
-    public void setDCX(int dCX) {
-        this.dCX = dCX;
+    public void setPCX(int pCX) {
+        this.pCX = pCX;
     }
 
-    public int getDCY() {
-        return this.dCY;
+    public int getPCY() {
+        return this.pCY;
     }
 
-    public void setDCY(int dCY) {
-        this.dCY = dCY;
+    public void setPCY(int pCY) {
+        this.pCY = pCY;
     }
 
     public boolean isDead() {

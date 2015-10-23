@@ -19,7 +19,7 @@ public class GreyGate extends Antagonist {
 
     @Override
     public void draw(Batch batch, float alpha) {
-        super.draw(batch, alpha);
+        batch.draw(textureRegion, this.getX(), this.getY());
     }
     
     @Override
