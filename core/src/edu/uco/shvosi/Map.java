@@ -363,14 +363,39 @@ public class Map {
         
         /*  ADDING ENTITIES NOT ON TILE SHEETS TO THE MAP
             INSTRCTIONS BELOW
+        
             - Add antagonists to tempAntagList
             - Add items,traps, or non moving entities to tempMiscList
+                - testmap 1
+                    - [1][7] - [17][10] empty testing area
+                    - [9][2] Bernard position
+                - testmap 2 - 20x20 map, fully empty
+                    - [1][1] - [18][17] empty testing area
+                    - [1][17] Bernard position
             - Be aware that entities placed on any map.tmx will hold priority
             at its location on the entityGrid. Entities created here will be ignored
             if placed on the same tile as an entity from any map.tmx. Please
             place them in an empty block
             - An error message will appear if it is not created for the above reason
          */
+        
+        //Add for testmap 1
+        if(GameScreen.level == 0){
+            Gdx.app.log("Map", "Adding entities for map level=0");
+        }
+        
+        //Add for testmap 2
+        else if(GameScreen.level == 1){
+            Gdx.app.log("Map", "Adding entities for map level=1");
+        }
+        
+        //Add for Cole's Map
+        else if(GameScreen.level == 2){
+            Gdx.app.log("Map", "Adding entities for map level=2");
+        } else {
+            Gdx.app.log("Map", "Level out of scope");
+            return;
+        }
 
         // Populate the cells from tempAntagList and add to entity list
         for (int i = 0; i < tempAntagList.size(); i++) {

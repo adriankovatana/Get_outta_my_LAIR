@@ -6,12 +6,12 @@
  <tileset firstgid="145" source="Traps.tsx"/>
  <layer name="Map" width="20" height="20">
   <data encoding="base64" compression="zlib">
-   eJxjYmBgYKIyFgJiLgqxEJJ5jFTCo+aNmjdq3qh56OZRy0zk8m+w+5daGADxWwKh
+   eJxjYmBgYKIyFgJiLgqxEJJ5jFTCo+aNmjdq3qh5I908amIA4HMCjw==
   </data>
  </layer>
  <layer name="Entities" width="20" height="20" visible="0">
   <data encoding="base64" compression="zlib">
-   eJxjYBj8wGmQmDFYwcoBtHshlPaE0jPpYCcxdkRiEbOC0p5Y5AYSBBKQx+YXbMCRCmbgAxsp1D8RiY3uVmxxMhGLGKmA0ryxEIuYFRYxXMASiz588W2JRcwIiBOJtI/SOCIVAACndQuM
+   eJxjYBj8wGigHTAKRsEoGAWjAAMAAB7HADM=
   </data>
  </layer>
 </map>

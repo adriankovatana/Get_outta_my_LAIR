@@ -25,7 +25,7 @@ public class GameScreen implements Screen {
     public static int turnCount;
     private TextureLoader textureLoader = new TextureLoader();
 
-    private int level = 0;
+    public static int level = 0;
     //private boolean turnsFinished = true;
     //private boolean playTurn = false;
     private Protagonist bernard;
@@ -43,6 +43,31 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        //Check for game over
+        if(map.getEntityList().isEmpty() ||
+                (map.bernard.isDead() && map.bernard.turnFinished)){
+            if(roundStarted){
+                entityTurn = 0;
+                roundStarted = false;
+                stage.clear();
+                turnLabel.setText("Game Over");
+                turnLabel.setX(map.bernard.getX());
+                turnLabel.setY(map.bernard.getY() + 50);
+                healthLabel.setX(map.bernard.getX() - 65);
+                healthLabel.setY(map.bernard.getY());
+                healthLabel.setText("Press 'Esc' to go to main menu...");
+                stage.addActor(turnLabel);
+                stage.addActor(healthLabel);
+            }
+            if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
+                map.dispose();
+                game.setScreen(game.startScreen);
+            }
+            Gdx.gl.glClearColor(0, 0, 0, 1);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            stage.draw();
+            return;
+        }
 
         /* == INPUT == */
         /* Bernard Controls */
@@ -190,6 +215,7 @@ public class GameScreen implements Screen {
             stage.clear();
             map.dispose();
             initNewLevel();
+            return;
         }
         
         //Check if dead
@@ -290,15 +316,13 @@ public class GameScreen implements Screen {
     public void initNewLevel() {
         //Test Level
         if (level == 0) {
-//            map = new Map(this.bernard, "maps/testmap.tmx");
-            map = new Map(this.bernard, "colemap/colemap.tmx");
+            map = new Map(this.bernard, "maps/testmap.tmx");
             level = 1;
         } else if (level == 1) {
             map = new Map(this.bernard, "maps/testmap2.tmx");
             level = 2;
         } else if (level == 2) {
-//            map = new Map(this.bernard, "colemap/colemap.tmx");
-            map = new Map(this.bernard, "maps/testmap.tmx");
+            map = new Map(this.bernard, "colemap/colemap.tmx");
             level = 0;
         }
         map.bernard.removeAllObservers();

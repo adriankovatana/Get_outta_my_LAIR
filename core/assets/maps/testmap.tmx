@@ -162,12 +162,12 @@
  </tileset>
  <layer name="Map" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJztmbsOgCAMRZHR0f//WBcHc2NbizZczR1OjBQLR14DvbW2fpx+sHwceXAhDy7kwYU8uJAHF/LgQh5cyIMLeXAhDy7kwYU8uJAHF/LgQh5cyIOL/jNm34vpXi03r6rnoNcvrwxjWzBuSxDfWjw/Md4hP/YLY+fvKverKA/GvfrZ2AwP63nmaoy8GKvHSNtVHtZ7pcfdvSRbd9RjdH1Y+9VVX7z9araH9Q2uKW/9ve0xcn6wrQ88u6yyCg/Mj3lXKMf3p/8wMxczbVp1n+SMPP7ADvTyEIM=
+   eJztmbEOwyAMBQljRv7/Y7t0qKwYYwTtUb3hFJEYkgPjDNRSyn049c11OPJgIQ8W8mAhDxbyYCEPFvJgIQ8W8mAhDxbyYCEPFvJgIQ8W8mAhDxZ1kEzsL4nOra6BGJ2r8fJqNv9WebRg3aK8ah/f01t7r52d3531KhrHPu/F9/YsxcO7ZhxP9bD775seXnvGow3EZ/ZUNnZlXo14ePXq6VuierXKw5unXn3zcsX2eRpjR1716r/3buL+mHn3Kg87X3bc29y37Z0emX9X1HfFmJHHP/AC+rIQkQ==
   </data>
  </layer>
  <layer name="Entities" width="50" height="50" visible="0">
   <data encoding="base64" compression="zlib">
-   eJzt1bEKgCAUhWGfqTdqbOxRaqtNt9x6w25kVOJSiZb8HxwuOB3xgkoBAAAAAAAAAAAAQHnq3AUiKeUeyGt0s/fOjZs2YRdcWRf/bf5m7W/UsVNfVweyO79FJxkkWjJJ5lQFIwjtlE7e4r0qd4EHWkmjtv25gz8/jgV//g/E
+   eJzt1kEKwjAQheE5kzfq0qVHMTuzqzu7syc0xYaGmKYzEYTI/8GjFNKYR4qpCAAAAAAAAAAAAABs5pBJEVGOy7PM79fcDYnjtQblOG+Ys/SspYtbxzrDb/y6xxEnbT0sa/nm2d57ePnssfd+LXrrMWVzuuTaUw8n/fdY9sLJ9n8u0mePEk2PoZCSa8gtZAx5hDyz9bSw9Ij7ZNmPuXI/7qynRdqhdu7H9VvPwbjuU3Z/NN5K06HWp+QScpb3+2OhPfNLWr7J0k7/5AVyLYSc
   </data>
  </layer>
 </map>

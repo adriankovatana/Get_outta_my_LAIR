@@ -283,7 +283,7 @@ public class Protagonist extends Entity implements Observable {
 
     @Override
     public void performDeath() {
-        this.addAction(sequence(deathAnimation(), finishTurn()));
+        this.addAction(deathAnimation());
     }
 
     public int getHealth() {
@@ -471,6 +471,9 @@ public class Protagonist extends Entity implements Observable {
             @Override
             public boolean act(float delta) {
                 //Temp death
+                Protagonist.this.remove();
+                Protagonist.this.setTurnFinished(true);
+                Protagonist.this.turnAction = Constants.TurnAction.NONE;
                 return true;
                 /*if (this.deathAnimation.isAnimationFinished()) {
                  return true;
