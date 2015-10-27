@@ -57,7 +57,7 @@ public class Wreker extends Antagonist {
             {
                 flip = false;
             }
-            if(xdis >1 || ydis >1){    
+            if(Math.abs(xdis) >1 ||Math.abs(ydis) >1){    
                 if (flip) {
                     temp = wrekerWalk.getKeyFrame(elapsedTime);
                     temp.flip(true, false);
@@ -71,7 +71,7 @@ public class Wreker extends Antagonist {
                     elapsedTime = 0f;
                 }
             }
-            if(xdis <=1 && ydis <=1){    
+            if(Math.abs(xdis) <=1 && Math.abs(ydis) <=1){    
                 if (flip) {
                     temp = wrekerAttack.getKeyFrame(elapsedTime);
                     temp.flip(true, false);
