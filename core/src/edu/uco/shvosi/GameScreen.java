@@ -44,9 +44,9 @@ public class GameScreen implements Screen {
     @Override
     public void render(float delta) {
         //Check for game over
-        if(map.getEntityList().isEmpty() ||
-                (map.bernard.isDead() && map.bernard.turnFinished)){
-            if(roundStarted){
+        if (map.getEntityList().isEmpty()
+                || (map.bernard.isDead() && map.bernard.turnFinished)) {
+            if (roundStarted) {
                 entityTurn = 0;
                 roundStarted = false;
                 stage.clear();
@@ -182,7 +182,7 @@ public class GameScreen implements Screen {
                     map.bernard.attackAction();
                 }
 
-                if (Gdx.input.isKeyJustPressed(Keys.NUM_4)) {
+                if (Gdx.input.isKeyJustPressed(Keys.NUM_4) && map.bernard.barrierCooldown <= 0) {
                     roundStarted = true;
                     map.bernard.setBarrierLimit(3);
                     map.bernard.setExecuteBarrier(true);
@@ -191,8 +191,8 @@ public class GameScreen implements Screen {
                     map.bernard.setActiveSkill();
                     map.bernard.attackAction();
                 }
-                
-                if (Gdx.input.isKeyJustPressed(Keys.NUM_5)) {
+
+                if (Gdx.input.isKeyJustPressed(Keys.NUM_5)  && map.bernard.lightningInfusionCooldown <= 0) {
                     roundStarted = true;
                     map.bernard.setLightBarrierLimit(3);
                     map.bernard.setExecuteLightBarrier(true);
@@ -206,7 +206,6 @@ public class GameScreen implements Screen {
 
         /* -- END INPUT -- */
         /* == UPDATE == */
-        
         //Check map exit
         if (map.exitReached()) {
             //Load the next level
@@ -217,7 +216,7 @@ public class GameScreen implements Screen {
             initNewLevel();
             return;
         }
-        
+
         //Check if dead
         for (int i = 0; i < map.getEntityList().size(); i++) {
             Entity aggressor = map.getEntityList().get(i);
@@ -239,7 +238,7 @@ public class GameScreen implements Screen {
                 roundStarted = false;
                 for (int i = 0; i < map.getEntityList().size(); i++) {
                     map.getEntityList().get(i).setTurnFinished(false);
-                    if(i == map.getEntityList().size() - 1) {
+                    if (i == map.getEntityList().size() - 1) {
                         turnCount++;
                     }
                 }
@@ -263,22 +262,22 @@ public class GameScreen implements Screen {
                 }
             }
         }
-        
+
         //Add actions to the activeEntity if it just started its turn!
         if (roundStarted && !activeEntity.hasActions()) {
             map.playTurn(activeEntity);
             //Gdx.app.log("TURN", activeEntity.getName());
         }
-        
+
         //temporary health display
         healthpoints = "HP: " + map.bernard.getHealth();
         healthLabel.setX(map.bernard.getX() + 20);
-        healthLabel.setY(map.bernard.getY() + Constants.SCREENHEIGHT/2);
+        healthLabel.setY(map.bernard.getY() + Constants.SCREENHEIGHT / 2);
         healthLabel.setText(healthpoints);
 
         //temporary inventory display
-        invent.setX(map.bernard.getX() - Constants.SCREENWIDTH/2 + map.bernard.getWidth()*0.75f);
-        invent.setY(map.bernard.getY() + Constants.SCREENHEIGHT/2 - map.bernard.getHeight()/2);
+        invent.setX(map.bernard.getX() - Constants.SCREENWIDTH / 2 + map.bernard.getWidth() * 0.75f);
+        invent.setY(map.bernard.getY() + Constants.SCREENHEIGHT / 2 - map.bernard.getHeight() / 2);
 
         //temporary turn display
         String temp = "";
@@ -286,7 +285,7 @@ public class GameScreen implements Screen {
             temp = "Turn Underway";
         }
         turnLabel.setX(map.bernard.getX());
-        turnLabel.setY(map.bernard.getY() + Constants.SCREENHEIGHT/2 - 10);
+        turnLabel.setY(map.bernard.getY() + Constants.SCREENHEIGHT / 2 - 10);
         turnLabel.setText(temp);
 
 
@@ -366,7 +365,7 @@ public class GameScreen implements Screen {
         turnLabel = new Label("", TextureLoader.SKIN);
 
         initNewLevel();
-        
+
         turnCount = 0;
     }
 
