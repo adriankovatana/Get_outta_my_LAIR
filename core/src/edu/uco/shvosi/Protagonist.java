@@ -29,6 +29,8 @@ public class Protagonist extends Entity implements Observable {
     private Label effectLabel;
     private int heldItem = 0;
     public int mute = 0;
+    public int barrierCooldown = 0;
+    public int lightningInfusionCooldown = 0;
     public int redLaserCooldown = 0;
     private Constants.MapGridCode[][] currentMap;
     
@@ -182,7 +184,8 @@ public class Protagonist extends Entity implements Observable {
                 break;
         }
         redLaserCooldown--;
-    }
+        barrierCooldown--;
+        lightningInfusionCooldown--;}
 
     @Override
     public void draw(Batch batch, float alpha) {

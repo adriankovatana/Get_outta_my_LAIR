@@ -65,6 +65,7 @@ class SkillTwo extends Skill {
                     }
                     if (bernard.getLightBarrierLimit() == 0) {
                         bernard.setExecuteLightBarrier(false);
+                        bernard.lightningInfusionCooldown = 5;
                     }
                 }
             }

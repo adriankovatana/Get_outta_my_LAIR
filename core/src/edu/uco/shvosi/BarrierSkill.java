@@ -30,6 +30,7 @@ public class BarrierSkill extends Skill {
                     bernard.heal(bernard.getBarrierDamage() / 2 + 10);
                     bernard.resetBarrierDamage();
                     bernard.setExecuteBarrier(false);
+                    bernard.barrierCooldown = 5;
                     elapsedHeal = 0f;
                 }
             }

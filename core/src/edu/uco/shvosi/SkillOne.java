@@ -51,6 +51,7 @@ class SkillOne extends Skill {
 //                    Gdx.app.log("LightBarrier", l);
                     if (bernard.getLightBarrierLimit() == 0) {
                         bernard.setExecuteLightBarrier(false);
+                        bernard.lightningInfusionCooldown = 5;
                     }
                     elapsedLight = 0f;
                 }
