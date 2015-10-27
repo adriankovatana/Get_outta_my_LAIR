@@ -182,7 +182,7 @@ public class GameScreen implements Screen {
                     map.bernard.attackAction();
                 }
 
-                if (Gdx.input.isKeyJustPressed(Keys.NUM_4) && map.bernard.barrierCooldown <= 0) {
+                if (Gdx.input.isKeyJustPressed(Keys.NUM_4) && map.bernard.barrierCooldown <= 0 && !map.bernard.getExecuteBarrier()) {
                     roundStarted = true;
                     map.bernard.setBarrierLimit(3);
                     map.bernard.setExecuteBarrier(true);
@@ -192,7 +192,7 @@ public class GameScreen implements Screen {
                     map.bernard.attackAction();
                 }
 
-                if (Gdx.input.isKeyJustPressed(Keys.NUM_5)  && map.bernard.lightningInfusionCooldown <= 0) {
+                if (Gdx.input.isKeyJustPressed(Keys.NUM_5)  && map.bernard.lightningInfusionCooldown <= 0  && !map.bernard.getExecuteLightBarrier()) {
                     roundStarted = true;
                     map.bernard.setLightBarrierLimit(3);
                     map.bernard.setExecuteLightBarrier(true);
