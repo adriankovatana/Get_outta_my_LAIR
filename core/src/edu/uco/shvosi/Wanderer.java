@@ -20,8 +20,9 @@ public class Wanderer extends Antagonist {
     private String XorY;
     private int xdis;
     private int ydis;
-    private int damage = 50;
+    private int damage = 5;
     private boolean active = false;
+    private DamageEntity melee;
     
 
     public Wanderer(int cX, int cY) {
@@ -29,6 +30,7 @@ public class Wanderer extends Antagonist {
         wanderWalk = TextureLoader.wanderWalk;
         wanderAttack = TextureLoader.wanderAttack;
         this.damage = damage;
+        melee = new DamageEntity(0,0,this.damage);
         
         this.name = "Wanderer";
 
@@ -37,7 +39,18 @@ public class Wanderer extends Antagonist {
     @Override
     public void attackAction() {
         //Do Attack Stuffs?
-        //MeleeAttack meleeAttach = new MeleeAttack(bernardX, bernardY, damage);
+        if(!flip)
+        {
+           melee.setCX(this.cX + 1);
+           melee.setCY(this.cY);
+        }
+        else
+        {
+           melee.setCX(this.cX - 1);
+           melee.setCY(this.cY);
+        }
+        melee.setDead(false);
+        Map.miscEntityList.add(melee);
         this.addAction(this.finishTurn());
         
     }
@@ -110,7 +123,7 @@ public class Wanderer extends Antagonist {
                 active = true;
             }
         
-            if (active && (xdis <= 1 || ydis <= 1))
+            if (active && (xdis > 1 || ydis > 1))
              {
             
             while (!canMove(d, mapGrid, entityGrid)) {
@@ -153,10 +166,10 @@ public class Wanderer extends Antagonist {
    
         this.setTurnAction(Constants.TurnAction.MOVE);
              }//end if active
-//        else if (active && (xdis <= 1 && ydis <= 1))
-//        {
-//           this.setTurnAction(Constants.TurnAction.ATTACK);
-//
-//        }
+        else if (active && (xdis <= 1 && ydis <= 1))
+        {
+           this.setTurnAction(Constants.TurnAction.ATTACK);
+
+        }
     }
 }

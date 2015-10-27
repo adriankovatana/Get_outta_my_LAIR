@@ -46,7 +46,7 @@ public class GameScreen implements Screen {
         //Check for game over
         if (map.getEntityList().isEmpty()
                 || (map.bernard.isDead() && map.bernard.turnFinished)) {
-            if (roundStarted) {
+            if (roundStarted || !map.getEntityList().isEmpty()) {
                 entityTurn = 0;
                 roundStarted = false;
                 stage.clear();
@@ -58,9 +58,11 @@ public class GameScreen implements Screen {
                 healthLabel.setText("Press 'Esc' to go to main menu...");
                 stage.addActor(turnLabel);
                 stage.addActor(healthLabel);
+                map.getEntityList().clear();
             }
             if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
                 map.dispose();
+                level = 0;
                 game.setScreen(game.startScreen);
             }
             Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -232,6 +234,8 @@ public class GameScreen implements Screen {
         //Sets the next active entity when it is done with its turn
         if (roundStarted && activeEntity.turnFinished) {
             activeEntity = map.getEntityList().get(++entityTurn % map.getEntityList().size());
+            
+            Gdx.app.log(activeEntity.getName(), activeEntity.cX + "' " + activeEntity.cY);
 
             //If we have reached bernard, the turn is over and set all turnfinished to false;
             if (activeEntity instanceof Protagonist) {
