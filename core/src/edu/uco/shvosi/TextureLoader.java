@@ -63,6 +63,9 @@ public class TextureLoader {
     public static final Texture BLANKTEXTURE = new Texture(Gdx.files.internal("characters/blank.png"));
     public static final Texture CATLADYTEXTURE = new Texture(Gdx.files.internal("characters/blank.png"));
     public static final Texture CATTYTEXTURE = new Texture(Gdx.files.internal("characters/catLady_sheet.png"));
+    public static final Texture CATTEXTURE = new Texture(Gdx.files.internal("characters/blank.png"));
+    public static final Texture CATWALKTEXTURE = new Texture(Gdx.files.internal("characters/catwalk.png"));
+    public static final Texture CATATTACKTEXTURE = new Texture(Gdx.files.internal("characters/catattack.png"));
     public static final Texture MELEEATTACKTEXTURE = new Texture(Gdx.files.internal("melee_sheet.png"));
     public static final Texture WANDERATTACKTEXTURE = new Texture(Gdx.files.internal("characters/wander_attack_sheet.png"));
     public static final Texture DRUNKATTACKTEXTURE = new Texture(Gdx.files.internal("characters/drunk_attack_sheet.png"));
@@ -75,6 +78,7 @@ public class TextureLoader {
     public static final Texture REDGATERTEXTURE = new Texture(Gdx.files.internal("colemap/redgater.png"));
     
 
+    private Array<TextureRegion> catFrames;
     private Array<TextureRegion> hammerFrames;
     private Array<TextureRegion> blueFrames;
     private Array<TextureRegion> drunkFrames;
@@ -87,6 +91,9 @@ public class TextureLoader {
     private Array<TextureRegion> drunkAttackFrames;
     private Array<TextureRegion> suffragetteFrames;
     private Array<TextureRegion> hammerAttackFrames;
+    private Array<TextureRegion> catAttackFrames;
+
+    public static Animation catWalk;
     public static Animation blueWalk;
     public static Animation hammerWalk;
     public static Animation catLadyWalk;
@@ -99,6 +106,8 @@ public class TextureLoader {
     public static Animation wrekerAttack;
     public static Animation suffragetteWalk;
     public static Animation hammerAttack;
+    public static Animation catAttack;
+
     
     //skills
     public static final Texture MELEESKILLTEXTURE = new Texture(Gdx.files.internal("melee_sheet.png"));
@@ -295,7 +304,22 @@ public class TextureLoader {
         }
 
         hammerAttack = new Animation(0.10f, hammerAttackFrames, PlayMode.LOOP);
+        //cat
+        catFrames = new Array<TextureRegion>(2);
+        for (int i = 0; i < 2; i++) {
+            catFrames.add(new TextureRegion(CATWALKTEXTURE, 0, i * 100, 100, 100));
+        }
 
+        catWalk = new Animation(0.50f, catFrames, PlayMode.LOOP);
+
+        catAttackFrames = new Array<TextureRegion>(2);
+        for (int i = 0; i < 2; i++) {
+            catAttackFrames.add(new TextureRegion(CATATTACKTEXTURE, 0, i * 100, 100, 100));
+        }
+
+        catAttack = new Animation(0.10f, catAttackFrames, PlayMode.LOOP);
+        
+        //
         //
         //sufferagette
         suffragetteFrames = new Array<TextureRegion>(2);

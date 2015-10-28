@@ -7,10 +7,10 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import java.util.List;
 
-public class Wreker extends Antagonist {
+public class CatAttack extends Antagonist {
     
-    private Animation wrekerWalk;
-    private Animation wrekerAttack;
+    private Animation catWalk;
+    private Animation catAttack;
     private boolean moving = false;
     private boolean flip = false;
     private float elapsedTime;
@@ -25,16 +25,19 @@ public class Wreker extends Antagonist {
     private int [] directions;
     private boolean moved = false;
     private DamageEntity melee;
+    private DamageEntity self;
+
     
 
-    public Wreker(int cX, int cY) {
-        super(Constants.EnemyType.WREKER, TextureLoader.WREKERTEXTURE, cX, cY);
-        this.name = "Wreker";
-        wrekerWalk = TextureLoader.wrekerWalk;
-        wrekerAttack = TextureLoader.wrekerAttack;
+    public CatAttack(int cX, int cY) {
+        super(Constants.EnemyType.CATATTACK, TextureLoader.CATTEXTURE, cX, cY);
+        this.name = "CatAttack";
+        catWalk = TextureLoader.catWalk;
+        catAttack = TextureLoader.catAttack;
       
         this.damage = damage;
         melee = new DamageEntity(0,0,this.damage);
+        self = new DamageEntity(0,0,this.damage);
     }
 
     @Override
@@ -43,8 +46,13 @@ public class Wreker extends Antagonist {
 
         melee.setCX(bernardX);
         melee.setCY(bernardY);
+        self.setCX(this.cX);
+        self.setCY(this.cY);
         melee.setDead(false);
+        self.setDead(false);
         Map.miscEntityList.add(melee);
+        Map.miscEntityList.add(self);
+
         this.addAction(this.finishTurn());
     }
     
@@ -62,30 +70,30 @@ public class Wreker extends Antagonist {
             {
                 flip = false;
             }
-            if(Math.abs(xdis) >1 ||Math.abs(ydis) >1){    
+            if(Math.abs(xdis) >5 ||Math.abs(ydis) >5){    
                 if (flip) {
-                    temp = wrekerWalk.getKeyFrame(elapsedTime);
+                    temp = catWalk.getKeyFrame(elapsedTime);
                     temp.flip(true, false);
                     batch.draw(temp, this.getX(),getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
                     temp.flip(true, false);
                 } else {
-                    batch.draw(wrekerWalk.getKeyFrame(elapsedTime), this.getX(), this.getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
+                    batch.draw(catWalk.getKeyFrame(elapsedTime), this.getX(), this.getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
                 }
-                if (wrekerWalk.isAnimationFinished(elapsedTime)) {
+                if (catWalk.isAnimationFinished(elapsedTime)) {
                     moving = false;
                     elapsedTime = 0f;
                 }
             }
-            if(Math.abs(xdis) <=1 && Math.abs(ydis) <=1){    
+            if(Math.abs(xdis) <=5 && Math.abs(ydis) <=5){    
                 if (flip) {
-                    temp = wrekerAttack.getKeyFrame(elapsedTime);
+                    temp = catAttack.getKeyFrame(elapsedTime);
                     temp.flip(true, false);
                     batch.draw(temp, this.getX(),getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
                     temp.flip(true, false);
                 } else {
-                    batch.draw(wrekerAttack.getKeyFrame(elapsedTime), this.getX(), this.getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
+                    batch.draw(catAttack.getKeyFrame(elapsedTime), this.getX(), this.getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
                 }
-                if (wrekerAttack.isAnimationFinished(elapsedTime)) {
+                if (catAttack.isAnimationFinished(elapsedTime)) {
                     moving = false;
                     elapsedTime = 0f;
                 }

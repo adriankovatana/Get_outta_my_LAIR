@@ -49,6 +49,7 @@ public class Wanderer extends Antagonist {
            melee.setCX(this.cX - 1);
            melee.setCY(this.cY);
         }
+
         melee.setDead(false);
         Map.miscEntityList.add(melee);
         this.addAction(this.finishTurn());

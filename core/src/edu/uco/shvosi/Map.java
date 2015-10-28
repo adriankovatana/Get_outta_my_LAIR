@@ -71,7 +71,9 @@ public class Map {
                 } else if (properties.get("ENEMY") != null) {
                     if (properties.get("CatLady") != null) {
                         initEnemy(x, y, Constants.EnemyType.CATLADY);
-                    } else if (properties.get("Drunk") != null) {
+                    } else if (properties.get("CatAttack") != null) {
+                        initEnemy(x, y, Constants.EnemyType.CATATTACK);
+                    }else if (properties.get("Drunk") != null) {
                         initEnemy(x, y, Constants.EnemyType.DRUNK);
                     } else if (properties.get("Wanderer") != null) {
                         initEnemy(x, y, Constants.EnemyType.WANDERER);
@@ -220,6 +222,9 @@ public class Map {
         switch (enemyType) {
             case CATLADY:
                 entityList.add(new CatLady(cX, cY));
+                break;
+            case CATATTACK:
+                entityList.add(new CatAttack(cX, cY));
                 break;
             case DRUNK:
                 entityList.add(new Drunk(cX, cY));
@@ -384,6 +389,8 @@ public class Map {
             Gdx.app.log("Map", "Adding entities for map level=0");
             tempAntagList.add(new Wanderer(5,7));
             tempAntagList.add(new Wreker(9,7));
+            tempAntagList.add(new CatAttack(8,5));
+
 
         }
         

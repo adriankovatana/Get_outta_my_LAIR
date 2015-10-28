@@ -29,7 +29,8 @@ public class Constants {
         BONNIE,
         CLYDE,
         GREYGATE,
-        REDGATE;
+        REDGATE,
+        CATATTACK;
     }
     
     public static enum EnemyAttackType {
