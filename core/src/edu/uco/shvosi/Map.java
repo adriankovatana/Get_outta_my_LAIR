@@ -387,9 +387,19 @@ public class Map {
         //Add for testmap 1
         if(GameScreen.level == 0){
             Gdx.app.log("Map", "Adding entities for map level=0");
-            tempAntagList.add(new Wanderer(5,7));
-            tempAntagList.add(new Wreker(9,7));
-            tempAntagList.add(new CatAttack(8,5));
+            tempAntagList.add(new CatLady(9,21));
+            tempAntagList.add(new CatAttack(9,22));
+            tempAntagList.add(new CatAttack(9,20));
+            tempAntagList.add(new CatAttack(8,21));
+            tempAntagList.add(new CatAttack(10,21));
+            tempAntagList.add(new CatAttack(8,22));
+            tempAntagList.add(new CatAttack(10,20));
+            
+
+
+            //tempAntagList.add(new Wanderer(5,7));
+            //tempAntagList.add(new Wreker(9,7));
+            //tempAntagList.add(new CatAttack(8,5));
 
 
         }
