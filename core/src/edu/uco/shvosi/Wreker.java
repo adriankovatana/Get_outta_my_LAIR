@@ -156,10 +156,7 @@ public class Wreker extends Antagonist {
                             {
                                 d = Constants.Direction.UP;
                             }
-                            else
-                            {
-                                active = false;
-                            }
+                      
                         }
                     }
                 }//end try to go left
@@ -192,10 +189,7 @@ public class Wreker extends Antagonist {
                             {
                                 d = Constants.Direction.UP;
                             }
-                            else
-                            {
-                                active = false;
-                            }
+                       
                         }
                     }
                 }//end go right
@@ -228,10 +222,7 @@ public class Wreker extends Antagonist {
                             {
                                 d = Constants.Direction.LEFT;
                             }
-                            else
-                            {
-                                active = false;
-                            }
+                         
                         }
                     }//end try go down
                 }
@@ -264,10 +255,7 @@ public class Wreker extends Antagonist {
                             {
                                 d = Constants.Direction.LEFT;
                             }
-                            else
-                            {
-                                active = false;
-                            }
+                      
                         }
                     }//end try go down
                 }
