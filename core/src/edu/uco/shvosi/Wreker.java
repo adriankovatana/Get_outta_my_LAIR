@@ -146,17 +146,30 @@ public class Wreker extends Antagonist {
                     }
                     if(!moved)
                     {
-                        for(int i =0; i < 5; i++)//try to go around large obstacle
+                        int i;
+                        int k;
+                        for(i =0; i < 5; i++)//try to go around large obstacle
                         {
                             if(mapGrid[this.cX-1][this.cY-i]== Constants.MapGridCode.FLOOR)
                             {
-                                d = Constants.Direction.DOWN;
+                               // d = Constants.Direction.DOWN;
+                                break;
                             }
-                            if(mapGrid[this.cX-1][this.cY+i]== Constants.MapGridCode.FLOOR)
+                        }
+                        for (k = 0; k < 5; k++ )
+                            if(mapGrid[this.cX-1][this.cY+k]== Constants.MapGridCode.FLOOR)
                             {
-                                d = Constants.Direction.UP;
+                                //d = Constants.Direction.UP;
+                                break;
                             }
-                      
+                        if(i<k)
+                        {
+                            d = Constants.Direction.UP;
+                        }
+                        else
+                        {
+                            d = Constants.Direction.DOWN;
+                        }
                         }
                     }
                 }//end try to go left
@@ -179,19 +192,31 @@ public class Wreker extends Antagonist {
                     }
                     if(!moved)
                     {
-                        for(int i =0; i < 5; i++)//try to go around large obstacle
+                        int i;
+                        int k;
+                        for(i =0; i < 5; i++)//try to go around large obstacle
                         {
-                            if(mapGrid[this.cX+1][this.cY-i]== Constants.MapGridCode.FLOOR)
+                            if(mapGrid[this.cX-1][this.cY-i]== Constants.MapGridCode.FLOOR)
                             {
-                                d = Constants.Direction.DOWN;
+                               // d = Constants.Direction.DOWN;
+                                break;
                             }
-                            if(mapGrid[this.cX+1][this.cY+i]== Constants.MapGridCode.FLOOR)
-                            {
-                                d = Constants.Direction.UP;
-                            }
-                       
                         }
-                    }
+                        for (k = 0; k < 5; k++ )
+                            if(mapGrid[this.cX-1][this.cY+k]== Constants.MapGridCode.FLOOR)
+                            {
+                                //d = Constants.Direction.UP;
+                                break;
+                            }
+                        if(i<k)
+                        {
+                            d = Constants.Direction.UP;
+                        }
+                        else
+                        {
+                            d = Constants.Direction.DOWN;
+                        }
+                        }
                 }//end go right
                 if("Y".equals(XorY) && ydis > 1)//need to go down
                 {
@@ -212,20 +237,32 @@ public class Wreker extends Antagonist {
                     }
                     if(!moved)
                     {
-                        for(int i =0; i < 5; i++)//try to go around large obstacle
+                        int i;
+                        int k;
+                        for(i =0; i < 5; i++)//try to go around large obstacle
                         {
-                            if(mapGrid[this.cX+i][this.cY-1]== Constants.MapGridCode.FLOOR)
-                            {
-                                d = Constants.Direction.RIGHT;
-                            }
                             if(mapGrid[this.cX-i][this.cY-1]== Constants.MapGridCode.FLOOR)
                             {
-                                d = Constants.Direction.LEFT;
+                               // d = Constants.Direction.DOWN;
+                                break;
                             }
-                         
                         }
-                    }//end try go down
-                }
+                        for (k = 0; k < 5; k++ )
+                            if(mapGrid[this.cX+k][this.cY-1]== Constants.MapGridCode.FLOOR)
+                            {
+                                //d = Constants.Direction.UP;
+                                break;
+                            }
+                        if(i<k)
+                        {
+                            d = Constants.Direction.RIGHT;
+                        }
+                        else
+                        {
+                            d = Constants.Direction.LEFT;
+                        }
+                        }
+                }//end down
                 if("Y".equals(XorY) && ydis < 1)//need to go up
                 {
                     if(this.canMove(Constants.Direction.UP,mapGrid,entityGrid))
@@ -244,21 +281,33 @@ public class Wreker extends Antagonist {
                         moved = true;
                     }
                     if(!moved)
-                    {
-                        for(int i =0; i < 5; i++)//try to go around large obstacle
+ {
+                        int i;
+                        int k;
+                        for(i =0; i < 5; i++)//try to go around large obstacle
                         {
-                            if(mapGrid[this.cX+i][this.cY+1]== Constants.MapGridCode.FLOOR)
+                            if(mapGrid[this.cX-i][this.cY-1]== Constants.MapGridCode.FLOOR)
                             {
-                                d = Constants.Direction.RIGHT;
+                               // d = Constants.Direction.DOWN;
+                                break;
                             }
-                            if(mapGrid[this.cX-i][this.cY+1]== Constants.MapGridCode.FLOOR)
-                            {
-                                d = Constants.Direction.LEFT;
-                            }
-                      
                         }
-                    }//end try go down
-                }
+                        for (k = 0; k < 5; k++ )
+                            if(mapGrid[this.cX+k][this.cY-1]== Constants.MapGridCode.FLOOR)
+                            {
+                                //d = Constants.Direction.UP;
+                                break;
+                            }
+                        if(i<k)
+                        {
+                            d = Constants.Direction.RIGHT;
+                        }
+                        else
+                        {
+                            d = Constants.Direction.LEFT;
+                        }
+                        }
+                }//end up
                         this.setTurnAction(Constants.TurnAction.MOVE);
                 }//end move to one spot away
              }//end if active
@@ -320,7 +369,7 @@ public class Wreker extends Antagonist {
 //           this.setTurnAction(Constants.TurnAction.ATTACK);
 //
 //        }
-    }
+   // }
     
     @Override
     public void collision(Entity entity) {

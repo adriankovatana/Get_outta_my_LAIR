@@ -184,7 +184,35 @@ public class Antagonist extends Entity {
                 this.setCX(this.getCX() + 1);
                 return true;
             }
-        } else {
+        } else if (direction == Constants.Direction.UP_RIGHT) {
+            if (mapGrid[this.getCX() + 1][this.getCY()+1] == Constants.MapGridCode.FLOOR
+                    && entityGrid[this.getCX() + 1][this.getCY()] == Constants.EntityGridCode.NONE) {
+                this.setCX(this.getCX() + 1);
+                this.setCY(this.getCY() +1);
+                return true;
+            }
+        }else if (direction == Constants.Direction.DOWN_RIGHT) {
+            if (mapGrid[this.getCX() + 1][this.getCY()-1] == Constants.MapGridCode.FLOOR
+                    && entityGrid[this.getCX() + 1][this.getCY()] == Constants.EntityGridCode.NONE) {
+                this.setCX(this.getCX() + 1);
+                this.setCY(this.getCY() -1);
+                return true;
+            }
+        }else if (direction == Constants.Direction.UP_LEFT) {
+            if (mapGrid[this.getCX() - 1][this.getCY()+1] == Constants.MapGridCode.FLOOR
+                    && entityGrid[this.getCX() + 1][this.getCY()] == Constants.EntityGridCode.NONE) {
+                this.setCX(this.getCX() - 1);
+                this.setCY(this.getCY() +1);
+                return true;
+            }
+        }else if (direction == Constants.Direction.DOWN_LEFT) {
+            if (mapGrid[this.getCX() - 1][this.getCY()- 1] == Constants.MapGridCode.FLOOR
+                    && entityGrid[this.getCX() + 1][this.getCY()] == Constants.EntityGridCode.NONE) {
+                this.setCX(this.getCX() - 1);
+                this.setCY(this.getCY() - 1);
+                return true;
+            }
+        }else {
             // No direction
         }
         return false;

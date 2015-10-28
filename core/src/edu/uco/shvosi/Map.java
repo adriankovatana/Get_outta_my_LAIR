@@ -383,6 +383,8 @@ public class Map {
         if(GameScreen.level == 0){
             Gdx.app.log("Map", "Adding entities for map level=0");
             tempAntagList.add(new Wanderer(5,7));
+            tempAntagList.add(new Wreker(9,7));
+
         }
         
         //Add for testmap 2
