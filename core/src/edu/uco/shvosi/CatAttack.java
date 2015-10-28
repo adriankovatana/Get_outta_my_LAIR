@@ -34,7 +34,7 @@ public class CatAttack extends Antagonist {
         this.name = "CatAttack";
         catWalk = TextureLoader.catWalk;
         catAttack = TextureLoader.catAttack;
-      
+        this.health = 10;
         this.damage = damage;
         melee = new DamageEntity(0,0,this.damage);
         self = new DamageEntity(0,0,this.damage);
