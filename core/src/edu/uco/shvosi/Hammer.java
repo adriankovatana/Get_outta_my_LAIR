@@ -87,7 +87,7 @@ public class Hammer extends Antagonist {
                     elapsedTime = 0f;
                 }
             }
-            if(Math.abs(xdis) <=2 && Math.abs(ydis) <=2){    
+            if(Math.abs(xdis) <= 2 && Math.abs(ydis) <= 2){    
                 if (flip) {
                     temp = hammerAttack.getKeyFrame(elapsedTime);
                     temp.flip(true, false);
@@ -337,3 +337,4 @@ public class Hammer extends Antagonist {
         
     }
 }
+
