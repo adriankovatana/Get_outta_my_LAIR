@@ -242,7 +242,7 @@ public class Map {
                 entityList.add(new Hammer(cX, cY));
                 break;
             case SUFFRAGETTE:
-                entityList.add(new Suffragette(cX, cY));
+                entityList.add(new Suffragette(cX, cY,Constants.Direction.NONE,0));
                 break;
             case GREYGATE:
                 break;

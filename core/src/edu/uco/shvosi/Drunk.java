@@ -73,12 +73,12 @@ public class Drunk extends Antagonist {
 
         xdis = this.getCX() - bernardX;
         ydis = this.getCY() - bernardY;
-        if (xdis < 5 && ydis < 5) {
+        if (Math.abs(xdis) < 5 && Math.abs(ydis)  < 5) {
             active = true;
         }
         if (active) {
             while (!canMove(d, mapGrid, entityGrid)) {
-                if (xdis < 5 || ydis < 5) {
+                if (Math.abs(xdis) < 3 && Math.abs(ydis) < 3) {
                     random = (int) (Math.random() * entityGrid.length);
                     switch (random % 4) {
                         case 1:
@@ -97,7 +97,7 @@ public class Drunk extends Antagonist {
                             break;
                     }
                 }//end
-                if (xdis >= 5 || ydis >= 5) {
+                if (xdis > 3 || ydis > 3) {
                     if (Math.abs(xdis) > Math.abs(ydis)) {
                         XorY = "X";
                     } else {

@@ -12,26 +12,26 @@ public class Suffragette extends Antagonist {
     private boolean flip = false;
     private float elapsedTime;
     private TextureRegion temp;
-    private int bernardX;
-    private int bernardY;
-    private String XorY;
-    private int xdis;
-    private int ydis;
     private int begX; 
     private int begY;
+    private Constants.Direction direction;
+    private int moveCount = 0;
+
     private boolean active = false;
+    int distance;
     
 
-    public Suffragette(int cX, int cY) {
+    public Suffragette(int cX, int cY, Constants.Direction d, int distance) {
         super(Constants.EnemyType.SUFFRAGETTE, TextureLoader.SUFFERTETEXTURE, cX, cY);
         this.name = "Suffragette";
         this.walkAnimation = TextureLoader.suffragetteWalk;
         this.begX = cX;
         this.begY = cY;
-        this.setBoundingBox(120);
+        this.direction = d;
         this.damage = 0;
         this.health = 1000;
         this.maxHealth = this.health;
+        this.distance = distance;
     }
 
     @Override
@@ -48,7 +48,7 @@ public class Suffragette extends Antagonist {
         
                          
             elapsedTime += Gdx.graphics.getDeltaTime();
-            if(xdis >=0)
+            if(direction == Constants.Direction.LEFT)
             {
                 flip = true;
             }
@@ -77,21 +77,10 @@ public class Suffragette extends Antagonist {
     
     @Override
     public void calculateTurn(Constants.MapGridCode[][] mapGrid, Constants.EntityGridCode[][] entityGrid, List<Entity> entityList) {
-        //Random movement
-        int tries = 0;
+                
         Constants.Direction d = Constants.Direction.NONE;
 
-            for(int i = 0; i < entityList.size(); i++)
-            {
-                if(entityList.get(i).getGridCode() == Constants.EntityGridCode.PLAYER){
-                    bernardX = entityList.get(i).getCX();
-                    bernardY = entityList.get(i).getCY();
-                    break;
-                }
-            }
-          
-            xdis = this.getCX() - bernardX;
-            ydis = this.getCY() - bernardY;
+
             if(this.getHealth() < 1000)
             {
                 active = true;
@@ -99,103 +88,38 @@ public class Suffragette extends Antagonist {
         
             if (active)
              {
-             if(xdis > 1 && ydis >1){    
-            
-            while (!canMove(d, mapGrid, entityGrid)) {
-        
-                if(Math.abs(xdis) > Math.abs(ydis))
+                while (moveCount < distance)
                 {
-                    XorY="X";
+                    d = this.direction;
+                    moveCount ++;
+                    this.setTurnAction(Constants.TurnAction.MOVE);
                 }
-                else
-                {
-                    XorY="Y";
-                }
-        
-                if("X".equals(XorY) && xdis >= 0)
-                {
-                    d = Constants.Direction.LEFT;
-                }
-        
-            if("X".equals(XorY) && xdis < 0)
-            {
-                d = Constants.Direction.RIGHT;
-            }
-            if("Y".equals(XorY) && ydis >= 0)
-            {
-                d = Constants.Direction.DOWN;
-            }
-        
-            if("Y".equals(XorY) && ydis < 0)
-            {
-                d = Constants.Direction.UP;
-            }
-        
-            tries++;
-            if(tries > 5){
-                this.setTurnAction(Constants.TurnAction.NONE);
-                this.addAction(this.finishTurn());
-                return;
-            }
-        }//end while         
-            
-             }//end if > 1
-               else{
-                 int backX;
-                 int backY;
-                 
-                 backX = this.getCX() - this.begX;
-                 backY = this.getCY() - this.begY;
-                 
-                while (!canMove(d, mapGrid, entityGrid)) {
-        
-                if(Math.abs(backX) > Math.abs(backY))
-                {
-                    XorY="X";
-                }
-                else
-                {
-                    XorY="Y";
-                }
-        
-                if("X".equals(XorY) && backX >= 0)
-                {
-                    d = Constants.Direction.LEFT;
-                }
-        
-            if("X".equals(XorY) && backY < 0)
-            {
-                d = Constants.Direction.RIGHT;
-            }
-            if("Y".equals(XorY) && backY >= 0)
-            {
-                d = Constants.Direction.DOWN;
-            }
-        
-            if("Y".equals(XorY) && backY < 0)
-            {
-                d = Constants.Direction.UP;
-            }
-        
-            tries++;
-            if(tries > 5){
-                this.setTurnAction(Constants.TurnAction.NONE);
-                this.addAction(this.finishTurn());
-                return;
-            }
-        }//end while 
-                 
-                    
-             }
-   
-        this.setTurnAction(Constants.TurnAction.MOVE);
+                reverse();
+                moveCount = 0;
+                this.setTurnAction(Constants.TurnAction.MOVE);
              }//end if active
-//        else if (active && (xdis <= 1 && ydis <= 1))
-//        {
-//           this.setTurnAction(Constants.TurnAction.ATTACK);
-//
-//        }
     }
+    
+    public void reverse()
+    {
+        if(direction == Constants.Direction.DOWN)
+        {
+            direction = Constants.Direction.UP;
+        }
+        if(direction == Constants.Direction.UP)
+        {
+            direction = Constants.Direction.DOWN;
+        }   
+        if(direction == Constants.Direction.RIGHT)
+        {
+            direction = Constants.Direction.LEFT;
+        }
+        if(direction == Constants.Direction.LEFT)
+        {
+            direction = Constants.Direction.RIGHT;
+        }
+    }
+    
     
     @Override
     public void collision(Entity entity) {
