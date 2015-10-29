@@ -23,6 +23,7 @@ public class Wanderer extends Antagonist {
     private int damage = 5;
     private boolean active = false;
     private DamageEntity melee;
+    private boolean moved = false;
     
 
     public Wanderer(int cX, int cY) {
@@ -108,7 +109,7 @@ public class Wanderer extends Antagonist {
         int tries = 0;
         Constants.Direction d = Constants.Direction.NONE;
 
-            for(int i = 0; i < entityList.size(); i++)
+            for(int i = 0; i < entityList.size(); i++)//get bernards location
             {
                 if(entityList.get(i).getGridCode() == Constants.EntityGridCode.PLAYER){
                     bernardX = entityList.get(i).getCX();
@@ -117,60 +118,217 @@ public class Wanderer extends Antagonist {
                 }
             }
           
-            xdis = this.getCX() - bernardX;
-            ydis = this.getCY() - bernardY;
-            if(xdis < 5 && ydis < 5)
+            xdis = this.getCX() - bernardX;//get dis between me and bernard on x axis
+            ydis = this.getCY() - bernardY;//get dis between me and bernard on y axis
+            
+            //if bernard is less than 5 spaces away I become active
+            if(Math.abs(xdis) < 5 && Math.abs(ydis) < 5)
             {
                 active = true;
             }
         
-            if (active && (xdis > 1 || ydis > 1))
+            if (active)//active charater can move and attack
              {
-            
-            while (!canMove(d, mapGrid, entityGrid)) {
-        
-                if(Math.abs(xdis) > Math.abs(ydis))
+                if(Math.abs(xdis)> 1 || Math.abs(ydis)> 1)//moves to one spot awway
                 {
-                    XorY="X";
-                }
-                else
+                    if(Math.abs(xdis) > Math.abs(ydis))
+                    {
+                        XorY="X";
+                    }
+                    else
+                    {
+                        XorY="Y";
+                    }
+                if("X".equals(XorY) && xdis > 1)//need to go left
                 {
-                    XorY="Y";
-                }
-        
-                if("X".equals(XorY) && xdis >= 0)
+                    if(this.canMove(Constants.Direction.LEFT,mapGrid,entityGrid))
+                    {
+                        d = Constants.Direction.LEFT;//try to go left
+                        moved = true;
+                    }
+                    else if (this.canMove(Constants.Direction.UP_LEFT,mapGrid,entityGrid))
+                    {
+                        d = Constants.Direction.UP_LEFT;//if something in the way try to go around
+                        moved = true;
+                    }
+                    else if (this.canMove(Constants.Direction.DOWN_LEFT,mapGrid,entityGrid))
+                    {
+                        d = Constants.Direction.DOWN_LEFT;//try to go around
+                        moved = true;
+                    }
+                    if(!moved)
+                    {
+                        int i;
+                        int k;
+                        for(i =0; i < 5; i++)//try to go around large obstacle
+                        {
+                            if(mapGrid[this.cX-1][this.cY-i]== Constants.MapGridCode.FLOOR)
+                            {
+                               // d = Constants.Direction.DOWN;
+                                break;
+                            }
+                        }
+                        for (k = 0; k < 5; k++ )
+                            if(mapGrid[this.cX-1][this.cY+k]== Constants.MapGridCode.FLOOR)
+                            {
+                                //d = Constants.Direction.UP;
+                                break;
+                            }
+                        if(i<k)
+                        {
+                            d = Constants.Direction.UP;
+                        }
+                        else
+                        {
+                            d = Constants.Direction.DOWN;
+                        }
+                        }
+                    }
+                //end try to go left
+                if("X".equals(XorY) && xdis < 1)//need to go right
                 {
-                    d = Constants.Direction.LEFT;
-                }
-        
-            if("X".equals(XorY) && xdis < 0)
-            {
-                d = Constants.Direction.RIGHT;
-            }
-            if("Y".equals(XorY) && ydis >= 0)
-            {
-                d = Constants.Direction.DOWN;
-            }
-        
-            if("Y".equals(XorY) && ydis < 0)
-            {
-                d = Constants.Direction.UP;
-            }
-        
-            tries++;
-            if(tries > 5){
-                this.setTurnAction(Constants.TurnAction.NONE);
-                this.addAction(this.finishTurn());
-                return;
-            }
-        }//end while
-   
-        this.setTurnAction(Constants.TurnAction.MOVE);
-             }//end if active
-        else if (active && (xdis <= 1 && ydis <= 1))
-        {
-           this.setTurnAction(Constants.TurnAction.ATTACK);
+                    if(this.canMove(Constants.Direction.RIGHT,mapGrid,entityGrid))
+                    {
+                        d = Constants.Direction.RIGHT;//try right
+                        moved = true;
+                    }
+                    else if (this.canMove(Constants.Direction.UP_RIGHT,mapGrid,entityGrid))
+                    {
+                        d = Constants.Direction.UP_RIGHT;//go around
+                        moved = true;
+                    }
+                    else if (this.canMove(Constants.Direction.DOWN_RIGHT,mapGrid,entityGrid))
+                    {
+                        d = Constants.Direction.DOWN_RIGHT;//go around
+                        moved = true;
+                    }
+                    if(!moved)
+                    {
+                        int i;
+                        int k;
+                        for(i =0; i < 5; i++)//try to go around large obstacle
+                        {
+                            if(mapGrid[this.cX-1][this.cY-i]== Constants.MapGridCode.FLOOR)
+                            {
+                               // d = Constants.Direction.DOWN;
+                                break;
+                            }
+                        }
+                        for (k = 0; k < 5; k++ )
+                            if(mapGrid[this.cX-1][this.cY+k]== Constants.MapGridCode.FLOOR)
+                            {
+                                //d = Constants.Direction.UP;
+                                break;
+                            }
+                        if(i<k)
+                        {
+                            d = Constants.Direction.UP;
+                        }
+                        else
+                        {
+                            d = Constants.Direction.DOWN;
+                        }
+                        }
+                }//end go right
+                if("Y".equals(XorY) && ydis > 1)//need to go down
+                {
+                    if(this.canMove(Constants.Direction.DOWN,mapGrid,entityGrid))
+                    {
+                        d = Constants.Direction.DOWN;//try down
+                        moved = true;
+                    }
+                    else if (this.canMove(Constants.Direction.DOWN_LEFT,mapGrid,entityGrid))
+                    {
+                        d = Constants.Direction.DOWN_LEFT;//go around
+                        moved = true;
+                    }
+                    else if (this.canMove(Constants.Direction.DOWN_RIGHT,mapGrid,entityGrid))
+                    {
+                        d = Constants.Direction.DOWN_RIGHT;//go aroud
+                        moved = true;
+                    }
+                    if(!moved)
+                    {
+                        int i;
+                        int k;
+                        for(i =0; i < 5; i++)//try to go around large obstacle
+                        {
+                            if(mapGrid[this.cX-i][this.cY-1]== Constants.MapGridCode.FLOOR)
+                            {
+                               // d = Constants.Direction.DOWN;
+                                break;
+                            }
+                        }
+                        for (k = 0; k < 5; k++ )
+                            if(mapGrid[this.cX+k][this.cY-1]== Constants.MapGridCode.FLOOR)
+                            {
+                                //d = Constants.Direction.UP;
+                                break;
+                            }
+                        if(i<k)
+                        {
+                            d = Constants.Direction.RIGHT;
+                        }
+                        else
+                        {
+                            d = Constants.Direction.LEFT;
+                        }
+                        }
+                }//end down
+                if("Y".equals(XorY) && ydis < 1)//need to go up
+                {
+                    if(this.canMove(Constants.Direction.UP,mapGrid,entityGrid))
+                    {
+                        d = Constants.Direction.UP;//try up
+                        moved = true;
+                    }
+                    else if (this.canMove(Constants.Direction.UP_LEFT,mapGrid,entityGrid))
+                    {
+                        d = Constants.Direction.UP_LEFT;//go around
+                        moved = true;
+                    }
+                    else if (this.canMove(Constants.Direction.UP_RIGHT,mapGrid,entityGrid))
+                    {
+                        d = Constants.Direction.UP_RIGHT;//go around
+                        moved = true;
+                    }
+                    if(!moved)
+ {
+                        int i;
+                        int k;
+                        for(i =0; i < 5; i++)//try to go around large obstacle
+                        {
+                            if(mapGrid[this.cX-i][this.cY-1]== Constants.MapGridCode.FLOOR)
+                            {
+                               // d = Constants.Direction.DOWN;
+                                break;
+                            }
+                        }
+                        for (k = 0; k < 5; k++ )
+                            if(mapGrid[this.cX+k][this.cY-1]== Constants.MapGridCode.FLOOR)
+                            {
+                                //d = Constants.Direction.UP;
+                                break;
+                            }
+                        if(i<k)
+                        {
+                            d = Constants.Direction.RIGHT;
+                        }
+                        else
+                        {
+                            d = Constants.Direction.LEFT;
+                        }
+                        }
+                }//end up
+                        this.setTurnAction(Constants.TurnAction.MOVE);
+                }//end move to one spot away
+                if(Math.abs(xdis) <=1 && Math.abs(ydis) <=1)
+                {
+                   this.setTurnAction(Constants.TurnAction.ATTACK);
 
-        }
-    }
+                }                            
+                   
+            }//end if active
+             }//end function
+
 }
