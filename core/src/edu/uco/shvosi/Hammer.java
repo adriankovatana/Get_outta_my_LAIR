@@ -29,6 +29,8 @@ public class Hammer extends Antagonist {
     public Hammer(int cX, int cY) {
         super(Constants.EnemyType.HAMMER, TextureLoader.HAMMERTETEXTURE, cX, cY);
         this.name = "Hammer";
+        health = 30;
+        maxHealth = 30;
         hammerWalk = TextureLoader.hammerWalk;
         hammerAttack = TextureLoader.hammerAttack;
         this.damage = damage;
