@@ -59,4 +59,10 @@
    <property name="Trap5" value="4"/>
   </properties>
  </tile>
+ <tile id="33">
+  <properties>
+   <property name="Blocker" value="6"/>
+   <property name="TRAP" value="4"/>
+  </properties>
+ </tile>
 </tileset>
