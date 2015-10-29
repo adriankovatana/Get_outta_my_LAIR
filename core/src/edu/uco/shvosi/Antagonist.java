@@ -1,5 +1,6 @@
 package edu.uco.shvosi;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -20,6 +21,8 @@ public class Antagonist extends Entity {
     protected float elapsedWalk;
     protected Animation attackAnimation;
     protected float elapsedAttack;
+    protected Animation deathAnimation;
+    protected float elapsedDeath;
     protected int damage;
     protected TextureRegion healthbarBackground;
     protected TextureRegion healthbarFill;
@@ -36,13 +39,19 @@ public class Antagonist extends Entity {
         this.elapsedAttack = 0f;
         this.healthbarBackground = new TextureRegion(TextureLoader.HPBARBACKGROUND);
         this.healthbarFill = new TextureRegion(TextureLoader.HPBARFILL);
+        this.deathAnimation = TextureLoader.death;
     }
-    
+
     @Override
     public void draw(Batch batch, float alpha) {
         super.draw(batch, alpha);
-        batch.draw(healthbarBackground, this.getX()+10, this.getY());
-        batch.draw(healthbarFill, this.getX()+11, this.getY()+1, healthbarFill.getRegionWidth()*((float)health/(float)maxHealth), healthbarFill.getRegionHeight());
+        batch.draw(healthbarBackground, this.getX() + 10, this.getY());
+        batch.draw(healthbarFill, this.getX() + 11, this.getY() + 1, healthbarFill.getRegionWidth() * ((float) health / (float) maxHealth), healthbarFill.getRegionHeight());
+        if (this.isDead()) {
+            elapsedDeath += Gdx.graphics.getDeltaTime();
+            batch.draw(deathAnimation.getKeyFrame(elapsedDeath), this.getX(), this.getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
+        }
+
     }
 
     @Override
@@ -60,9 +69,8 @@ public class Antagonist extends Entity {
                 break;
         }
     }
-    
-    public void setBoundingBox(int size)
-    {
+
+    public void setBoundingBox(int size) {
         Rectangle box = new Rectangle(getCX(), getCY(), size, size);
     }
 
@@ -92,7 +100,7 @@ public class Antagonist extends Entity {
     public void attackAction() {
         //Do Stuffs
     }
-    
+
     public void moveAction() {
         MoveToAction moveAction = new MoveToAction();
         moveAction.setPosition((float) (this.getCX() * Constants.TILEDIMENSION),
@@ -101,7 +109,7 @@ public class Antagonist extends Entity {
         this.addAction(sequence(moveAction, finishTurn()));
         this.moving = true;
     }
-    
+
     public Action attackAnimation() {
         return new Action() {
             @Override
@@ -113,7 +121,7 @@ public class Antagonist extends Entity {
             }
         };
     }
-    
+
     public Action movingAnimation() {
         return new Action() {
             @Override
@@ -138,15 +146,15 @@ public class Antagonist extends Entity {
         };
     }
 
-    public void calculateTurn(Constants.MapGridCode[][] mapGrid, 
+    public void calculateTurn(Constants.MapGridCode[][] mapGrid,
             Constants.EntityGridCode[][] entityGrid, List<Entity> entityList) {
     }
-    
+
     public DamageEntity[] getDamageEntities() {
         //Return damage entities to the engine to be placed
         return null;
     }
-    
+
     protected boolean canMove(Constants.Direction direction, Constants.MapGridCode[][] mapGrid, Constants.EntityGridCode[][] entityGrid) {
         if (direction == Constants.Direction.UP) {
             if (this.getCY() == mapGrid[0].length - 1) {
@@ -185,36 +193,57 @@ public class Antagonist extends Entity {
                 return true;
             }
         } else if (direction == Constants.Direction.UP_RIGHT) {
-            if (mapGrid[this.getCX() + 1][this.getCY()+1] == Constants.MapGridCode.FLOOR
+            if (mapGrid[this.getCX() + 1][this.getCY() + 1] == Constants.MapGridCode.FLOOR
                     && entityGrid[this.getCX() + 1][this.getCY()] == Constants.EntityGridCode.NONE) {
                 this.setCX(this.getCX() + 1);
-                this.setCY(this.getCY() +1);
+                this.setCY(this.getCY() + 1);
                 return true;
             }
-        }else if (direction == Constants.Direction.DOWN_RIGHT) {
-            if (mapGrid[this.getCX() + 1][this.getCY()-1] == Constants.MapGridCode.FLOOR
+        } else if (direction == Constants.Direction.DOWN_RIGHT) {
+            if (mapGrid[this.getCX() + 1][this.getCY() - 1] == Constants.MapGridCode.FLOOR
                     && entityGrid[this.getCX() + 1][this.getCY()] == Constants.EntityGridCode.NONE) {
                 this.setCX(this.getCX() + 1);
-                this.setCY(this.getCY() -1);
+                this.setCY(this.getCY() - 1);
                 return true;
             }
-        }else if (direction == Constants.Direction.UP_LEFT) {
-            if (mapGrid[this.getCX() - 1][this.getCY()+1] == Constants.MapGridCode.FLOOR
+        } else if (direction == Constants.Direction.UP_LEFT) {
+            if (mapGrid[this.getCX() - 1][this.getCY() + 1] == Constants.MapGridCode.FLOOR
                     && entityGrid[this.getCX() + 1][this.getCY()] == Constants.EntityGridCode.NONE) {
                 this.setCX(this.getCX() - 1);
-                this.setCY(this.getCY() +1);
+                this.setCY(this.getCY() + 1);
                 return true;
             }
-        }else if (direction == Constants.Direction.DOWN_LEFT) {
-            if (mapGrid[this.getCX() - 1][this.getCY()- 1] == Constants.MapGridCode.FLOOR
+        } else if (direction == Constants.Direction.DOWN_LEFT) {
+            if (mapGrid[this.getCX() - 1][this.getCY() - 1] == Constants.MapGridCode.FLOOR
                     && entityGrid[this.getCX() + 1][this.getCY()] == Constants.EntityGridCode.NONE) {
                 this.setCX(this.getCX() - 1);
                 this.setCY(this.getCY() - 1);
                 return true;
             }
-        }else {
+        } else {
             // No direction
         }
         return false;
+    }
+
+    @Override
+    public void performDeath() {
+        this.addAction(deathAnimation());
+    }
+
+    public Action deathAnimation() {
+        return new Action() {
+            @Override
+            public boolean act(float delta) {
+                //Temp death
+                if (deathAnimation.isAnimationFinished(elapsedDeath)) {
+                    Antagonist.this.remove();
+                    Antagonist.this.setTurnFinished(true);
+                    Antagonist.this.turnAction = Constants.TurnAction.NONE;
+                    return true;
+                }
+                return false;
+            }
+        };
     }
 }

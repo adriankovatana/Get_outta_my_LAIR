@@ -33,7 +33,7 @@ public class Protagonist extends Entity implements Observable {
     public int lightningInfusionCooldown = 0;
     public int redLaserCooldown = 0;
     private Constants.MapGridCode[][] currentMap;
-    
+
     public SequenceAction seqAction;
     private TextureRegion healthbarBackground;
     private TextureRegion healthbarFill;
@@ -52,11 +52,12 @@ public class Protagonist extends Entity implements Observable {
     private int poisonCounter = 0;
     private int transformCounter = 0;
     private Animation jump;
+    private Animation death;
+    private TextureRegion temp;
     private float elapsedJump = 0f;
-    private TextureRegion tempJump;
+    private float elapsedDeath = 0f;
     private Animation smoke;
     private float elapsedSmoke = 0f;
-    private TextureRegion tempSmoke;
     private boolean smokeStart = true;
     private boolean executeDetection;
     private boolean executeBarrier;
@@ -98,10 +99,11 @@ public class Protagonist extends Entity implements Observable {
 
         jump = TextureLoader.jump;
         smoke = TextureLoader.smokeTrap;
-        
+        death = TextureLoader.bernardDeath;
+
         greyKey = false;
         redKey = false;
-        
+
         seqAction = new SequenceAction();
         healthbarBackground = new TextureRegion(TextureLoader.HPBARBACKGROUND);
         healthbarFill = new TextureRegion(TextureLoader.HPBARFILL);
@@ -185,7 +187,8 @@ public class Protagonist extends Entity implements Observable {
         }
         redLaserCooldown--;
         barrierCooldown--;
-        lightningInfusionCooldown--;}
+        lightningInfusionCooldown--;
+    }
 
     @Override
     public void draw(Batch batch, float alpha) {
@@ -198,6 +201,44 @@ public class Protagonist extends Entity implements Observable {
             }
             skills.get("Light Barrier").draw(batch, alpha, this);
         }
+
+        if (transformCounter >= 2 && transform == true) {
+            if (smokeStart == true) {
+                elapsedSmoke += Gdx.graphics.getDeltaTime();
+                batch.draw(smoke.getKeyFrame(elapsedSmoke), this.getX(), this.getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
+                if (smoke.isAnimationFinished(elapsedSmoke)) {
+                    smokeStart = false;
+                }
+            }
+            elapsedJump += Gdx.graphics.getDeltaTime();
+            batch.draw(jump.getKeyFrame(elapsedJump), this.getX(), this.getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
+            if (jump.isAnimationFinished(elapsedJump)) {
+                elapsedJump = 0f;
+            }
+            if (transformCounter == 4) {
+                elapsedSmoke = 0f;
+                smokeStart = true;
+                transform = false;
+                transformCounter = 0;
+            }
+        } else if (this.isDead()) {
+            elapsedDeath += Gdx.graphics.getDeltaTime();
+            if (this.textureRegion.isFlipX()) {
+                temp = death.getKeyFrame(elapsedDeath);
+                temp.flip(true, false);
+                batch.draw(death.getKeyFrame(elapsedDeath), this.getX() + 6, this.getY(), Constants.TILEDIMENSION - 2, Constants.TILEDIMENSION - 12);
+                temp.flip(true, false);
+            } else {
+                batch.draw(death.getKeyFrame(elapsedDeath), this.getX() - 6, this.getY(), Constants.TILEDIMENSION - 2, Constants.TILEDIMENSION - 12);
+            }
+        } else {
+            super.draw(batch, alpha);
+        }
+
+        if (this.activeSkill != null) {
+            this.activeSkill.draw(batch, alpha, this);
+        }
+
         if (executeBarrier == true) {
             if (barrierLimit == 3) {
                 TextureLoader.barrierSkill.setFrameDuration(.02f);
@@ -209,37 +250,6 @@ public class Protagonist extends Entity implements Observable {
                 TextureLoader.barrierSkill.setFrameDuration(.07f);
             }
             skills.get("Barrier").draw(batch, alpha, this);
-        }
-
-        if (transformCounter >= 2 && transform == true) {
-            if (smokeStart == true) {
-                elapsedSmoke += Gdx.graphics.getDeltaTime();
-                tempSmoke = smoke.getKeyFrame(elapsedSmoke);
-                batch.draw(smoke.getKeyFrame(elapsedSmoke), this.getX(), this.getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
-                if (smoke.isAnimationFinished(elapsedSmoke)) {
-                    smokeStart = false;
-                }
-            }
-            elapsedJump += Gdx.graphics.getDeltaTime();
-            tempJump = jump.getKeyFrame(elapsedJump);
-            batch.draw(jump.getKeyFrame(elapsedJump), this.getX(), this.getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
-            if (jump.isAnimationFinished(elapsedJump)) {
-                elapsedJump = 0f;
-            }
-            if (transformCounter == 4) {
-                elapsedSmoke = 0f;
-                smokeStart = true;
-                transform = false;
-                transformCounter = 0;
-            }
-        } else {
-            super.draw(batch, alpha);
-        }
-
-        if (this.isDead()) {
-            // Draw death animation
-        } else if (this.activeSkill != null) {
-            this.activeSkill.draw(batch, alpha, this);
         }
 
         if (poisonCounter >= 2 && poison == true) {
@@ -278,10 +288,10 @@ public class Protagonist extends Entity implements Observable {
                 smokeParticle.reset();
             }
         }
-        
+
         //HP BAR
-        batch.draw(healthbarBackground, this.getX()+10, this.getY());
-        batch.draw(healthbarFill, this.getX()+11, this.getY()+1, healthbarFill.getRegionWidth()*((float)health/(float)maxHealth), healthbarFill.getRegionHeight());
+        batch.draw(healthbarBackground, this.getX() + 10, this.getY());
+        batch.draw(healthbarFill, this.getX() + 11, this.getY() + 1, healthbarFill.getRegionWidth() * ((float) health / (float) maxHealth), healthbarFill.getRegionHeight());
     }
 
     @Override
@@ -357,11 +367,10 @@ public class Protagonist extends Entity implements Observable {
         moveAction.setPosition((float) (this.getCX() * Constants.TILEDIMENSION),
                 (float) (this.getCY() * Constants.TILEDIMENSION));
         moveAction.setDuration(Constants.MOVEACTIONDURATION);
-        if(sliding){
+        if (sliding) {
             seqAction.addAction(moveAction);
             sliding = false;
-        }
-        else{
+        } else {
             seqAction.addAction(moveAction);
             //seqAction.addAction(finishTurn());
             this.addAction(seqAction);
@@ -474,14 +483,13 @@ public class Protagonist extends Entity implements Observable {
             @Override
             public boolean act(float delta) {
                 //Temp death
-                Protagonist.this.remove();
-                Protagonist.this.setTurnFinished(true);
-                Protagonist.this.turnAction = Constants.TurnAction.NONE;
-                return true;
-                /*if (this.deathAnimation.isAnimationFinished()) {
-                 return true;
-                 }*/
-                //return false;
+                if (death.isAnimationFinished(elapsedDeath)) {
+                    Protagonist.this.remove();
+                    Protagonist.this.setTurnFinished(true);
+                    Protagonist.this.turnAction = Constants.TurnAction.NONE;
+                    return true;
+                }
+                return false;
             }
         };
     }
@@ -512,8 +520,9 @@ public class Protagonist extends Entity implements Observable {
         return new Action() {
             @Override
             public boolean act(float delta) {
-                if(Protagonist.this.getActions().size > 1)
+                if (Protagonist.this.getActions().size > 1) {
                     return false;
+                }
                 Protagonist.this.setTurnFinished(true);
                 Protagonist.this.turnAction = Constants.TurnAction.NONE;
                 return true;
@@ -611,7 +620,7 @@ public class Protagonist extends Entity implements Observable {
     void setSliding(boolean b) {
         this.sliding = b;
     }
-    
+
     boolean getSliding() {
         return sliding;
     }
@@ -619,14 +628,17 @@ public class Protagonist extends Entity implements Observable {
     void setRedKey(boolean b) {
         redKey = b;
     }
+
     void setGreyKey(boolean b) {
         greyKey = b;
     }
+
     boolean getRedKey() {
         return redKey;
     }
+
     boolean getGreyKey() {
         return greyKey;
     }
-    
+
 }

@@ -17,6 +17,7 @@ public class TextureLoader {
     public static final Texture DORABERNARDJUMPTEXTURE = new Texture(Gdx.files.internal("characters/doraJump.png"));
     public static final Texture BERNARDSHIELDTEXTURE = new Texture(Gdx.files.internal("characters/bernard_shield.png"));
     public static final Texture BERNARDGLANCETEXTURE = new Texture(Gdx.files.internal("characters/bernard_sheet.png"));
+    public static final Texture BERNARDDEATHTEXTURE = new Texture(Gdx.files.internal("characters/bernard_death.png"));
     public static final Texture HEALTHTEXTURE = new Texture(Gdx.files.internal("items/health.png"));
     public static final Texture REDLASERTEXTURE = new Texture(Gdx.files.internal("RedLaserAnimation.png"));
     public static final Texture DETECTIONTEXTURE = new Texture(Gdx.files.internal("detection.png"));
@@ -31,12 +32,14 @@ public class TextureLoader {
     private TextureRegion[] healFrames;
     private TextureRegion[] jumpFrames;
     private TextureRegion[] lightBarrierFrames;
+    private TextureRegion[] bernardDeathFrames;
     private Array<TextureRegion> laserFrames;
     private Array<TextureRegion> lightFrames;
     private Array<TextureRegion> skillOneFrames;
     private Array<TextureRegion> bernardGlanceFrames;
 
     public static Animation bernardGlance;
+    public static Animation bernardDeath;
     public static Animation redLaser;
     public static Animation skillOne;
     public static Animation skillTwo;
@@ -76,7 +79,7 @@ public class TextureLoader {
     public static final Texture GREYGATERTEXTURE = new Texture(Gdx.files.internal("colemap/greygater.png"));
     public static final Texture REDGATELTEXTURE = new Texture(Gdx.files.internal("colemap/redgatel.png"));
     public static final Texture REDGATERTEXTURE = new Texture(Gdx.files.internal("colemap/redgater.png"));
-    
+    public static final Texture DEATHTEXTURE = new Texture(Gdx.files.internal("death.png"));
 
     private Array<TextureRegion> catFrames;
     private Array<TextureRegion> hammerFrames;
@@ -92,6 +95,7 @@ public class TextureLoader {
     private Array<TextureRegion> suffragetteFrames;
     private Array<TextureRegion> hammerAttackFrames;
     private Array<TextureRegion> catAttackFrames;
+    private TextureRegion[] deathFrames;
 
     public static Animation catWalk;
     public static Animation blueWalk;
@@ -107,7 +111,7 @@ public class TextureLoader {
     public static Animation suffragetteWalk;
     public static Animation hammerAttack;
     public static Animation catAttack;
-
+    public static Animation death;
     
     //skills
     public static final Texture MELEESKILLTEXTURE = new Texture(Gdx.files.internal("melee_sheet.png"));
@@ -172,6 +176,17 @@ public class TextureLoader {
         }
         bernardGlance = new Animation(0.4f, bernardGlanceFrames, PlayMode.NORMAL);
 
+        //Bernard's Death Animation
+        TextureRegion[][] tmp10 = TextureRegion.split(TextureLoader.BERNARDDEATHTEXTURE, TextureLoader.BERNARDDEATHTEXTURE.getWidth() / 1, TextureLoader.BERNARDDEATHTEXTURE.getHeight() / 5);
+        bernardDeathFrames = new TextureRegion[5 * 1];
+        int index10 = 0;
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 1; j++) {
+                bernardDeathFrames[index10++] = tmp10[i][j];
+            }
+        }
+        bernardDeath = new Animation(0.3f, bernardDeathFrames);
+        
         //Big Ass Laser
         laserFrames = new Array<TextureRegion>(15);
         for (int i = 0; i < 15; i++) {
@@ -254,6 +269,17 @@ public class TextureLoader {
         heal = new Animation(0.02f, healFrames);
 
         //antagonist
+        //Antagonist's Death Animation
+        TextureRegion[][] tmp11 = TextureRegion.split(TextureLoader.DEATHTEXTURE, TextureLoader.DEATHTEXTURE.getWidth() / FRAME_ROWS, TextureLoader.DEATHTEXTURE.getHeight() / FRAME_ROWS);
+        deathFrames = new TextureRegion[FRAME_ROWS * FRAME_ROWS];
+        int index11 = 0;
+        for (int i = 0; i < FRAME_ROWS; i++) {
+            for (int j = 0; j < FRAME_ROWS; j++) {
+                deathFrames[index11++] = tmp11[i][j];
+            }
+        }
+        death = new Animation(0.02f, deathFrames);
+        
         //Antagonist Drunk
         drunkFrames = new Array<TextureRegion>(6);
         for (int i = 0; i < 6; i++) {
@@ -426,6 +452,7 @@ public class TextureLoader {
     public void dispose() {
         SKIN.dispose();
         BERNARDTEXTURE.dispose();
+        BERNARDDEATHTEXTURE.dispose();
         DORABERNARDJUMPTEXTURE.dispose();
         WANDERTEXTURE.dispose();
         DRUNKTEXTURE.dispose();
@@ -446,6 +473,7 @@ public class TextureLoader {
         REDLASERTEXTURE.dispose();
         SKILLONETEXTURE.dispose();
         BLANKTEXTURE.dispose();
+        DEATHTEXTURE.dispose();
         CATTYTEXTURE.dispose();
         CATLADYTEXTURE.dispose();
         WANDERATTACKTEXTURE.dispose();
