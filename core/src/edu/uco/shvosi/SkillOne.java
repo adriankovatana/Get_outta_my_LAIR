@@ -22,7 +22,8 @@ class SkillOne extends Skill {
     public SkillOne() {
         super(0, 0, TextureLoader.skillOne,
                 Gdx.audio.newSound(Gdx.files.internal("sounds/skill1.mp3")));
-        this.damage = 10;
+        this.baseDamage = 10;
+        this.damage = this.baseDamage;
         this.width = 2;
 
         this.damageEntities.add(new DamageEntity(0, 0, this.damage));

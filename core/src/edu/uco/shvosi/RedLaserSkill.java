@@ -22,7 +22,8 @@ class RedLaserSkill extends Skill {
     public RedLaserSkill() {
         super(0, 0, TextureLoader.redLaser,
                 Gdx.audio.newSound(Gdx.files.internal("sounds/attack.mp3")));
-        this.damage = 20;
+        this.baseDamage = 20;
+        this.damage = this.baseDamage;
         this.width = 3;
 
         this.damageEntities.add(new DamageEntity(0, 0, this.damage));

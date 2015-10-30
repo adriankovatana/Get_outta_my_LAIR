@@ -26,7 +26,8 @@ class SkillTwo extends Skill {
     public SkillTwo() {
         super(0, 0, TextureLoader.skillTwo,
                 Gdx.audio.newSound(Gdx.files.internal("sounds/skill2.mp3")));
-        this.damage = 5;
+        this.baseDamage = 5;
+        this.damage = this.baseDamage;
         rotation = 0f;
         width = 2;
 

@@ -34,6 +34,8 @@ public class Wanderer extends Antagonist {
         melee = new DamageEntity(0,0,this.damage);
         
         this.name = "Wanderer";
+        
+        this.xpValue = 10000;
 
     }
 

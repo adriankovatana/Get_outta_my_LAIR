@@ -1,16 +1,24 @@
 package edu.uco.shvosi;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Action;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +26,12 @@ import java.util.List;
 
 public class Protagonist extends Entity implements Observable {
 
+    private Dialog levelUpDialog;
+
+    public Dialog getLevelUpDialog() {
+        return levelUpDialog;
+    }
+    public boolean choice = true;
     private int health;
     private int maxHealth;
     private Constants.Direction direction;
@@ -33,6 +47,10 @@ public class Protagonist extends Entity implements Observable {
     public int lightningInfusionCooldown = 0;
     public int redLaserCooldown = 0;
     private Constants.MapGridCode[][] currentMap;
+    private int currentXp = 0;
+    private int xpToNextLevel = 100;
+    private int level = 1;
+    private float strengthMod = 1f;
 
     public SequenceAction seqAction;
     private TextureRegion healthbarBackground;
@@ -107,6 +125,36 @@ public class Protagonist extends Entity implements Observable {
         seqAction = new SequenceAction();
         healthbarBackground = new TextureRegion(TextureLoader.HPBARBACKGROUND);
         healthbarFill = new TextureRegion(TextureLoader.HPBARFILL);
+
+        levelUpDialog = new Dialog("Level Up!", TextureLoader.SKIN) {
+
+            @Override
+            public void hide() {
+                this.setVisible(false);
+            }
+
+        }.text("Choose to upgrade Health or Damage").button("Health", new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                Protagonist.this.maxHealth += 10;
+                Protagonist.this.currentXp -= Protagonist.this.xpToNextLevel;
+                Protagonist.this.xpToNextLevel *= 1.2f;
+                Protagonist.this.level++;
+                return true;
+            }
+        }).button("Damage", new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                strengthMod += 0.1f;
+                for (Skill s : Protagonist.this.skills.values()) {
+                    s.setDamage((int) (s.getDamage() * strengthMod));
+                }
+                Protagonist.this.currentXp -= Protagonist.this.xpToNextLevel;
+                Protagonist.this.xpToNextLevel *= 1.2f;
+                Protagonist.this.level++;
+                return true;
+            }
+        });
     }
 
     public void setActiveSkill() {
@@ -639,6 +687,31 @@ public class Protagonist extends Entity implements Observable {
 
     boolean getGreyKey() {
         return greyKey;
+    }
+
+    private void levelUp() {
+
+        //levelUpDialog.setVisible(true);
+        Protagonist.this.maxHealth += 10;
+        strengthMod += 0.1f;
+        for (Skill s : Protagonist.this.skills.values()) {
+            s.setDamage((int) (s.getBaseDamage() * strengthMod));
+        }
+        Protagonist.this.currentXp -= Protagonist.this.xpToNextLevel;
+        Protagonist.this.xpToNextLevel *= 1.2f;
+        Protagonist.this.level++;
+
+    }
+
+    public void addExp(int exp) {
+        this.currentXp += exp;
+        while (this.currentXp >= this.xpToNextLevel) {
+            this.levelUp();
+        }
+    }
+
+    int getLevel() {
+        return this.level;
     }
 
 }

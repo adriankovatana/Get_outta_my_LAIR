@@ -25,6 +25,7 @@ public class CatLady extends Antagonist {
         this.walkAnimation = TextureLoader.catLadyWalk;
         
         this.name = "CatLady";
+        super.xpValue = 100;
 
     }
 

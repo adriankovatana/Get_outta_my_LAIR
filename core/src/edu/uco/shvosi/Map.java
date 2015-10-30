@@ -395,6 +395,8 @@ public class Map {
             tempAntagList.add(new CatAttack(8,22));
             tempAntagList.add(new CatAttack(10,20));
             
+            tempAntagList.add(new Wanderer(9, 4));
+            
 
 
             //tempAntagList.add(new Wanderer(5,7));
