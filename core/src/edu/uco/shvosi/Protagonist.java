@@ -660,4 +660,8 @@ public class Protagonist extends Entity implements Observable {
         return greyKey;
     }
 
+    int getDamage() {
+        return 100;
+    }
+
 }
