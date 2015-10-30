@@ -38,6 +38,7 @@ public class GreyGate extends Antagonist {
                 bernard.setHeldItem(0);
                 GameScreen.invent.setImage(TextureLoader.INVENTORYTEXTURE);
                 this.takeDamage(100000);
+                this.setVisible(false);
 
             }
         }
