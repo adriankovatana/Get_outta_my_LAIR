@@ -7,9 +7,15 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class GameScreen implements Screen {
 
@@ -19,6 +25,7 @@ public class GameScreen implements Screen {
     private OrthographicCamera camera;
     private Map map;
     private Stage stage;
+    private Stage inventory;
     private String healthpoints;
     private Label healthLabel;
     public static Inventory invent;
@@ -207,6 +214,28 @@ public class GameScreen implements Screen {
                     map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
                     map.bernard.setActiveSkill();
                     map.bernard.attackAction();
+                }
+                if (Gdx.input.isKeyJustPressed(Keys.I)) {
+                    final Dialog dialog = new Dialog("Bernard", TextureLoader.SKIN, "dialog") {
+                        public void result(Object obj) {
+                            System.out.println("result "+obj);
+                        }
+                    };
+                    TextButton button = new TextButton("Close", TextureLoader.SKIN, "default");
+                    button.setWidth(200);
+                    button.setHeight(50);
+                    String health = "Health: " + Integer.toString(map.bernard.getHealth()) + "/" + Integer.toString(map.bernard.getHealth());
+                    String damage = "Damage: " + Integer.toString(map.bernard.getDamage());
+                    dialog.text(health);
+                    dialog.text(damage);
+                    dialog.add(button);
+                    dialog.show(stage);  
+                    button.addListener(new ClickListener() {
+                        public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                            dialog.remove();
+                            return true;                         
+                        }
+                    });                 
                 }
             }
         }
