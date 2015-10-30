@@ -26,6 +26,7 @@ public class Antagonist extends Entity {
     protected int damage;
     protected TextureRegion healthbarBackground;
     protected TextureRegion healthbarFill;
+    protected int xpValue;
 
     public Antagonist(Constants.EnemyType enemyType, Texture texture, int cX, int cY) {
         super(Constants.EntityGridCode.ENEMY, texture, cX, cY);
@@ -40,6 +41,7 @@ public class Antagonist extends Entity {
         this.healthbarBackground = new TextureRegion(TextureLoader.HPBARBACKGROUND);
         this.healthbarFill = new TextureRegion(TextureLoader.HPBARFILL);
         this.deathAnimation = TextureLoader.death;
+        this.xpValue = 0;
     }
 
     @Override
@@ -245,5 +247,9 @@ public class Antagonist extends Entity {
                 return false;
             }
         };
+    }
+
+    int getXpValue() {
+        return xpValue;
     }
 }

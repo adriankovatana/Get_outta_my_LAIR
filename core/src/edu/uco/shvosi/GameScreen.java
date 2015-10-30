@@ -258,6 +258,13 @@ public class GameScreen implements Screen {
             Entity aggressor = map.getEntityList().get(i);
 
             if (aggressor.isDead()) {
+                if(activeEntity instanceof Protagonist && aggressor instanceof Antagonist)
+                {
+                    Antagonist ant;
+                    ant = (Antagonist) aggressor;
+                    
+                    map.bernard.addExp(ant.getXpValue());
+                }
                 aggressor.performDeath();
                 map.removeEntityFromGrid(aggressor);
                 map.getEntityList().remove(i);
@@ -311,7 +318,7 @@ public class GameScreen implements Screen {
         healthpoints = "HP: " + map.bernard.getHealth();
         healthLabel.setX(map.bernard.getX() + 20);
         healthLabel.setY(map.bernard.getY() + Constants.SCREENHEIGHT / 2);
-        healthLabel.setText(healthpoints);
+        healthLabel.setText("Level: " + map.bernard.getLevel() + "    " + healthpoints);
 
         //temporary inventory display
         invent.setX(map.bernard.getX() - Constants.SCREENWIDTH / 2 + map.bernard.getWidth() * 0.75f);
@@ -387,7 +394,7 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
         // called when this screen is set as the screen with game.setScreen();
-        Gdx.input.setInputProcessor(stage);
+        
         batch = new SpriteBatch();
 
         //Initialize Camera
@@ -404,6 +411,10 @@ public class GameScreen implements Screen {
         turnLabel = new Label("", TextureLoader.SKIN);
 
         initNewLevel();
+        
+        map.bernard.getLevelUpDialog().show(stage);
+        map.bernard.getLevelUpDialog().setVisible(false);
+        Gdx.input.setInputProcessor(stage);
 
         turnCount = 0;
     }

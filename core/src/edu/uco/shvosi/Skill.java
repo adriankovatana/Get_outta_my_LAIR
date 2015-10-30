@@ -28,6 +28,11 @@ public class Skill{
     protected Animation animation;
     protected Sound sound;
     protected int damage;
+    protected int baseDamage;
+
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
     protected List<DamageEntity> damageEntities;
     protected int width;
     protected int height;
@@ -96,5 +101,9 @@ public class Skill{
         else
             batch.draw(animation.getKeyFrame(elapsed), entity.getX() + Constants.TILEDIMENSION, entity.getY(), Constants.TILEDIMENSION * width, Constants.TILEDIMENSION * height);
 
+    }
+
+    public int getBaseDamage() {
+        return baseDamage;
     }
 }
