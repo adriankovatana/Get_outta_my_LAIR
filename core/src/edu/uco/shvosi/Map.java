@@ -399,7 +399,7 @@ public class Map {
             
 
 
-            tempAntagList.add(new Suffragette(5,7,Constants.Direction.UP,4));
+            tempAntagList.add(new Suffragette(5,7,Constants.Direction.UP,2));
             //tempAntagList.add(new Wreker(9,7));
             //tempAntagList.add(new CatAttack(8,5));
 

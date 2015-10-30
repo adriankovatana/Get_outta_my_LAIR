@@ -16,9 +16,13 @@ public class Suffragette extends Antagonist {
     private int begY;
     private int goToX;
     private int goToY;
+    private int targetX;
+    private int targetY;
     private Constants.Direction direction;
+    private Constants.Direction oposite;
     private boolean arrived = false;
     private boolean active = false;
+    private boolean thisWay = true;
     private int distance;
     
 
@@ -37,21 +41,25 @@ public class Suffragette extends Antagonist {
         {
             goToX = cX;
             goToY = cY - distance;
+            oposite = Constants.Direction.UP;
         }
         if (direction == Constants.Direction.UP)
         {
             goToX = cX;
             goToY = cY + distance;
+            oposite = Constants.Direction.DOWN;
         }
         if (direction == Constants.Direction.RIGHT)
         {
             goToX = cX + distance;
             goToY = cY;
+           oposite = Constants.Direction.LEFT;
         }
-        if (direction == Constants.Direction.RIGHT)
+        if (direction == Constants.Direction.LEFT)
         {
             goToX = cX - distance;
             goToY = cY;
+            oposite = Constants.Direction.RIGHT;
         }
     }
 
@@ -89,8 +97,7 @@ public class Suffragette extends Antagonist {
                 if (this.walkAnimation.isAnimationFinished(elapsedTime)) {
                     moving = false;
                     elapsedTime = 0f;
-                }
-               
+                }               
     }
 
     
@@ -100,44 +107,63 @@ public class Suffragette extends Antagonist {
         Constants.Direction d = Constants.Direction.NONE;
 
 
-            if(this.getHealth() < 1000)
+            if(this.health < 1000)
             {
                 active = true;
             }
-        
-            if (active)
-             {
-                 if(cX == goToX && cY == goToY)
-                 {
-                     arrived = true;
-                 }
-                 if(!arrived)
-                 {
-                    d = this.direction;
-                    this.setTurnAction(Constants.TurnAction.MOVE);
-                 }
-                 if (arrived && (goToX != begX || goToY != begY))
-                 {
-                     goToX = begX;
-                     goToY = begY;
-                     arrived = false;
-                     this.setTurnAction(Constants.TurnAction.MOVE);
-                 }
-                 if (arrived && (goToX == begX && goToY == begY))
-                 {
-                     goToX = begX;
-                     goToY = begY;
-                     arrived = false;
-                     active = false;
-                     health = 1000;
-                     this.setTurnAction(Constants.TurnAction.NONE);
-                 }
+            if(active){
+                if(thisWay)//set target
+                {
+                    targetX = goToX;
+                    targetY = goToY;
+                }   
+                else
+                {
+                    targetX = begX;
+                    targetY = begY;
+                }
+                if(this.canMove(direction,mapGrid,entityGrid))
+                    {
+                        d = direction;
+                        this.setTurnAction(Constants.TurnAction.MOVE);
+                    }
+                if(cX == goToX && cY == goToY)
+                {
+                    thisWay = false;//going that way now
+                    reverse();//reverses direction
+                }
+                if(cX == begX && cY == begY)
+                {
+                    thisWay = true;
+                    reverse();
+                    active = false;
+                    health = 1000;
+                }
+                 
                                 
-                //this.setTurnAction(Constants.TurnAction.MOVE);
+               // this.setTurnAction(Constants.TurnAction.MOVE);
              }//end if active
     }
     
-   
+    public void reverse(){
+        if (direction == Constants.Direction.DOWN)
+        {
+            direction = Constants.Direction.UP;
+        }
+        if (direction == Constants.Direction.UP)
+        {
+            direction = Constants.Direction.DOWN;
+        }
+        if (direction == Constants.Direction.RIGHT)
+        {
+           direction = Constants.Direction.LEFT;
+        }
+        if (direction == Constants.Direction.LEFT)
+        {
+            direction = Constants.Direction.RIGHT;
+        }
+    
+    }
     
     @Override
     public void collision(Entity entity) {
