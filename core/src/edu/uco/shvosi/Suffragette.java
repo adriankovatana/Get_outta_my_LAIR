@@ -14,11 +14,12 @@ public class Suffragette extends Antagonist {
     private TextureRegion temp;
     private int begX; 
     private int begY;
+    private int goToX;
+    private int goToY;
     private Constants.Direction direction;
-    private int moveCount = 0;
-
+    private boolean arrived = false;
     private boolean active = false;
-    int distance;
+    private int distance;
     
 
     public Suffragette(int cX, int cY, Constants.Direction d, int distance) {
@@ -32,6 +33,26 @@ public class Suffragette extends Antagonist {
         this.health = 1000;
         this.maxHealth = this.health;
         this.distance = distance;
+        if (direction == Constants.Direction.DOWN)
+        {
+            goToX = cX;
+            goToY = cY - distance;
+        }
+        if (direction == Constants.Direction.UP)
+        {
+            goToX = cX;
+            goToY = cY + distance;
+        }
+        if (direction == Constants.Direction.RIGHT)
+        {
+            goToX = cX + distance;
+            goToY = cY;
+        }
+        if (direction == Constants.Direction.RIGHT)
+        {
+            goToX = cX - distance;
+            goToY = cY;
+        }
     }
 
     @Override
@@ -69,9 +90,7 @@ public class Suffragette extends Antagonist {
                     moving = false;
                     elapsedTime = 0f;
                 }
-            
-         
-        
+               
     }
 
     
@@ -88,38 +107,37 @@ public class Suffragette extends Antagonist {
         
             if (active)
              {
-                while (moveCount < distance)
-                {
+                 if(cX == goToX && cY == goToY)
+                 {
+                     arrived = true;
+                 }
+                 if(!arrived)
+                 {
                     d = this.direction;
-                    moveCount ++;
                     this.setTurnAction(Constants.TurnAction.MOVE);
-                }
-                reverse();
-                moveCount = 0;
-                this.setTurnAction(Constants.TurnAction.MOVE);
+                 }
+                 if (arrived && (goToX != begX || goToY != begY))
+                 {
+                     goToX = begX;
+                     goToY = begY;
+                     arrived = false;
+                     this.setTurnAction(Constants.TurnAction.MOVE);
+                 }
+                 if (arrived && (goToX == begX && goToY == begY))
+                 {
+                     goToX = begX;
+                     goToY = begY;
+                     arrived = false;
+                     active = false;
+                     health = 1000;
+                     this.setTurnAction(Constants.TurnAction.NONE);
+                 }
+                                
+                //this.setTurnAction(Constants.TurnAction.MOVE);
              }//end if active
     }
     
-    public void reverse()
-    {
-        if(direction == Constants.Direction.DOWN)
-        {
-            direction = Constants.Direction.UP;
-        }
-        if(direction == Constants.Direction.UP)
-        {
-            direction = Constants.Direction.DOWN;
-        }   
-        if(direction == Constants.Direction.RIGHT)
-        {
-            direction = Constants.Direction.LEFT;
-        }
-        if(direction == Constants.Direction.LEFT)
-        {
-            direction = Constants.Direction.RIGHT;
-        }
-    }
-    
+   
     
     @Override
     public void collision(Entity entity) {

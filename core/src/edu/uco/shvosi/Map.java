@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -208,6 +209,7 @@ public class Map {
     }
 
     private void initBernard(int cX, int cY) {
+        bernard.seqAction = new SequenceAction();
         bernard.clearActions();
         bernard.setCX(cX);
         bernard.setCY(cY);
@@ -295,8 +297,6 @@ public class Map {
                 break;
             case TRAP5:
                 miscEntityList.add(new TrapType5(cX, cY));
-                break;
-            case SLIDETILE:
                 break;
             case BLOCKER:
                 miscEntityList.add(new Blocker(cX, cY));
@@ -399,7 +399,7 @@ public class Map {
             
 
 
-            //tempAntagList.add(new Wanderer(5,7));
+            tempAntagList.add(new Suffragette(5,7,Constants.Direction.UP,4));
             //tempAntagList.add(new Wreker(9,7));
             //tempAntagList.add(new CatAttack(8,5));
 

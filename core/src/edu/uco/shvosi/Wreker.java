@@ -32,6 +32,8 @@ public class Wreker extends Antagonist {
         this.name = "Wreker";
         wrekerWalk = TextureLoader.wrekerWalk;
         wrekerAttack = TextureLoader.wrekerAttack;
+        health = 70;
+        maxHealth = 70;
       
         this.damage = damage;
         melee = new DamageEntity(0,0,this.damage);

@@ -79,6 +79,7 @@ public class GameScreen implements Screen {
                 map.bernard.setTurnAction(Constants.TurnAction.MOVE);
                 String c = String.valueOf(map.bernard.getTransformCounter());
                 Gdx.app.log("Lose Turn Counter", c);
+                map.playTurn(activeEntity);
             } else {
                 //Movement
                 if (Gdx.input.isKeyJustPressed(Keys.W) && map.bernardCanMove(Constants.Direction.UP)) {
@@ -89,6 +90,7 @@ public class GameScreen implements Screen {
                     map.bernard.setDirection(Constants.Direction.UP);
                     map.bernard.setTurnAction(Constants.TurnAction.MOVE);
                     Gdx.app.log("MOVING", "UP");
+                    map.playTurn(activeEntity);
                 } else if (Gdx.input.isKeyJustPressed(Keys.S) && map.bernardCanMove(Constants.Direction.DOWN)) {
                     //entityTurnInProg = true;
                     //this.playTurn = true;
@@ -97,6 +99,7 @@ public class GameScreen implements Screen {
                     map.bernard.setDirection(Constants.Direction.DOWN);
                     map.bernard.setTurnAction(Constants.TurnAction.MOVE);
                     Gdx.app.log("MOVING", "DOWN");
+                    map.playTurn(activeEntity);
                 } else if (Gdx.input.isKeyJustPressed(Keys.A)) {
                     if (map.bernard.getDirection() != Constants.Direction.LEFT) {
                         map.bernard.flipTexture(Constants.Direction.LEFT);
@@ -109,6 +112,7 @@ public class GameScreen implements Screen {
                         map.bernard.notifyObservers();
                         map.bernard.setTurnAction(Constants.TurnAction.MOVE);
                         Gdx.app.log("MOVING", "LEFT");
+                        map.playTurn(activeEntity);
                     }
                 } else if (Gdx.input.isKeyJustPressed(Keys.D)) {
                     if (map.bernard.getDirection() != Constants.Direction.RIGHT) {
@@ -123,6 +127,7 @@ public class GameScreen implements Screen {
                         map.bernard.notifyObservers();
                         map.bernard.setTurnAction(Constants.TurnAction.MOVE);
                         Gdx.app.log("MOVING", "RIGHT");
+                        map.playTurn(activeEntity);
                     }
                 }
 
@@ -242,7 +247,7 @@ public class GameScreen implements Screen {
         if (roundStarted && activeEntity.turnFinished) {
             activeEntity = map.getEntityList().get(++entityTurn % map.getEntityList().size());
             
-            Gdx.app.log(activeEntity.getName(), activeEntity.cX + "' " + activeEntity.cY);
+            //Gdx.app.log(activeEntity.getName(), activeEntity.cX + "' " + activeEntity.cY);
 
             //If we have reached bernard, the turn is over and set all turnfinished to false;
             if (activeEntity instanceof Protagonist) {
@@ -275,7 +280,7 @@ public class GameScreen implements Screen {
         }
 
         //Add actions to the activeEntity if it just started its turn!
-        if (roundStarted && !activeEntity.hasActions()) {
+        if (roundStarted && !activeEntity.hasActions() && !(activeEntity instanceof Protagonist)) {
             map.playTurn(activeEntity);
             //Gdx.app.log("TURN", activeEntity.getName());
         }

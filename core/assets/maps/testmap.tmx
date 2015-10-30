@@ -159,6 +159,12 @@
     <property name="Trap5" value="4"/>
    </properties>
   </tile>
+  <tile id="33">
+   <properties>
+    <property name="Blocker" value="6"/>
+    <property name="TRAP" value="4"/>
+   </properties>
+  </tile>
  </tileset>
  <layer name="Map" width="50" height="50">
   <data encoding="base64" compression="zlib">
@@ -167,7 +173,7 @@
  </layer>
  <layer name="Entities" width="50" height="50" visible="0">
   <data encoding="base64" compression="zlib">
-   eJzt1kEKwjAQheE5kzfq0qVHMTuzqzu7syc0xYaGmKYzEYTI/8GjFNKYR4qpCAAAAAAAAAAAAABs5pBJEVGOy7PM79fcDYnjtQblOG+Ys/SspYtbxzrDb/y6xxEnbT0sa/nm2d57ePnssfd+LXrrMWVzuuTaUw8n/fdY9sLJ9n8u0mePEk2PoZCSa8gtZAx5hDyz9bSw9Ij7ZNmPuXI/7qynRdqhdu7H9VvPwbjuU3Z/NN5K06HWp+QScpb3+2OhPfNLWr7J0k7/5AVyLYSc
+   eJzt1kEOwiAQhWHO5I26dOlRZCe7urM7OaEQS4J12s6gMcH8XzLpZmjnBRLqHAAAAAAAAAAAAAC8mhQVlX3SujDX1VClX2tQ9gXDO6W1lix+7vWGb/w6xx7v2nJYZvlkbe85gnvPsXa+st5yTIt3+urZUw7v+s+R9yLPGKu+HnNINDkGoSTnVJdUY6pbqvtinhaWHGWfvrUf48o8LeoMW/d+mb/1Hjwo++J+i0iTYSuP5JTq6J7nx0J750ta/snqTP/kAUX0gdw=
   </data>
  </layer>
 </map>

@@ -53,6 +53,9 @@ public class Protagonist extends Entity implements Observable {
     private float strengthMod = 1f;
 
     public SequenceAction seqAction;
+    public Constants.Direction slideDirection;
+    public int slideCounter;
+
     private TextureRegion healthbarBackground;
     private TextureRegion healthbarFill;
 
@@ -123,6 +126,9 @@ public class Protagonist extends Entity implements Observable {
         redKey = false;
 
         seqAction = new SequenceAction();
+        slideDirection = Constants.Direction.NONE;
+        slideCounter = 0;
+
         healthbarBackground = new TextureRegion(TextureLoader.HPBARBACKGROUND);
         healthbarFill = new TextureRegion(TextureLoader.HPBARFILL);
 
@@ -411,19 +417,31 @@ public class Protagonist extends Entity implements Observable {
     }
 
     public void moveAction() {
-        MoveToAction moveAction = new MoveToAction();
+        seqAction.addAction(normalMoveToAction());
+        this.addAction(seqAction);
+    }
+
+    public MoveToAction normalMoveToAction() {
+        MoveToAction moveAction = new MoveToAction() {
+            @Override
+            protected void end() {
+                if (!Protagonist.this.sliding) {
+                    seqAction.addAction(finishTurn());
+                }
+            }
+        };
         moveAction.setPosition((float) (this.getCX() * Constants.TILEDIMENSION),
                 (float) (this.getCY() * Constants.TILEDIMENSION));
         moveAction.setDuration(Constants.MOVEACTIONDURATION);
-        if (sliding) {
-            seqAction.addAction(moveAction);
-            sliding = false;
-        } else {
-            seqAction.addAction(moveAction);
-            //seqAction.addAction(finishTurn());
-            this.addAction(seqAction);
-            this.addAction(finishTurn());
-        }
+        return moveAction;
+    }
+
+    public MoveToAction slideMoveToAction() {
+        MoveToAction moveAction = new MoveToAction();
+        moveAction.setPosition((float) (this.getCX() * Constants.TILEDIMENSION),
+                (float) (this.getCY() * Constants.TILEDIMENSION));
+        moveAction.setDuration(Constants.MOVEACTIONDURATION * slideCounter);
+        return moveAction;
     }
 
     public void attackAction() {
@@ -568,11 +586,12 @@ public class Protagonist extends Entity implements Observable {
         return new Action() {
             @Override
             public boolean act(float delta) {
-                if (Protagonist.this.getActions().size > 1) {
-                    return false;
-                }
+//                if (Protagonist.this.getActions().size > 1) {
+//                    return false;
+//                }
                 Protagonist.this.setTurnFinished(true);
                 Protagonist.this.turnAction = Constants.TurnAction.NONE;
+                Protagonist.this.sliding = false;
                 return true;
             }
         };

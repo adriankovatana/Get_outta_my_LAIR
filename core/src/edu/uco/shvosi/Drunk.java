@@ -25,6 +25,8 @@ public class Drunk extends Antagonist {
     public Drunk(int cX, int cY) {
         super(Constants.EnemyType.DRUNK, TextureLoader.DRUNKTEXTURE, cX, cY);
         drunkWalk = TextureLoader.drunkWalk;
+        health = 30;
+        maxHealth = 30;
 
         this.name = "Drunk";
     }
