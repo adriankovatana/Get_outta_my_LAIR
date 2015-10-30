@@ -224,8 +224,8 @@ public class GameScreen implements Screen {
                     TextButton button = new TextButton("Close", TextureLoader.SKIN, "default");
                     button.setWidth(200);
                     button.setHeight(50);
-                    String health = "Health: " + Integer.toString(map.bernard.getHealth()) + "/" + Integer.toString(map.bernard.getHealth());
-                    String damage = "Damage: " + Integer.toString(map.bernard.getDamage());
+                    String health = "Health: " + Integer.toString(map.bernard.getHealth()) + "/" + Integer.toString(map.bernard.getMaxHealth());
+                    String damage = "Damage: " + Float.toString(map.bernard.getDamage());
                     dialog.text(health);
                     dialog.text(damage);
                     dialog.add(button);
