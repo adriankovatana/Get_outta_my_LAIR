@@ -94,6 +94,7 @@ public class PauseScreen implements Screen {
                 screen.map.dispose();
                 screen.level = 0;
                 screen.game.setScreen(screen.game.startScreen);
+                screen.resume();
                 return true;
             }
         });
