@@ -35,7 +35,7 @@ public class Wanderer extends Antagonist {
         
         this.name = "Wanderer";
         
-        this.xpValue = 10000;
+        this.xpValue = 100;
 
     }
 
