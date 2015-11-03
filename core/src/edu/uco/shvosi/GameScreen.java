@@ -326,7 +326,7 @@ public class GameScreen implements Screen {
 
         //temporary health display
         healthpoints = "HP: " + map.bernard.getHealth();
-        healthLabel.setX(map.bernard.getX() + 20);
+        healthLabel.setX(map.bernard.getX() - 5);
         healthLabel.setY(map.bernard.getY() + Constants.SCREENHEIGHT / 2);
         healthLabel.setText("Level: " + map.bernard.getLevel() + "    " + healthpoints);
 

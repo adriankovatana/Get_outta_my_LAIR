@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
@@ -32,7 +33,7 @@ public class Protagonist extends Entity implements Observable {
     public Dialog getLevelUpDialog() {
         return levelUpDialog;
     }
-    public boolean choice = true;
+    private int levelUpCounter;
     private int health;
     private int maxHealth;
     private Constants.Direction direction;
@@ -136,32 +137,30 @@ public class Protagonist extends Entity implements Observable {
         levelUpDialog = new Dialog("Level Up!", TextureLoader.SKIN) {
 
             @Override
-            public void hide() {
-                this.setVisible(false);
+            protected void result(Object obj) {
+                if (obj.toString() == "true") {
+                    Protagonist.this.maxHealth += 10;
+                } else {
+                    strengthMod += 0.1f;
+                    for (Skill s : Protagonist.this.skills.values()) {
+                        s.setDamage((int) (s.getBaseDamage() * strengthMod));
+                    }
+                }
+                Protagonist.this.levelUpCounter--;
             }
 
-        }.text("Choose to upgrade Health or Damage").button("Health", new InputListener() {
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                Protagonist.this.maxHealth += 10;
-                Protagonist.this.currentXp -= Protagonist.this.xpToNextLevel;
-                Protagonist.this.xpToNextLevel *= 1.2f;
-                Protagonist.this.level++;
-                return true;
-            }
-        }).button("Damage", new InputListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                strengthMod += 0.1f;
-                for (Skill s : Protagonist.this.skills.values()) {
-                    s.setDamage((int) (s.getDamage() * strengthMod));
+            public void hide() {
+                if (levelUpCounter == 0) {
+                    this.setVisible(false);
                 }
-                Protagonist.this.currentXp -= Protagonist.this.xpToNextLevel;
-                Protagonist.this.xpToNextLevel *= 1.2f;
-                Protagonist.this.level++;
-                return true;
             }
-        });
+
+        }
+                .text(
+                        "Choose to upgrade Health or Damage").button("Health", true).button("Damage", false);
+        levelUpDialog.setMovable(
+                false);
     }
 
     public void setActiveSkill() {
@@ -357,10 +356,11 @@ public class Protagonist extends Entity implements Observable {
     public int getHealth() {
         return this.health;
     }
+
     public int getMaxHealth() {
         return this.maxHealth;
     }
-    
+
     public void takeDamage(int damage) {
         if (executeBarrier == true) {
             this.health -= damage / 2;
@@ -712,19 +712,15 @@ public class Protagonist extends Entity implements Observable {
         return greyKey;
     }
 
-
     float getDamage() {
         return strengthMod;
     }
-    
+
     private void levelUp() {
 
-        //levelUpDialog.setVisible(true);
-        Protagonist.this.maxHealth += 10;
-        strengthMod += 0.1f;
-        for (Skill s : Protagonist.this.skills.values()) {
-            s.setDamage((int) (s.getBaseDamage() * strengthMod));
-        }
+        levelUpDialog.setX(this.getX() - levelUpDialog.getWidth() / 2 + this.getWidth() / 2);
+        levelUpDialog.setY(this.getY());
+        levelUpDialog.setVisible(true);
         Protagonist.this.currentXp -= Protagonist.this.xpToNextLevel;
         Protagonist.this.xpToNextLevel *= 1.2f;
         Protagonist.this.level++;
@@ -734,6 +730,7 @@ public class Protagonist extends Entity implements Observable {
     public void addExp(int exp) {
         this.currentXp += exp;
         while (this.currentXp >= this.xpToNextLevel) {
+            levelUpCounter++;
             this.levelUp();
         }
     }
