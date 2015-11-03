@@ -246,30 +246,7 @@ public class GameScreen implements Screen {
 
                     if (Gdx.input.isKeyJustPressed(Keys.I)) {
                         this.pause();
-                        /*                                     
-                         final Dialog dialog = new Dialog("Bernard", TextureLoader.SKIN, "dialog") {
-                         public void result(Object obj) {
-                         System.out.println("result "+obj);
-                         }
-                         };
-                         Drawable emptyslot = new Drawable();
-                         ImageButton button = new ImageButton(TextureLoader.SKIN, "default");
-                         button.setWidth(200);
-                         button.setHeight(50);
-                         String health = "Health: " + Integer.toString(map.bernard.getHealth()) + "/" + Integer.toString(map.bernard.getMaxHealth());
-                         String damage = "Damage: " + Float.toString(map.bernard.getDamage());
-                         dialog.text(health);
-                         dialog.text(damage);
-                         dialog.add(button);
-                         dialog.show(stage);
-                         dialog.setModal(true);
-                         button.addListener(new ClickListener() {
-                         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                         dialog.remove();
-                         return true;                         
-                         }
-                         });                 
-                         */                    }
+                    }
                 }
             }
 
@@ -464,6 +441,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void resume() {
+        Gdx.input.setInputProcessor(stage);
         paused = false;
     }
 
