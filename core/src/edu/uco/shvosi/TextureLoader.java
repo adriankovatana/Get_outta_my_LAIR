@@ -25,7 +25,9 @@ public class TextureLoader {
     public static final Texture BARRIERTEXTURE = new Texture(Gdx.files.internal("barrier.png"));
     public static final Texture HEALTEXTURE = new Texture(Gdx.files.internal("heal.png"));
     public static final Texture LIGHTBARRIERTEXTURE = new Texture(Gdx.files.internal("lightBarrier.png"));
+    public static final Texture ICICLETEXTURE = new Texture(Gdx.files.internal("icicle.png"));
     public static final Texture LIGHTTEXTURE = new Texture(Gdx.files.internal("lightning.png"));
+    public static final Texture LIGHTTEXTURE2 = new Texture(Gdx.files.internal("lightning2.png"));
 
     private TextureRegion[] detectionFrames;
     private TextureRegion[] barrierFrames;
@@ -33,6 +35,8 @@ public class TextureLoader {
     private TextureRegion[] jumpFrames;
     private TextureRegion[] lightBarrierFrames;
     private TextureRegion[] bernardDeathFrames;
+    private TextureRegion[] icicleFrames;
+    private TextureRegion[] light2Frames;
     private Array<TextureRegion> laserFrames;
     private Array<TextureRegion> lightFrames;
     private Array<TextureRegion> skillOneFrames;
@@ -49,7 +53,9 @@ public class TextureLoader {
     public static Animation jump;
     public static Animation lightBarrier;
     public static Animation light;
-    
+    public static Animation icicle;
+    public static Animation light2;
+
     //antagonist
     public static final Texture SUFFERTETEXTURE = new Texture(Gdx.files.internal("characters/blank.png"));
     public static final Texture HAMMERTETEXTURE = new Texture(Gdx.files.internal("characters/blank.png"));
@@ -112,14 +118,14 @@ public class TextureLoader {
     public static Animation hammerAttack;
     public static Animation catAttack;
     public static Animation death;
-    
+
     //skills
     public static final Texture MELEESKILLTEXTURE = new Texture(Gdx.files.internal("melee_sheet.png"));
     public static final Texture BLUESKILLTEXTURE = new Texture(Gdx.files.internal("blue_skill_sheet.png"));
     private Array<TextureRegion> blueSkillFrames;
     private Array<TextureRegion> meleeSkillFrames;
     public static Animation blueSkill;
-    public static Animation meleeSkill;    
+    public static Animation meleeSkill;
     //end skills
 
     //traps and items
@@ -135,13 +141,13 @@ public class TextureLoader {
     public static final Texture REDKEYTEXTURE = new Texture(Gdx.files.internal("colemap/redkey.png"));
     public static final Texture GREYKEYTEXTURE = new Texture(Gdx.files.internal("colemap/greykey.png"));
     public static final Texture BLOCKERTEXTURE = new Texture(Gdx.files.internal("colemap/stop.png"));
-    
+
     public static final Texture INVENTORYTEXTURE = new Texture(Gdx.files.internal("invent/Inventory.png"));
     public static final Texture INVENTORYSHIELDTEXTURE = new Texture(Gdx.files.internal("invent/InventoryShield.png"));
     public static final Texture INVENTORYWHISTLETEXTURE = new Texture(Gdx.files.internal("invent/InventoryWhistle.png"));
     public static final Texture INVENTORYREDKEYTEXTURE = new Texture(Gdx.files.internal("invent/InventoryRedKey.png"));
     public static final Texture INVENTORYGREYKEYTEXTURE = new Texture(Gdx.files.internal("invent/InventoryGreyKey.png"));
-    
+
     private TextureRegion[] kunaiFrames;
     private TextureRegion[] powerFrames;
     private TextureRegion[] smokeFrames;
@@ -150,7 +156,7 @@ public class TextureLoader {
     public static Animation powerTrap;
     public static Animation smokeTrap;
     public static Animation transformTrap;
-    
+
     //slide tiles
     public static final Texture SLIDELEFT = new Texture(Gdx.files.internal("traps/slidetiles/leftarrow.png"));
     public static final Texture SLIDERIGHT = new Texture(Gdx.files.internal("traps/slidetiles/rightarrow.png"));
@@ -160,7 +166,7 @@ public class TextureLoader {
     //UI
     public static final Texture HPBARBACKGROUND = new Texture(Gdx.files.internal("ui/healthbarbackground.png"));
     public static final Texture HPBARFILL = new Texture(Gdx.files.internal("ui/healthbarfill.png"));
-    
+
     private static final int FRAME_COLS = 5;
     private static final int FRAME_ROWS = 4;
     private static final int FRAME_ROWS3 = 3;
@@ -186,7 +192,29 @@ public class TextureLoader {
             }
         }
         bernardDeath = new Animation(0.3f, bernardDeathFrames);
-        
+
+        //Icicle
+        TextureRegion[][] tmp12 = TextureRegion.split(TextureLoader.ICICLETEXTURE, TextureLoader.ICICLETEXTURE.getWidth() / 5, TextureLoader.ICICLETEXTURE.getHeight() / 3);
+        icicleFrames = new TextureRegion[5 * 3];
+        int index12 = 0;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 5; j++) {
+                icicleFrames[index12++] = tmp12[i][j];
+            }
+        }
+        icicle = new Animation(0.05f, icicleFrames);
+
+        //Lightning 2
+        TextureRegion[][] tmp13 = TextureRegion.split(TextureLoader.LIGHTTEXTURE2, TextureLoader.LIGHTTEXTURE2.getWidth() / 5, TextureLoader.LIGHTTEXTURE2.getHeight() / 3);
+        light2Frames = new TextureRegion[5 * 3];
+        int index13 = 0;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 5; j++) {
+                light2Frames[index13++] = tmp13[i][j];
+            }
+        }
+        light2 = new Animation(0.05f, light2Frames);
+
         //Big Ass Laser
         laserFrames = new Array<TextureRegion>(15);
         for (int i = 0; i < 15; i++) {
@@ -279,7 +307,7 @@ public class TextureLoader {
             }
         }
         death = new Animation(0.02f, deathFrames);
-        
+
         //Antagonist Drunk
         drunkFrames = new Array<TextureRegion>(6);
         for (int i = 0; i < 6; i++) {
@@ -344,7 +372,7 @@ public class TextureLoader {
         }
 
         catAttack = new Animation(0.10f, catAttackFrames, PlayMode.LOOP);
-        
+
         //
         //
         //sufferagette
@@ -385,10 +413,10 @@ public class TextureLoader {
         }
 
         meleeAttack = new Animation(0.03f, meleeFrames, PlayMode.NORMAL);
-        
+
         //skills
         //blue
-         blueSkillFrames = new Array<TextureRegion>(12);
+        blueSkillFrames = new Array<TextureRegion>(12);
         for (int i = 0; i < 12; i++) {
             blueSkillFrames.add(new TextureRegion(BLUESKILLTEXTURE, 0, i * 600, 600, 600));
         }
@@ -401,8 +429,7 @@ public class TextureLoader {
         }
 
         meleeSkill = new Animation(0.03f, meleeSkillFrames, PlayMode.NORMAL);
-        
-        
+
         //traps and items
         //Kunai Trap
         TextureRegion[][] tmp = TextureRegion.split(TextureLoader.TRAPKUNAI, TextureLoader.TRAPKUNAI.getWidth() / FRAME_COLS, TextureLoader.TRAPKUNAI.getHeight() / FRAME_ROWS);
@@ -469,6 +496,8 @@ public class TextureLoader {
         BARRIERTEXTURE.dispose();
         LIGHTBARRIERTEXTURE.dispose();
         LIGHTTEXTURE.dispose();
+        LIGHTTEXTURE2.dispose();
+        ICICLETEXTURE.dispose();
         HEALTEXTURE.dispose();
         REDLASERTEXTURE.dispose();
         SKILLONETEXTURE.dispose();

@@ -92,6 +92,8 @@ public class Constants {
         BARRIERSKILL,
         LIGHTBARRIERSKILL,
         REDLASERSKILL,
+        FREEZINGSKILL,
+        LASERSKILL,
         MELEESKILL,
         BLUESSKILL;
     }

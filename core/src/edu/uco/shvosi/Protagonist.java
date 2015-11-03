@@ -111,6 +111,8 @@ public class Protagonist extends Entity implements Observable {
         skills.put("Detection", new DetectionSkill());
         skills.put("Barrier", new BarrierSkill());
         skills.put("Light Barrier", new LightBarrierSkill());
+        skills.put("Freezing", new FreezingSkill());
+        skills.put("Laser Fusion", new LaserSkill());
 
         smokeParticle = new ParticleEffect();
         smokeParticle.load(Gdx.files.internal("traps/smoke.p"), Gdx.files.internal("traps"));
@@ -199,6 +201,12 @@ public class Protagonist extends Entity implements Observable {
                 break;
             case LIGHTBARRIERSKILL:
                 this.activeSkill = skills.get("Light Barrier");
+                break;
+            case FREEZINGSKILL:
+                this.activeSkill = skills.get("Freezing");
+                break;
+            case LASERSKILL:
+                this.activeSkill = skills.get("Laser Fusion");
                 break;
             default:
         }
@@ -527,6 +535,55 @@ public class Protagonist extends Entity implements Observable {
 
                 }
                 break;
+            case FREEZINGSKILL:
+                if (executeLightBarrier == true) {
+                    for (int i = 0; i < 8; i++) {
+                        activeSkill.damageEntities.get(i).setDamage(activeSkill.damage + activeSkill.damage / 2);
+                    }
+                } else {
+                    for (int i = 0; i < 8; i++) {
+                        activeSkill.damageEntities.get(i).setDamage(activeSkill.damage);
+                    }
+                }
+                activeSkill.damageEntities.get(0).setDead(false);
+                activeSkill.damageEntities.get(0).setCX(this.getCX() + 1);
+                activeSkill.damageEntities.get(0).setCY(this.getCY());
+                activeSkill.damageEntities.get(1).setDead(false);
+                activeSkill.damageEntities.get(1).setCX(this.getCX() + 1);
+                activeSkill.damageEntities.get(1).setCY(this.getCY() + 1);
+                activeSkill.damageEntities.get(2).setDead(false);
+                activeSkill.damageEntities.get(2).setCX(this.getCX() + 1);
+                activeSkill.damageEntities.get(2).setCY(this.getCY() - 1);
+                activeSkill.damageEntities.get(3).setDead(false);
+                activeSkill.damageEntities.get(3).setCX(this.getCX());
+                activeSkill.damageEntities.get(3).setCY(this.getCY() + 1);
+                activeSkill.damageEntities.get(4).setDead(false);
+                activeSkill.damageEntities.get(4).setCX(this.getCX());
+                activeSkill.damageEntities.get(4).setCY(this.getCY() - 1);
+                activeSkill.damageEntities.get(5).setDead(false);
+                activeSkill.damageEntities.get(5).setCX(this.getCX() - 1);
+                activeSkill.damageEntities.get(5).setCY(this.getCY());
+                activeSkill.damageEntities.get(6).setDead(false);
+                activeSkill.damageEntities.get(6).setCX(this.getCX() - 1);
+                activeSkill.damageEntities.get(6).setCY(this.getCY() + 1);
+                activeSkill.damageEntities.get(7).setDead(false);
+                activeSkill.damageEntities.get(7).setCX(this.getCX() - 1);
+                activeSkill.damageEntities.get(7).setCY(this.getCY() - 1);
+                break;
+            case LASERSKILL:
+                if (executeLightBarrier == true) {
+                    activeSkill.damageEntities.get(0).setDamage(activeSkill.damage + activeSkill.damage / 2);
+                    activeSkill.damageEntities.get(1).setDamage(activeSkill.damage + activeSkill.damage / 2);
+                } else {
+                    activeSkill.damageEntities.get(0).setDamage(activeSkill.damage);
+                    activeSkill.damageEntities.get(1).setDamage(activeSkill.damage);
+                }
+                activeSkill.damageEntities.get(0).setDead(false);
+                activeSkill.damageEntities.get(0).setCX(this.getCX());
+                activeSkill.damageEntities.get(0).setCY(this.getCY() + 1);
+                activeSkill.damageEntities.get(1).setDead(false);
+                activeSkill.damageEntities.get(1).setCX(this.getCX());
+                activeSkill.damageEntities.get(1).setCY(this.getCY() + 2);
             default:
 
         }
