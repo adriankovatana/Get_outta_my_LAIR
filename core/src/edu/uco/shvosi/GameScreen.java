@@ -10,27 +10,31 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class GameScreen implements Screen {
 
-    private MyGdxGame game;
+    public MyGdxGame game;
 
     private SpriteBatch batch;
     private OrthographicCamera camera;
-    private Map map;
+    public Map map;
     private Stage stage;
-    private Stage inventory;
     private String healthpoints;
     private Label healthLabel;
     public static Inventory invent;
     public static int turnCount;
     private TextureLoader textureLoader = new TextureLoader();
+    private boolean paused = false;
+    
+    PauseScreen pauseScreen = new PauseScreen(this);
 
     public static int level = 0;
     //private boolean turnsFinished = true;
@@ -49,7 +53,9 @@ public class GameScreen implements Screen {
     }
 
     @Override
-    public void render(float delta) {
+    public void render(float delta) {       
+        if (!paused){
+
         //Check for game over
         if (map.getEntityList().isEmpty()
                 || (map.bernard.isDead() && map.bernard.turnFinished)) {
@@ -216,12 +222,15 @@ public class GameScreen implements Screen {
                     map.bernard.attackAction();
                 }
                 if (Gdx.input.isKeyJustPressed(Keys.I)) {
+                    this.pause();
+ /*                                     
                     final Dialog dialog = new Dialog("Bernard", TextureLoader.SKIN, "dialog") {
                         public void result(Object obj) {
                             System.out.println("result "+obj);
                         }
                     };
-                    TextButton button = new TextButton("Close", TextureLoader.SKIN, "default");
+                    Drawable emptyslot = new Drawable();
+                    ImageButton button = new ImageButton(TextureLoader.SKIN, "default");
                     button.setWidth(200);
                     button.setHeight(50);
                     String health = "Health: " + Integer.toString(map.bernard.getHealth()) + "/" + Integer.toString(map.bernard.getMaxHealth());
@@ -229,14 +238,15 @@ public class GameScreen implements Screen {
                     dialog.text(health);
                     dialog.text(damage);
                     dialog.add(button);
-                    dialog.show(stage);  
+                    dialog.show(stage);
+                    dialog.setModal(true);
                     button.addListener(new ClickListener() {
                         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                             dialog.remove();
                             return true;                         
                         }
                     });                 
-                }
+ */               }
             }
         }
 
@@ -349,7 +359,11 @@ public class GameScreen implements Screen {
 
         centerCameraOn(map.bernard);
         camera.update();
-        /* -- END RENDER -- */
+        /* -- END RENDER -- */ 
+        }
+        else {
+            pauseScreen.render(delta);
+        }
     }
 
     public void centerCameraOn(Entity entity) {
@@ -425,10 +439,12 @@ public class GameScreen implements Screen {
 
     @Override
     public void pause() {
+        paused = true;
     }
 
     @Override
     public void resume() {
+        paused = false;
     }
 
     @Override

@@ -6,6 +6,7 @@ public class MyGdxGame extends Game {
 
     public StartScreen startScreen;
     public GameScreen gameScreen;
+  
     public int mute = 0;
 
     @Override
