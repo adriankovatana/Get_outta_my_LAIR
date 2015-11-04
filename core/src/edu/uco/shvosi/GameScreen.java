@@ -33,6 +33,7 @@ public class GameScreen implements Screen {
     public static int turnCount;
     private TextureLoader textureLoader = new TextureLoader();
     private boolean paused = false;
+    private boolean showFullMap = false;
 
     PauseScreen pauseScreen = new PauseScreen(this);
 
@@ -55,7 +56,11 @@ public class GameScreen implements Screen {
     @Override
     public void render(float delta) {
         if (!paused) {
-
+            if(Gdx.input.isKeyJustPressed(Keys.M)){
+                paused = true;
+                showFullMap = true;
+            }
+            
             //Check for game over
             if (map.getEntityList().isEmpty()
                     || (map.bernard.isDead() && map.bernard.turnFinished)) {
@@ -347,19 +352,33 @@ public class GameScreen implements Screen {
             /* == RENDER == */
             Gdx.gl.glClearColor(0, 0, 0, 1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-            batch.setProjectionMatrix(camera.combined);
-            batch.begin();
-            map.render(camera);
-            batch.end();
-
+//            batch.setProjectionMatrix(camera.combined);
+//            batch.begin();
+//            map.render(camera);
+//            batch.end();
             stage.act(Gdx.graphics.getDeltaTime());
+            map.render(camera);
             stage.draw();
+            map.renderMiniMap();
 
             centerCameraOn(map.bernard);
             camera.update();
             /* -- END RENDER -- */
         } else {
-            pauseScreen.render(delta);
+            if(showFullMap){
+                if(Gdx.input.isKeyJustPressed(Keys.M)){
+                    paused = false;
+                    showFullMap = false;
+                }
+                Gdx.gl.glClearColor(0, 0, 0, 1);
+                Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+                //batch.setProjectionMatrix(camera.combined);
+                batch.begin();
+                map.renderFullMap();
+                batch.end();
+            } else {
+                pauseScreen.render(delta);
+            }
         }
     }
 

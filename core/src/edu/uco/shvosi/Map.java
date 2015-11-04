@@ -23,6 +23,8 @@ public class Map {
     private int width;
     private int height;
     public Protagonist bernard;
+    private OrthographicCamera cameraMiniMap;
+    private OrthographicCamera cameraFullMap;
 
     public static List<Entity> miscEntityList;
 
@@ -181,10 +183,30 @@ public class Map {
         this.tileDimension = Constants.TILEDIMENSION;
         this.width = mapGrid.length * tileDimension;
         this.height = mapGrid[0].length * tileDimension;
+        
+        this.cameraFullMap = new OrthographicCamera(this.width, this.height);
+        this.cameraFullMap.zoom = 1.1f;
+        this.cameraFullMap.translate(this.width/2, this.height/2);
+        this.cameraFullMap.update();
+        
+        this.cameraMiniMap = new OrthographicCamera(this.width, this.height);
+        this.cameraMiniMap.zoom = 4f;
+        this.cameraMiniMap.translate(-this.width*0.99f, this.height*1.98f);
+        this.cameraMiniMap.update();
     }
 
     public void render(OrthographicCamera camera) {
         renderer.setView(camera);
+        renderer.render();
+    }
+    
+    public void renderFullMap() {
+        renderer.setView(this.cameraFullMap);
+        renderer.render();
+    }
+    
+    public void renderMiniMap() {
+        renderer.setView(this.cameraMiniMap);
         renderer.render();
     }
 
@@ -567,7 +589,8 @@ public class Map {
     }
 
     public boolean exitReached() {
-        if (mapGrid[bernard.getCX()][bernard.getCY()] == Constants.MapGridCode.EXIT) {
+        if (mapGrid[bernard.getCX()][bernard.getCY()] == Constants.MapGridCode.EXIT &&
+                bernard.turnFinished) {
             return true;
         }
         return false;
