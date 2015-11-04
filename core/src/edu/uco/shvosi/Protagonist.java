@@ -1,26 +1,16 @@
 package edu.uco.shvosi;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Action;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
-import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -91,7 +81,9 @@ public class Protagonist extends Entity implements Observable {
     private boolean healEffect;
     private boolean greyKey;
     private boolean redKey;
-
+    String levelup = "You are now level " + level + "!";
+    String textlevel = "Choose to upgrade Health or Damage\n" + levelup;
+    
     private List<Observer> observers;
 
     public Protagonist(int cX, int cY) {
@@ -158,9 +150,8 @@ public class Protagonist extends Entity implements Observable {
                 }
             }
 
-        }
-                .text(
-                        "Choose to upgrade Health or Damage").button("Health", true).button("Damage", false);
+        }.text(textlevel).button("Health", true).button("Damage", false);
+                
         levelUpDialog.setMovable(
                 false);
     }
@@ -774,13 +765,17 @@ public class Protagonist extends Entity implements Observable {
     }
 
     private void levelUp() {
-
+//        String levelup = "You are now level " + level + "!";
+//        String textlevel = "Choose to upgrade Health or Damage\n" + levelup;
+//        levelUpDialog.text(textlevel);
+//        Gdx.app.log("Level text: ", textlevel);
+        levelUpDialog.setModal(true);
         levelUpDialog.setX(this.getX() - levelUpDialog.getWidth() / 2 + this.getWidth() / 2);
         levelUpDialog.setY(this.getY());
         levelUpDialog.setVisible(true);
-        Protagonist.this.currentXp -= Protagonist.this.xpToNextLevel;
-        Protagonist.this.xpToNextLevel *= 1.2f;
-        Protagonist.this.level++;
+        this.currentXp -= this.xpToNextLevel;
+        this.xpToNextLevel *= 1.2f;
+        this.level++;
 
     }
 
