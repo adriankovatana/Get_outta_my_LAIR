@@ -253,4 +253,12 @@ public class Antagonist extends Entity {
     int getXpValue() {
         return xpValue;
     }
+    
+    public int bluesClub(Constants.MapGridCode[][] mapGrid, Constants.EntityGridCode[][] entityGrid, List<Entity> entityList)
+    {
+        int bluesCount = 0;
+        
+    
+        return bluesCount;
+    }
 }
