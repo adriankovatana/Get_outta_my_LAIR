@@ -22,11 +22,13 @@ public class Blues extends Antagonist {
     private boolean active = false;
     private BluesSkill bluesSkill;
     
+    
     public Blues(int cX, int cY) {
         super(Constants.EnemyType.BLUES, TextureLoader.BLUESTEXTURE, cX, cY);
         this.name = "Blues";
         this.walkAnimation = TextureLoader.blueWalk;
         BluesSkill bluesSkill = new BluesSkill();
+        this.range = 3;
     }
 
     @Override
@@ -65,91 +67,234 @@ public class Blues extends Antagonist {
 
     }
 
-    @Override
+      @Override
     public void calculateTurn(Constants.MapGridCode[][] mapGrid, Constants.EntityGridCode[][] entityGrid, List<Entity> entityList) {
         //Random movement
-        int random = 0;
         int tries = 0;
         Constants.Direction d = Constants.Direction.NONE;
-        
-        for(int i = 0; i < entityList.size(); i++)
+
+
+
+            for(int i = 0; i < entityList.size(); i++)//get bernards location
             {
-            if(entityList.get(i).getGridCode() == Constants.EntityGridCode.PLAYER){
-                bernardX = entityList.get(i).getCX();
-                bernardY = entityList.get(i).getCY();
-                break;
+                if(entityList.get(i).getGridCode() == Constants.EntityGridCode.PLAYER){
+                    bernardX = entityList.get(i).getCX();
+                    bernardY = entityList.get(i).getCY();
+                    break;
                 }
             }
-        
-            xdis = this.getCX() - bernardX;
-            ydis = this.getCY() - bernardY;
-            if(xdis < 5 && ydis < 5)
+          
+            xdis = this.getCX() - bernardX;//get dis between me and bernard on x axis
+            ydis = this.getCY() - bernardY;//get dis between me and bernard on y axis
+            
+            //if bernard is less than 5 spaces away I become active
+            if(Math.abs(xdis) < 5 && Math.abs(ydis) < 5)
             {
                 active = true;
             }
-        if(active)
-        {
-            while (!canMove(d, mapGrid, entityGrid)) {
-                if(xdis < 3 && ydis < 3)
+        
+            if (active)//active charater can move and attack
+            {
+                int distanceDown = 0;
+                int distanceUp = 0;
+                int distanceRight = 0;
+                int distanceLeft = 0;
+                
+                if(Math.abs(xdis)> range || Math.abs(ydis)> range)//moves to attack position
                 {
-                    random = (int) (Math.random() * entityGrid.length);
-                    
-                    switch (random % 4) {
-                        case 1:
-                            d = Constants.Direction.UP;
-                            break;
-                        case 2:
-                            d = Constants.Direction.DOWN;
-                            break;
-                        case 3:
-                            d = Constants.Direction.LEFT;
-                            flip = true;
-                            break;
-                        default:
-                            d = Constants.Direction.RIGHT;
-                            flip = false;
-                            break;
+                    if(Math.abs(xdis) > Math.abs(ydis))
+                    {
+                        XorY="X";
                     }
-                }//end
-                if(xdis >= 3 || ydis >= 3)
+                    else
+                    {
+                        XorY="Y";
+                    }
+                    
+                if("X".equals(XorY) && xdis > range)//need to go left
                 {
-                     if(Math.abs(xdis) > Math.abs(ydis))
+                for(distanceDown=0; distanceDown < 5; distanceDown++)//get shortest distance around verticle obstacle
                 {
-                    XorY="X";
+                    if(mapGrid[this.cX-1][this.cY-distanceDown]== Constants.MapGridCode.FLOOR)
+                    {
+                        break;
+                    }
                 }
-                else
+                for (distanceUp = 0; distanceUp < 5; distanceUp++ )
                 {
-                    XorY="Y";
+                        if(mapGrid[this.cX-1][this.cY+distanceUp]== Constants.MapGridCode.FLOOR)
+                        {
+                            break;
+                        }
                 }
-        
-                if("X".equals(XorY) && xdis >= 0)
+                if(this.canMove(Constants.Direction.LEFT,mapGrid,entityGrid))
                 {
-                    d = Constants.Direction.LEFT;
+                    d = Constants.Direction.LEFT;//try to go left
                 }
-        
-            if("X".equals(XorY) && xdis < 0)
+                else if (this.canMove(Constants.Direction.UP_LEFT,mapGrid,entityGrid))
+                {
+                    d = Constants.Direction.UP_LEFT;//if something in the way try to go around
+                }
+                else if (this.canMove(Constants.Direction.DOWN_LEFT,mapGrid,entityGrid))
+                {
+                    d = Constants.Direction.DOWN_LEFT;//try to go around
+                }
+                else if(distanceDown>=distanceUp)
+                {
+                    if (this.canMove(Constants.Direction.UP,mapGrid,entityGrid))
+                    {       
+                        d = Constants.Direction.UP;
+                    }
+                }
+                else if (distanceDown<distanceUp)
+                {
+                    if (this.canMove(Constants.Direction.DOWN,mapGrid,entityGrid))
+                    {       
+                        d = Constants.Direction.DOWN;
+                    }
+                }
+            }//end try to go left
+                    
+            if("X".equals(XorY) && xdis < range)//need to go right
             {
-                d = Constants.Direction.RIGHT;
-            }
-            if("Y".equals(XorY) && ydis >= 0)
-            {
-                d = Constants.Direction.DOWN;
-            }
-        
-            if("Y".equals(XorY) && ydis < 0)
-            {
-                d = Constants.Direction.UP;
-            }
-                }//end
-                tries++;
-                if(tries > 5){
-                    this.setTurnAction(Constants.TurnAction.NONE);
-                    this.addAction(this.finishTurn());
-                    return;
-            }
-        }
+                for(distanceDown=0; distanceDown < 5; distanceDown++)//get shortest distance around verticle obstacle
+                {
+                    if(mapGrid[this.cX+1][this.cY-distanceDown]== Constants.MapGridCode.FLOOR)
+                    {
+                        break;
+                    }
+                }
+                for (distanceUp = 0; distanceUp < 5; distanceUp++ )
+                {
+                        if(mapGrid[this.cX+1][this.cY+distanceUp]== Constants.MapGridCode.FLOOR)
+                        {
+                            break;
+                        }
+                }
+                if(this.canMove(Constants.Direction.RIGHT,mapGrid,entityGrid))
+                {
+                    d = Constants.Direction.RIGHT;//try right
+                }
+                else if (this.canMove(Constants.Direction.UP_RIGHT,mapGrid,entityGrid))
+                {
+                    d = Constants.Direction.UP_RIGHT;//go around
+                }
+                else if (this.canMove(Constants.Direction.DOWN_RIGHT,mapGrid,entityGrid))
+                {
+                    d = Constants.Direction.DOWN_RIGHT;//go around
+                }
+                else if(distanceDown>=distanceUp)
+                {
+                    if (this.canMove(Constants.Direction.UP,mapGrid,entityGrid))
+                    {       
+                         d = Constants.Direction.UP;
+                    }
+                }
+                else if (distanceDown<distanceUp)
+                {
+                    if (this.canMove(Constants.Direction.DOWN,mapGrid,entityGrid))
+                    {       
+                        d = Constants.Direction.DOWN;
+                    }
+                }
+                     
+                }//end go right
+                if("Y".equals(XorY) && ydis > range)//need to go down
+                 {
+                    for(distanceRight=0; distanceRight < 5; distanceRight++)//get shortest distance around verticle obstacle
+                    {
+                        if(mapGrid[this.cX+distanceRight][this.cY-1]== Constants.MapGridCode.FLOOR)
+                        {
+                            break;
+                        }
+                    }
+                    for (distanceLeft = 0; distanceLeft < 5; distanceLeft++ )
+                    {
+                        if(mapGrid[this.cX-distanceLeft][this.cY-1]== Constants.MapGridCode.FLOOR)
+                        {
+                            break;
+                        }
+                    }
+                    if(this.canMove(Constants.Direction.DOWN,mapGrid,entityGrid))
+                    {
+                        d = Constants.Direction.DOWN;//try down
+                    }
+                    else if (this.canMove(Constants.Direction.DOWN_LEFT,mapGrid,entityGrid))
+                    {
+                        d = Constants.Direction.DOWN_LEFT;//go around
+                    }
+                    else if (this.canMove(Constants.Direction.DOWN_RIGHT,mapGrid,entityGrid))
+                    {
+                        d = Constants.Direction.DOWN_RIGHT;//go aroud
+                    }
+                    else if(distanceLeft>=distanceRight)
+                        {
+                            if (this.canMove(Constants.Direction.RIGHT,mapGrid,entityGrid))
+                            {       
+                                d = Constants.Direction.RIGHT;
+                            }
+                        }
+                    else if (distanceLeft<distanceRight)
+                        {
+                            if (this.canMove(Constants.Direction.LEFT,mapGrid,entityGrid))
+                            {       
+                                d = Constants.Direction.LEFT;
+                            }
+                        }
+                        
+                }//end down
+                if("Y".equals(XorY) && ydis < range)//need to go up
+                {
+                    for(distanceRight=0; distanceRight < 5; distanceRight++)//get shortest distance around verticle obstacle
+                    {
+                        if(mapGrid[this.cX+distanceRight][this.cY+1]== Constants.MapGridCode.FLOOR)
+                        {
+                            break;
+                        }
+                    }
+                    for (distanceLeft = 0; distanceLeft < 5; distanceLeft++ )
+                    {
+                        if(mapGrid[this.cX-distanceLeft][this.cY+1]== Constants.MapGridCode.FLOOR)
+                        {
+                            break;
+                        }
+                    }                    
+                    if(this.canMove(Constants.Direction.UP,mapGrid,entityGrid))
+                    {
+                        d = Constants.Direction.UP;//try up
+                    }
+                    else if (this.canMove(Constants.Direction.UP_LEFT,mapGrid,entityGrid))
+                    {
+                        d = Constants.Direction.UP_LEFT;//go around
+                    }
+                    else if (this.canMove(Constants.Direction.UP_RIGHT,mapGrid,entityGrid))
+                    {
+                        d = Constants.Direction.UP_RIGHT;//go around
+                    }
+                    else if(distanceLeft>=distanceRight)
+                        {
+                            if (this.canMove(Constants.Direction.RIGHT,mapGrid,entityGrid))
+                            {       
+                                d = Constants.Direction.RIGHT;
+                            }
+                        }
+                    else if (distanceLeft<distanceRight)
+                        {
+                            if (this.canMove(Constants.Direction.LEFT,mapGrid,entityGrid))
+                            {       
+                                d = Constants.Direction.LEFT;
+                            }
+                        }
+                       
+        }//end up
+            this.setTurnAction(Constants.TurnAction.MOVE);
+            }//end move to one spot away
+                if(Math.abs(xdis) <=range && Math.abs(ydis) <=range)
+                {
+                   this.setTurnAction(Constants.TurnAction.ATTACK);
 
-        this.setTurnAction(Constants.TurnAction.MOVE);
-        }//end if active
-    }
+                }                            
+                 
+            }//end if active
+    }//end function
 }

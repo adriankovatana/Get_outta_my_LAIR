@@ -19,12 +19,11 @@ public class CatLady extends Antagonist {
     private int ydis; 
     private boolean active = false;
     private boolean moved = false;
-    private int range = 2;
-
+    
     public CatLady(int cX, int cY) {
         super(Constants.EnemyType.CATLADY, TextureLoader.CATLADYTEXTURE, cX, cY);
         this.walkAnimation = TextureLoader.catLadyWalk;
-        
+        this.range = 2;
         this.name = "CatLady";
         super.xpValue = 100;
 

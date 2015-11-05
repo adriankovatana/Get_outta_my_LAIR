@@ -137,7 +137,7 @@ public class Wanderer extends Antagonist {
                 int distanceRight = 0;
                 int distanceLeft = 0;
                 
-                if(Math.abs(xdis)> 1 || Math.abs(ydis)> 0)//moves to one spot awway
+                if(Math.abs(xdis)> 1 || Math.abs(ydis)> 0)//moves to attack position
                 {
                     if(Math.abs(xdis) > Math.abs(ydis))
                     {
