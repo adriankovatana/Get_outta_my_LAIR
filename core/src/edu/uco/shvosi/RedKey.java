@@ -24,9 +24,9 @@ public class RedKey extends Entity {
             if (xCoordinate == this.getCX() && yCoordinate == this.getCY() && this.state == 0 && bernard.getHeldItem() == 0) {            
                 this.dead = true;
                 this.state = 1;
-                bernard.addInventory(4);
-                if (bernard.getActive() == 0){
-                    bernard.setActive(4);
+                bernard.addInventory(this);
+                if (bernard.getActive() == null){
+                    bernard.setActive(this);
                 } 
                 this.turnFinished = true;
             }

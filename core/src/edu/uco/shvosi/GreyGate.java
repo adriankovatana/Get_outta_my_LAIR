@@ -33,7 +33,7 @@ public class GreyGate extends Antagonist {
             Protagonist bernard = (Protagonist) entity;
             Integer xCoordinate = bernard.getCX();
             Integer yCoordinate = bernard.getCY() + 1;
-            if (xCoordinate == this.getCX() && yCoordinate == this.getCY() && bernard.getGreyKey()) {
+            if (xCoordinate == this.getCX() && yCoordinate == this.getCY()) {
                 return true;
             }
         }

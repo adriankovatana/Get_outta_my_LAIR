@@ -5,7 +5,6 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 
 public class ItemShield extends Entity {
-    private int type;
     private int state = 0;
     Sound invent = Gdx.audio.newSound(Gdx.files.internal("sounds/invent.mp3"));
     
@@ -22,9 +21,9 @@ public class ItemShield extends Entity {
             Integer xCoordinate = bernard.getCX();
             Integer yCoordinate = bernard.getCY();
             if (xCoordinate == this.getCX() && yCoordinate == this.getCY() && this.state == 0) {                
-                bernard.addInventory(1);
-                if (bernard.getActive() == 0){
-                    bernard.setActive(1);
+                bernard.addInventory(this);
+                if (bernard.getActive() == null){
+                    bernard.setActive(this);
                 }
                 invent.play(Constants.MASTERVOLUME);
                 this.dead = true;
