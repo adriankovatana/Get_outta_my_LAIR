@@ -154,11 +154,6 @@ public class GameScreen implements Screen {
                         map.bernard.useItem();
                     }
 
-                    //Mute
-                    if (Gdx.input.isKeyJustPressed(Keys.M)) {
-                        map.bernard.mute = 1;
-                    }
-
                     //Skills
                     if (Gdx.input.isKeyJustPressed(Keys.SPACE) && map.bernard.redLaserCooldown <= 0) {
                         roundStarted = true;
@@ -332,7 +327,7 @@ public class GameScreen implements Screen {
             //temporary health display
             healthpoints = "HP: " + map.bernard.getHealth();
             healthLabel.setX(map.bernard.getX() - 5);
-            healthLabel.setY(map.bernard.getY() + Constants.SCREENHEIGHT / 2);
+            healthLabel.setY(map.bernard.getY() + Constants.SCREENHEIGHT / 2 - 100);
             healthLabel.setText("Level: " + map.bernard.getLevel() + "    " + healthpoints);
 
             //temporary inventory display
@@ -345,7 +340,7 @@ public class GameScreen implements Screen {
                 temp = "Turn Underway";
             }
             turnLabel.setX(map.bernard.getX());
-            turnLabel.setY(map.bernard.getY() + Constants.SCREENHEIGHT / 2 - 10);
+            turnLabel.setY(map.bernard.getY() + Constants.SCREENHEIGHT / 2 - 110);
             turnLabel.setText(temp);
 
 
@@ -363,6 +358,10 @@ public class GameScreen implements Screen {
             stage.draw();
             map.renderFog();
             map.renderMiniMap();
+            batch.setProjectionMatrix(camera.combined);
+            batch.begin();
+            invent.draw(batch, delta);
+            batch.end();
 
             centerCameraOn(map.bernard);
             camera.update();
@@ -420,7 +419,7 @@ public class GameScreen implements Screen {
         }
         //Health Display
         stage.addActor(healthLabel);
-        stage.addActor(invent);
+ //       stage.addActor(invent);
         stage.addActor(turnLabel);
     }
 
