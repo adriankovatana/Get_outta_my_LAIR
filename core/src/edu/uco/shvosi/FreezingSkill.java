@@ -18,7 +18,7 @@ public class FreezingSkill extends Skill {
         this.baseDamage = 15;
         this.damage = this.baseDamage;
         for (int i = 0; i < 8; i++) {
-            this.damageEntities.add(new DamageEntity(0, 0, this.damage));
+            this.damageEntities.add(new DamageEntity(0, 0, this.damage, Constants.SkillName.FREEZINGSKILL));
         }
         snowParticle = new ParticleEffect();
         snowParticle.load(Gdx.files.internal("snow.p"), Gdx.files.internal(""));

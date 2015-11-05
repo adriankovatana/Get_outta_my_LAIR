@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Action;
@@ -28,6 +29,13 @@ public class Antagonist extends Entity {
     protected TextureRegion healthbarFill;
     protected int xpValue;
     protected int range;
+    protected boolean ignite;
+    protected boolean frostBite;
+    protected int frostBiteCounter = 0;
+    protected int igniteCounter = 0;
+    protected ParticleEffect igniteParticle;
+    protected Animation frostBiteAnimation;
+    protected float elapsedFrostBite;
 
     public Antagonist(Constants.EnemyType enemyType, Texture texture, int cX, int cY) {
         super(Constants.EntityGridCode.ENEMY, texture, cX, cY);
@@ -43,6 +51,12 @@ public class Antagonist extends Entity {
         this.healthbarFill = new TextureRegion(TextureLoader.HPBARFILL);
         this.deathAnimation = TextureLoader.death;
         this.xpValue = 0;
+        this.ignite = false;
+        this.frostBite = false;
+        igniteParticle = new ParticleEffect();
+        igniteParticle.load(Gdx.files.internal("ignite.p"), Gdx.files.internal(""));
+        this.frostBiteAnimation = TextureLoader.frost;
+        this.elapsedFrostBite = 0f;
     }
 
     @Override
@@ -55,6 +69,17 @@ public class Antagonist extends Entity {
             batch.draw(deathAnimation.getKeyFrame(elapsedDeath), this.getX(), this.getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
         }
 
+        if (ignite == true) {
+            igniteParticle.start();
+            igniteParticle.getEmitters().first().setPosition(this.getX() + 50, this.getY() + 15);
+            igniteParticle.draw(batch, Gdx.graphics.getDeltaTime());
+            igniteParticle.allowCompletion();
+        }
+
+        if (frostBite == true) {
+            elapsedFrostBite += Gdx.graphics.getDeltaTime();
+            batch.draw(frostBiteAnimation.getKeyFrame(elapsedFrostBite), this.getX() - 20, this.getY() - 20, Constants.TILEDIMENSION + 40, Constants.TILEDIMENSION + 40);
+        }
     }
 
     @Override
@@ -82,7 +107,11 @@ public class Antagonist extends Entity {
     }
 
     public void takeDamage(int damage) {
-        this.health -= damage;
+        if (frostBite == true) {
+            this.health -= damage + damage / 5;
+        } else {
+            this.health -= damage;
+        }
         if (this.health <= 0) {
             this.health = 0;
             this.setDead(true);
@@ -138,6 +167,24 @@ public class Antagonist extends Entity {
     }
 
     public Action finishTurn() {
+        if (ignite == true) {
+            igniteCounter--;
+            this.takeDamage(this.health / 10);
+            Gdx.app.log("Ignite Counter", String.valueOf(igniteCounter));
+//            Gdx.app.log("Health", String.valueOf(this.health));
+            if (igniteCounter <= 0) {
+                ignite = false;
+                igniteParticle.reset();
+            }
+        }
+        if (frostBite == true) {
+            frostBiteCounter--;
+            Gdx.app.log("FrostBite Counter", String.valueOf(frostBiteCounter));
+            if (frostBiteCounter <= 0) {
+                frostBite = false;
+            }
+        }
+
         return new Action() {
             @Override
             public boolean act(float delta) {
@@ -253,12 +300,26 @@ public class Antagonist extends Entity {
     int getXpValue() {
         return xpValue;
     }
-    
-    public int bluesClub(Constants.MapGridCode[][] mapGrid, Constants.EntityGridCode[][] entityGrid, List<Entity> entityList)
-    {
+
+     public void setIgnite(boolean ignite) {
+        this.ignite = ignite;
+    }
+
+    public void setIgniteCounter(int igniteCounter) {
+        this.igniteCounter = igniteCounter;
+    }
+
+    public void setFrost(boolean frostBite) {
+        this.frostBite = frostBite;
+    }
+
+    public void setFrostBiteCounter(int frostBiteCounter) {
+        this.frostBiteCounter = frostBiteCounter;
+    }
+
+    public int bluesClub(Constants.MapGridCode[][] mapGrid, Constants.EntityGridCode[][] entityGrid, List<Entity> entityList) {
         int bluesCount = 0;
-        
-    
+
         return bluesCount;
     }
 }

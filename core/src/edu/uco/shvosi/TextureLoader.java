@@ -86,6 +86,7 @@ public class TextureLoader {
     public static final Texture REDGATELTEXTURE = new Texture(Gdx.files.internal("colemap/redgatel.png"));
     public static final Texture REDGATERTEXTURE = new Texture(Gdx.files.internal("colemap/redgater.png"));
     public static final Texture DEATHTEXTURE = new Texture(Gdx.files.internal("death.png"));
+    public static final Texture FROSTBITETEXTURE = new Texture(Gdx.files.internal("frostbite.png"));
 
     private Array<TextureRegion> catFrames;
     private Array<TextureRegion> hammerFrames;
@@ -102,6 +103,7 @@ public class TextureLoader {
     private Array<TextureRegion> hammerAttackFrames;
     private Array<TextureRegion> catAttackFrames;
     private TextureRegion[] deathFrames;
+    private TextureRegion[] frostBiteFrames;
 
     public static Animation catWalk;
     public static Animation blueWalk;
@@ -118,6 +120,7 @@ public class TextureLoader {
     public static Animation hammerAttack;
     public static Animation catAttack;
     public static Animation death;
+    public static Animation frost;
 
     //skills
     public static final Texture MELEESKILLTEXTURE = new Texture(Gdx.files.internal("melee_sheet.png"));
@@ -307,6 +310,18 @@ public class TextureLoader {
             }
         }
         death = new Animation(0.02f, deathFrames);
+
+        //Antagonist's FrostBite Animation
+        TextureRegion[][] tmp14 = TextureRegion.split(TextureLoader.FROSTBITETEXTURE, TextureLoader.FROSTBITETEXTURE.getWidth() / 5, TextureLoader.FROSTBITETEXTURE.getHeight() / 3);
+        frostBiteFrames = new TextureRegion[5 * 3];
+        int index14 = 0;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 5; j++) {
+                frostBiteFrames[index14++] = tmp14[i][j];
+            }
+        }
+        frost = new Animation(0.05f, frostBiteFrames);
+        frost.setPlayMode(PlayMode.LOOP);
 
         //Antagonist Drunk
         drunkFrames = new Array<TextureRegion>(6);
@@ -509,6 +524,6 @@ public class TextureLoader {
         SUFFRAGETTETEXTURE.dispose();
         MELEESKILLTEXTURE.dispose();
         BLUESKILLTEXTURE.dispose();
-
+        FROSTBITETEXTURE.dispose();
     }
 }

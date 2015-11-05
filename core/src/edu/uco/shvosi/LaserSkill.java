@@ -19,8 +19,8 @@ public class LaserSkill extends Skill {
         this.damage = this.baseDamage;
         this.width = 2;
 
-        this.damageEntities.add(new DamageEntity(0, 0, this.damage));
-        this.damageEntities.add(new DamageEntity(0, 0, this.damage));
+        this.damageEntities.add(new DamageEntity(0, 0, this.damage, Constants.SkillName.LASERSKILL));
+        this.damageEntities.add(new DamageEntity(0, 0, this.damage, Constants.SkillName.LASERSKILL));
         laserParticle = new ParticleEffect();
         laserParticle.load(Gdx.files.internal("laserFusion.p"), Gdx.files.internal(""));
         light = TextureLoader.light;
