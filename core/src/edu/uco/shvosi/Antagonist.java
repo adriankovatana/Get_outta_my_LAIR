@@ -27,6 +27,7 @@ public class Antagonist extends Entity {
     protected TextureRegion healthbarBackground;
     protected TextureRegion healthbarFill;
     protected int xpValue;
+    protected int range;
 
     public Antagonist(Constants.EnemyType enemyType, Texture texture, int cX, int cY) {
         super(Constants.EntityGridCode.ENEMY, texture, cX, cY);
