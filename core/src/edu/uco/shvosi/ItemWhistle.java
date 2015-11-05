@@ -22,16 +22,14 @@ public class ItemWhistle extends Entity {
             Integer xCoordinate = bernard.getCX();
             Integer yCoordinate = bernard.getCY();
             if (xCoordinate == this.getCX() && yCoordinate == this.getCY() && this.state == 0) {
-                if (bernard.getHeldItem() == 0){
-                    Gdx.app.log("HELLLLLLLO", "YO");
-                    bernard.setHeldItem(1);
-                    GameScreen.invent.setImage(TextureLoader.INVENTORYWHISTLETEXTURE);
-                    invent.play(Constants.MASTERVOLUME);
-                    this.dead = true;
-                    this.state = 1;
-                    this.turnFinished = true;
-                }
-                
+                bernard.addInventory(2);
+                if (bernard.getActive() == 0){
+                    bernard.setActive(2);
+                }                    
+                invent.play(Constants.MASTERVOLUME);
+                this.dead = true;
+                this.state = 1;
+                this.turnFinished = true;               
             }
         }
     }

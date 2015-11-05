@@ -24,9 +24,10 @@ public class RedKey extends Entity {
             if (xCoordinate == this.getCX() && yCoordinate == this.getCY() && this.state == 0 && bernard.getHeldItem() == 0) {            
                 this.dead = true;
                 this.state = 1;
-                bernard.setRedKey(true);
-                bernard.setHeldItem(1);
-                GameScreen.invent.setImage(TextureLoader.INVENTORYREDKEYTEXTURE);
+                bernard.addInventory(4);
+                if (bernard.getActive() == 0){
+                    bernard.setActive(4);
+                } 
                 this.turnFinished = true;
             }
         }

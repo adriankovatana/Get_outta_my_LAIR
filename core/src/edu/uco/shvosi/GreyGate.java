@@ -27,21 +27,17 @@ public class GreyGate extends Antagonist {
         
     }
     
-    @Override
-    public void collision(Entity entity) {
+
+    public boolean isCollision(Entity entity) {
         if (entity instanceof Protagonist) {
             Protagonist bernard = (Protagonist) entity;
             Integer xCoordinate = bernard.getCX();
             Integer yCoordinate = bernard.getCY() + 1;
-
             if (xCoordinate == this.getCX() && yCoordinate == this.getCY() && bernard.getGreyKey()) {
-                bernard.setHeldItem(0);
-                GameScreen.invent.setImage(TextureLoader.INVENTORYTEXTURE);
-                this.takeDamage(100000);
-                this.setVisible(false);
-
+                return true;
             }
         }
+        return false;
     }
     
 }

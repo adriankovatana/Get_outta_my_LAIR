@@ -24,9 +24,10 @@ public class GreyKey extends Entity {
             if (xCoordinate == this.getCX() && yCoordinate == this.getCY() && this.state == 0) {
                   this.dead = true;
                   this.state = 1;                 
-                  bernard.setGreyKey(true);
-                  bernard.setHeldItem(1);
-                  GameScreen.invent.setImage(TextureLoader.INVENTORYGREYKEYTEXTURE);
+                  bernard.addInventory(3);
+                  if (bernard.getActive() == 0){
+                      bernard.setActive(3);
+                  } 
                   this.turnFinished = true; 
             }
         }

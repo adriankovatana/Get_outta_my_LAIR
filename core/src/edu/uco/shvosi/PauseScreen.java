@@ -24,24 +24,34 @@ public class PauseScreen implements Screen {
     private Texture menuT;
     private Image quitBut;
     private Texture quitT;
-
+    private Image[] itemI = new Image[10];
+    private Texture[] itemT = new Texture[10];
+    
     private Stage stage;
     private Label healthLabel;
     private Label damageLabel;
     private Label levelLabel;
+    private int[] items = new int[10];
+    private int index = 0;
+    private int invX = 175;
+    private int invY = 375;
 
 
-    public PauseScreen(GameScreen screen) {
-        this.screen = screen;
+    public PauseScreen(GameScreen s) {
+        screen = s;
     }
+
 
     @Override
     public void render(float delta) {
-        this.show();
+   //     this.show();
         
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+        screen.invent.setX(25);
+        screen.invent.setY(475);
+        stage.addActor(screen.invent);
+        
         batch.begin();
         splash.draw(batch);
         batch.end();
@@ -68,17 +78,17 @@ public class PauseScreen implements Screen {
         String damage = "Damage: " + Float.toString(screen.map.bernard.getDamage());
         String level = "Level: " + Integer.toString(screen.map.bernard.getLevel());
         
-        healthLabel.setX(350);
-        healthLabel.setY(100);
+        healthLabel.setX(295);
+        healthLabel.setY(115);
         healthLabel.setText(health);
-        damageLabel.setX(550);
-        damageLabel.setY(100);
+        damageLabel.setX(645);
+        damageLabel.setY(115);
         damageLabel.setText(damage);
-        levelLabel.setX(475);
-        levelLabel.setY(150);
+        levelLabel.setX(495);
+        levelLabel.setY(115);
         levelLabel.setText(level);
         
-        startT = new Texture(Gdx.files.internal("resumeButton.png"));
+        startT = new Texture(Gdx.files.internal("buttons/resumebutton.png"));
         startBut = new Image(startT);
         startBut.setPosition(350, 15);
         startBut.addListener(new ClickListener() {
@@ -87,7 +97,7 @@ public class PauseScreen implements Screen {
                 return true;
             }
         });
-        menuT = new Texture(Gdx.files.internal("menuButton.png"));
+        menuT = new Texture(Gdx.files.internal("buttons/menubutton.png"));
         menuBut = new Image(menuT);
         menuBut.addListener(new ClickListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -98,9 +108,9 @@ public class PauseScreen implements Screen {
                 return true;
             }
         });
-        menuBut.setPosition(450, 15);
+        menuBut.setPosition(480, 15);
         
-        quitT = new Texture(Gdx.files.internal("quitButton.png"));
+        quitT = new Texture(Gdx.files.internal("buttons/quitbutton.png"));
         quitBut = new Image(quitT);
         quitBut.addListener(new ClickListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -108,9 +118,89 @@ public class PauseScreen implements Screen {
                 return true;
             }
         });
-        quitBut.setPosition(550, 15);
+        quitBut.setPosition(610, 15);
         
         stage = new Stage();
+        
+        items = Protagonist.getInventory();
+        
+        for (int i : items){
+            if (index == 5){
+                invX = 175;
+                invY = 225;       
+            }
+            
+            if (i == 0){
+ //               Gdx.app.log("ITEM", "0");
+                break;
+            }
+            else if (i == 1){
+//                Gdx.app.log("ITEM", "1");
+                itemT[index] = TextureLoader.SHIELDTEXTURE;
+                itemI[index] = new Image(itemT[index]);
+                itemI[index].addListener(new ClickListener() {
+                    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                        Protagonist.setActive(1);
+                        return true;
+                    }
+                });
+                itemI[index].setPosition(invX, invY);
+                invX = invX + 150;
+                stage.addActor(itemI[index]);   
+            }
+             else if (i == 2){
+//                Gdx.app.log("ITEM", "2");
+                itemT[index] = TextureLoader.WHISTLETEXTURE;
+                itemI[index] = new Image(itemT[index]);
+                itemI[index].addListener(new ClickListener() {
+                    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                        Protagonist.setActive(2);
+                        return true;
+                    }
+                });
+                    itemI[index].setPosition(invX, invY);
+
+                invX = invX + 150;
+                stage.addActor(itemI[index]);   
+            }
+             else if (i == 3){
+ //               Gdx.app.log("ITEM", "3");
+                itemT[index] = TextureLoader.GREYKEYTEXTURE;
+                itemI[index] = new Image(itemT[index]);
+                itemI[index].addListener(new ClickListener() {
+                    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                        Protagonist.setActive(3);
+                        return true;
+                    }
+                });
+                itemI[index].setPosition(invX, invY);
+                invX = invX + 150;
+                stage.addActor(itemI[index]);   
+            }
+             else if(i == 4){
+ //               Gdx.app.log("ITEM", "4");
+                itemT[index] = TextureLoader.REDKEYTEXTURE;
+                itemI[index] = new Image(itemT[index]);
+                itemI[index].addListener(new ClickListener() {
+                    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                        Protagonist.setActive(4);
+                        return true;
+                    }
+                });
+
+                itemI[index].setPosition(invX, invY);
+
+                invX = invX + 150;
+                stage.addActor(itemI[index]);   
+            }
+            else {
+                Gdx.app.log("BROKEN", ""); 
+            }
+            index++;
+        }
+        
+        index = 0;
+        
 
         stage.addActor(startBut);
         stage.addActor(quitBut);
@@ -118,6 +208,7 @@ public class PauseScreen implements Screen {
         stage.addActor(healthLabel);
         stage.addActor(damageLabel);
         stage.addActor(levelLabel);
+ //       stage.addActor(invent);
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -141,6 +232,13 @@ public class PauseScreen implements Screen {
         splashT.dispose();
         startT.dispose();
         quitT.dispose();
+    }
+    
+    public void setInvX(int x){
+        invX = x;
+    }
+    public void setInvY(int y){
+        invY = y;
     }
 
 }

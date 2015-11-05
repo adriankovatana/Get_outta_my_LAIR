@@ -335,8 +335,8 @@ public class GameScreen implements Screen {
 
             //temporary inventory display
             invent.setX(map.bernard.getX() - Constants.SCREENWIDTH / 2 + map.bernard.getWidth() * 0.75f);
-            invent.setY(map.bernard.getY() + Constants.SCREENHEIGHT / 2 - map.bernard.getHeight() / 2);
-
+            invent.setY(map.bernard.getY() + Constants.SCREENHEIGHT / 2 - map.bernard.getHeight() / 2);        
+            
             //temporary turn display
             String temp = "";
             if (roundStarted) {
@@ -377,6 +377,7 @@ public class GameScreen implements Screen {
                 map.renderFullMap();
                 batch.end();
             } else {
+        //        invent = new Inventory(TextureLoader.INVENTORYTEXTURE, 5, 0);
                 pauseScreen.render(delta);
             }
         }
@@ -456,11 +457,15 @@ public class GameScreen implements Screen {
     @Override
     public void pause() {
         paused = true;
+        pauseScreen.show();
     }
 
     @Override
     public void resume() {
         Gdx.input.setInputProcessor(stage);
+        pauseScreen.setInvX(175);
+        pauseScreen.setInvY(375);
+        stage.addActor(invent);
         paused = false;
     }
 

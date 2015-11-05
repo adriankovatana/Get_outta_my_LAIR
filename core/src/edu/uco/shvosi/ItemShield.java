@@ -21,16 +21,15 @@ public class ItemShield extends Entity {
             Protagonist bernard = (Protagonist) entity;
             Integer xCoordinate = bernard.getCX();
             Integer yCoordinate = bernard.getCY();
-            if (xCoordinate == this.getCX() && yCoordinate == this.getCY() && this.state == 0) {
-                if (bernard.getHeldItem() == 0){
-                    bernard.setHeldItem(1);
-                    GameScreen.invent.setImage(TextureLoader.INVENTORYSHIELDTEXTURE);
-                    invent.play(Constants.MASTERVOLUME);
-                    this.dead = true;
-                    this.state = 1;
-                    this.turnFinished = true;
+            if (xCoordinate == this.getCX() && yCoordinate == this.getCY() && this.state == 0) {                
+                bernard.addInventory(1);
+                if (bernard.getActive() == 0){
+                    bernard.setActive(1);
                 }
-                
+                invent.play(Constants.MASTERVOLUME);
+                this.dead = true;
+                this.state = 1;
+                this.turnFinished = true;                          
             }
         }
     }

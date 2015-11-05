@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Action;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
@@ -83,6 +84,9 @@ public class Protagonist extends Entity implements Observable {
     private boolean redKey;
     String levelup = "You are now level " + level + "!";
     String textlevel = "Choose to upgrade Health or Damage\n" + levelup;
+    static int[] inventory = new int[10];
+    private int index = 0;
+    static int active = 0;
     
     private List<Observer> observers;
 
@@ -792,4 +796,33 @@ public class Protagonist extends Entity implements Observable {
 
     }
 
+    void addInventory(int i){
+        inventory[index] = i;
+        index++;
+    }
+    
+    static int[] getInventory(){
+        return inventory;
+    }
+    
+    static void setActive(int i){
+        active = i;
+        if (i == 1){
+        GameScreen.invent.setImage(TextureLoader.INVENTORYSHIELDTEXTURE);   
+        }
+        if (i == 2){
+        GameScreen.invent.setImage(TextureLoader.INVENTORYWHISTLETEXTURE);   
+        }
+        if (i == 3){
+        GameScreen.invent.setImage(TextureLoader.INVENTORYGREYKEYTEXTURE);   
+        }
+        if (i == 4){
+        GameScreen.invent.setImage(TextureLoader.INVENTORYREDKEYTEXTURE);   
+        }
+    }
+
+    int getActive() {
+        return active;
+    }
+    
 }
