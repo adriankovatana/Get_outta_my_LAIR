@@ -176,7 +176,12 @@
    eJzt1kEOgjAQheGeyVt4DJYuPYrd2R3uZGdPaBtpUnGAmZqY1PxfMmHBFOalJMU5AAAAAAAAAAAAAHg3KSoq+6R1Ya6boUq/1qDsC4ZnSmstWfzc6w3v+HWOPd615bDM8s3a3nME95lj7fvKessxLZ7pq2tPObzrP0feizxjrPp6zCHR5BiEklxSXVONqe6pHot5WlhylH2y7Mdx4964Mk+LOsPWuV/mbz0HD8q+uN8i0mTYyiM5pzq51/djoT3zJS3/ZHWmf/IEIieCJQ==
   </data>
  </layer>
- <layer name="Fog" width="50" height="50">
+ <layer name="ThinFog" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztwwEJAAAMBKGr8P3LLsdAwVVTVVVVVVVVVVXV5w+vTKYF
+  </data>
+ </layer>
+ <layer name="ThickFog" width="50" height="50">
   <data encoding="base64" compression="zlib">
    eJztw8EJAAAMA6H7Zv+FO0dBwVVTVVVVVVVVVVXV5w/Yk1fl
   </data>

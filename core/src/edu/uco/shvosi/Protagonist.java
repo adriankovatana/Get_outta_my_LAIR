@@ -87,6 +87,7 @@ public class Protagonist extends Entity implements Observable {
     static int[] inventory = new int[10];
     private int index = 0;
     static int active = 0;
+    protected int sightRadius;
     
     private List<Observer> observers;
 
@@ -96,6 +97,7 @@ public class Protagonist extends Entity implements Observable {
         this.health = this.maxHealth;
         this.direction = Constants.Direction.NONE;
         this.observers = new ArrayList();
+        this.sightRadius = 3;
 
         this.name = "Bernard";
 

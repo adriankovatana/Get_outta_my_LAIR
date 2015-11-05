@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +26,10 @@ public class Map {
     public Protagonist bernard;
     private OrthographicCamera cameraMiniMap;
     private OrthographicCamera cameraFullMap;
-    private TiledMapTileLayer fogLayer;
+    private TiledMapTileLayer thickFogLayer;
+    private TiledMapTileLayer thinFogLayer;
     private int[] mapIndex = {0};
-    private int[] fogIndex = {2};
+    private int[] fogIndex = {2,3};
 
     public static List<Entity> miscEntityList;
 
@@ -37,7 +39,8 @@ public class Map {
         this.renderer = new OrthogonalTiledMapRenderer(this.tiledMap);
         TiledMapTileLayer mapLayer = (TiledMapTileLayer) tiledMap.getLayers().get(0);
         TiledMapTileLayer entityLayer = (TiledMapTileLayer) tiledMap.getLayers().get(1);
-        fogLayer = (TiledMapTileLayer) tiledMap.getLayers().get(2);
+        thinFogLayer = (TiledMapTileLayer) tiledMap.getLayers().get(2);
+        thickFogLayer = (TiledMapTileLayer) tiledMap.getLayers().get(3);
 
         //Setup mapGrid
         mapGrid = new Constants.MapGridCode[mapLayer.getWidth()][mapLayer.getHeight()];
@@ -214,9 +217,35 @@ public class Map {
         renderer.render();
     }
 
-    private void removeFog(int cX, int cY) {
-        if (fogLayer.getCell(cX, cY).getTile() != null) {
-            fogLayer.getCell(cX, cY).setTile(null);
+    private void removeThickFog(int cX, int cY) {
+        if(cX >= mapGrid.length || cY >= mapGrid[0].length || cX < 0 || cY < 0)
+            return;
+        if (thickFogLayer.getCell(cX, cY).getTile() != null) {
+            thickFogLayer.getCell(cX, cY).setTile(null);
+        }
+    }
+    
+    private void removeThinFog(int cX, int cY) {
+        if(cX >= mapGrid.length || cY >= mapGrid[0].length || cX < 0 || cY < 0)
+            return;
+        if (thinFogLayer.getCell(cX, cY).getTile() != null) {
+            thinFogLayer.getCell(cX, cY).setTile(null);
+        }
+    }
+    
+    public void removeFogAroundBernard(){
+        int x = -bernard.sightRadius;
+        int y = bernard.sightRadius;
+        for (int i = 0; i < 1+bernard.sightRadius*2; i++) {
+            y = bernard.sightRadius;
+            for (int j = 0; j < 1+bernard.sightRadius*2; j++) {
+                if(Math.round(Vector2.dst(0, 0, x, y)) <= bernard.sightRadius)
+                    removeThickFog(bernard.getCX() + x, bernard.getCY() + y);
+                if(Math.round(Vector2.dst(0, 0, x, y)) <= bernard.sightRadius-1)
+                    removeThinFog(bernard.getCX() + x, bernard.getCY() + y);
+                y--;
+            }
+            x++;
         }
     }
 
@@ -251,18 +280,7 @@ public class Map {
         bernard.setY(bernard.getCY() * Constants.TILEDIMENSION);
         entityList.add(bernard);
         //Remove fog
-        int x = -2;
-        int y = 2;
-        for (int i = 0; i < 5; i++) {
-            y = 2;
-            for (int j = 0; j < 5; j++) {
-                if (bernard.getCX() + x >= 0 && bernard.getCY() + y >= 0) {
-                    removeFog(bernard.getCX() + x, bernard.getCY() + y);
-                }
-                y--;
-            }
-            x++;
-        }
+        this.removeFogAroundBernard();
     }
 
     private void initEnemy(int cX, int cY, Constants.EnemyType enemyType) {
@@ -633,18 +651,7 @@ public class Map {
         if (entity instanceof Protagonist) {
             if (entity.getTurnAction() == Constants.TurnAction.MOVE) {
                 moveEntity(entity);
-                int x = -2;
-                int y = 2;
-                for (int i = 0; i < 5; i++) {
-                    y = 2;
-                    for (int j = 0; j < 5; j++) {
-                        if (entity.getCX() + x >= 0 && entity.getCY() + y >= 0) {
-                            removeFog(entity.getCX() + x, entity.getCY() + y);
-                        }
-                        y--;
-                    }
-                    x++;
-                }
+                this.removeFogAroundBernard();
             }
             entity.performActions();
         } else if (entity instanceof Antagonist) {

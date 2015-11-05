@@ -6,6 +6,7 @@
  <tileset firstgid="145" source="Characters.tsx"/>
  <tileset firstgid="193" source="DarkRedmapTileSheet.tsx"/>
  <tileset firstgid="241" source="Gates.tsx"/>
+ <tileset firstgid="261" source="../maps/Map.tsx"/>
  <layer name="Map" width="38" height="63">
   <data encoding="base64" compression="zlib">
    eJzVmc0Og0AIhK3HHvv+L6PHPlVjUhNDRAYGcD1MYhV3P5cBfzpP0zQPqneTkPk+h7hXk9D57uSSOfNwyeOaD0bhkp7I4PJcr8aVkcezehiB6yitbqNcUX95563miq5HNVfWuKNwWXURPT9rXq0/yd/yfOu+aI2jxTP9m4mrqvturpVUlm9l3rexv0GtJ+Oi/rHWdxt7+W8vB8m4s5j1YtxKLrldwaXtZ7nYPqj1qbu5kDxKL13t6+DSdFwXTdp9g+W66gM711UM63vt/Cp518+6LlTsPE/hysqzt0/exWXVZXa9svnX4rTrGo2ry/ear0bh0r5vSO7qevSuB3of6+ayjluyfFPNpb0f7vHR987suomK5Yp+F6zmYn0XrXOWy/v9XvNb1F/ePGTn+alcaN/K9hf6HGT1Le/3CG8+onWBjoOubxeXta6sL7x9BY2z+tDdXFn1is6H1nUXF3IfOPu/lv3N5tGqk9G40Dyydcxyeft6tL97fR0Vm/+ncaH9BfUTy+V930GfR9n3oS49nWtE/QCDvmsF
@@ -16,9 +17,14 @@
    eJztmr9OwzAQxv1MGbPR0WO2jumYx2GDDTaydexjgQQSTLSSLV0v99d2miKB9InUieNfvzvbsdMphDD9q1rjWTFpSNox8t47Ig3g3KtQ7xvVb83VbeT1k/KZ4zokwbJT+n+8AXfmmg1c3tzDcZ6YtqiyDjBAjlquLIpLi2nmgvmZWSSuZwPPS6N4HhitkTuUP7fionJoDeXxyVOnJJaWdkZw3AX/WAc965O0Ot52SrigSrk+z/pqwBUDPS70YTnnZfVEO9z8tS+MI8clMWEuaV4dElurONbGF3LcI9fguH5kyn8Mdai8k9rtgn+8wrKM61q+Wf3y+t46rpxfUj2LP9o1Xr9GUD6gsnvw66K3DeOI/bqwzCtwjOF6vaLN25b+KK1/dqB+DPw8hNdRWn5I4xcVxw61Dee5DpRp6zbIa/HL4m+PGCBfn3hyWSkX9gvPQ9R824Pr8veCPnXEfbzCfnm4hrD0rk/ltVz7Sr/ycc5/7KU3fjiWVq5IcMHPWhw9XDiusD/hfoD9ioRq8otbw2jPkZiLGs8gW2l+SYwcd253F67zC8YwH5fwzAV1OI+yHpIyu+fetfNxqKxfEj9pvLfwvJ/1sQKrNk5QWnPvheIKClerPaYSv3BcW7FoccB9YK31o5erRX5dFJ3SnqdmJxd3P25Okrhq8ot6nqDi7I0/FQdpXN2Sy+IXnFssXF6VcEnvfaxccI+dem/Sep+hpV+RUQmvh2tm/JsUJopL24vwcJ2M15XEl3qOlriOYTkmevg4Lm1caJlfVL+CPjxWcFn3oLDvHBfUQahfk19Svfz9re+ft+SS9hhx/RiW820gyqnrpPcVtc85VHuDkcviF8XAvdeV4pTPa39a/6n16964pN9tDMJ56/6pdp7iktqzclnb+8v6BdANfgg=
   </data>
  </layer>
- <layer name="Fog" width="38" height="63">
+ <layer name="ThinFog" width="38" height="63">
   <data encoding="base64" compression="zlib">
-   eJztwwENAAAMw6D6lzVlV3AHkLBqqqqqqqqqqqqqvg9bzxae
+   eJztwwENAAAMAiAfwv5VTfAGsNFLqqqqqqqqqqqq6nt5TM29
+  </data>
+ </layer>
+ <layer name="ThickFog" width="38" height="63">
+  <data encoding="base64" compression="zlib">
+   eJztwwENAAAMAiAfwP51TfAGsNFLqqqqqqqqqqqq6ntXZILt
   </data>
  </layer>
 </map>
