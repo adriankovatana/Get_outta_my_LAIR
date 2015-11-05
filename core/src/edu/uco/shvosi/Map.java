@@ -25,6 +25,9 @@ public class Map {
     public Protagonist bernard;
     private OrthographicCamera cameraMiniMap;
     private OrthographicCamera cameraFullMap;
+    private TiledMapTileLayer fogLayer;
+    private int[] mapIndex = {0};
+    private int[] fogIndex = {2};
 
     public static List<Entity> miscEntityList;
 
@@ -34,6 +37,7 @@ public class Map {
         this.renderer = new OrthogonalTiledMapRenderer(this.tiledMap);
         TiledMapTileLayer mapLayer = (TiledMapTileLayer) tiledMap.getLayers().get(0);
         TiledMapTileLayer entityLayer = (TiledMapTileLayer) tiledMap.getLayers().get(1);
+        fogLayer = (TiledMapTileLayer) tiledMap.getLayers().get(2);
 
         //Setup mapGrid
         mapGrid = new Constants.MapGridCode[mapLayer.getWidth()][mapLayer.getHeight()];
@@ -63,7 +67,7 @@ public class Map {
         for (int x = 0; x < entityLayer.getWidth(); x++) {
             for (int y = 0; y < entityLayer.getHeight(); y++) {
                 TiledMapTileLayer.Cell cell = entityLayer.getCell(x, y);
-                if(cell == null){
+                if (cell == null) {
                     entityGrid[x][y] = Constants.EntityGridCode.NONE;
                     continue;
                 }
@@ -76,7 +80,7 @@ public class Map {
                         initEnemy(x, y, Constants.EnemyType.CATLADY);
                     } else if (properties.get("CatAttack") != null) {
                         initEnemy(x, y, Constants.EnemyType.CATATTACK);
-                    }else if (properties.get("Drunk") != null) {
+                    } else if (properties.get("Drunk") != null) {
                         initEnemy(x, y, Constants.EnemyType.DRUNK);
                     } else if (properties.get("Wanderer") != null) {
                         initEnemy(x, y, Constants.EnemyType.WANDERER);
@@ -91,29 +95,25 @@ public class Map {
                     } else if (properties.get("GreyGate") != null) {
                         if (properties.get("Left") != null) {
                             initGreyGate(x, y, Constants.GateType.LEFT);
-                        } 
-                        else if (properties.get("Right") != null){
+                        } else if (properties.get("Right") != null) {
                             initGreyGate(x, y, Constants.GateType.RIGHT);
-                        }
-                        else {
-                             Gdx.app.log("MAP CREATION", "ENEMY type at entityLayer("+x+")("+y+") is unknown. Creation skipped.");
+                        } else {
+                            Gdx.app.log("MAP CREATION", "ENEMY type at entityLayer(" + x + ")(" + y + ") is unknown. Creation skipped.");
                             entityGrid[x][y] = Constants.EntityGridCode.NONE;
                             continue;
                         }
                     } else if (properties.get("RedGate") != null) {
                         if (properties.get("Left") != null) {
                             initRedGate(x, y, Constants.GateType.LEFT);
-                        } 
-                        else if (properties.get("Right") != null){
+                        } else if (properties.get("Right") != null) {
                             initRedGate(x, y, Constants.GateType.RIGHT);
-                        }
-                        else {
-                             Gdx.app.log("MAP CREATION", "ENEMY type at entityLayer("+x+")("+y+") is unknown. Creation skipped.");
+                        } else {
+                            Gdx.app.log("MAP CREATION", "ENEMY type at entityLayer(" + x + ")(" + y + ") is unknown. Creation skipped.");
                             entityGrid[x][y] = Constants.EntityGridCode.NONE;
                             continue;
                         }
                     } else {
-                        Gdx.app.log("MAP CREATION", "ENEMY type at entityLayer("+x+")("+y+") is unknown. Creation skipped.");
+                        Gdx.app.log("MAP CREATION", "ENEMY type at entityLayer(" + x + ")(" + y + ") is unknown. Creation skipped.");
                         entityGrid[x][y] = Constants.EntityGridCode.NONE;
                         continue;
                     }
@@ -130,7 +130,7 @@ public class Map {
                     } else if (properties.get("GreyKey") != null) {
                         initItem(x, y, Constants.ItemType.GREYKEY);
                     } else {
-                        Gdx.app.log("MAP CREATION", "ITEM type at entityLayer("+x+")("+y+") is unknown. Creation skipped.");
+                        Gdx.app.log("MAP CREATION", "ITEM type at entityLayer(" + x + ")(" + y + ") is unknown. Creation skipped.");
                         entityGrid[x][y] = Constants.EntityGridCode.NONE;
                         continue;
                     }
@@ -156,20 +156,20 @@ public class Map {
                         } else if (properties.get("Right") != null) {
                             initArrowTrap(x, y, Constants.ArrowType.RIGHT);
                         } else {
-                            Gdx.app.log("MAP CREATION", "ARROW type at entityLayer("+x+")("+y+") is unknown. Creation skipped.");
+                            Gdx.app.log("MAP CREATION", "ARROW type at entityLayer(" + x + ")(" + y + ") is unknown. Creation skipped.");
                             entityGrid[x][y] = Constants.EntityGridCode.NONE;
                             continue;
                         }
                     } else if (properties.get("Blocker") != null) {
                         initTrap(x, y, Constants.TrapType.BLOCKER);
                     } else {
-                        Gdx.app.log("MAP CREATION", "TRAP type at entityLayer("+x+")("+y+") is unknown. Creation skipped.");
+                        Gdx.app.log("MAP CREATION", "TRAP type at entityLayer(" + x + ")(" + y + ") is unknown. Creation skipped.");
                         entityGrid[x][y] = Constants.EntityGridCode.NONE;
                         continue;
                     }
                     entityGrid[x][y] = Constants.EntityGridCode.TRAP;
                 } else {
-                //    Gdx.app.log("MAP CREATION", "Unknown property at entityLayer("+x+")("+y+"). Creation skipped.");
+                    //    Gdx.app.log("MAP CREATION", "Unknown property at entityLayer("+x+")("+y+"). Creation skipped.");
                     entityGrid[x][y] = Constants.EntityGridCode.NONE;
                 }
 
@@ -183,31 +183,41 @@ public class Map {
         this.tileDimension = Constants.TILEDIMENSION;
         this.width = mapGrid.length * tileDimension;
         this.height = mapGrid[0].length * tileDimension;
-        
+
         this.cameraFullMap = new OrthographicCamera(this.width, this.height);
         this.cameraFullMap.zoom = 1.1f;
-        this.cameraFullMap.translate(this.width/2, this.height/2);
+        this.cameraFullMap.translate(this.width / 2, this.height / 2);
         this.cameraFullMap.update();
-        
+
         this.cameraMiniMap = new OrthographicCamera(this.width, this.height);
         this.cameraMiniMap.zoom = 4f;
-        this.cameraMiniMap.translate(-this.width*0.99f, this.height*1.98f);
+        this.cameraMiniMap.translate(-this.width * 0.99f, this.height * 1.98f);
         this.cameraMiniMap.update();
     }
 
     public void render(OrthographicCamera camera) {
         renderer.setView(camera);
-        renderer.render();
+        renderer.render(mapIndex);
     }
-    
+
+    public void renderFog() {
+        renderer.render(fogIndex);
+    }
+
     public void renderFullMap() {
         renderer.setView(this.cameraFullMap);
         renderer.render();
     }
-    
+
     public void renderMiniMap() {
         renderer.setView(this.cameraMiniMap);
         renderer.render();
+    }
+
+    private void removeFog(int cX, int cY) {
+        if (fogLayer.getCell(cX, cY).getTile() != null) {
+            fogLayer.getCell(cX, cY).setTile(null);
+        }
     }
 
     public int getWidth() {
@@ -240,6 +250,19 @@ public class Map {
         bernard.setX(bernard.getCX() * Constants.TILEDIMENSION);
         bernard.setY(bernard.getCY() * Constants.TILEDIMENSION);
         entityList.add(bernard);
+        //Remove fog
+        int x = -2;
+        int y = 2;
+        for (int i = 0; i < 5; i++) {
+            y = 2;
+            for (int j = 0; j < 5; j++) {
+                if (bernard.getCX() + x >= 0 && bernard.getCY() + y >= 0) {
+                    removeFog(bernard.getCX() + x, bernard.getCY() + y);
+                }
+                y--;
+            }
+            x++;
+        }
     }
 
     private void initEnemy(int cX, int cY, Constants.EnemyType enemyType) {
@@ -266,7 +289,7 @@ public class Map {
                 entityList.add(new Hammer(cX, cY));
                 break;
             case SUFFRAGETTE:
-                entityList.add(new Suffragette(cX, cY,Constants.Direction.NONE,0));
+                entityList.add(new Suffragette(cX, cY, Constants.Direction.NONE, 0));
                 break;
             case GREYGATE:
                 break;
@@ -329,7 +352,7 @@ public class Map {
                 break;
         }
     }
-    
+
     private void initArrowTrap(int cX, int cY, Constants.ArrowType arrowType) {
         switch (arrowType) {
             case UP:
@@ -344,14 +367,14 @@ public class Map {
             case RIGHT:
                 miscEntityList.add(new SlideTile(cX, cY, Constants.Direction.RIGHT, TextureLoader.SLIDERIGHT));
                 break;
-       
+
             default:
                 //ERROR
                 Gdx.app.log("ERROR", "Arrow type not found. Not added to entity grid.");
                 break;
         }
     }
-    
+
     private void initGreyGate(int cX, int cY, Constants.GateType gateType) {
         switch (gateType) {
             case LEFT:
@@ -360,14 +383,14 @@ public class Map {
             case RIGHT:
                 miscEntityList.add(new GreyGate(cX, cY, Constants.Direction.RIGHT));
                 break;
-       
+
             default:
                 //ERROR
                 Gdx.app.log("ERROR", "Gate type not found. Not added to entity grid.");
                 break;
         }
     }
-    
+
     private void initRedGate(int cX, int cY, Constants.GateType gateType) {
         switch (gateType) {
             case LEFT:
@@ -376,7 +399,7 @@ public class Map {
             case RIGHT:
                 miscEntityList.add(new RedGate(cX, cY, Constants.Direction.RIGHT));
                 break;
-       
+
             default:
                 //ERROR
                 Gdx.app.log("ERROR", "Gate type not found. Not added to entity grid.");
@@ -387,54 +410,46 @@ public class Map {
     private void populateMapForTesting() {
         List<Entity> tempAntagList = new ArrayList<Entity>();
         List<Entity> tempMiscList = new ArrayList<Entity>();
-        
+
         /*  ADDING ENTITIES NOT ON TILE SHEETS TO THE MAP
-            INSTRCTIONS BELOW
+         INSTRCTIONS BELOW
         
-            - Add antagonists to tempAntagList
-            - Add items,traps, or non moving entities to tempMiscList
-                - testmap 1
-                    - [1][7] - [17][10] empty testing area
-                    - [9][2] Bernard position
-                - testmap 2 - 20x20 map, fully empty
-                    - [1][1] - [18][17] empty testing area
-                    - [1][17] Bernard position
-            - Be aware that entities placed on any map.tmx will hold priority
-            at its location on the entityGrid. Entities created here will be ignored
-            if placed on the same tile as an entity from any map.tmx. Please
-            place them in an empty block
-            - An error message will appear if it is not created for the above reason
+         - Add antagonists to tempAntagList
+         - Add items,traps, or non moving entities to tempMiscList
+         - testmap 1
+         - [1][7] - [17][10] empty testing area
+         - [9][2] Bernard position
+         - testmap 2 - 20x20 map, fully empty
+         - [1][1] - [18][17] empty testing area
+         - [1][17] Bernard position
+         - Be aware that entities placed on any map.tmx will hold priority
+         at its location on the entityGrid. Entities created here will be ignored
+         if placed on the same tile as an entity from any map.tmx. Please
+         place them in an empty block
+         - An error message will appear if it is not created for the above reason
          */
-        
         //Add for testmap 1
-        if(GameScreen.level == 0){
+        if (GameScreen.level == 0) {
             Gdx.app.log("Map", "Adding entities for map level=0");
-            tempAntagList.add(new CatLady(9,21));
-            tempAntagList.add(new CatAttack(9,22));
-            tempAntagList.add(new CatAttack(9,20));
-            tempAntagList.add(new CatAttack(8,21));
-            tempAntagList.add(new CatAttack(10,21));
-            tempAntagList.add(new CatAttack(8,22));
-            tempAntagList.add(new CatAttack(10,20));
-            
+            tempAntagList.add(new CatLady(9, 21));
+            tempAntagList.add(new CatAttack(9, 22));
+            tempAntagList.add(new CatAttack(9, 20));
+            tempAntagList.add(new CatAttack(8, 21));
+            tempAntagList.add(new CatAttack(10, 21));
+            tempAntagList.add(new CatAttack(8, 22));
+            tempAntagList.add(new CatAttack(10, 20));
+
             tempAntagList.add(new Wanderer(9, 4));
-            
 
-
-            tempAntagList.add(new Suffragette(5,7,Constants.Direction.UP,2));
+            tempAntagList.add(new Suffragette(5, 7, Constants.Direction.UP, 2));
             //tempAntagList.add(new Wreker(9,7));
             //tempAntagList.add(new CatAttack(8,5));
 
-
-        }
-        
-        //Add for testmap 2
-        else if(GameScreen.level == 1){
+        } //Add for testmap 2
+        else if (GameScreen.level == 1) {
             Gdx.app.log("Map", "Adding entities for map level=1");
-        }
-        
-        //Add for Cole's Map
-        else if(GameScreen.level == 2){
+        } //Add for Cole's Map
+        else if (GameScreen.level == 2) {
             Gdx.app.log("Map", "Adding entities for map level=2");
         } else {
             Gdx.app.log("Map", "Level out of scope");
@@ -444,26 +459,26 @@ public class Map {
         // Populate the cells from tempAntagList and add to entity list
         for (int i = 0; i < tempAntagList.size(); i++) {
             Entity entity = tempAntagList.get(i);
-            if(this.entityGrid[entity.getCX()][entity.getCY()] == Constants.EntityGridCode.NONE){
+            if (this.entityGrid[entity.getCX()][entity.getCY()] == Constants.EntityGridCode.NONE) {
                 this.entityGrid[entity.getCX()][entity.getCY()] = entity.getGridCode();
                 entityList.add(entity);
             } else {
-                Gdx.app.log("ENTITY PLACEMENT ERROR", "["+entity.getName()+
-                        "] could not be placed at ("+entity.getCX()+","+entity.getCY()
-                        +") because another entity exist there. Please choose a different coordinate.");
+                Gdx.app.log("ENTITY PLACEMENT ERROR", "[" + entity.getName()
+                        + "] could not be placed at (" + entity.getCX() + "," + entity.getCY()
+                        + ") because another entity exist there. Please choose a different coordinate.");
             }
-            
+
         }
         // Populate the cells from tempMiscList and add to entity list
         for (int i = 0; i < tempMiscList.size(); i++) {
             Entity entity = tempMiscList.get(i);
-            if(this.entityGrid[entity.getCX()][entity.getCY()] == Constants.EntityGridCode.NONE){
+            if (this.entityGrid[entity.getCX()][entity.getCY()] == Constants.EntityGridCode.NONE) {
                 this.entityGrid[entity.getCX()][entity.getCY()] = entity.getGridCode();
                 miscEntityList.add(entity);
             } else {
-                Gdx.app.log("ENTITY PLACEMENT ERROR", "["+entity.getName()+
-                        "] could not be placed at ("+entity.getCX()+","+entity.getCY()
-                        +") because another entity exist there. Please choose a different coordinate.");
+                Gdx.app.log("ENTITY PLACEMENT ERROR", "[" + entity.getName()
+                        + "] could not be placed at (" + entity.getCX() + "," + entity.getCY()
+                        + ") because another entity exist there. Please choose a different coordinate.");
             }
         }
     }
@@ -589,8 +604,8 @@ public class Map {
     }
 
     public boolean exitReached() {
-        if (mapGrid[bernard.getCX()][bernard.getCY()] == Constants.MapGridCode.EXIT &&
-                bernard.turnFinished) {
+        if (mapGrid[bernard.getCX()][bernard.getCY()] == Constants.MapGridCode.EXIT
+                && bernard.turnFinished) {
             return true;
         }
         return false;
@@ -618,6 +633,18 @@ public class Map {
         if (entity instanceof Protagonist) {
             if (entity.getTurnAction() == Constants.TurnAction.MOVE) {
                 moveEntity(entity);
+                int x = -2;
+                int y = 2;
+                for (int i = 0; i < 5; i++) {
+                    y = 2;
+                    for (int j = 0; j < 5; j++) {
+                        if (entity.getCX() + x >= 0 && entity.getCY() + y >= 0) {
+                            removeFog(entity.getCX() + x, entity.getCY() + y);
+                        }
+                        y--;
+                    }
+                    x++;
+                }
             }
             entity.performActions();
         } else if (entity instanceof Antagonist) {

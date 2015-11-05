@@ -359,6 +359,7 @@ public class GameScreen implements Screen {
             stage.act(Gdx.graphics.getDeltaTime());
             map.render(camera);
             stage.draw();
+            map.renderFog();
             map.renderMiniMap();
 
             centerCameraOn(map.bernard);

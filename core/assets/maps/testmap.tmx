@@ -166,7 +166,6 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="193" source="../colemap/Gates.tsx"/>
  <layer name="Map" width="50" height="50">
   <data encoding="base64" compression="zlib">
    eJztmbEOwyAMBQljRv7/Y7t0qKwYYwTtUb3hFJEYkgPjDNRSyn049c11OPJgIQ8W8mAhDxbyYCEPFvJgIQ8W8mAhDxbyYCEPFvJgIQ8W8mAhDxZ1kEzsL4nOra6BGJ2r8fJqNv9WebRg3aK8ah/f01t7r52d3531KhrHPu/F9/YsxcO7ZhxP9bD775seXnvGow3EZ/ZUNnZlXo14ePXq6VuierXKw5unXn3zcsX2eRpjR1716r/3buL+mHn3Kg87X3bc29y37Z0emX9X1HfFmJHHP/AC+rIQkQ==
@@ -174,7 +173,12 @@
  </layer>
  <layer name="Entities" width="50" height="50" visible="0">
   <data encoding="base64" compression="zlib">
-   eJzt1kEOwiAQhWHO5C08Rpcue5Sys7u6szu5hZ5KSCBBhJahiQnm/5IJRqftvGBClQIAAAAAAAAAAACAT2tFmcq+3HWzr5ugQn+tobJvFtwzd60ki/a9WvCMX+fYo1VbDsksR67tPcesvnOU/l9ObznW5J46WnvKoVX/OdxeuBlN1Hc0x1MwT4tcjpyaHEOmnDTDZOtqa7F1t/VI5mkhyRH2aW8/Rr+6+c/R96+kbynM0yLOsHXuh/lL52CY/VJ4zsmvaZaU2fm9pCbDVp5YyDD6z5NwltozP6flnSzO9E/eD+KHyA==
+   eJzt1kEOgjAQheGeyVt4DJYuPYrd2R3uZGdPaBtpUnGAmZqY1PxfMmHBFOalJMU5AAAAAAAAAAAAAHg3KSoq+6R1Ya6boUq/1qDsC4ZnSmstWfzc6w3v+HWOPd615bDM8s3a3nME95lj7fvKessxLZ7pq2tPObzrP0feizxjrPp6zCHR5BiEklxSXVONqe6pHot5WlhylH2y7Mdx4964Mk+LOsPWuV/mbz0HD8q+uN8i0mTYyiM5pzq51/djoT3zJS3/ZHWmf/IEIieCJQ==
+  </data>
+ </layer>
+ <layer name="Fog" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztw8EJAAAMA6H7Zv+FO0dBwVVTVVVVVVVVVVXV5w/Yk1fl
   </data>
  </layer>
 </map>

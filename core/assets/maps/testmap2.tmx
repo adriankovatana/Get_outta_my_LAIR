@@ -14,4 +14,9 @@
    eJxjYBj8wGigHTAKRsEoGAWjAAMAAB7HADM=
   </data>
  </layer>
+ <layer name="Fog" width="20" height="20">
+  <data encoding="base64" compression="zlib">
+   eJzjZGBg4BzFo3gUj+JRPIpJxAAW9A4R
+  </data>
+ </layer>
 </map>
