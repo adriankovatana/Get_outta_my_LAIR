@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import java.util.ArrayList;
 
 public class PauseScreen implements Screen {
 
@@ -31,7 +32,7 @@ public class PauseScreen implements Screen {
     private Label healthLabel;
     private Label damageLabel;
     private Label levelLabel;
-    private int[] items = new int[10];
+    private ArrayList<Entity> items = new ArrayList<Entity>();
     private int index = 0;
     private int invX = 175;
     private int invY = 375;
@@ -124,23 +125,19 @@ public class PauseScreen implements Screen {
         
         items = Protagonist.getInventory();
         
-        for (int i : items){
+        for (final Entity i : items){
             if (index == 5){
                 invX = 175;
                 invY = 225;       
             }
             
-            if (i == 0){
- //               Gdx.app.log("ITEM", "0");
-                break;
-            }
-            else if (i == 1){
+            if (i instanceof ItemShield){
 //                Gdx.app.log("ITEM", "1");
                 itemT[index] = TextureLoader.SHIELDTEXTURE;
                 itemI[index] = new Image(itemT[index]);
                 itemI[index].addListener(new ClickListener() {
                     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                        Protagonist.setActive(1);
+                        Protagonist.setActive(i);
                         return true;
                     }
                 });
@@ -148,13 +145,13 @@ public class PauseScreen implements Screen {
                 invX = invX + 150;
                 stage.addActor(itemI[index]);   
             }
-             else if (i == 2){
+             else if (i instanceof ItemWhistle){
 //                Gdx.app.log("ITEM", "2");
                 itemT[index] = TextureLoader.WHISTLETEXTURE;
                 itemI[index] = new Image(itemT[index]);
                 itemI[index].addListener(new ClickListener() {
                     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                        Protagonist.setActive(2);
+                        Protagonist.setActive(i);
                         return true;
                     }
                 });
@@ -163,13 +160,13 @@ public class PauseScreen implements Screen {
                 invX = invX + 150;
                 stage.addActor(itemI[index]);   
             }
-             else if (i == 3){
+             else if (i instanceof GreyKey){
  //               Gdx.app.log("ITEM", "3");
                 itemT[index] = TextureLoader.GREYKEYTEXTURE;
                 itemI[index] = new Image(itemT[index]);
                 itemI[index].addListener(new ClickListener() {
                     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                        Protagonist.setActive(3);
+                        Protagonist.setActive(i);
                         return true;
                     }
                 });
@@ -177,13 +174,13 @@ public class PauseScreen implements Screen {
                 invX = invX + 150;
                 stage.addActor(itemI[index]);   
             }
-             else if(i == 4){
+             else if(i instanceof RedKey){
  //               Gdx.app.log("ITEM", "4");
                 itemT[index] = TextureLoader.REDKEYTEXTURE;
                 itemI[index] = new Image(itemT[index]);
                 itemI[index].addListener(new ClickListener() {
                     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                        Protagonist.setActive(4);
+                        Protagonist.setActive(i);
                         return true;
                     }
                 });

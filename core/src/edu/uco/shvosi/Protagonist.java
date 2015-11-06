@@ -44,7 +44,8 @@ public class Protagonist extends Entity implements Observable {
     private int xpToNextLevel = 100;
     private int level = 1;
     private float strengthMod = 1f;
-
+    
+    
     public SequenceAction seqAction;
     public Constants.Direction slideDirection;
     public int slideCounter;
@@ -80,13 +81,11 @@ public class Protagonist extends Entity implements Observable {
     private int lightBarrierLimit = 0;
     private int barrierDamage = 0;
     private boolean healEffect;
-    private boolean greyKey;
-    private boolean redKey;
     String levelup = "You are now level " + level + "!";
     String textlevel = "Choose to upgrade Health or Damage\n" + levelup;
-    static int[] inventory = new int[10];
+    static ArrayList<Entity> inventory = new ArrayList<Entity>();
     private int index = 0;
-    static int active = 0;
+    static Entity active = null;
     protected int sightRadius;
     
     private List<Observer> observers;
@@ -123,9 +122,6 @@ public class Protagonist extends Entity implements Observable {
         jump = TextureLoader.jump;
         smoke = TextureLoader.smokeTrap;
         death = TextureLoader.bernardDeath;
-
-        greyKey = false;
-        redKey = false;
 
         seqAction = new SequenceAction();
         slideDirection = Constants.Direction.NONE;
@@ -655,8 +651,14 @@ public class Protagonist extends Entity implements Observable {
         };
     }
 
-    void useItem() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    void useItem() {       
+           inventory.remove(active);   
+           if (inventory.isEmpty()){
+               setActive(null);
+           }
+           else{
+               setActive(inventory.get(0));
+           }
     }
 
     public void resetStatusCounter() {
@@ -750,22 +752,6 @@ public class Protagonist extends Entity implements Observable {
         return sliding;
     }
 
-    void setRedKey(boolean b) {
-        redKey = b;
-    }
-
-    void setGreyKey(boolean b) {
-        greyKey = b;
-    }
-
-    boolean getRedKey() {
-        return redKey;
-    }
-
-    boolean getGreyKey() {
-        return greyKey;
-    }
-
     float getDamage() {
         return strengthMod;
     }
@@ -798,32 +784,35 @@ public class Protagonist extends Entity implements Observable {
 
     }
 
-    void addInventory(int i){
-        inventory[index] = i;
+    void addInventory(Entity i){
+        inventory.add(i);
         index++;
     }
     
-    static int[] getInventory(){
+    static ArrayList<Entity> getInventory(){
         return inventory;
     }
     
-    static void setActive(int i){
+    static void setActive(Entity i){
         active = i;
-        if (i == 1){
+        if (i == null){
+        GameScreen.invent.setImage(TextureLoader.INVENTORYTEXTURE);   
+        }
+        if (i instanceof ItemShield){
         GameScreen.invent.setImage(TextureLoader.INVENTORYSHIELDTEXTURE);   
         }
-        if (i == 2){
+        if (i instanceof ItemWhistle){
         GameScreen.invent.setImage(TextureLoader.INVENTORYWHISTLETEXTURE);   
         }
-        if (i == 3){
+        if (i instanceof GreyKey){
         GameScreen.invent.setImage(TextureLoader.INVENTORYGREYKEYTEXTURE);   
         }
-        if (i == 4){
+        if (i instanceof RedKey){
         GameScreen.invent.setImage(TextureLoader.INVENTORYREDKEYTEXTURE);   
         }
     }
 
-    int getActive() {
+    Entity getActive() {
         return active;
     }
     

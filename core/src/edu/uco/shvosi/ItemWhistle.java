@@ -22,9 +22,9 @@ public class ItemWhistle extends Entity {
             Integer xCoordinate = bernard.getCX();
             Integer yCoordinate = bernard.getCY();
             if (xCoordinate == this.getCX() && yCoordinate == this.getCY() && this.state == 0) {
-                bernard.addInventory(2);
-                if (bernard.getActive() == 0){
-                    bernard.setActive(2);
+                bernard.addInventory(this);
+                if (bernard.getActive() == null){
+                    bernard.setActive(this);
                 }                    
                 invent.play(Constants.MASTERVOLUME);
                 this.dead = true;

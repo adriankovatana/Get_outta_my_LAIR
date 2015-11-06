@@ -36,6 +36,7 @@ public class Antagonist extends Entity {
     protected ParticleEffect igniteParticle;
     protected Animation frostBiteAnimation;
     protected float elapsedFrostBite;
+    protected int bluesCount;
 
     public Antagonist(Constants.EnemyType enemyType, Texture texture, int cX, int cY) {
         super(Constants.EntityGridCode.ENEMY, texture, cX, cY);
@@ -244,28 +245,28 @@ public class Antagonist extends Entity {
             }
         } else if (direction == Constants.Direction.UP_RIGHT) {
             if (mapGrid[this.getCX() + 1][this.getCY() + 1] == Constants.MapGridCode.FLOOR
-                    && entityGrid[this.getCX() + 1][this.getCY()] == Constants.EntityGridCode.NONE) {
+                    && entityGrid[this.getCX() + 1][this.getCY()+ 1] == Constants.EntityGridCode.NONE) {
                 this.setCX(this.getCX() + 1);
                 this.setCY(this.getCY() + 1);
                 return true;
             }
         } else if (direction == Constants.Direction.DOWN_RIGHT) {
             if (mapGrid[this.getCX() + 1][this.getCY() - 1] == Constants.MapGridCode.FLOOR
-                    && entityGrid[this.getCX() + 1][this.getCY()] == Constants.EntityGridCode.NONE) {
+                    && entityGrid[this.getCX() + 1][this.getCY()- 1] == Constants.EntityGridCode.NONE) {
                 this.setCX(this.getCX() + 1);
                 this.setCY(this.getCY() - 1);
                 return true;
             }
         } else if (direction == Constants.Direction.UP_LEFT) {
             if (mapGrid[this.getCX() - 1][this.getCY() + 1] == Constants.MapGridCode.FLOOR
-                    && entityGrid[this.getCX() + 1][this.getCY()] == Constants.EntityGridCode.NONE) {
+                    && entityGrid[this.getCX() - 1][this.getCY() + 1] == Constants.EntityGridCode.NONE) {
                 this.setCX(this.getCX() - 1);
                 this.setCY(this.getCY() + 1);
                 return true;
             }
         } else if (direction == Constants.Direction.DOWN_LEFT) {
             if (mapGrid[this.getCX() - 1][this.getCY() - 1] == Constants.MapGridCode.FLOOR
-                    && entityGrid[this.getCX() + 1][this.getCY()] == Constants.EntityGridCode.NONE) {
+                    && entityGrid[this.getCX()- 1][this.getCY()-1] == Constants.EntityGridCode.NONE) {
                 this.setCX(this.getCX() - 1);
                 this.setCY(this.getCY() - 1);
                 return true;
@@ -317,8 +318,8 @@ public class Antagonist extends Entity {
         this.frostBiteCounter = frostBiteCounter;
     }
 
-    public int bluesClub(Constants.MapGridCode[][] mapGrid, Constants.EntityGridCode[][] entityGrid, List<Entity> entityList) {
-        int bluesCount = 0;
+    public int getBluesCOunt(Constants.MapGridCode[][] mapGrid, Constants.EntityGridCode[][] entityGrid, List<Entity> entityList) {
+        
 
         return bluesCount;
     }

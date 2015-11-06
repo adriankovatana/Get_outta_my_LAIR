@@ -24,9 +24,9 @@ public class GreyKey extends Entity {
             if (xCoordinate == this.getCX() && yCoordinate == this.getCY() && this.state == 0) {
                   this.dead = true;
                   this.state = 1;                 
-                  bernard.addInventory(3);
-                  if (bernard.getActive() == 0){
-                      bernard.setActive(3);
+                  bernard.addInventory(this);
+                  if (bernard.getActive() == null){
+                      bernard.setActive(this);
                   } 
                   this.turnFinished = true; 
             }
