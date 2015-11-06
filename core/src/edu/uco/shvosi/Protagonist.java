@@ -771,17 +771,17 @@ public class Protagonist extends Entity implements Observable {
     }
 
     private void levelUp() {
-//        String levelup = "You are now level " + level + "!";
-//        String textlevel = "Choose to upgrade Health or Damage\n" + levelup;
-//        levelUpDialog.text(textlevel);
-//        Gdx.app.log("Level text: ", textlevel);
+        this.level++;
+        levelup = "You are now level " + level + "!";
+        textlevel = "Choose to upgrade Health or Damage\n" + levelup;
+        ((Label) levelUpDialog.getContentTable().getCells().get(0).getActor()).setText(textlevel);
         levelUpDialog.setModal(true);
         levelUpDialog.setX(this.getX() - levelUpDialog.getWidth() / 2 + this.getWidth() / 2);
         levelUpDialog.setY(this.getY());
         levelUpDialog.setVisible(true);
         this.currentXp -= this.xpToNextLevel;
         this.xpToNextLevel *= 1.2f;
-        this.level++;
+        
 
     }
 
