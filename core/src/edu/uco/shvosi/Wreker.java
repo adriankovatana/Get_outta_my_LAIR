@@ -100,11 +100,11 @@ public class Wreker extends Antagonist {
     
        @Override
     public void calculateTurn(Constants.MapGridCode[][] mapGrid, Constants.EntityGridCode[][] entityGrid, List<Entity> entityList) {
-        //Random movement
-        int tries = 0;
+        
         Constants.Direction d = Constants.Direction.NONE;
 
-
+//        getBluesCount(entityList);
+//        damage = damage + bluesCount;
 
             for(int i = 0; i < entityList.size(); i++)//get bernards location
             {

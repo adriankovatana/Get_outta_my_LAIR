@@ -318,9 +318,18 @@ public class Antagonist extends Entity {
         this.frostBiteCounter = frostBiteCounter;
     }
 
-    public int getBluesCOunt(Constants.MapGridCode[][] mapGrid, Constants.EntityGridCode[][] entityGrid, List<Entity> entityList) {
-        
-
+    public int getBluesCount(List<Entity> entityList) {
+        int blueX;
+        int blueY;
+        for (int i = 0; i < entityList.size(); i++) {
+            if (entityList.get(i).name.equals("Blues")) {
+                blueX = entityList.get(i).getCX();
+                blueY = entityList.get(i).getCY();
+                if(Math.abs(this.getCX() - blueX) <=3 && Math.abs(this.getCY() - blueY) <= 3){
+                     bluesCount += 10;
+                }                
+            }
+        }
         return bluesCount;
     }
 }
