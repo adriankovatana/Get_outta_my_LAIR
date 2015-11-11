@@ -41,6 +41,7 @@ public class Blues extends Antagonist {
     public void attackAction() {
         blueDamage.setCX(bernardX);
         blueDamage.setCY(bernardY);
+        blueDamage.setDamage(this.damage);
         blueDamage.setDead(false);
         Map.miscEntityList.add(blueDamage);
         this.addAction(this.finishTurn());
@@ -88,12 +89,13 @@ public class Blues extends Antagonist {
                 break;
             }
         }
+        damage = 2;
         for (int i = 0; i < entityList.size(); i++) {
             if (entityList.get(i).getGridCode() == Constants.EntityGridCode.ENEMY) {
                 enemyX = entityList.get(i).getCX();
                 enemyY = entityList.get(i).getCY();
-                if(Math.abs(this.cX - enemyX) <= range&& Math.abs(this.cY - enemyY) <= range)
-                   {damage = damage * damage;}
+                if(Math.abs(this.getCX() - enemyX) < range && Math.abs(this.getCY() - enemyY) < range)
+                   {damage = damage * 2;}
             }
         }
 
