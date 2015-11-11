@@ -19,7 +19,7 @@ public class CatLady extends Antagonist {
     private String XorY; 
     private int xdis; 
     private int ydis; 
-    private int damage = 15; 
+    private int damage = 10; 
     private boolean active = false;
     private boolean moved = false;
     private DamageEntity melee; 
@@ -34,8 +34,6 @@ public class CatLady extends Antagonist {
         this.range = 2;
         this.name = "CatLady";
         super.xpValue = 100;
-        //catLady do transformation 
-      //  catLadyChange = TextureLoader.catLadyAttack; 
         this.health = 70; 
         this.maxHealth = this.health; 
         this.damage = damage; 
@@ -126,8 +124,6 @@ public class CatLady extends Antagonist {
         int tries = 0;
         Constants.Direction d = Constants.Direction.NONE;
 
-
-
             for(int i = 0; i < entityList.size(); i++)//get bernards location
             {
                 if(entityList.get(i).getGridCode() == Constants.EntityGridCode.PLAYER){
@@ -137,7 +133,7 @@ public class CatLady extends Antagonist {
                 }
             }
           
-           xdis = this.getCX() - bernardX;//get dis between me and bernard on x axis
+            xdis = this.getCX() - bernardX;//get dis between me and bernard on x axis
             ydis = this.getCY() - bernardY;//get dis between me and bernard on y axis
             
             //if bernard is less than 5 spaces away I become active
@@ -152,6 +148,19 @@ public class CatLady extends Antagonist {
                 if(turns > 9)
                 {
                     range = 1;
+                    if(health < maxHealth)
+                    {
+                        if(health > 50)
+                        {
+                            health = maxHealth;
+                        }
+                        else
+                        {
+                            health +=20;
+                        }
+                        turns = 0;
+                    }//end tutn > 9
+                       
                 }
                 int distanceDown = 0;
                 int distanceUp = 0;

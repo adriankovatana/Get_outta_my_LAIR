@@ -38,6 +38,7 @@ public class CatAttack extends Antagonist {
         this.damage = damage;
         melee = new DamageEntity(0,0,this.damage);
         self = new DamageEntity(0,0,this.damage);
+        this.range = 1;
     }
 
     @Override
@@ -327,7 +328,6 @@ public class CatAttack extends Antagonist {
                 if(Math.abs(xdis) <=range && Math.abs(ydis) <=range)
                 {
                    this.setTurnAction(Constants.TurnAction.ATTACK);
-
                 }                            
                  
             }//end if active
