@@ -15,7 +15,7 @@ public class TextureLoader {
     //bernard and his powers
     public static final Texture BERNARDTEXTURE = new Texture(Gdx.files.internal("characters/bernard2.png"));
     public static final Texture DORABERNARDJUMPTEXTURE = new Texture(Gdx.files.internal("characters/doraJump.png"));
-    public static final Texture BERNARDSHIELDTEXTURE = new Texture(Gdx.files.internal("characters/bernard_shield.png"));
+    public static final Texture BERNARDSHIELDTEXTURE = new Texture(Gdx.files.internal("items/shieldbernard.png"));
     public static final Texture BERNARDGLANCETEXTURE = new Texture(Gdx.files.internal("characters/bernard_sheet.png"));
     public static final Texture BERNARDDEATHTEXTURE = new Texture(Gdx.files.internal("characters/bernard_death.png"));
     public static final Texture HEALTHTEXTURE = new Texture(Gdx.files.internal("items/health.png"));

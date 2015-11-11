@@ -44,6 +44,7 @@ public class Protagonist extends Entity implements Observable {
     private int xpToNextLevel = 100;
     private int level = 1;
     private float strengthMod = 1f;
+    private boolean shieldActive = false;
     
     
     public SequenceAction seqAction;
@@ -347,6 +348,9 @@ public class Protagonist extends Entity implements Observable {
         //HP BAR
         batch.draw(healthbarBackground, this.getX() + 10, this.getY());
         batch.draw(healthbarFill, this.getX() + 11, this.getY() + 1, healthbarFill.getRegionWidth() * ((float) health / (float) maxHealth), healthbarFill.getRegionHeight());
+        if (shieldActive){
+             batch.draw(TextureLoader.BERNARDSHIELDTEXTURE, this.getX(), this.getY());
+        }
     }
 
     @Override
@@ -363,17 +367,23 @@ public class Protagonist extends Entity implements Observable {
     }
 
     public void takeDamage(int damage) {
-        if (executeBarrier == true) {
-            this.health -= damage / 2;
-            this.barrierDamage += damage / 2;
-            this.barrierLimit -= 1;
-            if (barrierLimit == 0) {
-                healEffect = true;
-            }
-        } else {
-            this.health -= damage;
+        if(shieldActive){
+            shieldActive = false;
         }
-        this.addAction(this.takeDamageAnimation());
+        else{
+            if (executeBarrier == true) {
+                this.health -= damage / 2;
+                this.barrierDamage += damage / 2;
+                this.barrierLimit -= 1;
+                if (barrierLimit == 0) {
+                    healEffect = true;
+                }
+            } else {
+                this.health -= damage;
+            }
+            this.addAction(this.takeDamageAnimation());
+        }
+            
         if (this.health <= 0) {
             this.health = 0;
             this.setDead(true);
@@ -651,15 +661,6 @@ public class Protagonist extends Entity implements Observable {
         };
     }
 
-    void useItem() {       
-           inventory.remove(active);   
-           if (inventory.isEmpty()){
-               setActive(null);
-           }
-           else{
-               setActive(inventory.get(0));
-           }
-    }
 
     public void resetStatusCounter() {
         poison = false;
@@ -810,6 +811,47 @@ public class Protagonist extends Entity implements Observable {
         if (i instanceof RedKey){
         GameScreen.invent.setImage(TextureLoader.INVENTORYREDKEYTEXTURE);   
         }
+    }
+    
+    public void useItem() {
+        if (active == null) {          
+        }
+        else if (active instanceof ItemShield) {
+            shieldActive = true;
+            removeItem();
+        } 
+        else if (active instanceof ItemWhistle) {
+            barrierCooldown = 0;
+            lightningInfusionCooldown = 0;
+            redLaserCooldown = 0;
+            removeItem();
+        }
+        else if (active instanceof GreyKey) {
+            if (GreyGate.isCollision(this)){
+                Map.miscEntityList.add(new DamageEntity(this.getCX() + 1, this.getCY() + 1, 100000));
+                Map.miscEntityList.add(new DamageEntity(this.getCX() - 1, this.getCY() + 1, 100000));
+                Map.miscEntityList.add(new DamageEntity(this.getCX(), this.getCY() + 1, 100000));
+                removeItem();
+            }
+        }
+        else if (active instanceof RedKey) {
+           if (RedGate.isCollision(this)){
+                Map.miscEntityList.add(new DamageEntity(this.getCX() + 1, this.getCY() + 1, 100000));
+                Map.miscEntityList.add(new DamageEntity(this.getCX() - 1, this.getCY() + 1, 100000));
+                Map.miscEntityList.add(new DamageEntity(this.getCX(), this.getCY() + 1, 100000));
+                removeItem();
+            }
+        }     
+    }
+    
+    public void removeItem(){
+        inventory.remove(active);   
+        if (inventory.isEmpty()){
+            setActive(null);
+        }
+        else{
+            setActive(inventory.get(0));
+        }      
     }
 
     Entity getActive() {

@@ -1,17 +1,18 @@
 package edu.uco.shvosi;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 
 public class RedGate extends Antagonist {
     
-    private TextureRegion temp;
+    private static int x;
+    private static int y;
 
 
     public RedGate(int cX, int cY, Constants.Direction direction) {
         super(Constants.EnemyType.REDGATE, TextureLoader.REDGATELTEXTURE, cX, cY);
+        x = cX;
+        y = cY;
         if (direction == Constants.Direction.RIGHT){
             textureRegion.setTexture(TextureLoader.REDGATERTEXTURE);
         }
@@ -24,16 +25,22 @@ public class RedGate extends Antagonist {
         batch.draw(textureRegion, this.getX(), this.getY());
     }
     
-    public boolean isCollision(Entity entity) {
+    public static boolean isCollision(Entity entity) {
         if (entity instanceof Protagonist) {
             Protagonist bernard = (Protagonist) entity;
             Integer xCoordinate = bernard.getCX();
             Integer yCoordinate = bernard.getCY() + 1;
-            if (xCoordinate == this.getCX() && yCoordinate == this.getCY()) {
+            if ((xCoordinate == RedGate.x && yCoordinate == RedGate.y)|| (xCoordinate == RedGate.x - 1 && yCoordinate == RedGate.y)) {
                 return true;
             }
         }
         return false;
+    }
+    
+    @Override
+    public void takeDamage(int damage){
+        this.setDead(true);
+        this.remove();
     }
     
 }

@@ -396,10 +396,10 @@ public class Map {
     private void initGreyGate(int cX, int cY, Constants.GateType gateType) {
         switch (gateType) {
             case LEFT:
-                miscEntityList.add(new GreyGate(cX, cY, Constants.Direction.LEFT));
+                entityList.add(new GreyGate(cX, cY, Constants.Direction.LEFT));
                 break;
             case RIGHT:
-                miscEntityList.add(new GreyGate(cX, cY, Constants.Direction.RIGHT));
+                entityList.add(new GreyGate(cX, cY, Constants.Direction.RIGHT));
                 break;
 
             default:
@@ -412,10 +412,10 @@ public class Map {
     private void initRedGate(int cX, int cY, Constants.GateType gateType) {
         switch (gateType) {
             case LEFT:
-                miscEntityList.add(new RedGate(cX, cY, Constants.Direction.LEFT));
+                entityList.add(new RedGate(cX, cY, Constants.Direction.LEFT));
                 break;
             case RIGHT:
-                miscEntityList.add(new RedGate(cX, cY, Constants.Direction.RIGHT));
+                entityList.add(new RedGate(cX, cY, Constants.Direction.RIGHT));
                 break;
 
             default:

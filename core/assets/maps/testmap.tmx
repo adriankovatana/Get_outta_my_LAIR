@@ -169,12 +169,12 @@
  <tileset firstgid="193" source="../colemap/Gates.tsx"/>
  <layer name="Map" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJztmbEOwyAMBQljRv7/Y7t0qKwYYwTtUb3hFJEYkgPjDNRSyn049c11OPJgIQ8W8mAhDxbyYCEPFvJgIQ8W8mAhDxbyYCEPFvJgIQ8W8mAhDxZ1kEzsL4nOra6BGJ2r8fJqNv9WebRg3aK8ah/f01t7r52d3531KhrHPu/F9/YsxcO7ZhxP9bD775seXnvGow3EZ/ZUNnZlXo14ePXq6VuierXKw5unXn3zcsX2eRpjR1716r/3buL+mHn3Kg87X3bc29y37Z0emX9X1HfFmJHHP/AC+rIQkQ==
+   eJztmbsOgCAMRZHRkf//WBdNTGMfkKIXc4cTg1T0AK0DtZSyL0492RaHHljQAwt6YEEPLOiBBT2woAcW9MCCHljQAwt6YEEPLOiBBT2woAcW9MCiBumJ/RLv3GoLxPBc7d19FYkf3X9ZHs1Ztyte62+377HWXmv3zu/MeuWNI/uteCtnUTy0a4/jqh4y/9700NojHi0Qn12vZnhE4q16deXbPd6rV1ke2jxZ9U3bK/KZpzFm7Cuv/q+SHyPvzvKQ8yXH3cV92Z7p0fPv8p7NGNPz+AMHzCIQkQ==
   </data>
  </layer>
  <layer name="Entities" width="50" height="50" visible="0">
   <data encoding="base64" compression="zlib">
-   eJzt1kEOgjAQheGeyVt4DJYuOQrdyQ53srO3kFNZkjYZsZRpMSaY/0smYGzpvJSkGAMAAAAAAAAAAAAA70ZFOeW41Lw+1K2g4nitRjmuL3hmam5JFhvG2oI1fp1jizV1OUp62TP36Dl685lj7f2aHS3HuHimFdcj5bDm+zlaZT81UjnmvZh7dGLcnhya/mU/NVI5UjQ5mkRFT3Hf+br6GnzdfT0W/dQoyRH3SbMfU7ieM2OGlX5qyAy5cz/2v3UOXlbWOYn73HvmMv/laDLk8kSy/zb87hZrTSZPe+an1HyTyUz/5AV+doan
+   eJzt1kEOgjAQBdCeyVt4DNy55Ch0JzvcyU5uoIkmcipL0iYjttPp4Kbmv2QChpbOTwloDAAAAAAAAAAAAAAAAADAp1FQk3BcbF7v61xQYbzUwVdOX3DP2NySLNaPtQVrPFw9hb1o0Rw51uhylPSyZW7tOXrznSP1fC1qyzGu7mnJsaYc1vw2x83VXdiPRizHshdLjxMZtyWH5H1L+9GI5YiR5GgiFbzIeefq5GpwdXF1XfWjUZIj7JNkP2Z/3DNjhkQ/GjQD990P/ee+g8fEOjty3jL9TMw1jiQDlyeg/bf+d7daaza8JnOdo/lPRjP9kzeImok3
   </data>
  </layer>
  <layer name="ThinFog" width="50" height="50">
