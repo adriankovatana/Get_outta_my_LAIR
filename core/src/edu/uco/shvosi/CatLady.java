@@ -9,6 +9,8 @@ import java.util.List;
 
 public class CatLady extends Antagonist {
     
+    private Animation catLadyWalk; 
+    private Animation catLadyAttack; 
     private boolean flip = false;
     private float elapsedTime;
     private TextureRegion temp;
@@ -17,21 +19,43 @@ public class CatLady extends Antagonist {
     private String XorY; 
     private int xdis; 
     private int ydis; 
+    private int damage = 15; 
     private boolean active = false;
     private boolean moved = false;
+    private DamageEntity melee; 
+    private DamageEntity self; 
+    private int turns= 0;
+    private boolean isCat = false;
     
     public CatLady(int cX, int cY) {
         super(Constants.EnemyType.CATLADY, TextureLoader.CATLADYTEXTURE, cX, cY);
-        this.walkAnimation = TextureLoader.catLadyWalk;
+        catLadyWalk = TextureLoader.catLadyWalk;
+        catLadyAttack = TextureLoader.catLadyAttack;
         this.range = 2;
         this.name = "CatLady";
         super.xpValue = 100;
-
+        //catLady do transformation 
+      //  catLadyChange = TextureLoader.catLadyAttack; 
+        this.health = 70; 
+        this.maxHealth = this.health; 
+        this.damage = damage; 
+        melee = new DamageEntity(0,0,this.damage); 
+        //self = new DamageEntity(0,0, this.damage); 
     }
 
     @Override
     public void attackAction() {
         //Do Attack Stuffs?
+        
+        melee.setCX(bernardX);
+        melee.setCY(bernardY);
+        //self.setCX(this.cX);
+        //self.setCY(this.cY);
+        melee.setDead(false);
+        //self.setDead(false);
+        Map.miscEntityList.add(melee);
+        //Map.miscEntityList.add(self);
+        
         this.addAction(this.finishTurn());
     }
     
@@ -41,39 +65,68 @@ public class CatLady extends Antagonist {
     
                 
             elapsedTime += Gdx.graphics.getDeltaTime();
-            
-            if(xdis >=0)
+            if(range == 1 && Math.abs(xdis) <=range && Math.abs(ydis) <=range)
             {
-                flip = true;
+                isCat = true;
             }
-            else
+            if(isCat)
             {
-                flip = false;
-            }
+                if(xdis >=0)
+                {
+                    flip = true;
+                }
+                else
+                {
+                    flip = false;
+                }
                 
-            if (flip) {
-                temp = this.walkAnimation.getKeyFrame(elapsedTime);
-                temp.flip(true, false);
-                batch.draw(temp, this.getX(),getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
-                temp.flip(true, false);
-            } else {
-                batch.draw(this.walkAnimation.getKeyFrame(elapsedTime), this.getX(), this.getY(), Constants.TILEDIMENSION , Constants.TILEDIMENSION);
-            }
-            if (this.walkAnimation.isAnimationFinished(elapsedTime)) {
-                moving = false;
-                elapsedTime = 0f;
-            }
-        
+                if (flip) {
+                    temp = this.catLadyAttack.getKeyFrame(elapsedTime);
+                    temp.flip(true, false);
+                    batch.draw(temp, this.getX(),getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
+                    temp.flip(true, false);
+                } else {
+                    batch.draw(catLadyAttack.getKeyFrame(elapsedTime), this.getX(), this.getY(), Constants.TILEDIMENSION , Constants.TILEDIMENSION);
+                }
+                if (catLadyAttack.isAnimationFinished(elapsedTime)) {
+                    moving = false;
+                    elapsedTime = 0f;
+                }
+            }  
+            
+            else{          
+                if(xdis >=0)
+                {
+                    flip = true;
+                }
+                else
+                {
+                    flip = false;
+                }
+                
+                if (flip) {
+                    temp = catLadyWalk.getKeyFrame(elapsedTime);
+                    temp.flip(true, false);
+                    batch.draw(temp, this.getX(),getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
+                    temp.flip(true, false);
+                } else {
+                    batch.draw(catLadyWalk.getKeyFrame(elapsedTime), this.getX(), this.getY(), Constants.TILEDIMENSION , Constants.TILEDIMENSION);
+                }
+                if (catLadyWalk.isAnimationFinished(elapsedTime)) {
+                    moving = false;
+                    elapsedTime = 0f;
+                }
+            }       
     }
 
     
     @Override
     public void calculateTurn(Constants.MapGridCode[][] mapGrid, Constants.EntityGridCode[][] entityGrid, List<Entity> entityList) {
-        
+        //Random movement
+        int tries = 0;
         Constants.Direction d = Constants.Direction.NONE;
 
-//        getBluesCount(entityList);
-//        damage = damage + bluesCount;
+
 
             for(int i = 0; i < entityList.size(); i++)//get bernards location
             {
@@ -84,7 +137,7 @@ public class CatLady extends Antagonist {
                 }
             }
           
-            xdis = this.getCX() - bernardX;//get dis between me and bernard on x axis
+           xdis = this.getCX() - bernardX;//get dis between me and bernard on x axis
             ydis = this.getCY() - bernardY;//get dis between me and bernard on y axis
             
             //if bernard is less than 5 spaces away I become active
@@ -95,6 +148,11 @@ public class CatLady extends Antagonist {
         
             if (active)//active charater can move and attack
             {
+                turns ++;
+                if(turns > 9)
+                {
+                    range = 1;
+                }
                 int distanceDown = 0;
                 int distanceUp = 0;
                 int distanceRight = 0;
@@ -289,13 +347,38 @@ public class CatLady extends Antagonist {
         }//end up
             this.setTurnAction(Constants.TurnAction.MOVE);
             }//end move to one spot away
-//                if(Math.abs(xdis) <=1 && Math.abs(ydis) <=range)
-//                {
-//                   this.setTurnAction(Constants.TurnAction.ATTACK);
-//
-//                }                            
-//                 
+               if(range == 1 && Math.abs(xdis) <=range && Math.abs(ydis) <=range)
+                {
+                   this.setTurnAction(Constants.TurnAction.ATTACK);
+
+                }                            
+                 
             }//end if active
     }//end function
+    
+    @Override
+    public void collision(Entity entity){
+        
+    }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
