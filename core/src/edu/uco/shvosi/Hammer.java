@@ -19,7 +19,7 @@ public class Hammer extends Antagonist {
     private String XorY;
     private int xdis;
     private int ydis;
-    private int damage = 10;
+    private int damage = 5;
     private boolean active = false;
     private boolean moved = false;
     private DamageEntity melee;
@@ -35,13 +35,13 @@ public class Hammer extends Antagonist {
         hammerAttack = TextureLoader.hammerAttack;
         this.damage = damage;
         melee = new DamageEntity(0,0,this.damage);
-        oneAway = new DamageEntity(0,0,this.damage/2);
+        oneAway = new DamageEntity(0,0,this.damage);
         range = 2;
     }
 
     @Override
     public void attackAction() {
-              if(!flip)
+        if(!flip)
         {
            melee.setCX(this.cX + 1);
            melee.setCY(this.cY);

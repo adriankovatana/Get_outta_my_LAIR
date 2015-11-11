@@ -21,6 +21,9 @@ public class Blues extends Antagonist {
     private int ydis; 
     private boolean active = false;
     private BluesSkill bluesSkill;
+    private int enemyX;
+    private int enemyY;
+    private DamageEntity blueDamage;
     
     
     public Blues(int cX, int cY) {
@@ -29,10 +32,17 @@ public class Blues extends Antagonist {
         this.walkAnimation = TextureLoader.blueWalk;
         BluesSkill bluesSkill = new BluesSkill();
         this.range = 3;
+        this.damage = 2;
+        blueDamage = new DamageEntity(0,0,this.damage);
+
     }
 
     @Override
     public void attackAction() {
+        blueDamage.setCX(bernardX);
+        blueDamage.setCY(bernardY);
+        blueDamage.setDead(false);
+        Map.miscEntityList.add(blueDamage);
         this.addAction(this.finishTurn());
     }
     
@@ -78,6 +88,14 @@ public class Blues extends Antagonist {
                 break;
             }
         }
+        for (int i = 0; i < entityList.size(); i++) {
+            if (entityList.get(i).getGridCode() == Constants.EntityGridCode.ENEMY) {
+                enemyX = entityList.get(i).getCX();
+                enemyY = entityList.get(i).getCY();
+                if(Math.abs(this.cX - enemyX) <= range&& Math.abs(this.cY - enemyY) <= range)
+                   {damage = damage * damage;}
+            }
+        }
 
         xdis = this.getCX() - bernardX;
         ydis = this.getCY() - bernardY;
@@ -86,9 +104,10 @@ public class Blues extends Antagonist {
         }
         if (active) {
             if (Math.abs(xdis) < range && Math.abs(ydis) < range) {
+                if(this.damage == 2){
                 while (!canMove(d, mapGrid, entityGrid)) {
                     random = (int) (Math.random() * entityGrid.length);
-                    switch (random % 8) {
+                    switch (random % 4) {
                         case 1:
                             d = Constants.Direction.UP;
                             break;
@@ -103,10 +122,17 @@ public class Blues extends Antagonist {
                             d = Constants.Direction.RIGHT;
                             flip = false;
                             break;
+                        default:
+                            d = Constants.Direction.NONE;                           
 
+                    }//end switch
+                    }//end while
+                }//end damage  2
+                else{
+                    this.setTurnAction(Constants.TurnAction.ATTACK);
                     }
                 }//end in range
-            }//end while
+            
             if (Math.abs(xdis) > range && Math.abs(ydis) > range) {
 
                 int distanceDown = 0;
@@ -299,6 +325,7 @@ public class Blues extends Antagonist {
                         }
                        
                 }//end up
+                this.setTurnAction(Constants.TurnAction.MOVE);
             }
         }//end if active
     }
