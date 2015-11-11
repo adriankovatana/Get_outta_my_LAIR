@@ -322,7 +322,7 @@ public class Antagonist extends Entity {
 //        int blueX;
 //        int blueY;
 //        for (int i = 0; i < entityList.size(); i++) {
-//            if (entityList.get(i).name.equals("Blues")) {
+//            if (entityList.get(i).getName().equals("Blues")) {
 //                blueX = entityList.get(i).getCX();
 //                blueY = entityList.get(i).getCY();
 //                if(Math.abs(this.getCX() - blueX) <=3 && Math.abs(this.getCY() - blueY) <= 3){

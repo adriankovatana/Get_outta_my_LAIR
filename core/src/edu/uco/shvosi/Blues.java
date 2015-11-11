@@ -85,8 +85,8 @@ public class Blues extends Antagonist {
             active = true;
         }
         if (active) {
-            while (!canMove(d, mapGrid, entityGrid)) {
-                if (Math.abs(xdis) < range && Math.abs(ydis) < range) {
+            if (Math.abs(xdis) < range && Math.abs(ydis) < range) {
+                while (!canMove(d, mapGrid, entityGrid)) {
                     random = (int) (Math.random() * entityGrid.length);
                     switch (random % 8) {
                         case 1:
