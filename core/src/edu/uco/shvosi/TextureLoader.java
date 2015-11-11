@@ -28,7 +28,7 @@ public class TextureLoader {
     public static final Texture ICICLETEXTURE = new Texture(Gdx.files.internal("icicle.png"));
     public static final Texture LIGHTTEXTURE = new Texture(Gdx.files.internal("lightning.png"));
     public static final Texture LIGHTTEXTURE2 = new Texture(Gdx.files.internal("lightning2.png"));
-
+    
     private TextureRegion[] detectionFrames;
     private TextureRegion[] barrierFrames;
     private TextureRegion[] healFrames;
@@ -87,6 +87,7 @@ public class TextureLoader {
     public static final Texture REDGATERTEXTURE = new Texture(Gdx.files.internal("colemap/redgater.png"));
     public static final Texture DEATHTEXTURE = new Texture(Gdx.files.internal("death.png"));
     public static final Texture FROSTBITETEXTURE = new Texture(Gdx.files.internal("frostbite.png"));
+    public static final Texture CATLADYTRANSFORMTEXTURE = new Texture(Gdx.files.internal("characters/big_cat_attack.png"));
 
     private Array<TextureRegion> catFrames;
     private Array<TextureRegion> hammerFrames;
@@ -102,6 +103,7 @@ public class TextureLoader {
     private Array<TextureRegion> suffragetteFrames;
     private Array<TextureRegion> hammerAttackFrames;
     private Array<TextureRegion> catAttackFrames;
+    private Array<TextureRegion> catLadyTransformFrames;
     private TextureRegion[] deathFrames;
     private TextureRegion[] frostBiteFrames;
 
@@ -119,6 +121,7 @@ public class TextureLoader {
     public static Animation suffragetteWalk;
     public static Animation hammerAttack;
     public static Animation catAttack;
+    public static Animation catLadyAttack;
     public static Animation death;
     public static Animation frost;
 
@@ -421,7 +424,16 @@ public class TextureLoader {
         }
 
         catLadyWalk = new Animation(0.50f, catLadyFrames, PlayMode.LOOP);
+        
+         //catLady is Tranforming
+        catLadyTransformFrames = new Array<TextureRegion>(4);
+        for (int i = 0; i < 4; i++) {
+            catLadyTransformFrames.add(new TextureRegion(CATLADYTRANSFORMTEXTURE, 25, i * 100, 100, 100));
+        }
 
+        catLadyAttack = new Animation(0.50f, catLadyTransformFrames, PlayMode.LOOP);
+        
+        //melee skill
         meleeFrames = new Array<TextureRegion>(7);
         for (int i = 0; i < 7; i++) {
             meleeFrames.add(new TextureRegion(MELEEATTACKTEXTURE, 25, i * 100, 100, 100));
@@ -525,5 +537,7 @@ public class TextureLoader {
         MELEESKILLTEXTURE.dispose();
         BLUESKILLTEXTURE.dispose();
         FROSTBITETEXTURE.dispose();
+        CATLADYTRANSFORMTEXTURE.dispose(); 
+
     }
 }
