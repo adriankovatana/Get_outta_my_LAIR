@@ -457,11 +457,11 @@ public class Map {
             tempAntagList.add(new CatAttack(8, 22));
             tempAntagList.add(new CatAttack(10, 20));
 
-            tempAntagList.add(new Wanderer(9, 4));
+            //tempAntagList.add(new Wanderer(9, 4));
 
            // tempAntagList.add(new Suffragette(5, 7, Constants.Direction.UP, 2));
-            tempAntagList.add(new Wreker(9,3));
-            tempAntagList.add(new Blues(17,3));
+            //tempAntagList.add(new Wreker(9,3));
+            tempAntagList.add(new Blues(10,3));
 
         } //Add for testmap 2
         else if (GameScreen.level == 1) {
