@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -16,6 +17,7 @@ public class GameScreen implements Screen {
 
     private SpriteBatch batch;
     private OrthographicCamera camera;
+    private Vector3 mousePosition;
     public Map map;
     private Stage stage;
     private String healthpoints;
@@ -26,6 +28,7 @@ public class GameScreen implements Screen {
     private boolean paused = false;
     private boolean help = false;
     private boolean showFullMap = false;
+    private boolean targetToggle = true;
 
     PauseScreen pauseScreen = new PauseScreen(this);
     HelpScreen helpScreen = new HelpScreen(this);
@@ -46,11 +49,11 @@ public class GameScreen implements Screen {
     @Override
     public void render(float delta) {
         if (!paused) {
-            if(Gdx.input.isKeyJustPressed(Keys.M)){
+            if (Gdx.input.isKeyJustPressed(Keys.M)) {
                 paused = true;
                 showFullMap = true;
             }
-            
+
             //Check for game over
             if (map.getEntityList().isEmpty()
                     || (map.bernard.isDead() && map.bernard.turnFinished)) {
@@ -89,9 +92,38 @@ public class GameScreen implements Screen {
                     Gdx.app.log("Lose Turn Counter", c);
                     map.playTurn(activeEntity);
                 } else {
+
+                    //Bernard Coordinates Check
+//                    if (Gdx.input.isKeyJustPressed(Keys.C)) {
+//                        Gdx.app.log("Bernards X Coordinates", String.valueOf(bernard.getX()));
+//                        Gdx.app.log("Bernards Y Coordinates", String.valueOf(bernard.getY()));
+//                        Gdx.app.log("Mouse Position", String.valueOf(mousePosition));
+//                    }
+                    //Toggle Target Square
+                    if (Gdx.input.isKeyJustPressed(Keys.T)) {
+                        targetToggle ^= true;
+                    }
+
+                    //Mouse Direction
+                    if (mousePosition.x > map.bernard.getX() + Constants.TILEDIMENSION && mousePosition.y < map.bernard.getY() + Constants.TILEDIMENSION && mousePosition.y > map.bernard.getY()) {
+                        map.bernard.setDirection(Constants.Direction.RIGHT);
+                        map.bernard.flipTexture(Constants.Direction.RIGHT);
+//                        Gdx.app.log("Direction", "Right");
+                    } else if (mousePosition.x < map.bernard.getX() && mousePosition.y < map.bernard.getY() + Constants.TILEDIMENSION && mousePosition.y > map.bernard.getY()) {
+                        map.bernard.setDirection(Constants.Direction.LEFT);
+                        map.bernard.flipTexture(Constants.Direction.LEFT);
+//                        Gdx.app.log("Direction", "Left");
+                    } else if (mousePosition.y > map.bernard.getY() + Constants.TILEDIMENSION && mousePosition.x < map.bernard.getX() + Constants.TILEDIMENSION && mousePosition.x > map.bernard.getX()) {
+                        map.bernard.setDirection(Constants.Direction.UP);
+//                        Gdx.app.log("Direction", "Up");
+                    } else if (mousePosition.y < map.bernard.getY() && mousePosition.x < map.bernard.getX() + Constants.TILEDIMENSION && mousePosition.x > map.bernard.getX()) {
+                        map.bernard.setDirection(Constants.Direction.DOWN);
+//                        Gdx.app.log("Direction", "Down");
+                    }
+
                     //Movement
                     if (Gdx.input.isKeyJustPressed(Keys.W) && map.bernardCanMove(Constants.Direction.UP)) {
-                    //entityTurnInProg = true;
+                        //entityTurnInProg = true;
                         //this.playTurn = true;
                         roundStarted = true;
                         map.bernard.notifyObservers();
@@ -100,7 +132,7 @@ public class GameScreen implements Screen {
                         Gdx.app.log("MOVING", "UP");
                         map.playTurn(activeEntity);
                     } else if (Gdx.input.isKeyJustPressed(Keys.S) && map.bernardCanMove(Constants.Direction.DOWN)) {
-                    //entityTurnInProg = true;
+                        //entityTurnInProg = true;
                         //this.playTurn = true;
                         roundStarted = true;
                         map.bernard.notifyObservers();
@@ -114,7 +146,7 @@ public class GameScreen implements Screen {
                             map.bernard.setDirection(Constants.Direction.LEFT);
                         }
                         if (map.bernardCanMove(Constants.Direction.LEFT)) {
-                        //entityTurnInProg = true;
+                            //entityTurnInProg = true;
                             //this.playTurn = true;
                             roundStarted = true;
                             map.bernard.notifyObservers();
@@ -129,7 +161,7 @@ public class GameScreen implements Screen {
                         }
 
                         if (map.bernardCanMove(Constants.Direction.RIGHT)) {
-                        //entityTurnInProg = true;
+                            //entityTurnInProg = true;
                             //this.playTurn = true;
                             roundStarted = true;
                             map.bernard.notifyObservers();
@@ -158,7 +190,7 @@ public class GameScreen implements Screen {
                     }
 
                     if (Gdx.input.isKeyJustPressed(Keys.NUM_1)) {
-                    //entityTurnInProg = true;
+                        //entityTurnInProg = true;
                         //this.playTurn = true;
                         roundStarted = true;
                         map.bernard.setSkill(Constants.SkillName.SKILLONE);
@@ -275,12 +307,12 @@ public class GameScreen implements Screen {
                 }
             }
 
-        // -- Play the turn --
+            // -- Play the turn --
             //Sets the next active entity when it is done with its turn
             if (roundStarted && activeEntity.turnFinished) {
                 activeEntity = map.getEntityList().get(++entityTurn % map.getEntityList().size());
 
-            //Gdx.app.log(activeEntity.getName(), activeEntity.cX + "' " + activeEntity.cY);
+                //Gdx.app.log(activeEntity.getName(), activeEntity.cX + "' " + activeEntity.cY);
                 //If we have reached bernard, the turn is over and set all turnfinished to false;
                 if (activeEntity instanceof Protagonist) {
                     roundStarted = false;
@@ -309,8 +341,9 @@ public class GameScreen implements Screen {
                         aggressor.collision(map.getEntityList().get(j));
                     }
                 }
-                if(bernard.getSliding())
+                if (bernard.getSliding()) {
                     map.removeFogAroundBernard();
+                }
             }
 
             //Add actions to the activeEntity if it just started its turn!
@@ -327,8 +360,8 @@ public class GameScreen implements Screen {
 
             //temporary inventory display
             invent.setX(map.bernard.getX() - Constants.SCREENWIDTH / 2 + map.bernard.getWidth() * 0.75f);
-            invent.setY(map.bernard.getY() + Constants.SCREENHEIGHT / 2 - map.bernard.getHeight() / 2);        
-            
+            invent.setY(map.bernard.getY() + Constants.SCREENHEIGHT / 2 - map.bernard.getHeight() / 2);
+
             //temporary turn display
             String temp = "";
             if (roundStarted) {
@@ -356,14 +389,33 @@ public class GameScreen implements Screen {
             batch.setProjectionMatrix(camera.combined);
             batch.begin();
             invent.draw(batch, delta);
+
+            //Target Square
+            if (targetToggle == true) {
+                if (map.bernard.getDirection() == Constants.Direction.UP) {
+                    batch.draw(TextureLoader.TARGETSQUARE, map.bernard.getX() - 5, map.bernard.getY() + Constants.TILEDIMENSION - 3, Constants.TILEDIMENSION + 10, Constants.TILEDIMENSION + 10);
+                } else if (map.bernard.getDirection() == Constants.Direction.DOWN) {
+                    batch.draw(TextureLoader.TARGETSQUARE, map.bernard.getX() - 5, map.bernard.getY() - Constants.TILEDIMENSION - 3, Constants.TILEDIMENSION + 10, Constants.TILEDIMENSION + 10);
+                } else if (map.bernard.getDirection() == Constants.Direction.LEFT) {
+                    batch.draw(TextureLoader.TARGETSQUARE, map.bernard.getX() - Constants.TILEDIMENSION - 5, map.bernard.getY() - 3, Constants.TILEDIMENSION + 10, Constants.TILEDIMENSION + 10);
+                } else if (map.bernard.getDirection() == Constants.Direction.RIGHT) {
+                    batch.draw(TextureLoader.TARGETSQUARE, map.bernard.getX() + Constants.TILEDIMENSION - 5, map.bernard.getY() - 3, Constants.TILEDIMENSION + 10, Constants.TILEDIMENSION + 10);
+                }
+            }
+
             batch.end();
 
             centerCameraOn(map.bernard);
             camera.update();
+            
+            //Separate mouse coordinates from the screen to the actual game map
+            mousePosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+            camera.unproject(mousePosition);
+
             /* -- END RENDER -- */
         } else {
-            if(showFullMap){
-                if(Gdx.input.isKeyJustPressed(Keys.M)){
+            if (showFullMap) {
+                if (Gdx.input.isKeyJustPressed(Keys.M)) {
                     paused = false;
                     showFullMap = false;
                 }
@@ -374,10 +426,9 @@ public class GameScreen implements Screen {
                 map.renderFullMap();
                 batch.end();
             } else {
-                if (help){
+                if (help) {
                     helpScreen.render(delta);
-                }
-                else{
+                } else {
                     pauseScreen.render(delta);
                 }
             }
@@ -418,7 +469,7 @@ public class GameScreen implements Screen {
         }
         //Health Display
         stage.addActor(healthLabel);
- //       stage.addActor(invent);
+        //       stage.addActor(invent);
         stage.addActor(turnLabel);
     }
 
@@ -427,6 +478,8 @@ public class GameScreen implements Screen {
         // called when this screen is set as the screen with game.setScreen();
 
         batch = new SpriteBatch();
+        
+        mousePosition = new Vector3();
 
         //Initialize Camera
         camera = new OrthographicCamera();
@@ -457,18 +510,17 @@ public class GameScreen implements Screen {
     @Override
     public void pause() {
         paused = true;
-        if (help){
+        if (help) {
             helpScreen.show();
-        }
-        else{
+        } else {
             pauseScreen.show();
         }
     }
 
-    public void setHelp(boolean a){
+    public void setHelp(boolean a) {
         help = a;
     }
-    
+
     @Override
     public void resume() {
         Gdx.input.setInputProcessor(stage);

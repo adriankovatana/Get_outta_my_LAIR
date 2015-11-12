@@ -45,8 +45,7 @@ public class Protagonist extends Entity implements Observable {
     private int level = 1;
     private float strengthMod = 1f;
     private boolean shieldActive = false;
-    
-    
+
     public SequenceAction seqAction;
     public Constants.Direction slideDirection;
     public int slideCounter;
@@ -88,7 +87,7 @@ public class Protagonist extends Entity implements Observable {
     private int index = 0;
     static Entity active = null;
     protected int sightRadius;
-    
+
     private List<Observer> observers;
 
     public Protagonist(int cX, int cY) {
@@ -154,7 +153,7 @@ public class Protagonist extends Entity implements Observable {
             }
 
         }.text(textlevel).button("Health", true).button("Damage", false);
-                
+
         levelUpDialog.setMovable(
                 false);
     }
@@ -348,8 +347,8 @@ public class Protagonist extends Entity implements Observable {
         //HP BAR
         batch.draw(healthbarBackground, this.getX() + 10, this.getY());
         batch.draw(healthbarFill, this.getX() + 11, this.getY() + 1, healthbarFill.getRegionWidth() * ((float) health / (float) maxHealth), healthbarFill.getRegionHeight());
-        if (shieldActive){
-             batch.draw(TextureLoader.BERNARDSHIELDTEXTURE, this.getX(), this.getY());
+        if (shieldActive) {
+            batch.draw(TextureLoader.BERNARDSHIELDTEXTURE, this.getX(), this.getY());
         }
     }
 
@@ -367,10 +366,9 @@ public class Protagonist extends Entity implements Observable {
     }
 
     public void takeDamage(int damage) {
-        if(shieldActive){
+        if (shieldActive) {
             shieldActive = false;
-        }
-        else{
+        } else {
             if (executeBarrier == true) {
                 this.health -= damage / 2;
                 this.barrierDamage += damage / 2;
@@ -383,7 +381,7 @@ public class Protagonist extends Entity implements Observable {
             }
             this.addAction(this.takeDamageAnimation());
         }
-            
+
         if (this.health <= 0) {
             this.health = 0;
             this.setDead(true);
@@ -470,20 +468,34 @@ public class Protagonist extends Entity implements Observable {
                     activeSkill.damageEntities.get(0).setDamage(activeSkill.damage);
                     activeSkill.damageEntities.get(1).setDamage(activeSkill.damage);
                 }
-                if (this.textureRegion.isFlipX()) {
+                if (this.direction == Constants.Direction.LEFT) {
                     activeSkill.damageEntities.get(0).setDead(false);
                     activeSkill.damageEntities.get(0).setCX(this.getCX() - 1);
                     activeSkill.damageEntities.get(0).setCY(this.getCY());
                     activeSkill.damageEntities.get(1).setDead(false);
                     activeSkill.damageEntities.get(1).setCX(this.getCX() - 2);
                     activeSkill.damageEntities.get(1).setCY(this.getCY());
-                } else {
+                } else if (this.direction == Constants.Direction.RIGHT) {
                     activeSkill.damageEntities.get(0).setDead(false);
                     activeSkill.damageEntities.get(0).setCX(this.getCX() + 1);
                     activeSkill.damageEntities.get(0).setCY(this.getCY());
                     activeSkill.damageEntities.get(1).setDead(false);
                     activeSkill.damageEntities.get(1).setCX(this.getCX() + 2);
                     activeSkill.damageEntities.get(1).setCY(this.getCY());
+                } else if (this.direction == Constants.Direction.UP) {
+                    activeSkill.damageEntities.get(0).setDead(false);
+                    activeSkill.damageEntities.get(0).setCX(this.getCX());
+                    activeSkill.damageEntities.get(0).setCY(this.getCY() + 1);
+                    activeSkill.damageEntities.get(1).setDead(false);
+                    activeSkill.damageEntities.get(1).setCX(this.getCX());
+                    activeSkill.damageEntities.get(1).setCY(this.getCY() + 2);
+                } else if (this.direction == Constants.Direction.DOWN) {
+                    activeSkill.damageEntities.get(0).setDead(false);
+                    activeSkill.damageEntities.get(0).setCX(this.getCX());
+                    activeSkill.damageEntities.get(0).setCY(this.getCY() - 1);
+                    activeSkill.damageEntities.get(1).setDead(false);
+                    activeSkill.damageEntities.get(1).setCX(this.getCX());
+                    activeSkill.damageEntities.get(1).setCY(this.getCY() - 2);
                 }
                 break;
             case REDLASERSKILL:
@@ -496,7 +508,7 @@ public class Protagonist extends Entity implements Observable {
                     activeSkill.damageEntities.get(1).setDamage(activeSkill.damage);
                     activeSkill.damageEntities.get(2).setDamage(activeSkill.damage);
                 }
-                if (this.textureRegion.isFlipX()) {
+                if (this.direction == Constants.Direction.LEFT) {
                     activeSkill.damageEntities.get(0).setDead(false);
                     activeSkill.damageEntities.get(0).setCX(this.getCX() - 1);
                     activeSkill.damageEntities.get(0).setCY(this.getCY());
@@ -506,7 +518,7 @@ public class Protagonist extends Entity implements Observable {
                     activeSkill.damageEntities.get(2).setDead(false);
                     activeSkill.damageEntities.get(2).setCX(this.getCX() - 3);
                     activeSkill.damageEntities.get(2).setCY(this.getCY());
-                } else {
+                } else if (this.direction == Constants.Direction.RIGHT) {
                     activeSkill.damageEntities.get(0).setDead(false);
                     activeSkill.damageEntities.get(0).setCX(this.getCX() + 1);
                     activeSkill.damageEntities.get(0).setCY(this.getCY());
@@ -516,11 +528,32 @@ public class Protagonist extends Entity implements Observable {
                     activeSkill.damageEntities.get(2).setDead(false);
                     activeSkill.damageEntities.get(2).setCX(this.getCX() + 3);
                     activeSkill.damageEntities.get(2).setCY(this.getCY());
+                } else if (this.direction == Constants.Direction.UP) {
+                    activeSkill.damageEntities.get(0).setDead(false);
+                    activeSkill.damageEntities.get(0).setCX(this.getCX());
+                    activeSkill.damageEntities.get(0).setCY(this.getCY() + 1);
+                    activeSkill.damageEntities.get(1).setDead(false);
+                    activeSkill.damageEntities.get(1).setCX(this.getCX());
+                    activeSkill.damageEntities.get(1).setCY(this.getCY() + 2);
+                    activeSkill.damageEntities.get(2).setDead(false);
+                    activeSkill.damageEntities.get(2).setCX(this.getCX());
+                    activeSkill.damageEntities.get(2).setCY(this.getCY() + 3);
+                } else if (this.direction == Constants.Direction.DOWN) {
+                    activeSkill.damageEntities.get(0).setDead(false);
+                    activeSkill.damageEntities.get(0).setCX(this.getCX());
+                    activeSkill.damageEntities.get(0).setCY(this.getCY() - 1);
+                    activeSkill.damageEntities.get(1).setDead(false);
+                    activeSkill.damageEntities.get(1).setCX(this.getCX());
+                    activeSkill.damageEntities.get(1).setCY(this.getCY() - 2);
+                    activeSkill.damageEntities.get(2).setDead(false);
+                    activeSkill.damageEntities.get(2).setCX(this.getCX());
+                    activeSkill.damageEntities.get(2).setCY(this.getCY() - 3);
                 }
 //                Gdx.app.log(activeSkill.damageEntities.get(0).name + " 0 ", "" + activeSkill.damageEntities.get(0).getCX() + " , " + activeSkill.damageEntities.get(0).getCY());
 //                Gdx.app.log(activeSkill.damageEntities.get(1).name + " 1 ", "" + activeSkill.damageEntities.get(1).getCX() + " , " + activeSkill.damageEntities.get(1).getCY());
 //                Gdx.app.log(activeSkill.damageEntities.get(2).name + " 2 ", "" + activeSkill.damageEntities.get(2).getCX() + " , " + activeSkill.damageEntities.get(2).getCY());
                 break;
+
             case SKILLTWO:
                 if (executeLightBarrier == true) {
                     activeSkill.damageEntities.get(0).setDamage(activeSkill.damage + activeSkill.damage / 2);
@@ -650,9 +683,9 @@ public class Protagonist extends Entity implements Observable {
         return new Action() {
             @Override
             public boolean act(float delta) {
-//                if (Protagonist.this.getActions().size > 1) {
-//                    return false;
-//                }
+                if (Protagonist.this.getActions().size > 1) {
+                    return false;
+                }
                 Protagonist.this.setTurnFinished(true);
                 Protagonist.this.turnAction = Constants.TurnAction.NONE;
                 Protagonist.this.sliding = false;
@@ -660,7 +693,6 @@ public class Protagonist extends Entity implements Observable {
             }
         };
     }
-
 
     public void resetStatusCounter() {
         poison = false;
@@ -768,7 +800,6 @@ public class Protagonist extends Entity implements Observable {
         levelUpDialog.setVisible(true);
         this.currentXp -= this.xpToNextLevel;
         this.xpToNextLevel *= 1.2f;
-        
 
     }
 
@@ -783,86 +814,81 @@ public class Protagonist extends Entity implements Observable {
     int getLevel() {
         return this.level;
     }
-    
-    int getExpToLevel(){
+
+    int getExpToLevel() {
         return xpToNextLevel;
     }
-    
-    public void addDamage(){
+
+    public void addDamage() {
         strengthMod *= 1.1f;
     }
 
-    void addInventory(Entity i){
+    void addInventory(Entity i) {
         inventory.add(i);
         index++;
     }
-    
-    static ArrayList<Entity> getInventory(){
+
+    static ArrayList<Entity> getInventory() {
         return inventory;
     }
-    
-    static void setActive(Entity i){
+
+    static void setActive(Entity i) {
         active = i;
-        if (i == null){
-        GameScreen.invent.setImage(TextureLoader.INVENTORYTEXTURE);   
+        if (i == null) {
+            GameScreen.invent.setImage(TextureLoader.INVENTORYTEXTURE);
         }
-        if (i instanceof ItemShield){
-        GameScreen.invent.setImage(TextureLoader.INVENTORYSHIELDTEXTURE);   
+        if (i instanceof ItemShield) {
+            GameScreen.invent.setImage(TextureLoader.INVENTORYSHIELDTEXTURE);
         }
-        if (i instanceof ItemWhistle){
-        GameScreen.invent.setImage(TextureLoader.INVENTORYWHISTLETEXTURE);   
+        if (i instanceof ItemWhistle) {
+            GameScreen.invent.setImage(TextureLoader.INVENTORYWHISTLETEXTURE);
         }
-        if (i instanceof GreyKey){
-        GameScreen.invent.setImage(TextureLoader.INVENTORYGREYKEYTEXTURE);   
+        if (i instanceof GreyKey) {
+            GameScreen.invent.setImage(TextureLoader.INVENTORYGREYKEYTEXTURE);
         }
-        if (i instanceof RedKey){
-        GameScreen.invent.setImage(TextureLoader.INVENTORYREDKEYTEXTURE);   
+        if (i instanceof RedKey) {
+            GameScreen.invent.setImage(TextureLoader.INVENTORYREDKEYTEXTURE);
         }
     }
-    
+
     public void useItem() {
-        if (active == null) {          
-        }
-        else if (active instanceof ItemShield) {
+        if (active == null) {
+        } else if (active instanceof ItemShield) {
             shieldActive = true;
             removeItem();
-        } 
-        else if (active instanceof ItemWhistle) {
+        } else if (active instanceof ItemWhistle) {
             barrierCooldown = 0;
             lightningInfusionCooldown = 0;
             redLaserCooldown = 0;
             removeItem();
-        }
-        else if (active instanceof GreyKey) {
-            if (GreyGate.isCollision(this)){
+        } else if (active instanceof GreyKey) {
+            if (GreyGate.isCollision(this)) {
+                Map.miscEntityList.add(new DamageEntity(this.getCX() + 1, this.getCY() + 1, 100000));
+                Map.miscEntityList.add(new DamageEntity(this.getCX() - 1, this.getCY() + 1, 100000));
+                Map.miscEntityList.add(new DamageEntity(this.getCX(), this.getCY() + 1, 100000));
+                removeItem();
+            }
+        } else if (active instanceof RedKey) {
+            if (RedGate.isCollision(this)) {
                 Map.miscEntityList.add(new DamageEntity(this.getCX() + 1, this.getCY() + 1, 100000));
                 Map.miscEntityList.add(new DamageEntity(this.getCX() - 1, this.getCY() + 1, 100000));
                 Map.miscEntityList.add(new DamageEntity(this.getCX(), this.getCY() + 1, 100000));
                 removeItem();
             }
         }
-        else if (active instanceof RedKey) {
-           if (RedGate.isCollision(this)){
-                Map.miscEntityList.add(new DamageEntity(this.getCX() + 1, this.getCY() + 1, 100000));
-                Map.miscEntityList.add(new DamageEntity(this.getCX() - 1, this.getCY() + 1, 100000));
-                Map.miscEntityList.add(new DamageEntity(this.getCX(), this.getCY() + 1, 100000));
-                removeItem();
-            }
-        }     
     }
-    
-    public void removeItem(){
-        inventory.remove(active);   
-        if (inventory.isEmpty()){
+
+    public void removeItem() {
+        inventory.remove(active);
+        if (inventory.isEmpty()) {
             setActive(null);
-        }
-        else{
+        } else {
             setActive(inventory.get(0));
-        }      
+        }
     }
 
     Entity getActive() {
         return active;
     }
-    
+
 }

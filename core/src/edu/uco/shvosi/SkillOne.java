@@ -38,13 +38,14 @@ class SkillOne extends Skill {
             Protagonist bernard = (Protagonist) entity;
             if (bernard.getLightBarrierLimit() > 0) {
                 elapsedLight += Gdx.graphics.getDeltaTime();
-                if (bernard.textureRegion.isFlipX()) {
-                    temp = light.getKeyFrame(elapsed);
-                    temp.flip(true, false);
-                    batch.draw(light.getKeyFrame(elapsedLight), bernard.getX() - Constants.TILEDIMENSION * width, bernard.getY(), Constants.TILEDIMENSION * width, Constants.TILEDIMENSION * height);
-                    temp.flip(true, false);
-                } else {
-                    batch.draw(light.getKeyFrame(elapsedLight), bernard.getX() + Constants.TILEDIMENSION, bernard.getY(), Constants.TILEDIMENSION * width, Constants.TILEDIMENSION * height);
+                if (bernard.getDirection() == Constants.Direction.LEFT) {
+                    batch.draw(light.getKeyFrame(elapsedLight), entity.getX() - 50, entity.getY() - 5, Constants.TILEDIMENSION / 2, Constants.TILEDIMENSION / 2, Constants.TILEDIMENSION * width + 50, Constants.TILEDIMENSION * height, 1, 1, 180);
+                } else if (bernard.getDirection() == Constants.Direction.RIGHT) {
+                    batch.draw(light.getKeyFrame(elapsedLight), entity.getX() + Constants.TILEDIMENSION, entity.getY(), Constants.TILEDIMENSION * width, Constants.TILEDIMENSION * height);
+                } else if (bernard.getDirection() == Constants.Direction.UP) {
+                    batch.draw(light.getKeyFrame(elapsedLight), entity.getX(), entity.getY() + 50, Constants.TILEDIMENSION / 2, Constants.TILEDIMENSION / 2, Constants.TILEDIMENSION * width + 50, Constants.TILEDIMENSION * height, 1, 1, 90);
+                } else if (bernard.getDirection() == Constants.Direction.DOWN) {
+                    batch.draw(light.getKeyFrame(elapsedLight), entity.getX(), entity.getY() - 50, Constants.TILEDIMENSION / 2, Constants.TILEDIMENSION / 2, Constants.TILEDIMENSION * width + 50, Constants.TILEDIMENSION * height, 1, 1, -90);
                 }
                 if (light.isAnimationFinished(elapsedLight)) {
                     bernard.setLightBarrierLimit(bernard.getLightBarrierLimit() - 1);
@@ -57,14 +58,24 @@ class SkillOne extends Skill {
                     elapsedLight = 0f;
                 }
             }
-        }
-        if (entity.textureRegion.isFlipX()) {
-            temp = animation.getKeyFrame(elapsed);
-            temp.flip(true, false);
-            batch.draw(animation.getKeyFrame(elapsed), entity.getX() - Constants.TILEDIMENSION * width, entity.getY(), Constants.TILEDIMENSION * width, Constants.TILEDIMENSION * height);
-            temp.flip(true, false);
-        } else {
-            batch.draw(animation.getKeyFrame(elapsed), entity.getX() + Constants.TILEDIMENSION, entity.getY(), Constants.TILEDIMENSION * width, Constants.TILEDIMENSION * height);
+
+//        if (entity.textureRegion.isFlipX()) {
+//            temp = animation.getKeyFrame(elapsed);
+//            temp.flip(true, false);
+//            batch.draw(animation.getKeyFrame(elapsed), entity.getX() - Constants.TILEDIMENSION * width, entity.getY(), Constants.TILEDIMENSION * width, Constants.TILEDIMENSION * height);
+//            temp.flip(true, false);
+//        } else {
+//            batch.draw(animation.getKeyFrame(elapsed), entity.getX() + Constants.TILEDIMENSION, entity.getY(), Constants.TILEDIMENSION * width, Constants.TILEDIMENSION * height);
+//        }
+            if (bernard.getDirection() == Constants.Direction.LEFT) {
+                batch.draw(animation.getKeyFrame(elapsed), entity.getX() - 50, entity.getY() - 10, Constants.TILEDIMENSION / 2, Constants.TILEDIMENSION / 2, Constants.TILEDIMENSION * width + 50, Constants.TILEDIMENSION * height, 1, 1, 180);
+            } else if (bernard.getDirection() == Constants.Direction.RIGHT) {
+                batch.draw(animation.getKeyFrame(elapsed), entity.getX() + Constants.TILEDIMENSION, entity.getY(), Constants.TILEDIMENSION * width, Constants.TILEDIMENSION * height);
+            } else if (bernard.getDirection() == Constants.Direction.UP) {
+                batch.draw(animation.getKeyFrame(elapsed), entity.getX(), entity.getY() + 50, Constants.TILEDIMENSION / 2, Constants.TILEDIMENSION / 2, Constants.TILEDIMENSION * width + 50, Constants.TILEDIMENSION * height, 1, 1, 90);
+            } else if (bernard.getDirection() == Constants.Direction.DOWN) {
+                batch.draw(animation.getKeyFrame(elapsed), entity.getX(), entity.getY() - 50, Constants.TILEDIMENSION / 2, Constants.TILEDIMENSION / 2, Constants.TILEDIMENSION * width + 50, Constants.TILEDIMENSION * height, 1, 1, -90);
+            }
         }
     }
 

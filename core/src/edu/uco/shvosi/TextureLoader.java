@@ -177,6 +177,7 @@ public class TextureLoader {
     //UI
     public static final Texture HPBARBACKGROUND = new Texture(Gdx.files.internal("ui/healthbarbackground.png"));
     public static final Texture HPBARFILL = new Texture(Gdx.files.internal("ui/healthbarfill.png"));
+    public static final Texture TARGETSQUARE = new Texture(Gdx.files.internal("ui/square.png"));
 
     private static final int FRAME_COLS = 5;
     private static final int FRAME_ROWS = 4;
@@ -550,6 +551,6 @@ public class TextureLoader {
         BLUESKILLTEXTURE.dispose();
         FROSTBITETEXTURE.dispose();
         CATLADYTRANSFORMTEXTURE.dispose(); 
-
+        TARGETSQUARE.dispose();
     }
 }
