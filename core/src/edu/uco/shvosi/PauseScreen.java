@@ -49,12 +49,10 @@ public class PauseScreen implements Screen {
         
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        screen.invent.setX(25);
-        screen.invent.setY(475);
-        stage.addActor(screen.invent);
         
         batch.begin();
         splash.draw(batch);
+        screen.invent.draw(batch, delta);
         batch.end();
         stage.draw();
     }
@@ -205,6 +203,7 @@ public class PauseScreen implements Screen {
         stage.addActor(healthLabel);
         stage.addActor(damageLabel);
         stage.addActor(levelLabel);
+        screen.invent.setPosition(25, 475);
  //       stage.addActor(invent);
 
         Gdx.input.setInputProcessor(stage);

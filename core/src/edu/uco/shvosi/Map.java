@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -197,8 +198,8 @@ public class Map {
         this.cameraFullMap.update();
 
         this.cameraMiniMap = new OrthographicCamera(this.width, this.height);
-        this.cameraMiniMap.zoom = 4f;
-        this.cameraMiniMap.translate(-this.width * 0.99f, this.height * 1.98f);
+        this.cameraMiniMap.zoom = 5.0f;
+        this.cameraMiniMap.translate(-this.width * 1.12f, this.height * 2.45f);
         this.cameraMiniMap.update();
     }
 
