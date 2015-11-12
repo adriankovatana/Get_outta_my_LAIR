@@ -128,9 +128,12 @@ public class TextureLoader {
     //skills
     public static final Texture MELEESKILLTEXTURE = new Texture(Gdx.files.internal("melee_sheet.png"));
     public static final Texture BLUESKILLTEXTURE = new Texture(Gdx.files.internal("blue_skill_sheet.png"));
+    public static final Texture HAMMERDOWNTEXTURE = new Texture(Gdx.files.internal("hammer_down_sheet.png"));
     private Array<TextureRegion> blueSkillFrames;
+    private Array<TextureRegion> hammerDownFrames;
     private Array<TextureRegion> meleeSkillFrames;
     public static Animation blueSkill;
+    public static Animation hammerDownSkill;
     public static Animation meleeSkill;
     //end skills
 
@@ -449,6 +452,13 @@ public class TextureLoader {
         }
 
         blueSkill = new Animation(0.03f, blueSkillFrames, PlayMode.LOOP);
+        //hammer down
+        hammerDownFrames = new Array<TextureRegion>(6);
+        for (int i = 0; i < 6; i++) {
+            hammerDownFrames.add(new TextureRegion(HAMMERDOWNTEXTURE, 0, i * 500, 500, 500));
+        }
+
+        hammerDownSkill = new Animation(0.1f, hammerDownFrames, PlayMode.NORMAL);        
         //melee
         meleeSkillFrames = new Array<TextureRegion>(7);
         for (int i = 0; i < 7; i++) {

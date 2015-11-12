@@ -90,7 +90,8 @@ public class Hammer extends Antagonist {
                     elapsedTime = 0f;
                 }
             }
-            if(Math.abs(xdis) <= 2 && Math.abs(ydis) <= 2){    
+            if(Math.abs(xdis) <= 2 && Math.abs(ydis) <= 2){
+                batch.draw(TextureLoader.hammerDownSkill.getKeyFrame(elapsedTime), this.getX()-200, this.getY()-200, Constants.TILEDIMENSION*5 , Constants.TILEDIMENSION*5);
                 if (flip) {
                     temp = hammerAttack.getKeyFrame(elapsedTime);
                     temp.flip(true, false);
@@ -105,9 +106,9 @@ public class Hammer extends Antagonist {
                 }
             }
         
-    }
-
-      @Override
+    }      
+    
+    @Override
     public void calculateTurn(Constants.MapGridCode[][] mapGrid, Constants.EntityGridCode[][] entityGrid, List<Entity> entityList) {
         
         Constants.Direction d = Constants.Direction.NONE;

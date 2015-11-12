@@ -13,11 +13,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 class HammerDown extends Skill {
 
-    private Animation blueSkill;
+    private Animation hammerDownSkill;
    
     
     public HammerDown() {
-        super(0, 0, TextureLoader.blueSkill,
+        super(0, 0, TextureLoader.hammerDownSkill,
                 Gdx.audio.newSound(Gdx.files.internal("sounds/skill1.mp3")));
         this.damage = 5;
         this.width = 4;
@@ -25,7 +25,7 @@ class HammerDown extends Skill {
         this.damageEntities.add(new DamageEntity(0, 0, this.damage));
         this.damageEntities.add(new DamageEntity(0, 0, this.damage));
 
-        blueSkill = TextureLoader.blueSkill;
+        hammerDownSkill = TextureLoader.hammerDownSkill;
     }
 
     public void draw(Batch batch, float alpha, Entity entity) {
