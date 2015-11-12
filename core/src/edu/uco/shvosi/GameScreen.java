@@ -24,9 +24,11 @@ public class GameScreen implements Screen {
     public static int turnCount;
     private TextureLoader textureLoader = new TextureLoader();
     private boolean paused = false;
+    private boolean help = false;
     private boolean showFullMap = false;
 
     PauseScreen pauseScreen = new PauseScreen(this);
+    HelpScreen helpScreen = new HelpScreen(this);
 
     public static int level = 0;
     private Protagonist bernard;
@@ -233,6 +235,11 @@ public class GameScreen implements Screen {
                     }
 
                     if (Gdx.input.isKeyJustPressed(Keys.I)) {
+                        this.setHelp(false);
+                        this.pause();
+                    }
+                    if (Gdx.input.isKeyJustPressed(Keys.H)) {
+                        this.setHelp(true);
                         this.pause();
                     }
                 }
@@ -367,8 +374,12 @@ public class GameScreen implements Screen {
                 map.renderFullMap();
                 batch.end();
             } else {
-        //        invent = new Inventory(TextureLoader.INVENTORYTEXTURE, 5, 0);
-                pauseScreen.render(delta);
+                if (help){
+                    helpScreen.render(delta);
+                }
+                else{
+                    pauseScreen.render(delta);
+                }
             }
         }
     }
@@ -446,9 +457,18 @@ public class GameScreen implements Screen {
     @Override
     public void pause() {
         paused = true;
-        pauseScreen.show();
+        if (help){
+            helpScreen.show();
+        }
+        else{
+            pauseScreen.show();
+        }
     }
 
+    public void setHelp(boolean a){
+        help = a;
+    }
+    
     @Override
     public void resume() {
         Gdx.input.setInputProcessor(stage);
@@ -456,6 +476,7 @@ public class GameScreen implements Screen {
         pauseScreen.setInvY(375);
         stage.addActor(invent);
         paused = false;
+        help = false;
     }
 
     @Override
