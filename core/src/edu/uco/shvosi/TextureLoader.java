@@ -175,6 +175,7 @@ public class TextureLoader {
     public static final Texture SLIDEDOWN = new Texture(Gdx.files.internal("traps/slidetiles/downarrow.png"));
 
     //UI
+    public static final Texture HUD = new Texture(Gdx.files.internal("ui/HUD.png"));
     public static final Texture HPBARBACKGROUND = new Texture(Gdx.files.internal("ui/healthbarbackground.png"));
     public static final Texture HPBARFILL = new Texture(Gdx.files.internal("ui/healthbarfill.png"));
     public static final Texture TARGETSQUARE = new Texture(Gdx.files.internal("ui/square.png"));

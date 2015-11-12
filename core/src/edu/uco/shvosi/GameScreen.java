@@ -16,6 +16,7 @@ public class GameScreen implements Screen {
     public MyGdxGame game;
 
     private SpriteBatch batch;
+    private SpriteBatch uibatch;
     private OrthographicCamera camera;
     private Vector3 mousePosition;
     public Map map;
@@ -32,6 +33,7 @@ public class GameScreen implements Screen {
 
     PauseScreen pauseScreen = new PauseScreen(this);
     HelpScreen helpScreen = new HelpScreen(this);
+    Entity hud;
 
     public static int level = 0;
     private Protagonist bernard;
@@ -359,8 +361,8 @@ public class GameScreen implements Screen {
             healthLabel.setText("Level: " + map.bernard.getLevel() + "    " + healthpoints);
 
             //temporary inventory display
-            invent.setX(map.bernard.getX() - Constants.SCREENWIDTH / 2 + map.bernard.getWidth() * 0.75f);
-            invent.setY(map.bernard.getY() + Constants.SCREENHEIGHT / 2 - map.bernard.getHeight() / 2);
+//            invent.setX(map.bernard.getX() - Constants.SCREENWIDTH / 2 + map.bernard.getWidth() * 0.75f);
+//            invent.setY(map.bernard.getY() + Constants.SCREENHEIGHT / 2 - map.bernard.getHeight() / 2);
 
             //temporary turn display
             String temp = "";
@@ -388,7 +390,6 @@ public class GameScreen implements Screen {
             map.renderMiniMap();
             batch.setProjectionMatrix(camera.combined);
             batch.begin();
-            invent.draw(batch, delta);
 
             //Target Square
             if (targetToggle == true) {
@@ -404,7 +405,12 @@ public class GameScreen implements Screen {
             }
 
             batch.end();
-
+            
+            uibatch.begin();
+            hud.draw(uibatch, delta);
+            invent.draw(uibatch, delta);
+            uibatch.end();
+            
             centerCameraOn(map.bernard);
             camera.update();
 
@@ -484,6 +490,7 @@ public class GameScreen implements Screen {
         // called when this screen is set as the screen with game.setScreen();
 
         batch = new SpriteBatch();
+        uibatch = new SpriteBatch();
 
         mousePosition = new Vector3();
 
@@ -492,7 +499,8 @@ public class GameScreen implements Screen {
         camera.setToOrtho(false, Constants.SCREENWIDTH, Constants.SCREENHEIGHT);
         FitViewport fv = new FitViewport(Constants.SCREENWIDTH, Constants.SCREENHEIGHT, camera);
         stage = new Stage(fv, batch);
-        invent = new Inventory(TextureLoader.INVENTORYTEXTURE, 5, 0);
+        invent = new Inventory(TextureLoader.INVENTORYTEXTURE, 0, 0);
+        invent.setPosition(658, 0);
         healthLabel = new Label("HP: ", TextureLoader.SKIN);
         bernard = new Protagonist(0, 0);
         activeEntity = bernard;
@@ -509,6 +517,8 @@ public class GameScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
 
         turnCount = 0;
+        hud = new Entity(Constants.EntityGridCode.NONE, TextureLoader.HUD, 0,0);
+        hud.setPosition(0, 0);
     }
 
     @Override
@@ -534,7 +544,7 @@ public class GameScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
         pauseScreen.setInvX(175);
         pauseScreen.setInvY(375);
-        stage.addActor(invent);
+        invent.setPosition(658, 0);
         paused = false;
         help = false;
     }
