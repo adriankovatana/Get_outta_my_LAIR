@@ -1,23 +1,37 @@
 package edu.uco.shvosi;
 
+import java.util.ArrayList;
+
 public class Constants {
+
     public static final int TILEDIMENSION = 100;
     public static final int SCREENWIDTH = 1024;
     public static final int SCREENHEIGHT = 576;
     public static final float MOVEACTIONDURATION = 0.2f;
     public static float MASTERVOLUME = 0.0f;
-    
-    
+
+    public static final int SKILLONEREQ = 1;
+    public static final int SKILLTWOREQ = 3;
+    public static final int DETECTIONREQ = 7;
+    public static final int BARRIERREQ = 6;
+    public static final int LIGHTBARRIERREQ = 2;
+    public static final int REDLASERREQ = 5;
+    public static final int FREEZINGREQ = 10;
+    public static final int LASERREQ = 4;
+
     public static enum MapGridCode {
+
         FLOOR, WALL, STRUCTURE, EXIT;
     }
-    
+
     public static enum EntityGridCode {
+
         NONE, PLAYER, ENEMY, ITEM, TRAP;
     }
-    
+
     public static enum EnemyType {
-	NONE,
+
+        NONE,
         WANDERER,
         DRUNK,
         CATLADY,
@@ -32,14 +46,16 @@ public class Constants {
         REDGATE,
         CATATTACK;
     }
-    
+
     public static enum EnemyAttackType {
-	NONE,
+
+        NONE,
         MELEEATTACK;
     }
-    
+
     public static enum ItemType {
-	NONE,
+
+        NONE,
         HEALTH,
         SHIELD,
         WHISTLE,
@@ -48,8 +64,9 @@ public class Constants {
         DAMAGE,
         RARECANDY;
     }
-    
+
     public static enum TrapType {
+
         NONE,
         TRAP1,
         TRAP2,
@@ -59,34 +76,39 @@ public class Constants {
         SLIDETILE,
         BLOCKER;
     }
-    
+
     public static enum Direction {
+
         NONE,
         UP, DOWN, LEFT, RIGHT,
         UP_LEFT, UP_RIGHT,
         DOWN_LEFT, DOWN_RIGHT;
     }
-    
+
     public static enum ArrowType {
+
         NONE,
         UP,
         DOWN,
         LEFT,
         RIGHT;
     }
-    
+
     public static enum GateType {
-	NONE,
+
+        NONE,
         LEFT,
         RIGHT;
     }
-    
+
     public static enum TurnAction {
+
         NONE,
         MOVE, ATTACK;
     }
-    
+
     public static enum SkillName {
+
         NONE,
         SKILLONE,
         SKILLTWO,

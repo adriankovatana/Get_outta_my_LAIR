@@ -177,7 +177,7 @@ public class GameScreen implements Screen {
                     }
 
                     //Skills
-                    if (Gdx.input.isKeyJustPressed(Keys.SPACE) && map.bernard.redLaserCooldown <= 0) {
+                    if (Gdx.input.isKeyJustPressed(Keys.SPACE) && map.bernard.redLaserCooldown <= 0 && map.bernard.getLevel() >= Constants.REDLASERREQ) {
                         roundStarted = true;
                         map.bernard.setSkill(Constants.SkillName.REDLASERSKILL);
                         map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
@@ -189,7 +189,7 @@ public class GameScreen implements Screen {
                         }
                     }
 
-                    if (Gdx.input.isKeyJustPressed(Keys.NUM_1)) {
+                    if (Gdx.input.isKeyJustPressed(Keys.NUM_1) && map.bernard.getLevel() >= Constants.SKILLONEREQ) {
                         //entityTurnInProg = true;
                         //this.playTurn = true;
                         roundStarted = true;
@@ -203,7 +203,7 @@ public class GameScreen implements Screen {
                         }
                     }
 
-                    if (Gdx.input.isKeyJustPressed(Keys.NUM_2)) {
+                    if (Gdx.input.isKeyJustPressed(Keys.NUM_2) && map.bernard.getLevel() >= Constants.SKILLTWOREQ) {
                         roundStarted = true;
                         map.bernard.setSkill(Constants.SkillName.SKILLTWO);
                         map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
@@ -215,7 +215,7 @@ public class GameScreen implements Screen {
                         }
                     }
 
-                    if (Gdx.input.isKeyJustPressed(Keys.NUM_3)) {
+                    if (Gdx.input.isKeyJustPressed(Keys.NUM_3) && map.bernard.getLevel() >= Constants.DETECTIONREQ) {
                         roundStarted = true;
                         map.bernard.setExecuteDetection(true);
                         map.bernard.setSkill(Constants.SkillName.DETECTION);
@@ -224,7 +224,7 @@ public class GameScreen implements Screen {
                         map.bernard.attackAction();
                     }
 
-                    if (Gdx.input.isKeyJustPressed(Keys.NUM_4) && map.bernard.barrierCooldown <= 0 && !map.bernard.getExecuteBarrier()) {
+                    if (Gdx.input.isKeyJustPressed(Keys.NUM_4) && map.bernard.barrierCooldown <= 0 && !map.bernard.getExecuteBarrier() && map.bernard.getLevel() >= Constants.BARRIERREQ) {
                         roundStarted = true;
                         map.bernard.setBarrierLimit(3);
                         map.bernard.setExecuteBarrier(true);
@@ -234,7 +234,7 @@ public class GameScreen implements Screen {
                         map.bernard.attackAction();
                     }
 
-                    if (Gdx.input.isKeyJustPressed(Keys.NUM_5) && map.bernard.lightningInfusionCooldown <= 0 && !map.bernard.getExecuteLightBarrier()) {
+                    if (Gdx.input.isKeyJustPressed(Keys.NUM_5) && map.bernard.lightningInfusionCooldown <= 0 && !map.bernard.getExecuteLightBarrier() && map.bernard.getLevel() >= Constants.LIGHTBARRIERREQ) {
                         roundStarted = true;
                         map.bernard.setLightBarrierLimit(3);
                         map.bernard.setExecuteLightBarrier(true);
@@ -244,7 +244,7 @@ public class GameScreen implements Screen {
                         map.bernard.attackAction();
                     }
 
-                    if (Gdx.input.isKeyJustPressed(Keys.NUM_6)) {
+                    if (Gdx.input.isKeyJustPressed(Keys.NUM_6) && map.bernard.freezingCooldown <= 0 && map.bernard.getLevel() >= Constants.FREEZINGREQ) {
                         roundStarted = true;
                         map.bernard.setSkill(Constants.SkillName.FREEZINGSKILL);
                         map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
@@ -255,7 +255,7 @@ public class GameScreen implements Screen {
                         }
                     }
 
-                    if (Gdx.input.isKeyJustPressed(Keys.NUM_7)) {
+                    if (Gdx.input.isKeyJustPressed(Keys.NUM_7) && map.bernard.fusionCooldown <= 0 && map.bernard.getLevel() >= Constants.LASERREQ) {
                         roundStarted = true;
                         map.bernard.setSkill(Constants.SkillName.LASERSKILL);
                         map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
@@ -407,7 +407,7 @@ public class GameScreen implements Screen {
 
             centerCameraOn(map.bernard);
             camera.update();
-            
+
             //Separate mouse coordinates from the screen to the actual game map
             mousePosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(mousePosition);
@@ -471,6 +471,12 @@ public class GameScreen implements Screen {
         stage.addActor(healthLabel);
         //       stage.addActor(invent);
         stage.addActor(turnLabel);
+
+        map.bernard.getLevelUpDialog().show(stage);
+        map.bernard.getLevelUpDialog().setVisible(false);
+        map.bernard.getNewSkillDialog().show(stage);
+        map.bernard.getNewSkillDialog().setVisible(false);
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
@@ -478,7 +484,7 @@ public class GameScreen implements Screen {
         // called when this screen is set as the screen with game.setScreen();
 
         batch = new SpriteBatch();
-        
+
         mousePosition = new Vector3();
 
         //Initialize Camera
@@ -498,6 +504,8 @@ public class GameScreen implements Screen {
 
         map.bernard.getLevelUpDialog().show(stage);
         map.bernard.getLevelUpDialog().setVisible(false);
+        map.bernard.getNewSkillDialog().show(stage);
+        map.bernard.getNewSkillDialog().setVisible(false);
         Gdx.input.setInputProcessor(stage);
 
         turnCount = 0;

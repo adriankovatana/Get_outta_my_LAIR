@@ -12,18 +12,17 @@ import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.utils.Array;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
 public class Protagonist extends Entity implements Observable {
-
+    
     private Dialog levelUpDialog;
-
-    public Dialog getLevelUpDialog() {
-        return levelUpDialog;
-    }
+    private Dialog newSkillDialog;
     private int levelUpCounter;
     private int health;
     private int maxHealth;
@@ -39,24 +38,21 @@ public class Protagonist extends Entity implements Observable {
     public int barrierCooldown = 0;
     public int lightningInfusionCooldown = 0;
     public int redLaserCooldown = 0;
+    public int freezingCooldown = 0;
+    public int fusionCooldown = 0;
     private Constants.MapGridCode[][] currentMap;
     private int currentXp = 0;
     private int xpToNextLevel = 100;
     private int level = 1;
     private float strengthMod = 1f;
     private boolean shieldActive = false;
-
     public SequenceAction seqAction;
     public Constants.Direction slideDirection;
     public int slideCounter;
-
+    
     private TextureRegion healthbarBackground;
     private TextureRegion healthbarFill;
-
-    public void setCurrentMap(Constants.MapGridCode[][] currentMap) {
-        this.currentMap = currentMap;
-    }
-
+    
     private boolean scaleEffect = false;
     private boolean blind = false;
     private boolean poison = false;
@@ -87,9 +83,9 @@ public class Protagonist extends Entity implements Observable {
     private int index = 0;
     static Entity active = null;
     protected int sightRadius;
-
+    
     private List<Observer> observers;
-
+    
     public Protagonist(int cX, int cY) {
         super(Constants.EntityGridCode.PLAYER, TextureLoader.BERNARDTEXTURE, cX, cY);
         this.maxHealth = 100;
@@ -97,9 +93,9 @@ public class Protagonist extends Entity implements Observable {
         this.direction = Constants.Direction.NONE;
         this.observers = new ArrayList();
         this.sightRadius = 3;
-
+        
         this.name = "Bernard";
-
+        
         skillname = Constants.SkillName.NONE;
         skills = new HashMap<String, Skill>();
         skills.put("Basic Laser", new SkillOne());
@@ -110,28 +106,28 @@ public class Protagonist extends Entity implements Observable {
         skills.put("Light Barrier", new LightBarrierSkill());
         skills.put("Freezing", new FreezingSkill());
         skills.put("Laser Fusion", new LaserSkill());
-
+        
         smokeParticle = new ParticleEffect();
         smokeParticle.load(Gdx.files.internal("traps/smoke.p"), Gdx.files.internal("traps"));
         poisonParticle = new ParticleEffect();
         poisonParticle.load(Gdx.files.internal("traps/poison.p"), Gdx.files.internal("traps"));
         poisonParticle.scaleEffect(-0.40f);
-
+        
         this.effectLabel = new Label("", TextureLoader.SKIN);
-
+        
         jump = TextureLoader.jump;
         smoke = TextureLoader.smokeTrap;
         death = TextureLoader.bernardDeath;
-
+        
         seqAction = new SequenceAction();
         slideDirection = Constants.Direction.NONE;
         slideCounter = 0;
-
+        
         healthbarBackground = new TextureRegion(TextureLoader.HPBARBACKGROUND);
         healthbarFill = new TextureRegion(TextureLoader.HPBARFILL);
-
+        
         levelUpDialog = new Dialog("Level Up!", TextureLoader.SKIN) {
-
+            
             @Override
             protected void result(Object obj) {
                 if (obj.toString() == "true") {
@@ -144,20 +140,29 @@ public class Protagonist extends Entity implements Observable {
                 }
                 Protagonist.this.levelUpCounter--;
             }
-
+            
             @Override
             public void hide() {
                 if (levelUpCounter == 0) {
                     this.setVisible(false);
                 }
             }
-
+            
         }.text(textlevel).button("Health", true).button("Damage", false);
-
+        
         levelUpDialog.setMovable(
                 false);
+        
+        newSkillDialog = new Dialog("New Skill Acquired!", TextureLoader.SKIN) {
+            @Override
+            public void hide() {
+                this.setVisible(false);
+            }
+        }.button("Awesome, thanks!").text("Unlocked Lightning Infusion skill! Press the '5' key to activate.");
+        
+        newSkillDialog.setMovable(false);
     }
-
+    
     public void setActiveSkill() {
         switch (this.skillname) {
             case SKILLONE:
@@ -165,7 +170,7 @@ public class Protagonist extends Entity implements Observable {
                 break;
             case REDLASERSKILL:
                 this.activeSkill = skills.get("Red Laser");
-
+                
                 if (this.textureRegion.isFlipX()) {
                     for (int i = 1; i <= this.activeSkill.getWidth(); i++) {
                         if (currentMap[this.getCX() - i][this.getCY()] != Constants.MapGridCode.FLOOR) {
@@ -197,35 +202,37 @@ public class Protagonist extends Entity implements Observable {
                 break;
             case FREEZINGSKILL:
                 this.activeSkill = skills.get("Freezing");
+                this.freezingCooldown = 5;
                 break;
             case LASERSKILL:
                 this.activeSkill = skills.get("Laser Fusion");
+                this.fusionCooldown = 3;
                 break;
             default:
         }
         this.activeSkill.playSound();
     }
-
+    
     public Skill getActiveSkill() {
         return this.activeSkill;
     }
-
+    
     public void setSkill(Constants.SkillName skillname) {
         this.skillname = skillname;
     }
-
+    
     public HashMap<String, Skill> getSkills() {
         return skills;
     }
-
+    
     public int getHeldItem() {
         return heldItem;
     }
-
+    
     public void setHeldItem(int n) {
         heldItem = n;
     }
-
+    
     @Override
     public void performActions() {
         //this.setTurnFinished(false);
@@ -243,8 +250,10 @@ public class Protagonist extends Entity implements Observable {
         redLaserCooldown--;
         barrierCooldown--;
         lightningInfusionCooldown--;
+        freezingCooldown--;
+        fusionCooldown--;
     }
-
+    
     @Override
     public void draw(Batch batch, float alpha) {
         if (executeLightBarrier == true) {
@@ -256,7 +265,7 @@ public class Protagonist extends Entity implements Observable {
             }
             skills.get("Light Barrier").draw(batch, alpha, this);
         }
-
+        
         if (transformCounter >= 2 && transform == true) {
             if (smokeStart == true) {
                 elapsedSmoke += Gdx.graphics.getDeltaTime();
@@ -289,11 +298,11 @@ public class Protagonist extends Entity implements Observable {
         } else {
             super.draw(batch, alpha);
         }
-
+        
         if (this.activeSkill != null) {
             this.activeSkill.draw(batch, alpha, this);
         }
-
+        
         if (executeBarrier == true) {
             if (barrierLimit == 3) {
                 TextureLoader.barrierSkill.setFrameDuration(.02f);
@@ -306,11 +315,11 @@ public class Protagonist extends Entity implements Observable {
             }
             skills.get("Barrier").draw(batch, alpha, this);
         }
-
+        
         if (poisonCounter >= 2 && poison == true) {
             poisonParticle.start();
             poisonParticle.getEmitters().first().setPosition(this.getX() + 50, this.getY() + 35);
-
+            
             poisonParticle.draw(batch, Gdx.graphics.getDeltaTime());
             if (poisonCounter == 6) {
                 poison = false;
@@ -326,7 +335,7 @@ public class Protagonist extends Entity implements Observable {
             blind = false;
             executeDetection = false;
         }
-
+        
         if (blindCounter >= 2 && blind == true) {
             smokeParticle.start();
             smokeParticle.getEmitters().first().setPosition(this.getX() + 50, this.getY() + 35);
@@ -334,7 +343,7 @@ public class Protagonist extends Entity implements Observable {
                 smokeParticle.scaleEffect(1.40f);
                 scaleEffect = false;
             }
-
+            
             smokeParticle.draw(batch, Gdx.graphics.getDeltaTime());
             if (blindCounter == 7) {
                 smokeParticle.scaleEffect(.13281f);
@@ -351,20 +360,20 @@ public class Protagonist extends Entity implements Observable {
             batch.draw(TextureLoader.BERNARDSHIELDTEXTURE, this.getX(), this.getY());
         }
     }
-
+    
     @Override
     public void performDeath() {
         this.addAction(deathAnimation());
     }
-
+    
     public int getHealth() {
         return this.health;
     }
-
+    
     public int getMaxHealth() {
         return this.maxHealth;
     }
-
+    
     public void takeDamage(int damage) {
         if (shieldActive) {
             shieldActive = false;
@@ -381,59 +390,59 @@ public class Protagonist extends Entity implements Observable {
             }
             this.addAction(this.takeDamageAnimation());
         }
-
+        
         if (this.health <= 0) {
             this.health = 0;
             this.setDead(true);
         }
     }
-
+    
     public void heal(int value) {
         this.health += value;
         if (this.health >= maxHealth) {
             this.health = maxHealth;
         }
     }
-
+    
     public Constants.Direction getDirection() {
         return this.direction;
     }
-
+    
     public void setDirection(Constants.Direction direction) {
         this.direction = direction;
     }
-
+    
     public Constants.SkillName getSkillName() {
         return this.skillname;
     }
-
+    
     public Rectangle2D.Double getDetectionCollisionBox() {
         return new Rectangle2D.Double(this.getCX(), this.getCY(), 3, 3);
     }
-
+    
     public void notifyObservers() {
         for (Observer o : observers) {
             o.observerUpdate(this);
         }
     }
-
+    
     public void addObserver(Observer o) {
         this.observers.add(o);
     }
-
+    
     public void removeObserver(Observer o) {
         this.observers.remove(o);
     }
-
+    
     public void removeAllObservers() {
         this.observers.clear();
     }
-
+    
     public void moveAction() {
         seqAction.addAction(normalMoveToAction());
         this.addAction(seqAction);
     }
-
+    
     public MoveToAction normalMoveToAction() {
         MoveToAction moveAction = new MoveToAction() {
             @Override
@@ -448,7 +457,7 @@ public class Protagonist extends Entity implements Observable {
         moveAction.setDuration(Constants.MOVEACTIONDURATION);
         return moveAction;
     }
-
+    
     public MoveToAction slideMoveToAction() {
         MoveToAction moveAction = new MoveToAction();
         moveAction.setPosition((float) (this.getCX() * Constants.TILEDIMENSION),
@@ -456,7 +465,7 @@ public class Protagonist extends Entity implements Observable {
         moveAction.setDuration(Constants.MOVEACTIONDURATION * slideCounter);
         return moveAction;
     }
-
+    
     public void attackAction() {
         //Do Stuffs
         switch (this.skillname) {
@@ -553,7 +562,7 @@ public class Protagonist extends Entity implements Observable {
 //                Gdx.app.log(activeSkill.damageEntities.get(1).name + " 1 ", "" + activeSkill.damageEntities.get(1).getCX() + " , " + activeSkill.damageEntities.get(1).getCY());
 //                Gdx.app.log(activeSkill.damageEntities.get(2).name + " 2 ", "" + activeSkill.damageEntities.get(2).getCX() + " , " + activeSkill.damageEntities.get(2).getCY());
                 break;
-
+            
             case SKILLTWO:
                 if (executeLightBarrier == true) {
                     activeSkill.damageEntities.get(0).setDamage(activeSkill.damage + activeSkill.damage / 2);
@@ -568,7 +577,7 @@ public class Protagonist extends Entity implements Observable {
                     activeSkill.damageEntities.get(0).setDead(false);
                     activeSkill.damageEntities.get(0).setCX(this.getCX() + 1);
                     activeSkill.damageEntities.get(0).setCY(this.getCY());
-
+                    
                 }
                 break;
             case FREEZINGSKILL:
@@ -621,12 +630,12 @@ public class Protagonist extends Entity implements Observable {
                 activeSkill.damageEntities.get(1).setCX(this.getCX());
                 activeSkill.damageEntities.get(1).setCY(this.getCY() + 2);
             default:
-
+            
         }
-
+        
         this.addAction(sequence(attackAnimation(), finishTurn()));
     }
-
+    
     public Action attackAnimation() {
         return new Action() {
             @Override
@@ -640,7 +649,7 @@ public class Protagonist extends Entity implements Observable {
             }
         };
     }
-
+    
     public Action deathAnimation() {
         return new Action() {
             @Override
@@ -656,7 +665,7 @@ public class Protagonist extends Entity implements Observable {
             }
         };
     }
-
+    
     public Action takeDamageAnimation() {
         return new Action() {
             @Override
@@ -665,7 +674,7 @@ public class Protagonist extends Entity implements Observable {
             }
         };
     }
-
+    
     public Action finishTurn() {
         if (blind == true) {
             blindCounter++;
@@ -693,102 +702,102 @@ public class Protagonist extends Entity implements Observable {
             }
         };
     }
-
+    
     public void resetStatusCounter() {
         poison = false;
         blind = false;
         blindCounter = 0;
         poisonCounter = 0;
     }
-
+    
     public void setBlind(boolean blind) {
         this.blind = blind;
     }
-
+    
     public boolean getBlind() {
         return blind;
     }
-
+    
     public void setPoison(boolean poison) {
         this.poison = poison;
     }
-
+    
     public boolean getPoison() {
         return poison;
     }
-
+    
     public void setExecuteDetection(boolean executeDetection) {
         this.executeDetection = executeDetection;
     }
-
+    
     public void setTransform(boolean transform) {
         this.transform = transform;
     }
-
+    
     public boolean getTransform() {
         return transform;
     }
-
+    
     public int getTransformCounter() {
         return transformCounter;
     }
-
+    
     public void setExecuteBarrier(boolean executeBarrier) {
         this.executeBarrier = executeBarrier;
     }
-
+    
     public void setExecuteLightBarrier(boolean executeLightBarrier) {
         this.executeLightBarrier = executeLightBarrier;
     }
-
+    
     public boolean getExecuteBarrier() {
         return executeBarrier;
     }
-
+    
     public boolean getExecuteLightBarrier() {
         return executeLightBarrier;
     }
-
+    
     public void setBarrierLimit(int b) {
         barrierLimit = b;
     }
-
+    
     public void setLightBarrierLimit(int b) {
         lightBarrierLimit = b;
     }
-
+    
     public int getLightBarrierLimit() {
         return lightBarrierLimit;
     }
-
+    
     public int getBarrierDamage() {
         return barrierDamage;
     }
-
+    
     public void resetBarrierDamage() {
         barrierDamage = 0;
     }
-
+    
     public boolean getHealEffect() {
         return healEffect;
     }
-
+    
     public void setHealEffect(boolean heal) {
         this.healEffect = heal;
     }
-
+    
     void setSliding(boolean b) {
         this.sliding = b;
     }
-
+    
     boolean getSliding() {
         return sliding;
     }
-
+    
     float getDamage() {
         return strengthMod;
     }
-
+    
     private void levelUp() {
         this.level++;
         levelup = "You are now level " + level + "!";
@@ -798,11 +807,13 @@ public class Protagonist extends Entity implements Observable {
         levelUpDialog.setX(this.getX() - levelUpDialog.getWidth() / 2 + this.getWidth() / 2);
         levelUpDialog.setY(this.getY());
         levelUpDialog.setVisible(true);
+        
+        checkForNewSkills();
         this.currentXp -= this.xpToNextLevel;
         this.xpToNextLevel *= 1.2f;
-
+        
     }
-
+    
     public void addExp(int exp) {
         this.currentXp += exp;
         while (this.currentXp >= this.xpToNextLevel) {
@@ -810,28 +821,28 @@ public class Protagonist extends Entity implements Observable {
             this.levelUp();
         }
     }
-
+    
     int getLevel() {
         return this.level;
     }
-
+    
     int getExpToLevel() {
         return xpToNextLevel;
     }
-
+    
     public void addDamage() {
         strengthMod *= 1.1f;
     }
-
+    
     void addInventory(Entity i) {
         inventory.add(i);
         index++;
     }
-
+    
     static ArrayList<Entity> getInventory() {
         return inventory;
     }
-
+    
     static void setActive(Entity i) {
         active = i;
         if (i == null) {
@@ -850,7 +861,7 @@ public class Protagonist extends Entity implements Observable {
             GameScreen.invent.setImage(TextureLoader.INVENTORYREDKEYTEXTURE);
         }
     }
-
+    
     public void useItem() {
         if (active == null) {
         } else if (active instanceof ItemShield) {
@@ -877,7 +888,7 @@ public class Protagonist extends Entity implements Observable {
             }
         }
     }
-
+    
     public void removeItem() {
         inventory.remove(active);
         if (inventory.isEmpty()) {
@@ -886,9 +897,53 @@ public class Protagonist extends Entity implements Observable {
             setActive(inventory.get(0));
         }
     }
-
+    
     Entity getActive() {
         return active;
     }
-
+    
+    private void checkForNewSkills() {
+        newSkillDialog.setModal(true);
+        newSkillDialog.setX(this.getX() - newSkillDialog.getWidth() / 2 + this.getWidth() / 2);
+        newSkillDialog.setY(this.getY());
+        newSkillDialog.setVisible(true);
+        switch (level) {
+            case Constants.BARRIERREQ:
+                ((Label) newSkillDialog.getContentTable().getCells().get(0).getActor()).setText("Unlocked Barrier skill! Press the '4' key to activate.");
+                break;
+            case Constants.DETECTIONREQ:
+                ((Label) newSkillDialog.getContentTable().getCells().get(0).getActor()).setText("Unlocked Detection skill! Press the '3' key to activate.");
+                break;
+            case Constants.FREEZINGREQ:
+                ((Label) newSkillDialog.getContentTable().getCells().get(0).getActor()).setText("Unlocked Freezing skill! Press the '6' key to activate.");
+                break;
+            case Constants.LASERREQ:
+                ((Label) newSkillDialog.getContentTable().getCells().get(0).getActor()).setText("Unlocked Laser Fusion skill! Press the '7' key to activate.");
+                break;
+            case Constants.LIGHTBARRIERREQ:
+                ((Label) newSkillDialog.getContentTable().getCells().get(0).getActor()).setText("Unlocked Lightning Infusion skill! Press the '5' key to activate.");
+                break;
+            case Constants.REDLASERREQ:
+                ((Label) newSkillDialog.getContentTable().getCells().get(0).getActor()).setText("Unlocked Big Red Laser skill! Press the space bar to activate.");
+                break;
+            case Constants.SKILLTWOREQ:
+                ((Label) newSkillDialog.getContentTable().getCells().get(0).getActor()).setText("Unlocked Rotating Laser skill! Press the '2' key to activate.");
+                break;
+            default:
+                newSkillDialog.setVisible(false);
+                break;
+        }
+    }
+    
+    public Dialog getLevelUpDialog() {
+        return levelUpDialog;
+    }
+    
+    public void setCurrentMap(Constants.MapGridCode[][] currentMap) {
+        this.currentMap = currentMap;
+    }
+    
+    public Dialog getNewSkillDialog() {
+        return newSkillDialog;
+    }
 }
