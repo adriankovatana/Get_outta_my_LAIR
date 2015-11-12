@@ -32,7 +32,7 @@ public class Blues extends Antagonist {
         this.walkAnimation = TextureLoader.blueWalk;
         BluesSkill bluesSkill = new BluesSkill();
         this.range = 3;
-        this.damage = 2;
+        this.damage = 1;
         blueDamage = new DamageEntity(0,0,this.damage);
 
     }
@@ -77,9 +77,8 @@ public class Blues extends Antagonist {
 
 @Override
     public void calculateTurn(Constants.MapGridCode[][] mapGrid, Constants.EntityGridCode[][] entityGrid, List<Entity> entityList) {
-        //Random movement
+
         int random = 0;
-        int tries = 0;
         Constants.Direction d = Constants.Direction.NONE;
 
         for (int i = 0; i < entityList.size(); i++) {
@@ -105,37 +104,42 @@ public class Blues extends Antagonist {
             active = true;
         }
         if (active) {
-            if (Math.abs(xdis) < range && Math.abs(ydis) < range) {
+            if (Math.abs(xdis) <= range && Math.abs(ydis) <= range) {
                 if(this.damage == 2){
-                while (!canMove(d, mapGrid, entityGrid)) {
+                    int tries = 0;
+                    while (tries < 5) {
                     random = (int) (Math.random() * entityGrid.length);
                     switch (random % 4) {
                         case 1:
-                            d = Constants.Direction.UP;
+                            if(this.canMove(Constants.Direction.UP,mapGrid,entityGrid))
+                                {d = Constants.Direction.UP;}
                             break;
                         case 2:
-                            d = Constants.Direction.DOWN;
+                            if(this.canMove(Constants.Direction.DOWN,mapGrid,entityGrid))
+                                {d = Constants.Direction.DOWN;}
                             break;
                         case 3:
-                            d = Constants.Direction.LEFT;
-                            flip = true;
+                            if(this.canMove(Constants.Direction.UP,mapGrid,entityGrid))
+                                {d = Constants.Direction.LEFT;}
+                                flip = true;
                             break;
                         case 4:
-                            d = Constants.Direction.RIGHT;
-                            flip = false;
+                            if(this.canMove(Constants.Direction.UP,mapGrid,entityGrid))
+                                {d = Constants.Direction.RIGHT;}
+                                flip = false;
                             break;
                         default:
                             d = Constants.Direction.NONE;                           
-
                     }//end switch
-                    }//end while
-                }//end damage  2
+                    tries ++;
+                }//end while
+                this.setTurnAction(Constants.TurnAction.MOVE);
+                }//end damage < 2
                 else{
                     this.setTurnAction(Constants.TurnAction.ATTACK);
                     }
-                }//end in range
-            
-            if (Math.abs(xdis) > range && Math.abs(ydis) > range) {
+            }//end in range
+            else if (Math.abs(xdis) > range || Math.abs(ydis) > range) {
 
                 int distanceDown = 0;
                 int distanceUp = 0;
