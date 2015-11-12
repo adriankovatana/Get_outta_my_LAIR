@@ -50,9 +50,9 @@ class RedLaserSkill extends Skill {
             } else if (bernard.getDirection() == Constants.Direction.RIGHT) {
                 batch.draw(animation.getKeyFrame(elapsed), entity.getX() + Constants.TILEDIMENSION, entity.getY(), Constants.TILEDIMENSION * width, Constants.TILEDIMENSION * height);
             } else if (bernard.getDirection() == Constants.Direction.UP) {
-                batch.draw(animation.getKeyFrame(elapsed), entity.getX(), entity.getY() + 50, Constants.TILEDIMENSION / 2, Constants.TILEDIMENSION / 2, Constants.TILEDIMENSION * width + 50, Constants.TILEDIMENSION * height, 1, 1, 90);
+                batch.draw(animation.getKeyFrame(elapsed), entity.getX(), entity.getY() + Constants.TILEDIMENSION, Constants.TILEDIMENSION / 2, Constants.TILEDIMENSION / 2, Constants.TILEDIMENSION * width + 50, Constants.TILEDIMENSION * height, 1, 1, 90);
             } else if (bernard.getDirection() == Constants.Direction.DOWN) {
-                batch.draw(animation.getKeyFrame(elapsed), entity.getX(), entity.getY() - 50, Constants.TILEDIMENSION / 2, Constants.TILEDIMENSION / 2, Constants.TILEDIMENSION * width + 50, Constants.TILEDIMENSION * height, 1, 1, -90);
+                batch.draw(animation.getKeyFrame(elapsed), entity.getX(), entity.getY() - Constants.TILEDIMENSION, Constants.TILEDIMENSION / 2, Constants.TILEDIMENSION / 2, Constants.TILEDIMENSION * width + 50, Constants.TILEDIMENSION * height, 1, 1, -90);
             }
 
             if (bernard.getLightBarrierLimit() > 0 && elapsed >= 0.25f) {

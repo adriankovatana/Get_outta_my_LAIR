@@ -383,9 +383,6 @@ public class GameScreen implements Screen {
 //            batch.end();
             stage.act(Gdx.graphics.getDeltaTime());
             map.render(camera);
-            stage.draw();
-            map.renderFog();
-            map.renderMiniMap();
             batch.setProjectionMatrix(camera.combined);
             batch.begin();
             invent.draw(batch, delta);
@@ -404,6 +401,10 @@ public class GameScreen implements Screen {
             }
 
             batch.end();
+
+            stage.draw();
+            map.renderFog();
+            map.renderMiniMap();
 
             centerCameraOn(map.bernard);
             camera.update();

@@ -171,21 +171,21 @@ public class Protagonist extends Entity implements Observable {
             case REDLASERSKILL:
                 this.activeSkill = skills.get("Red Laser");
                 
-                if (this.textureRegion.isFlipX()) {
-                    for (int i = 1; i <= this.activeSkill.getWidth(); i++) {
-                        if (currentMap[this.getCX() - i][this.getCY()] != Constants.MapGridCode.FLOOR) {
-                            activeSkill.setWidth(i - 1);
-                            break;
-                        }
-                    }
-                } else {
-                    for (int i = 1; i <= this.activeSkill.getWidth(); i++) {
-                        if (currentMap[this.getCX() + i][this.getCY()] != Constants.MapGridCode.FLOOR) {
-                            activeSkill.setWidth(i - 1);
-                            break;
-                        }
-                    }
-                }
+//                if (this.textureRegion.isFlipX()) {
+//                    for (int i = 1; i <= this.activeSkill.getWidth(); i++) {
+//                        if (currentMap[this.getCX() - i][this.getCY()] != Constants.MapGridCode.FLOOR) {
+//                            activeSkill.setWidth(i - 1);
+//                            break;
+//                        }
+//                    }
+//                } else {
+//                    for (int i = 1; i <= this.activeSkill.getWidth(); i++) {
+//                        if (currentMap[this.getCX() + i][this.getCY()] != Constants.MapGridCode.FLOOR) {
+//                            activeSkill.setWidth(i - 1);
+//                            break;
+//                        }
+//                    }
+//                }
                 this.redLaserCooldown = 5;
                 break;
             case SKILLTWO:
