@@ -44,7 +44,9 @@ public class Constants {
         SHIELD,
         WHISTLE,
         REDKEY,
-        GREYKEY;
+        GREYKEY,
+        DAMAGE,
+        RARECANDY;
     }
     
     public static enum TrapType {

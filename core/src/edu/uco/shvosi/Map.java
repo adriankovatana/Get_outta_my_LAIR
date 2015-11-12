@@ -132,6 +132,10 @@ public class Map {
                         initItem(x, y, Constants.ItemType.REDKEY);
                     } else if (properties.get("GreyKey") != null) {
                         initItem(x, y, Constants.ItemType.GREYKEY);
+                    } else if (properties.get("RareCandy") != null) {
+                        initItem(x, y, Constants.ItemType.REDKEY);
+                    } else if (properties.get("Damage") != null) {
+                        initItem(x, y, Constants.ItemType.GREYKEY);
                     } else {
                         Gdx.app.log("MAP CREATION", "ITEM type at entityLayer(" + x + ")(" + y + ") is unknown. Creation skipped.");
                         entityGrid[x][y] = Constants.EntityGridCode.NONE;
@@ -337,6 +341,12 @@ public class Map {
             case GREYKEY:
                 miscEntityList.add(new GreyKey(cX, cY));
                 break;
+            case RARECANDY:
+                miscEntityList.add(new ItemRareCandy(cX, cY));
+                break;
+            case DAMAGE:
+                miscEntityList.add(new ItemDamage(cX, cY));
+                break;
             default:
                 //ERROR
                 Gdx.app.log("ERROR", "Item type not found. Not added to entity grid.");
@@ -465,6 +475,9 @@ public class Map {
            // tempAntagList.add(new Suffragette(5, 7, Constants.Direction.UP, 2));
             //tempAntagList.add(new Wreker(9,3));
             tempAntagList.add(new Hammer(10,3));
+            
+            tempMiscList.add(new ItemRareCandy(8,1));
+            tempMiscList.add(new ItemDamage(9,1));
 
         } //Add for testmap 2
         else if (GameScreen.level == 1) {

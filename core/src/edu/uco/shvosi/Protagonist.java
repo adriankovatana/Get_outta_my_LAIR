@@ -782,7 +782,14 @@ public class Protagonist extends Entity implements Observable {
 
     int getLevel() {
         return this.level;
-
+    }
+    
+    int getExpToLevel(){
+        return xpToNextLevel;
+    }
+    
+    public void addDamage(){
+        strengthMod *= 1.1f;
     }
 
     void addInventory(Entity i){
