@@ -72,7 +72,7 @@ public class Wanderer extends Antagonist {
             {
                 flip = false;
             }
-            if(Math.abs(xdis) >1 || Math.abs(ydis) >1){    
+            if(Math.abs(xdis) >1 || Math.abs(ydis) >0){    
                 if (flip) {
                     temp = wanderWalk.getKeyFrame(elapsedTime);
                     temp.flip(true, false);
