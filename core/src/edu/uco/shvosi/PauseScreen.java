@@ -225,9 +225,19 @@ public class PauseScreen implements Screen {
 
     @Override
     public void dispose() {
-        splashT.dispose();
-        startT.dispose();
-        quitT.dispose();
+        if(batch != null){
+            splashT.dispose();
+            startT.dispose();
+            quitT.dispose();
+            menuT.dispose();
+        }
+        for (final Entity i : items){
+            i.dispose();
+        }
+        for(int i = 0; i < itemT.length; i++){
+            if(itemT[i] != null)
+                itemT[i].dispose();
+        }
     }
     
     public void setInvX(int x){

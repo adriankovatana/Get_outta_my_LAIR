@@ -118,4 +118,10 @@ public class FreezingSkill extends Skill {
             return false;
         }
     }
+    
+    @Override
+    public void dispose() {
+        super.dispose();
+        snowParticle.dispose();
+    }
 }

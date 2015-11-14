@@ -335,4 +335,10 @@ public class Blues extends Antagonist {
             }
         }//end if active
     }
+    
+    @Override
+    public void dispose() {
+        super.dispose();
+        //bluesSkill.dispose();
+    }
 }

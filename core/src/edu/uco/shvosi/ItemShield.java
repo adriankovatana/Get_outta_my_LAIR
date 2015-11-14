@@ -37,4 +37,10 @@ public class ItemShield extends Entity {
     public void performActions(){
         this.turnFinished = true;
     }
+    
+    @Override
+    public void dispose() {
+        super.dispose();
+        invent.dispose();
+    }
 }

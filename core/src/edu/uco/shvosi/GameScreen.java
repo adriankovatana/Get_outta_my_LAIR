@@ -31,9 +31,9 @@ public class GameScreen implements Screen {
     private boolean showFullMap = false;
     private boolean targetToggle = true;
 
-    PauseScreen pauseScreen = new PauseScreen(this);
-    HelpScreen helpScreen = new HelpScreen(this);
-    Entity hud;
+    private PauseScreen pauseScreen;
+    private HelpScreen helpScreen;
+    private GameUI gameUI;
 
     public static int level = 0;
     private Protagonist bernard;
@@ -128,7 +128,6 @@ public class GameScreen implements Screen {
                         //entityTurnInProg = true;
                         //this.playTurn = true;
                         roundStarted = true;
-                        map.bernard.notifyObservers();
                         map.bernard.setDirection(Constants.Direction.UP);
                         map.bernard.setTurnAction(Constants.TurnAction.MOVE);
                         Gdx.app.log("MOVING", "UP");
@@ -137,7 +136,6 @@ public class GameScreen implements Screen {
                         //entityTurnInProg = true;
                         //this.playTurn = true;
                         roundStarted = true;
-                        map.bernard.notifyObservers();
                         map.bernard.setDirection(Constants.Direction.DOWN);
                         map.bernard.setTurnAction(Constants.TurnAction.MOVE);
                         Gdx.app.log("MOVING", "DOWN");
@@ -151,7 +149,6 @@ public class GameScreen implements Screen {
                             //entityTurnInProg = true;
                             //this.playTurn = true;
                             roundStarted = true;
-                            map.bernard.notifyObservers();
                             map.bernard.setTurnAction(Constants.TurnAction.MOVE);
                             Gdx.app.log("MOVING", "LEFT");
                             map.playTurn(activeEntity);
@@ -166,7 +163,6 @@ public class GameScreen implements Screen {
                             //entityTurnInProg = true;
                             //this.playTurn = true;
                             roundStarted = true;
-                            map.bernard.notifyObservers();
                             map.bernard.setTurnAction(Constants.TurnAction.MOVE);
                             Gdx.app.log("MOVING", "RIGHT");
                             map.playTurn(activeEntity);
@@ -305,6 +301,7 @@ public class GameScreen implements Screen {
                     }
                     aggressor.performDeath();
                     map.removeEntityFromGrid(aggressor);
+                    aggressor.dispose();
                     map.getEntityList().remove(i);
                 }
             }
@@ -337,6 +334,7 @@ public class GameScreen implements Screen {
                 if (aggressor.isDead()) {
                     aggressor.performDeath();
                     map.removeEntityFromGrid(aggressor);
+                    aggressor.dispose();
                     map.miscEntityList.remove(i);
                 } else {
                     for (int j = 0; j < map.getEntityList().size(); j++) {
@@ -407,8 +405,7 @@ public class GameScreen implements Screen {
             map.renderMiniMap();
 
             uibatch.begin();
-            hud.draw(uibatch, delta);
-            invent.draw(uibatch, delta);
+            gameUI.draw(uibatch, delta);
             uibatch.end();
 
             centerCameraOn(map.bernard);
@@ -458,7 +455,6 @@ public class GameScreen implements Screen {
             map = new Map(this.bernard, "colemap/colemap.tmx");
             level = 0;
         }
-        map.bernard.removeAllObservers();
         map.bernard.setCurrentMap(map.getMapGrid());
         activeEntity = bernard;
 
@@ -491,6 +487,8 @@ public class GameScreen implements Screen {
 
         batch = new SpriteBatch();
         uibatch = new SpriteBatch();
+        pauseScreen = new PauseScreen(this);
+        helpScreen = new HelpScreen(this);
 
         mousePosition = new Vector3();
 
@@ -517,8 +515,7 @@ public class GameScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
 
         turnCount = 0;
-        hud = new Entity(Constants.EntityGridCode.NONE, TextureLoader.HUD, 0, 0);
-        hud.setPosition(0, 0);
+        gameUI = new GameUI(this);
     }
 
     @Override
@@ -556,8 +553,16 @@ public class GameScreen implements Screen {
     @Override
     public void dispose() {
         // never called automatically
-        //batch.dispose();
+        if(batch != null){
+            map.dispose();
+            helpScreen.dispose();
+            pauseScreen.dispose();
+            gameUI.dispose();
+            stage.dispose();
+            uibatch.dispose();
+            batch.dispose();
+        }
         textureLoader.dispose();
-        stage.dispose();
+            
     }
 }

@@ -37,5 +37,11 @@ public class RedKey extends Entity {
     public void performActions(){
         this.turnFinished = true;
     }
+    
+    @Override
+    public void dispose() {
+        super.dispose();
+        invent.dispose();
+    }
 }
 

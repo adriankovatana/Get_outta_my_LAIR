@@ -60,4 +60,10 @@ public class TrapType4 extends Trap {
             }
         }
     }
+    
+    @Override
+    public void dispose() {
+        super.dispose();
+        poisonParticle.dispose();
+    }
 }

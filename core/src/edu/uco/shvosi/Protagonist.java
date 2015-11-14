@@ -6,20 +6,16 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Action;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.utils.Array;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
 
-public class Protagonist extends Entity implements Observable {
+public class Protagonist extends Entity {
     
     private Dialog levelUpDialog;
     private Dialog newSkillDialog;
@@ -50,8 +46,8 @@ public class Protagonist extends Entity implements Observable {
     public Constants.Direction slideDirection;
     public int slideCounter;
     
-    private TextureRegion healthbarBackground;
-    private TextureRegion healthbarFill;
+//    private TextureRegion healthbarBackground;
+//    private TextureRegion healthbarFill;
     
     private boolean scaleEffect = false;
     private boolean blind = false;
@@ -84,14 +80,11 @@ public class Protagonist extends Entity implements Observable {
     static Entity active = null;
     protected int sightRadius;
     
-    private List<Observer> observers;
-    
     public Protagonist(int cX, int cY) {
         super(Constants.EntityGridCode.PLAYER, TextureLoader.BERNARDTEXTURE, cX, cY);
         this.maxHealth = 100;
         this.health = this.maxHealth;
         this.direction = Constants.Direction.NONE;
-        this.observers = new ArrayList();
         this.sightRadius = 3;
         
         this.name = "Bernard";
@@ -123,8 +116,8 @@ public class Protagonist extends Entity implements Observable {
         slideDirection = Constants.Direction.NONE;
         slideCounter = 0;
         
-        healthbarBackground = new TextureRegion(TextureLoader.HPBARBACKGROUND);
-        healthbarFill = new TextureRegion(TextureLoader.HPBARFILL);
+//        healthbarBackground = new TextureRegion(TextureLoader.HPBARBACKGROUND);
+//        healthbarFill = new TextureRegion(TextureLoader.HPBARFILL);
         
         levelUpDialog = new Dialog("Level Up!", TextureLoader.SKIN) {
             
@@ -354,8 +347,8 @@ public class Protagonist extends Entity implements Observable {
         }
 
         //HP BAR
-        batch.draw(healthbarBackground, this.getX() + 10, this.getY());
-        batch.draw(healthbarFill, this.getX() + 11, this.getY() + 1, healthbarFill.getRegionWidth() * ((float) health / (float) maxHealth), healthbarFill.getRegionHeight());
+//        batch.draw(healthbarBackground, this.getX() + 10, this.getY());
+//        batch.draw(healthbarFill, this.getX() + 11, this.getY() + 1, healthbarFill.getRegionWidth() * ((float) health / (float) maxHealth), healthbarFill.getRegionHeight());
         if (shieldActive) {
             batch.draw(TextureLoader.BERNARDSHIELDTEXTURE, this.getX(), this.getY());
         }
@@ -372,6 +365,10 @@ public class Protagonist extends Entity implements Observable {
     
     public int getMaxHealth() {
         return this.maxHealth;
+    }
+    
+    public float getHealthPercentage(){
+        return (float)this.health/this.maxHealth;
     }
     
     public void takeDamage(int damage) {
@@ -418,24 +415,6 @@ public class Protagonist extends Entity implements Observable {
     
     public Rectangle2D.Double getDetectionCollisionBox() {
         return new Rectangle2D.Double(this.getCX(), this.getCY(), 3, 3);
-    }
-    
-    public void notifyObservers() {
-        for (Observer o : observers) {
-            o.observerUpdate(this);
-        }
-    }
-    
-    public void addObserver(Observer o) {
-        this.observers.add(o);
-    }
-    
-    public void removeObserver(Observer o) {
-        this.observers.remove(o);
-    }
-    
-    public void removeAllObservers() {
-        this.observers.clear();
     }
     
     public void moveAction() {
@@ -945,5 +924,14 @@ public class Protagonist extends Entity implements Observable {
     
     public Dialog getNewSkillDialog() {
         return newSkillDialog;
+    }
+
+    @Override
+    public void dispose() {
+        this.smokeParticle.dispose();
+        this.poisonParticle.dispose();
+        for (Skill s : skills.values()) {
+            s.dispose();
+        }
     }
 }

@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.utils.Disposable;
 import java.util.List;
 
 public class Antagonist extends Entity {
@@ -332,4 +333,9 @@ public class Antagonist extends Entity {
 //        }
 //        return bluesCount;
 //    }
+
+    @Override
+    public void dispose() {
+        igniteParticle.dispose();
+    }
 }

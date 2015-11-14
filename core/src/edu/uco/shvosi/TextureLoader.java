@@ -28,7 +28,7 @@ public class TextureLoader {
     public static final Texture ICICLETEXTURE = new Texture(Gdx.files.internal("icicle.png"));
     public static final Texture LIGHTTEXTURE = new Texture(Gdx.files.internal("lightning.png"));
     public static final Texture LIGHTTEXTURE2 = new Texture(Gdx.files.internal("lightning2.png"));
-    
+
     private TextureRegion[] detectionFrames;
     private TextureRegion[] barrierFrames;
     private TextureRegion[] healFrames;
@@ -176,6 +176,7 @@ public class TextureLoader {
 
     //UI
     public static final Texture HUD = new Texture(Gdx.files.internal("ui/HUD.png"));
+    public static final Texture HEALTHPOOL = new Texture(Gdx.files.internal("ui/healthpool.png"));
     public static final Texture HPBARBACKGROUND = new Texture(Gdx.files.internal("ui/healthbarbackground.png"));
     public static final Texture HPBARFILL = new Texture(Gdx.files.internal("ui/healthbarfill.png"));
     public static final Texture TARGETSQUARE = new Texture(Gdx.files.internal("ui/square.png"));
@@ -431,15 +432,15 @@ public class TextureLoader {
         }
 
         catLadyWalk = new Animation(0.50f, catLadyFrames, PlayMode.LOOP);
-        
-         //catLady is Tranforming
+
+        //catLady is Tranforming
         catLadyTransformFrames = new Array<TextureRegion>(4);
         for (int i = 0; i < 4; i++) {
             catLadyTransformFrames.add(new TextureRegion(CATLADYTRANSFORMTEXTURE, 25, i * 100, 100, 100));
         }
 
         catLadyAttack = new Animation(0.50f, catLadyTransformFrames, PlayMode.LOOP);
-        
+
         //melee skill
         meleeFrames = new Array<TextureRegion>(7);
         for (int i = 0; i < 7; i++) {
@@ -462,7 +463,7 @@ public class TextureLoader {
             hammerDownFrames.add(new TextureRegion(HAMMERDOWNTEXTURE, 0, i * 500, 500, 500));
         }
 
-        hammerDownSkill = new Animation(0.1f, hammerDownFrames, PlayMode.NORMAL);        
+        hammerDownSkill = new Animation(0.1f, hammerDownFrames, PlayMode.NORMAL);
         //melee
         meleeSkillFrames = new Array<TextureRegion>(7);
         for (int i = 0; i < 7; i++) {
@@ -518,14 +519,101 @@ public class TextureLoader {
     }
 
     public void dispose() {
-        SKIN.dispose();
+        //A
+        
+        //B
+        BARRIERTEXTURE.dispose();
         BERNARDTEXTURE.dispose();
         BERNARDDEATHTEXTURE.dispose();
-        DORABERNARDJUMPTEXTURE.dispose();
-        WANDERTEXTURE.dispose();
-        DRUNKTEXTURE.dispose();
+        BERNARDGLANCETEXTURE.dispose();
+        BERNARDSHIELDTEXTURE.dispose();
+        BERNARDDEATHTEXTURE.dispose();
+        BLANKTEXTURE.dispose();
+        BLOCKERTEXTURE.dispose();
+        BLUESKILLTEXTURE.dispose();
+        BLUESTEXTURE.dispose();
+        BLUETEXTURE.dispose();
+        
+        //C
+        CATTEXTURE.dispose();
+        CATATTACKTEXTURE.dispose();
+        CATWALKTEXTURE.dispose();
+        CATTYTEXTURE.dispose();
+        CATLADYTEXTURE.dispose();
+        CATLADYTRANSFORMTEXTURE.dispose();
+        
+        //D
+        DAMAGETEXTURE.dispose();
+        DEATHTEXTURE.dispose();
+        DETECTIONTEXTURE.dispose();
         DRUNKENTEXTURE.dispose();
+        DRUNKATTACKTEXTURE.dispose();
+        DORABERNARDJUMPTEXTURE.dispose();
+        DRUNKTEXTURE.dispose();
+        
+        //E
+        
+        //F
+        FROSTBITETEXTURE.dispose();
+
+        //G
+        GREYGATELTEXTURE.dispose();
+        GREYGATERTEXTURE.dispose();
+        GREYKEYTEXTURE.dispose();
+
+        //H
+        HAMMERTETEXTURE.dispose();
+        HAMTEXTURE.dispose();
+        HAMMERATTACKTETEXTURE.dispose();
+        HAMMERDOWNTEXTURE.dispose();
+        HEALTEXTURE.dispose();
+        HUD.dispose();
+        HEALTHPOOL.dispose();
+        HPBARBACKGROUND.dispose();
+        HPBARFILL.dispose();
         HEALTHTEXTURE.dispose();
+
+        //I
+        ICICLETEXTURE.dispose();
+        INVENTORYTEXTURE.dispose();
+        INVENTORYSHIELDTEXTURE.dispose();
+        INVENTORYWHISTLETEXTURE.dispose();
+        INVENTORYREDKEYTEXTURE.dispose();
+        INVENTORYGREYKEYTEXTURE.dispose();
+
+        //J //K
+        
+        //L
+        LIGHTBARRIERTEXTURE.dispose();
+        LIGHTTEXTURE.dispose();
+        LIGHTTEXTURE2.dispose();
+
+        //M
+        MELEEATTACKTEXTURE.dispose();
+        MELEESKILLTEXTURE.dispose();
+
+        //N //O //P //Q
+        
+        //R
+        RARECANDYTEXTURE.dispose();
+        REDLASERTEXTURE.dispose();
+        REDGATELTEXTURE.dispose();
+        REDGATERTEXTURE.dispose();
+        REDKEYTEXTURE.dispose();
+
+        //S
+        SHIELDTEXTURE.dispose();
+        SKIN.dispose();
+        SKILLONETEXTURE.dispose();
+        SLIDELEFT.dispose();
+        SLIDERIGHT.dispose();
+        SLIDEUP.dispose();
+        SLIDEDOWN.dispose();
+        SUFFRAGETTETEXTURE.dispose();
+        SUFFERTETEXTURE.dispose();
+
+        //T
+        TARGETSQUARE.dispose();
         TRAPTEXTURE.dispose();
         TRAPTEXTURE2.dispose();
         TRAPTEXTURE3.dispose();
@@ -533,25 +621,18 @@ public class TextureLoader {
         TRAPPOWER.dispose();
         TRAPBLIND.dispose();
         TRAPTRANSFORM.dispose();
-        DETECTIONTEXTURE.dispose();
-        BARRIERTEXTURE.dispose();
-        LIGHTBARRIERTEXTURE.dispose();
-        LIGHTTEXTURE.dispose();
-        LIGHTTEXTURE2.dispose();
-        ICICLETEXTURE.dispose();
-        HEALTEXTURE.dispose();
-        REDLASERTEXTURE.dispose();
-        SKILLONETEXTURE.dispose();
-        BLANKTEXTURE.dispose();
-        DEATHTEXTURE.dispose();
-        CATTYTEXTURE.dispose();
-        CATLADYTEXTURE.dispose();
+        
+        //UV
+        
+        //W
+        WANDTEXTURE.dispose();
+        WANDERTEXTURE.dispose();
         WANDERATTACKTEXTURE.dispose();
-        SUFFRAGETTETEXTURE.dispose();
-        MELEESKILLTEXTURE.dispose();
-        BLUESKILLTEXTURE.dispose();
-        FROSTBITETEXTURE.dispose();
-        CATLADYTRANSFORMTEXTURE.dispose(); 
-        TARGETSQUARE.dispose();
+        WHISTLETEXTURE.dispose();
+        WREKERTEXTURE.dispose();
+        WREKINGTEXTURE.dispose();
+        WREKERATTACKTEXTURE.dispose();
+        
+        //XYZ
     }
 }

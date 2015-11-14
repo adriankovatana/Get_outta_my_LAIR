@@ -42,4 +42,9 @@ public class Trap extends Entity{
     public void performActions(){
         this.turnFinished = true;
     }
+    
+    @Override
+    public void dispose() {
+        sound.dispose();
+    }
 }

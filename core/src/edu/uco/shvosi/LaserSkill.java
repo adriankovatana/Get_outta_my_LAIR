@@ -61,4 +61,10 @@ public class LaserSkill extends Skill {
             return false;
         }
     }
+    
+    @Override
+    public void dispose() {
+        super.dispose();
+        laserParticle.dispose();
+    }
 }

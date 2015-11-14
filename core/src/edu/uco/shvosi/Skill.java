@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Action;
+import com.badlogic.gdx.utils.Disposable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,7 @@ import java.util.List;
  *
  * @author cody
  */
-public class Skill{
+public class Skill implements Disposable{
 
     protected float elapsed;
     protected Animation animation;
@@ -105,5 +106,10 @@ public class Skill{
 
     public int getBaseDamage() {
         return baseDamage;
+    }
+
+    @Override
+    public void dispose() {
+        sound.dispose();
     }
 }

@@ -65,10 +65,38 @@
     <property name="Wanderer" value="2"/>
    </properties>
   </tile>
+  <tile id="25">
+   <properties>
+    <property name="ENEMY" value="2"/>
+    <property name="GreyGate" value="7"/>
+    <property name="Left" value="0"/>
+   </properties>
+  </tile>
+  <tile id="26">
+   <properties>
+    <property name="ENEMY" value="2"/>
+    <property name="GreyGate" value="7"/>
+    <property name="Right" value="1"/>
+   </properties>
+  </tile>
   <tile id="32">
    <properties>
     <property name="Blues" value="3"/>
     <property name="ENEMY" value="2"/>
+   </properties>
+  </tile>
+  <tile id="33">
+   <properties>
+    <property name="ENEMY" value="2"/>
+    <property name="Left" value="0"/>
+    <property name="RedGate" value="8"/>
+   </properties>
+  </tile>
+  <tile id="34">
+   <properties>
+    <property name="ENEMY" value="2"/>
+    <property name="RedGate" value="8"/>
+    <property name="Right" value="1"/>
    </properties>
   </tile>
   <tile id="40">
@@ -86,16 +114,40 @@
     <property name="ITEM" value="3"/>
    </properties>
   </tile>
+  <tile id="1">
+   <properties>
+    <property name="ITEM" value="3"/>
+    <property name="RareCandy" value="5"/>
+   </properties>
+  </tile>
   <tile id="8">
    <properties>
     <property name="ITEM" value="3"/>
     <property name="Shield" value="1"/>
    </properties>
   </tile>
+  <tile id="9">
+   <properties>
+    <property name="Damage" value="6"/>
+    <property name="ITEM" value="3"/>
+   </properties>
+  </tile>
   <tile id="16">
    <properties>
     <property name="ITEM" value="3"/>
     <property name="Whistle" value="2"/>
+   </properties>
+  </tile>
+  <tile id="24">
+   <properties>
+    <property name="GreyKey" value="3"/>
+    <property name="ITEM" value="3"/>
+   </properties>
+  </tile>
+  <tile id="32">
+   <properties>
+    <property name="ITEM" value="3"/>
+    <property name="RedKey" value="4"/>
    </properties>
   </tile>
  </tileset>
@@ -174,7 +226,7 @@
  </layer>
  <layer name="Entities" width="50" height="50" visible="0">
   <data encoding="base64" compression="zlib">
-   eJzt1kEOgjAQBdCeyVt4DNy55Ch0JzvcyU5uoIkmcipL0iYjttPp4Kbmv2QChpbOTwloDAAAAAAAAAAAAAAAAADAp1FQk3BcbF7v61xQYbzUwVdOX3DP2NySLNaPtQVrPFw9hb1o0Rw51uhylPSyZW7tOXrznSP1fC1qyzGu7mnJsaYc1vw2x83VXdiPRizHshdLjxMZtyWH5H1L+9GI5YiR5GgiFbzIeefq5GpwdXF1XfWjUZIj7JNkP2Z/3DNjhkQ/GjQD990P/ee+g8fEOjty3jL9TMw1jiQDlyeg/bf+d7daaza8JnOdo/lPRjP9kzeImok3
+   eJzt1rEOgjAQBuA+k2+hbvoEuOnG6Ogj0E023GSTJ7RN2uSEcr2rLjX/l1yAtIX7UxIwBgAAAAAAAAAAAAAAAADg0yioSTgvta4P9VBUnC91CpXTK+6ZWqvJYsNcq3jGwdVR2EspmiPHmrIcml6+WVt7jt4sc6y9X15tOcbZPS051pTDmt/m2LnaC/spkcrh98L3OJF5Ne5HiiRHk6joSs47V3dXg6unq9esnxKaHHGfNPuxZcaGlX5K0Azcdz/2n/sOnleesyHnLdPPxIxxJBm4PBHtvw3XXbj2/yMXV7dML01mnFPyT0Yz/ZM3tEyGag==
   </data>
  </layer>
  <layer name="ThinFog" width="50" height="50">

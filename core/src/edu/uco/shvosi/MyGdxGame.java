@@ -19,7 +19,7 @@ public class MyGdxGame extends Game {
 
     @Override
     public void dispose() {
-        startScreen.dispose();
         gameScreen.dispose();
+        startScreen.dispose();
     }
 }

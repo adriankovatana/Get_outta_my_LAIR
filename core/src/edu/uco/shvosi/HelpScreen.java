@@ -18,9 +18,9 @@ public class HelpScreen implements Screen {
     private Sprite splash;
     private Image startBut;
     private Texture startT;
-    private Texture pageone = new Texture(Gdx.files.internal("help.png"));
-    private Texture pagetwo = new Texture(Gdx.files.internal("controls.png"));
-    private Texture pagethree = new Texture(Gdx.files.internal("items.png"));
+    private Texture pageone;
+    private Texture pagetwo;
+    private Texture pagethree;
     private int page = 1;
     private Stage stage;
 
@@ -46,6 +46,9 @@ public class HelpScreen implements Screen {
     @Override
     public void show() {
         batch = new SpriteBatch();
+        pageone = new Texture(Gdx.files.internal("help.png"));
+        pagetwo = new Texture(Gdx.files.internal("controls.png"));
+        pagethree = new Texture(Gdx.files.internal("items.png"));
         splash = new Sprite(pageone, 1024, 576);
         splash.setPosition(0, 0);
 
@@ -89,10 +92,14 @@ public class HelpScreen implements Screen {
 
     @Override
     public void dispose() {
-        pageone.dispose();
-        pagetwo.dispose();
-        pagethree.dispose();
-        startT.dispose();
+        if(batch != null){
+            pageone.dispose();
+            pagetwo.dispose();
+            pagethree.dispose();
+            startT.dispose();
+            stage.dispose();
+            batch.dispose();
+        }
     }
 
 }

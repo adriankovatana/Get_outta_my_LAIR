@@ -5,8 +5,9 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.utils.Disposable;
 
-public class Entity extends Image {
+public class Entity extends Image implements Disposable{
 
     protected int cX; // Coordinate X
     protected int cY; // Coordinate Y
@@ -132,5 +133,10 @@ public class Entity extends Image {
     }
 
     public void collision(Entity entity) {
+    }
+
+    @Override
+    public void dispose() {
+        //Nothing to dispose
     }
 }

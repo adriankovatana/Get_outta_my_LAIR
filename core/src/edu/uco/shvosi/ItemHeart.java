@@ -65,4 +65,10 @@ public class ItemHeart extends Entity {
     public void performActions() {
         this.turnFinished = true;
     }
+    
+    @Override
+    public void dispose() {
+        super.dispose();
+        health.dispose();
+    }
 }

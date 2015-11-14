@@ -134,9 +134,9 @@ public class Map {
                     } else if (properties.get("GreyKey") != null) {
                         initItem(x, y, Constants.ItemType.GREYKEY);
                     } else if (properties.get("RareCandy") != null) {
-                        initItem(x, y, Constants.ItemType.REDKEY);
+                        initItem(x, y, Constants.ItemType.RARECANDY);
                     } else if (properties.get("Damage") != null) {
-                        initItem(x, y, Constants.ItemType.GREYKEY);
+                        initItem(x, y, Constants.ItemType.DAMAGE);
                     } else {
                         Gdx.app.log("MAP CREATION", "ITEM type at entityLayer(" + x + ")(" + y + ") is unknown. Creation skipped.");
                         entityGrid[x][y] = Constants.EntityGridCode.NONE;
@@ -681,5 +681,12 @@ public class Map {
 
     public void dispose() {
         tiledMap.dispose();
+        for(Entity e : entityList){
+            if(!(e instanceof Protagonist))
+                e.dispose();
+        }
+        for(Entity e : miscEntityList){
+            e.dispose();
+        }
     }
 }

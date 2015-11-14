@@ -41,10 +41,38 @@
    <property name="Wanderer" value="2"/>
   </properties>
  </tile>
+ <tile id="25">
+  <properties>
+   <property name="ENEMY" value="2"/>
+   <property name="GreyGate" value="7"/>
+   <property name="Left" value="0"/>
+  </properties>
+ </tile>
+ <tile id="26">
+  <properties>
+   <property name="ENEMY" value="2"/>
+   <property name="GreyGate" value="7"/>
+   <property name="Right" value="1"/>
+  </properties>
+ </tile>
  <tile id="32">
   <properties>
    <property name="Blues" value="3"/>
    <property name="ENEMY" value="2"/>
+  </properties>
+ </tile>
+ <tile id="33">
+  <properties>
+   <property name="ENEMY" value="2"/>
+   <property name="Left" value="0"/>
+   <property name="RedGate" value="8"/>
+  </properties>
+ </tile>
+ <tile id="34">
+  <properties>
+   <property name="ENEMY" value="2"/>
+   <property name="RedGate" value="8"/>
+   <property name="Right" value="1"/>
   </properties>
  </tile>
  <tile id="40">
