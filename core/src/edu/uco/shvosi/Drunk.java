@@ -26,6 +26,7 @@ public class Drunk extends Antagonist {
     public Drunk(int cX, int cY) {
         super(Constants.EnemyType.DRUNK, TextureLoader.DRUNKTEXTURE, cX, cY);
         drunkWalk = TextureLoader.drunkWalk;
+        this.walkAnimation = TextureLoader.drunkWalk;
         health = 30;
         maxHealth = 30;
         range = 2;
@@ -183,10 +184,14 @@ public class Drunk extends Antagonist {
 			if(this.canMove(d, mapGrid, entityGrid))
                         {
                             this.setTurnAction(Constants.TurnAction.MOVE);
+                            this.addAction(this.finishTurn());
                         }
+                        
                         tries++;
 			if(tries > 5){
-                            this.setTurnAction(Constants.TurnAction.NONE);
+                            this.setTurnAction(Constants.TurnAction.ATTACK);
+                            this.addAction(this.finishTurn());
+
                             return;
                             }
                 }//end while
