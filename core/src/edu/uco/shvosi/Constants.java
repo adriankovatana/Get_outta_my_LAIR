@@ -15,7 +15,7 @@ public class Constants {
     public static final int DETECTIONREQ = 7;
     public static final int BARRIERREQ = 6;
     public static final int LIGHTBARRIERREQ = 2;
-    public static final int REDLASERREQ = 5;
+    public static final int REDLASERREQ = 1;
     public static final int FREEZINGREQ = 10;
     public static final int LASERREQ = 4;
 

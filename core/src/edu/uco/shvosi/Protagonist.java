@@ -234,7 +234,7 @@ public class Protagonist extends Entity {
                 moveAction();
                 break;
             case ATTACK:
-                //attackAction();
+                attackAction();
                 break;
             default:
                 this.setTurnFinished(true);

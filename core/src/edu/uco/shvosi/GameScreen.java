@@ -185,7 +185,7 @@ public class GameScreen implements Screen {
                         map.bernard.setSkill(Constants.SkillName.REDLASERSKILL);
                         map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
                         map.bernard.setActiveSkill();
-                        map.bernard.attackAction();
+                        map.playTurn(activeEntity);
                         for (DamageEntity d : map.bernard.getActiveSkill().damageEntities) {
                             map.miscEntityList.add(d);
                             //stage.addActor(d);
@@ -199,7 +199,7 @@ public class GameScreen implements Screen {
                         map.bernard.setSkill(Constants.SkillName.SKILLONE);
                         map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
                         map.bernard.setActiveSkill();
-                        map.bernard.attackAction();
+                        map.playTurn(activeEntity);
                         for (DamageEntity d : map.bernard.getActiveSkill().damageEntities) {
                             map.miscEntityList.add(d);
                             //stage.addActor(d);
@@ -209,7 +209,7 @@ public class GameScreen implements Screen {
                         map.bernard.setSkill(Constants.SkillName.SKILLTWO);
                         map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
                         map.bernard.setActiveSkill();
-                        map.bernard.attackAction();
+                        map.playTurn(activeEntity);
                         for (DamageEntity d : map.bernard.getActiveSkill().damageEntities) {
                             map.miscEntityList.add(d);
                             //stage.addActor(d);
@@ -220,7 +220,7 @@ public class GameScreen implements Screen {
                         map.bernard.setSkill(Constants.SkillName.DETECTION);
                         map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
                         map.bernard.setActiveSkill();
-                        map.bernard.attackAction();
+                        map.playTurn(activeEntity);
                     } else if (Gdx.input.isKeyJustPressed(Keys.NUM_4) && map.bernard.barrierCooldown <= 0 && !map.bernard.getExecuteBarrier() && map.bernard.getLevel() >= Constants.BARRIERREQ) {
                         roundStarted = true;
                         map.bernard.setBarrierLimit(3);
@@ -228,7 +228,7 @@ public class GameScreen implements Screen {
                         map.bernard.setSkill(Constants.SkillName.BARRIERSKILL);
                         map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
                         map.bernard.setActiveSkill();
-                        map.bernard.attackAction();
+                        map.playTurn(activeEntity);
                     } else if (Gdx.input.isKeyJustPressed(Keys.NUM_5) && map.bernard.lightningInfusionCooldown <= 0 && !map.bernard.getExecuteLightBarrier() && map.bernard.getLevel() >= Constants.LIGHTBARRIERREQ) {
                         roundStarted = true;
                         map.bernard.setLightBarrierLimit(3);
@@ -236,13 +236,13 @@ public class GameScreen implements Screen {
                         map.bernard.setSkill(Constants.SkillName.LIGHTBARRIERSKILL);
                         map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
                         map.bernard.setActiveSkill();
-                        map.bernard.attackAction();
+                        map.playTurn(activeEntity);
                     } else if (Gdx.input.isKeyJustPressed(Keys.NUM_6) && map.bernard.freezingCooldown <= 0 && map.bernard.getLevel() >= Constants.FREEZINGREQ) {
                         roundStarted = true;
                         map.bernard.setSkill(Constants.SkillName.FREEZINGSKILL);
                         map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
                         map.bernard.setActiveSkill();
-                        map.bernard.attackAction();
+                        map.playTurn(activeEntity);
                         for (DamageEntity d : map.bernard.getActiveSkill().damageEntities) {
                             map.miscEntityList.add(d);
                         }
@@ -251,7 +251,7 @@ public class GameScreen implements Screen {
                         map.bernard.setSkill(Constants.SkillName.LASERSKILL);
                         map.bernard.setTurnAction(Constants.TurnAction.ATTACK);
                         map.bernard.setActiveSkill();
-                        map.bernard.attackAction();
+                        map.playTurn(activeEntity);
                         for (DamageEntity d : map.bernard.getActiveSkill().damageEntities) {
                             map.miscEntityList.add(d);
                         }
