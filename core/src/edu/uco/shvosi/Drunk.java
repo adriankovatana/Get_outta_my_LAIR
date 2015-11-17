@@ -181,17 +181,10 @@ public class Drunk extends Antagonist {
                             this.setTurnAction(Constants.TurnAction.ATTACK);
                             break;
 					}
-			if(this.canMove(d, mapGrid, entityGrid))
-                        {
-                            this.setTurnAction(Constants.TurnAction.MOVE);
-                            this.addAction(this.finishTurn());
-                        }
-                        
+                      
                         tries++;
 			if(tries > 5){
                             this.setTurnAction(Constants.TurnAction.ATTACK);
-                            this.addAction(this.finishTurn());
-
                             return;
                             }
                 }//end while
