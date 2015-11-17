@@ -41,7 +41,7 @@ public class Drunk extends Antagonist {
         //Do Attack Stuffs?
         int random;
         random = (int) (Math.random() * 17);
-        switch (random % 16) {
+        switch (random % 64) {
             case 1:
                 bottle.setCX(this.cX -range);
                 bottle.setCY(this.cY + range);
@@ -137,6 +137,7 @@ public class Drunk extends Antagonist {
     public void calculateTurn(Constants.MapGridCode[][] mapGrid, Constants.EntityGridCode[][] entityGrid, List<Entity> entityList) {
         
         int random = 0;
+        int tries = 0;
         Constants.Direction d = Constants.Direction.NONE;
         
 //        getBluesCount(entityList);
@@ -156,8 +157,9 @@ public class Drunk extends Antagonist {
             active = true;
         }
         if (active) {
+            if (Math.abs(xdis) < range && Math.abs(ydis) < range) {
             while (!canMove(d, mapGrid, entityGrid)) {
-                if (Math.abs(xdis) < range && Math.abs(ydis) < range) {
+                
                     random = (int) (Math.random() * entityGrid.length);
                     switch (random % 8) {
                         case 1:
@@ -174,12 +176,22 @@ public class Drunk extends Antagonist {
                             d = Constants.Direction.RIGHT;
                             flip = false;
                             break;
-                        default:
+			default:
                             this.setTurnAction(Constants.TurnAction.ATTACK);
                             break;
-                    }
-                }//end in range
-            }//end while
+					}
+			if(this.canMove(d, mapGrid, entityGrid))
+                        {
+                            this.setTurnAction(Constants.TurnAction.MOVE);
+                        }
+                        tries++;
+			if(tries > 5){
+                            this.setTurnAction(Constants.TurnAction.NONE);
+                            return;
+                            }
+                }//end while
+            }//end in range
+            
             if (Math.abs(xdis) > range && Math.abs(ydis) > range) {
 
                 int distanceDown = 0;
