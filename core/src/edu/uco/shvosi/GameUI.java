@@ -13,6 +13,8 @@ public class GameUI implements Disposable{
     private TexturedActor hud;
     private TexturedActor health;
     private BitmapFont healthText;
+    private TexturedActor xpbarFill;
+    private BitmapFont levelText;
     
     public GameUI(GameScreen screen){
         this.screen = screen;
@@ -29,9 +31,25 @@ public class GameUI implements Disposable{
         };
         healthText = new BitmapFont();
         healthText.setColor(Color.WHITE);
+        
+        xpbarFill = new TexturedActor(TextureLoader.XPBARFILL,193,68){
+            @Override
+            public void draw(Batch batch, float parentAlpha){
+                batch.draw(xpbarFill.textureRegion.getTexture(), xpbarFill.getX(), xpbarFill.getY(),
+                xpbarFill.textureRegion.getRegionWidth()*GameUI.this.screen.map.bernard.getXPPercentage(), 
+                xpbarFill.textureRegion.getRegionHeight(),
+                xpbarFill.textureRegion.getU(),xpbarFill.textureRegion.getV(),
+                xpbarFill.textureRegion.getU2()*GameUI.this.screen.map.bernard.getXPPercentage(),
+                xpbarFill.textureRegion.getV2());
+            }
+        };
+        levelText = new BitmapFont();
+        levelText.setColor(Color.WHITE);
     }
     
     public void draw(Batch batch, float alpha){
+        xpbarFill.draw(batch, alpha);
+        levelText.draw(batch, "Level "+screen.map.bernard.getLevel(), 410, 80);
         health.draw(batch, alpha);
         healthText.draw(batch, screen.map.bernard.getHealth()+" / "+screen.map.bernard.getMaxHealth(), 115, 65);
         

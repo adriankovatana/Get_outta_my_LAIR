@@ -74,13 +74,13 @@ public class PauseScreen implements Screen {
         levelLabel = new Label("", TextureLoader.SKIN);
         
         String health = "Health: " + Integer.toString(screen.map.bernard.getHealth()) + "/" + Integer.toString(screen.map.bernard.getMaxHealth());
-        String damage = "Damage: " + Float.toString(screen.map.bernard.getDamage());
+        String damage = "Damage: " + Integer.toString((int)screen.map.bernard.getDamage()*100) + "%";
         String level = "Level: " + Integer.toString(screen.map.bernard.getLevel());
         
         healthLabel.setX(295);
         healthLabel.setY(115);
         healthLabel.setText(health);
-        damageLabel.setX(645);
+        damageLabel.setX(640);
         damageLabel.setY(115);
         damageLabel.setText(damage);
         levelLabel.setX(495);

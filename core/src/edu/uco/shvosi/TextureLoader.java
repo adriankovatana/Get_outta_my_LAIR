@@ -179,6 +179,7 @@ public class TextureLoader {
     public static final Texture HEALTHPOOL = new Texture(Gdx.files.internal("ui/healthpool.png"));
     public static final Texture HPBARBACKGROUND = new Texture(Gdx.files.internal("ui/healthbarbackground.png"));
     public static final Texture HPBARFILL = new Texture(Gdx.files.internal("ui/healthbarfill.png"));
+    public static final Texture XPBARFILL = new Texture(Gdx.files.internal("ui/xpfill.png"));
     public static final Texture TARGETSQUARE = new Texture(Gdx.files.internal("ui/square.png"));
 
     private static final int FRAME_COLS = 5;
@@ -633,6 +634,9 @@ public class TextureLoader {
         WREKINGTEXTURE.dispose();
         WREKERATTACKTEXTURE.dispose();
         
-        //XYZ
+        //X
+        XPBARFILL.dispose();
+        
+        //YZ
     }
 }

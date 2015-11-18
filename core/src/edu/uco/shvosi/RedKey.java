@@ -12,7 +12,7 @@ public class RedKey extends Entity {
     RedKey(int cX, int cY){
         super(Constants.EntityGridCode.ITEM, TextureLoader.REDKEYTEXTURE, cX, cY);
         
-        this.name = "ItemWhistle";
+        this.name = "RedKey";
     }
     
     @Override

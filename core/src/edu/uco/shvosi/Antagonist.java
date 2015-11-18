@@ -59,6 +59,7 @@ public class Antagonist extends Entity {
         igniteParticle.load(Gdx.files.internal("ignite.p"), Gdx.files.internal(""));
         this.frostBiteAnimation = TextureLoader.frost;
         this.elapsedFrostBite = 0f;
+        this.name = "Antagonist";
     }
 
     @Override

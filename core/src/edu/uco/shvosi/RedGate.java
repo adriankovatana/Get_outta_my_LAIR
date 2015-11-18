@@ -17,6 +17,7 @@ public class RedGate extends Antagonist {
             textureRegion.setTexture(TextureLoader.REDGATERTEXTURE);
         }
         this.maxHealth = 100000;
+        this.name = "RedGate";
     }
 
 
@@ -39,8 +40,10 @@ public class RedGate extends Antagonist {
     
     @Override
     public void takeDamage(int damage){
-        this.setDead(true);
-        this.remove();
+        if(damage == 100000){
+            this.setDead(true);
+            this.remove();
+        }
     }
     
 }

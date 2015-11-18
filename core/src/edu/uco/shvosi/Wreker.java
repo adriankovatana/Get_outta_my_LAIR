@@ -36,6 +36,7 @@ public class Wreker extends Antagonist {
         health = 70;
         maxHealth = 70;
         range = 1;
+        this.xpValue = 100;
       
         this.damage = damage;
         melee = new DamageEntity(0,0,this.damage);

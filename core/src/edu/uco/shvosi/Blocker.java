@@ -11,6 +11,7 @@ public class Blocker extends Trap {
         super(TextureLoader.BLOCKERTEXTURE, cX, cY, Constants.TrapType.BLOCKER,
                 Gdx.audio.newSound(Gdx.files.internal("sounds/trap2.mp3")));
         this.setVisible(false);
+        this.name = "Blockers";
     }
 
     @Override

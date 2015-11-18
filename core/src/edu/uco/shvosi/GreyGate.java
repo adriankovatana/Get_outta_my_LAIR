@@ -18,6 +18,7 @@ public class GreyGate extends Antagonist {
         }
         this.maxHealth = 100000;
         health = maxHealth;
+        this.name = "GreyGate";
     }
 
     @Override
@@ -45,7 +46,9 @@ public class GreyGate extends Antagonist {
     
     @Override
     public void takeDamage(int damage){
-        this.setDead(true);
-        this.remove();
+        if(damage == 100000){
+            this.setDead(true);
+            this.remove();
+        }
     }
 }

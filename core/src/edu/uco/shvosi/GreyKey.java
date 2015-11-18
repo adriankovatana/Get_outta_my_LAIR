@@ -12,7 +12,7 @@ public class GreyKey extends Entity {
     GreyKey(int cX, int cY){
         super(Constants.EntityGridCode.ITEM, TextureLoader.GREYKEYTEXTURE, cX, cY);
         
-        this.name = "ItemWhistle";
+        this.name = "GreyKey";
     }
     
     @Override

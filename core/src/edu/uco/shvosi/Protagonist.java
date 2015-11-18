@@ -371,6 +371,10 @@ public class Protagonist extends Entity {
         return (float)this.health/this.maxHealth;
     }
     
+    public float getXPPercentage(){
+        return (float)this.currentXp/this.xpToNextLevel;
+    }
+    
     public void takeDamage(int damage) {
         if (shieldActive) {
             shieldActive = false;

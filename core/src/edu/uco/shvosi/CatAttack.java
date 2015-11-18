@@ -39,6 +39,7 @@ public class CatAttack extends Antagonist {
         melee = new DamageEntity(0,0,this.damage);
         self = new DamageEntity(0,0,this.damage);
         this.range = 1;
+        this.xpValue = 1;
     }
 
     @Override

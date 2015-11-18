@@ -37,6 +37,7 @@ public class Hammer extends Antagonist {
         melee = new DamageEntity(0,0,this.damage);
         oneAway = new DamageEntity(0,0,this.damage);
         range = 2;
+        this.xpValue = 100;
     }
 
     @Override

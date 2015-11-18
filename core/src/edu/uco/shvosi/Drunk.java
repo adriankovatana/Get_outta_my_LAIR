@@ -33,6 +33,7 @@ public class Drunk extends Antagonist {
         this.damage = 10;
         bottle = new DamageEntity(0,0,this.damage);
         bottle.setDamage(damage);
+        this.xpValue = 100;
 
         this.name = "Drunk";
     }
