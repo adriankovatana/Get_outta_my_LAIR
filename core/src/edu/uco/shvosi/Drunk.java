@@ -162,7 +162,7 @@ public class Drunk extends Antagonist {
             active = true;
         }
         if (active) {
-            System.out.println(Math.abs(xdis) + " " + Math.abs(ydis));
+            //System.out.println(Math.abs(xdis) + " " + Math.abs(ydis));
             if (Math.abs(xdis) < range && Math.abs(ydis) < range) {
                 while (!canMove(d, mapGrid, entityGrid)) {
                     random = (int) (Math.random() * entityGrid.length);
