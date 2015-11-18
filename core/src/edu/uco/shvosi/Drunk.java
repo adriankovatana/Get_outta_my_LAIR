@@ -33,7 +33,6 @@ public class Drunk extends Antagonist {
         this.damage = 10;
         bottle = new DamageEntity(0,0,this.damage);
         bottle.setDamage(damage);
-        this.xpValue = 100;
 
         this.name = "Drunk";
     }
@@ -108,6 +107,10 @@ public class Drunk extends Antagonist {
                 bottle.setCX(this.cX - range);
                 bottle.setCY(this.cY + range/range);           
                 break;                
+            default:
+                bottle.setCX(this.bernardX);
+                bottle.setCY(this.bernardY);           
+                break;                
         }//end switch
         bottle.setDead(false);
         Map.miscEntityList.add(bottle);
@@ -159,11 +162,11 @@ public class Drunk extends Antagonist {
             active = true;
         }
         if (active) {
+            System.out.println(Math.abs(xdis) + " " + Math.abs(ydis));
             if (Math.abs(xdis) < range && Math.abs(ydis) < range) {
-            while (!canMove(d, mapGrid, entityGrid)) {
-                
+                while (!canMove(d, mapGrid, entityGrid)) {
                     random = (int) (Math.random() * entityGrid.length);
-                    switch (random % 8) {
+                    switch (random % 16) {
                         case 1:
                             d = Constants.Direction.UP;
                             break;
@@ -179,19 +182,24 @@ public class Drunk extends Antagonist {
                             flip = false;
                             break;
 			default:
-                            this.setTurnAction(Constants.TurnAction.ATTACK);
+                            //this.setTurnAction(Constants.TurnAction.ATTACK);
+                            tries = 5;
                             break;
-					}
+                    }
                       
-                        tries++;
-			if(tries > 5){
-                            this.setTurnAction(Constants.TurnAction.ATTACK);
-                            return;
-                            }
+                    tries++;
+                    if(tries > 5){
+                        this.setTurnAction(Constants.TurnAction.ATTACK);
+                        return;
+                    }
                 }//end while
+            if(tries <= 5)
+            {
+                this.setTurnAction(Constants.TurnAction.MOVE);
+            }
             }//end in range
             
-            if (Math.abs(xdis) > range && Math.abs(ydis) > range) {
+           else if (Math.abs(xdis) > range || Math.abs(ydis) > range) {
 
                 int distanceDown = 0;
                 int distanceUp = 0;
@@ -382,8 +390,9 @@ public class Drunk extends Antagonist {
                             }
                         }
                        
-        }//end up
-                }
+                }//end up
+            this.setTurnAction(Constants.TurnAction.MOVE);
+            }//end out of range
         }//end if active
     }
 
