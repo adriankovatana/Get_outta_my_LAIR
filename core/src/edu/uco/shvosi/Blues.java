@@ -89,7 +89,7 @@ public class Blues extends Antagonist {
                 break;
             }
         }
-        damage = 2;
+        damage = 1;
         for (int i = 0; i < entityList.size(); i++) {
             if (entityList.get(i).getGridCode() == Constants.EntityGridCode.ENEMY) {
                 enemyX = entityList.get(i).getCX();
