@@ -23,19 +23,20 @@ public class Drunk extends Antagonist {
     private int ydis;
     private boolean active = false;
     private DamageEntity bottle;
-    private boolean attacking = false;
-
+    
     public Drunk(int cX, int cY) {
         super(Constants.EnemyType.DRUNK, TextureLoader.DRUNKTEXTURE, cX, cY);
         drunkWalk = TextureLoader.drunkWalk;
+        drunkAttack = TextureLoader.drunkAttack;
         this.walkAnimation = TextureLoader.drunkWalk;
+        this.attackAnimation = TextureLoader.drunkAttack;
         health = 30;
         maxHealth = 30;
         range = 2;
         this.damage = 10;
         bottle = new DamageEntity(0,0,this.damage);
         bottle.setDamage(damage);
-
+        this.attacking = false;
         this.name = "Drunk";
     }
 
@@ -116,7 +117,6 @@ public class Drunk extends Antagonist {
         }//end switch
         bottle.setDead(false);
         Map.miscEntityList.add(bottle);
-        attacking = false;
         this.addAction(this.finishTurn());
     }
 
@@ -128,7 +128,19 @@ public class Drunk extends Antagonist {
         
         if(attacking)
         {
-        
+            if (flip) {
+                temp = drunkAttack.getKeyFrame(elapsedTime);
+                temp.flip(true, false);
+                batch.draw(temp, this.getX(), getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
+                temp.flip(true, false);
+            } else {
+                batch.draw(drunkAttack.getKeyFrame(elapsedTime), this.getX(), this.getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
+            }
+            if (drunkAttack.isAnimationFinished(elapsedTime)) {
+                attacking = false;
+                elapsedTime = 0f;
+        }
+                      
         }
         else{
             if (flip) {
@@ -199,7 +211,7 @@ public class Drunk extends Antagonist {
                     tries++;
                     if(tries > 5){
                         this.setTurnAction(Constants.TurnAction.ATTACK);
-                        //attacking = true;
+                        attacking = true;
                         return;
                     }
                 }//end while

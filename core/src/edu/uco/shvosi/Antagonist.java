@@ -19,6 +19,7 @@ public class Antagonist extends Entity {
     protected int maxHealth;
     protected Constants.EnemyType enemyType;
     protected boolean moving;
+    protected boolean attacking;
     protected Animation walkAnimation;
     protected float elapsedWalk;
     protected Animation attackAnimation;

@@ -77,7 +77,7 @@ public class TextureLoader {
     public static final Texture CATATTACKTEXTURE = new Texture(Gdx.files.internal("characters/catattack.png"));
     public static final Texture MELEEATTACKTEXTURE = new Texture(Gdx.files.internal("melee_sheet.png"));
     public static final Texture WANDERATTACKTEXTURE = new Texture(Gdx.files.internal("characters/wander_attack_sheet.png"));
-    public static final Texture DRUNKATTACKTEXTURE = new Texture(Gdx.files.internal("characters/drunk_attack_sheet.png"));
+    public static final Texture DRUNKATTACKTEXTURE = new Texture(Gdx.files.internal("characters/drunk_attack.png"));
     public static final Texture WREKERATTACKTEXTURE = new Texture(Gdx.files.internal("characters/wreker_attack_sheet.png"));
     public static final Texture SUFFRAGETTETEXTURE = new Texture(Gdx.files.internal("characters/suffragette_sheet.png"));
     public static final Texture HAMMERATTACKTETEXTURE = new Texture(Gdx.files.internal("characters/hammer_attack.png"));
@@ -88,6 +88,7 @@ public class TextureLoader {
     public static final Texture DEATHTEXTURE = new Texture(Gdx.files.internal("death.png"));
     public static final Texture FROSTBITETEXTURE = new Texture(Gdx.files.internal("frostbite.png"));
     public static final Texture CATLADYTRANSFORMTEXTURE = new Texture(Gdx.files.internal("characters/big_cat_attack.png"));
+    public static final Texture BOTTLETEXTURE = new Texture(Gdx.files.internal("characters/bottle_sheet.png"));
 
     private Array<TextureRegion> catFrames;
     private Array<TextureRegion> hammerFrames;
@@ -104,6 +105,7 @@ public class TextureLoader {
     private Array<TextureRegion> hammerAttackFrames;
     private Array<TextureRegion> catAttackFrames;
     private Array<TextureRegion> catLadyTransformFrames;
+    private Array<TextureRegion> bottleFrames;
     private TextureRegion[] deathFrames;
     private TextureRegion[] frostBiteFrames;
 
@@ -124,6 +126,7 @@ public class TextureLoader {
     public static Animation catLadyAttack;
     public static Animation death;
     public static Animation frost;
+    public static Animation bottle;
 
     //skills
     public static final Texture MELEESKILLTEXTURE = new Texture(Gdx.files.internal("melee_sheet.png"));
@@ -342,8 +345,9 @@ public class TextureLoader {
         }
 
         drunkWalk = new Animation(0.50f, drunkFrames, PlayMode.LOOP);
-        drunkAttackFrames = new Array<TextureRegion>(5);
-        for (int i = 0; i < 5; i++) {
+        
+        drunkAttackFrames = new Array<TextureRegion>(13);
+        for (int i = 0; i < 13; i++) {
             drunkAttackFrames.add(new TextureRegion(DRUNKATTACKTEXTURE, 25, i * 100, 100, 100));
         }
 
@@ -465,6 +469,15 @@ public class TextureLoader {
         }
 
         hammerDownSkill = new Animation(0.1f, hammerDownFrames, PlayMode.NORMAL);
+        
+        //bottle
+        bottleFrames = new Array<TextureRegion>(6);
+        for (int i = 0; i < 6; i++) {
+            bottleFrames.add(new TextureRegion(BOTTLETEXTURE, 0, i * 100, 100, 100));
+        }
+
+        bottle = new Animation(0.1f, bottleFrames, PlayMode.NORMAL);
+        //
         //melee
         meleeSkillFrames = new Array<TextureRegion>(7);
         for (int i = 0; i < 7; i++) {
@@ -534,6 +547,7 @@ public class TextureLoader {
         BLUESKILLTEXTURE.dispose();
         BLUESTEXTURE.dispose();
         BLUETEXTURE.dispose();
+        BOTTLETEXTURE.dispose();
         
         //C
         CATTEXTURE.dispose();

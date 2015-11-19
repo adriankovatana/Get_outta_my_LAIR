@@ -119,6 +119,7 @@ public class Constants {
         FREEZINGSKILL,
         LASERSKILL,
         MELEESKILL,
-        BLUESSKILL;
+        BLUESSKILL,
+        BOTTLE;
     }
 }
