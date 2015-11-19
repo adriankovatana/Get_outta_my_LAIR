@@ -11,6 +11,7 @@ import java.util.List;
 public class Drunk extends Antagonist {
 
     private Animation drunkWalk;
+    private Animation drunkAttack;
     private boolean moving = false;
     private boolean flip = false;
     private float elapsedTime;
@@ -22,6 +23,7 @@ public class Drunk extends Antagonist {
     private int ydis;
     private boolean active = false;
     private DamageEntity bottle;
+    private boolean attacking = false;
 
     public Drunk(int cX, int cY) {
         super(Constants.EnemyType.DRUNK, TextureLoader.DRUNKTEXTURE, cX, cY);
@@ -114,6 +116,7 @@ public class Drunk extends Antagonist {
         }//end switch
         bottle.setDead(false);
         Map.miscEntityList.add(bottle);
+        attacking = false;
         this.addAction(this.finishTurn());
     }
 
@@ -122,18 +125,24 @@ public class Drunk extends Antagonist {
         super.draw(batch, alpha);
 
         elapsedTime += Gdx.graphics.getDeltaTime();
-
-        if (flip) {
-            temp = drunkWalk.getKeyFrame(elapsedTime);
-            temp.flip(true, false);
-            batch.draw(temp, this.getX(), getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
-            temp.flip(true, false);
-        } else {
-            batch.draw(drunkWalk.getKeyFrame(elapsedTime), this.getX(), this.getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
+        
+        if(attacking)
+        {
+        
         }
-        if (drunkWalk.isAnimationFinished(elapsedTime)) {
-            moving = false;
-            elapsedTime = 0f;
+        else{
+            if (flip) {
+                temp = drunkWalk.getKeyFrame(elapsedTime);
+                temp.flip(true, false);
+                batch.draw(temp, this.getX(), getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
+                temp.flip(true, false);
+            } else {
+                batch.draw(drunkWalk.getKeyFrame(elapsedTime), this.getX(), this.getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
+            }
+            if (drunkWalk.isAnimationFinished(elapsedTime)) {
+                moving = false;
+                elapsedTime = 0f;
+        }
         }
 
     }
@@ -190,6 +199,7 @@ public class Drunk extends Antagonist {
                     tries++;
                     if(tries > 5){
                         this.setTurnAction(Constants.TurnAction.ATTACK);
+                        //attacking = true;
                         return;
                     }
                 }//end while
