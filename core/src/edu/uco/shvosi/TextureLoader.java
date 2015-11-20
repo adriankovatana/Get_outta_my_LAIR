@@ -471,12 +471,12 @@ public class TextureLoader {
         hammerDownSkill = new Animation(0.1f, hammerDownFrames, PlayMode.NORMAL);
         
         //bottle
-        bottleFrames = new Array<TextureRegion>(6);
-        for (int i = 0; i < 6; i++) {
-            bottleFrames.add(new TextureRegion(BOTTLETEXTURE, 0, i * 100, 100, 100));
+        bottleFrames = new Array<TextureRegion>(9);
+        for (int i = 0; i < 9; i++) {
+            bottleFrames.add(new TextureRegion(BOTTLETEXTURE, 25, i * 100, 100, 100));
         }
 
-        bottle = new Animation(0.1f, bottleFrames, PlayMode.NORMAL);
+        bottle = new Animation(0.3f, bottleFrames, PlayMode.NORMAL);
         //
         //melee
         meleeSkillFrames = new Array<TextureRegion>(7);
