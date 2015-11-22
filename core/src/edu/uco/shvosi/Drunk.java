@@ -12,6 +12,7 @@ public class Drunk extends Antagonist {
 
     private Animation drunkWalk;
     private Animation drunkAttack;
+    private Animation bottleFall;
     private boolean moving = false;
     private boolean flip = false;
     private float elapsedTime;
@@ -22,101 +23,188 @@ public class Drunk extends Antagonist {
     private int xdis;
     private int ydis;
     private boolean active = false;
-    private DamageEntity bottle;
-    
+    private DamageEntity bottleDamage;
+    private BottleSkill bottleSkill;
+    private int bottleX;
+    private int bottleY;
+        
     public Drunk(int cX, int cY) {
         super(Constants.EnemyType.DRUNK, TextureLoader.DRUNKTEXTURE, cX, cY);
         drunkWalk = TextureLoader.drunkWalk;
         drunkAttack = TextureLoader.drunkAttack;
+        bottleFall = TextureLoader.bottleSkill;
         this.walkAnimation = TextureLoader.drunkWalk;
         this.attackAnimation = TextureLoader.drunkAttack;
         health = 30;
         maxHealth = 30;
         range = 2;
         this.damage = 10;
-        bottle = new DamageEntity(0,0,this.damage);
-        bottle.setDamage(damage);
+        BottleSkill bottle = new BottleSkill();
+        bottleDamage = new DamageEntity(0,0,this.damage);
+        bottleDamage.setDamage(damage);
         this.attacking = false;
         this.name = "Drunk";
+        
     }
 
     @Override
     public void attackAction() {
         //Do Attack Stuffs?
         int random;
-        random = (int) (Math.random() * 17);
-        switch (random % 64) {
+        random = (int) (Math.random() * 51);
+        switch (random % 32) {
+//            case 1:
+//                bottleDamage.setCX(this.cX -range);
+//                bottleDamage.setCY(this.cY + range);
+//                bottleX = -200;
+//                bottleY= 200;
+//                break;
+//            case 2:
+//                bottleDamage.setCX(this.cX - range/range);
+//                bottleDamage.setCY(this.cY + range);
+//                bottleX = -100;
+//                bottleY= 200;
+//                break;
+//            case 3:
+//                bottleDamage.setCX(this.cX);
+//                bottleDamage.setCY(this.cY + range);
+//                bottleX = 0;
+//                bottleY= 200;
+//                break;
+//            case 4:
+//                bottleDamage.setCX(this.cX + range/range);
+//                bottleDamage.setCY(this.cY + range);
+//                bottleX = 100;
+//                bottleY= 200;
+//                break;
+//            case 5:
+//                bottleDamage.setCX(this.cX + range);
+//                bottleDamage.setCY(this.cY + range);
+//                bottleX = 200;
+//                bottleY= 200;                
+//                break;
+//            case 6:
+//                bottleDamage.setCX(this.cX + range);
+//                bottleDamage.setCY(this.cY + range/range);           
+//                bottleX = 200;
+//                bottleY= 100;
+//                break;
+//            case 7:
+//                bottleDamage.setCX(this.cX + range);
+//                bottleDamage.setCY(this.cY);           
+//                bottleX = 200;
+//                bottleY= 0;
+//                break;
+//            case 8:
+//                bottleDamage.setCX(this.cX + range);
+//                bottleDamage.setCY(this.cY + range/range);           
+//                bottleX = 200;
+//                bottleY= 100;
+//                break;
+//            case 9:
+//                bottleDamage.setCX(this.cX + range);
+//                bottleDamage.setCY(this.cY - range);
+//                bottleX = 200;
+//                bottleY= -200;
+//                break;
+//            case 10:
+//                bottleDamage.setCX(this.cX + range/range);
+//                bottleDamage.setCY(this.cY - range);           
+//                bottleX = 100;
+//                bottleY= -200;                break;
+//            case 11:
+//                bottleDamage.setCX(this.cX);
+//                bottleDamage.setCY(this.cY - range);           
+//                bottleX = 0;
+//                bottleY= -200;
+//                break;
+//            case 12:
+//                bottleDamage.setCX(this.cX - range/range);
+//                bottleDamage.setCY(this.cY - range);           
+//                bottleX = -100;
+//                bottleY= -200;
+//                break;
+//            case 13:
+//                bottleDamage.setCX(this.cX -range);
+//                bottleDamage.setCY(this.cY - range);
+//                bottleX = -200;
+//                bottleY= -200;
+//                break;
+//            case 14:
+//                bottleDamage.setCX(this.cX - range);
+//                bottleDamage.setCY(this.cY + range/range);           
+//                bottleX = -200;
+//                bottleY= 100;
+//                break;
+//            case 15:
+//                bottleDamage.setCX(this.cX - range);
+//                bottleDamage.setCY(this.cY);           
+//                bottleX = -200;
+//                bottleY= 0;
+//                break;
+//            case 16:
+//                bottleDamage.setCX(this.cX - range);
+//                bottleDamage.setCY(this.cY + range/range);
+//                bottleX = -200;
+//                bottleY= 100;
+//                break;   
             case 1:
-                bottle.setCX(this.cX -range);
-                bottle.setCY(this.cY + range);
+                bottleDamage.setCX(this.cX -range/range);
+                bottleDamage.setCY(this.cY + range/range);
+                bottleX = -100;
+                bottleY= 100;
                 break;
             case 2:
-                bottle.setCX(this.cX - range/range);
-                bottle.setCY(this.cY + range);           
+                bottleDamage.setCX(this.cX );
+                bottleDamage.setCY(this.cY + range/range);
+                bottleX = 0;
+                bottleY= 100;
                 break;
             case 3:
-                bottle.setCX(this.cX);
-                bottle.setCY(this.cY + range);           
+                bottleDamage.setCX(this.cX + range/range);
+                bottleDamage.setCY(this.cY + range/range);
+                bottleX = 100;
+                bottleY= 100;
                 break;
             case 4:
-                bottle.setCX(this.cX + range/range);
-                bottle.setCY(this.cY + range);           
+                bottleDamage.setCX(this.cX + range/range);
+                bottleDamage.setCY(this.cY );
+                bottleX = 100;
+                bottleY= 0;
                 break;
             case 5:
-                bottle.setCX(this.cX + range);
-                bottle.setCY(this.cY + range);
+                bottleDamage.setCX(this.cX + range/range);
+                bottleDamage.setCY(this.cY - range/range);
+                bottleX = 100;
+                bottleY= -100;                
                 break;
             case 6:
-                bottle.setCX(this.cX + range);
-                bottle.setCY(this.cY + range/range);           
+                bottleDamage.setCX(this.cX);
+                bottleDamage.setCY(this.cY - range/range);           
+                bottleX = 0;
+                bottleY= -100;
                 break;
             case 7:
-                bottle.setCX(this.cX + range);
-                bottle.setCY(this.cY);           
+                bottleDamage.setCX(this.cX - range/range);
+                bottleDamage.setCY(this.cY - range/range);           
+                bottleX = -100;
+                bottleY= -100;
                 break;
             case 8:
-                bottle.setCX(this.cX + range);
-                bottle.setCY(this.cY + range/range);           
-                break;
-            case 9:
-                bottle.setCX(this.cX + range);
-                bottle.setCY(this.cY - range);
-                break;
-            case 10:
-                bottle.setCX(this.cX + range/range);
-                bottle.setCY(this.cY - range);           
-                break;
-            case 11:
-                bottle.setCX(this.cX);
-                bottle.setCY(this.cY - range);           
-                break;
-            case 12:
-                bottle.setCX(this.cX - range/range);
-                bottle.setCY(this.cY - range);           
-                break;
-            case 13:
-                bottle.setCX(this.cX -range);
-                bottle.setCY(this.cY - range);
-                break;
-            case 14:
-                bottle.setCX(this.cX - range);
-                bottle.setCY(this.cY + range/range);           
-                break;
-            case 15:
-                bottle.setCX(this.cX - range);
-                bottle.setCY(this.cY);           
-                break;
-            case 16:
-                bottle.setCX(this.cX - range);
-                bottle.setCY(this.cY + range/range);           
+                bottleDamage.setCX(this.cX - range/range);
+                bottleDamage.setCY(this.cY);           
+                bottleX = -100;
+                bottleY= 0;
                 break;                
             default:
-                bottle.setCX(this.bernardX);
-                bottle.setCY(this.bernardY);           
+                bottleDamage.setCX(this.bernardX);
+                bottleDamage.setCY(this.bernardY); 
+                bottleX = -(xdis*100);
+                bottleY = -(ydis*100);
                 break;                
         }//end switch
-        bottle.setDead(false);
-        Map.miscEntityList.add(bottle);
+        bottleDamage.setDead(false);
+        Map.miscEntityList.add(bottleDamage);
         this.addAction(this.finishTurn());
     }
 
@@ -124,25 +212,9 @@ public class Drunk extends Antagonist {
     public void draw(Batch batch, float alpha) {
         super.draw(batch, alpha);
 
-        elapsedTime += Gdx.graphics.getDeltaTime();
-        
-        if(attacking)
-        {
-            if (flip) {
-                temp = drunkAttack.getKeyFrame(elapsedTime);
-                temp.flip(true, false);
-                batch.draw(temp, this.getX(), getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
-                temp.flip(true, false);
-            } else {
-                batch.draw(drunkAttack.getKeyFrame(elapsedTime), this.getX(), this.getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
-            }
-            if (drunkAttack.isAnimationFinished(elapsedTime)) {
-                attacking = false;
-                elapsedTime = 0f;
-        }
-                      
-        }
-        else{
+        elapsedTime += Gdx.graphics.getDeltaTime();        
+ 
+        if(!attacking){
             if (flip) {
                 temp = drunkWalk.getKeyFrame(elapsedTime);
                 temp.flip(true, false);
@@ -154,8 +226,25 @@ public class Drunk extends Antagonist {
             if (drunkWalk.isAnimationFinished(elapsedTime)) {
                 moving = false;
                 elapsedTime = 0f;
+            }
         }
+                
+        if(attacking){
+            batch.draw(drunkAttack.getKeyFrame(elapsedTime), this.getX(), this.getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
+            
+            //batch.draw(TextureLoader.hammerDownSkill.getKeyFrame(elapsedTime), bernardX, bernardY, Constants.TILEDIMENSION, Constants.TILEDIMENSION);
+
+            if (drunkAttack.isAnimationFinished(elapsedTime)) {
+                TextureLoader.bottleSkill.setFrameDuration(0.15f);
+                batch.draw(bottleFall.getKeyFrame(elapsedTime),this.getX() + bottleX, this.getY() + bottleY, Constants.TILEDIMENSION, Constants.TILEDIMENSION);
+            }
+            if(bottleFall.isAnimationFinished(elapsedTime)){
+                moving = false;
+                attacking = false;
+                elapsedTime = 0f;
+            }
         }
+        
 
     }
 

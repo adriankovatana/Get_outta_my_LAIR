@@ -13,11 +13,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 class BottleSkill extends Skill {
 
-    private Animation bottle;
+    private Animation bottleSkill;
    
     
     public BottleSkill() {
-        super(0, 0, TextureLoader.bottle,
+        super(0, 0, TextureLoader.bottleSkill,
                 Gdx.audio.newSound(Gdx.files.internal("sounds/skill1.mp3")));
         this.damage = 10;
         this.width = 4;
@@ -25,12 +25,12 @@ class BottleSkill extends Skill {
         this.damageEntities.add(new DamageEntity(0, 0, this.damage));
         //this.damageEntities.add(new DamageEntity(0, 0, this.damage));
 
-        bottle = TextureLoader.bottle;
+        bottleSkill = TextureLoader.bottleSkill;
     }
 
     public void draw(Batch batch, float alpha, Entity entity) {
         this.update();
-        batch.draw(animation.getKeyFrame(elapsed), entity.getX(), entity.getY(), Constants.TILEDIMENSION *4, Constants.TILEDIMENSION *4);
+        batch.draw(animation.getKeyFrame(elapsed), entity.getX(), entity.getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
         
     }
 
