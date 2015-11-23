@@ -16,13 +16,13 @@ public class Suffragette extends Antagonist {
     private int ydis;
     private int bernardX;
     private int bernardY;
-//    private int targetX;
-//    private int targetY;
+    private int begX;
+    private int begY;
     private Constants.Direction direction;
     private Constants.Direction reverse;
-    private boolean directionSet = false;
-    private boolean active = false;
-//    private boolean thisWay = true;
+    private boolean directionSet;
+    private boolean active;
+    private boolean hasMoved;
  //   private int distance;
     
 
@@ -30,13 +30,16 @@ public class Suffragette extends Antagonist {
         super(Constants.EnemyType.SUFFRAGETTE, TextureLoader.SUFFERTETEXTURE, cX, cY);
         this.name = "Suffragette";
         this.walkAnimation = TextureLoader.suffragetteWalk;
-        //this.begX = cX;
-        //this.begY = cY;
+        this.begX = cX;
+        this.begY = cY;
         //this.direction = d;
         this.damage = 0;
         this.health = 1000;
         this.maxHealth = this.health;
         //this.distance = distance;
+        directionSet = false;
+        active = false;
+        hasMoved = false;
 
     }
 
@@ -81,7 +84,7 @@ public class Suffragette extends Antagonist {
     @Override
     public void calculateTurn(Constants.MapGridCode[][] mapGrid, Constants.EntityGridCode[][] entityGrid, List<Entity> entityList) {
                 
-        Constants.Direction d = Constants.Direction.NONE;
+        //Constants.Direction d = Constants.Direction.NONE;
 
 
             if(this.health < 1000)
@@ -104,11 +107,11 @@ public class Suffragette extends Antagonist {
                 
                     if(xdis < 0)
                     {
-                    direction = Constants.Direction.LEFT;
+                    direction = Constants.Direction.RIGHT;
                     }
                     if(xdis > 0)
                     {
-                        direction = Constants.Direction.RIGHT;
+                        direction = Constants.Direction.LEFT;
                     }
                     if(ydis < 0)
                     {
@@ -118,62 +121,75 @@ public class Suffragette extends Antagonist {
                     {
                         direction = Constants.Direction.DOWN;
                     }                
-                                
-                    if (direction == Constants.Direction.DOWN)
-                    {
-                        reverse = Constants.Direction.UP;
-                    }
-                    if (direction == Constants.Direction.UP)
-                    {
-                        reverse = Constants.Direction.DOWN;
-                    }
-                    if (direction == Constants.Direction.RIGHT)
-                    {
-                        reverse = Constants.Direction.LEFT;
-                    }
-                    if (direction == Constants.Direction.LEFT)
-                    {
-                        reverse = Constants.Direction.RIGHT;
-                    }
+//                                
+//                    if (direction == Constants.Direction.DOWN)
+//                    {
+//                        reverse = Constants.Direction.UP;
+//                    }
+//                    if (direction == Constants.Direction.UP)
+//                    {
+//                        reverse = Constants.Direction.DOWN;
+//                   }
+//                    if (direction == Constants.Direction.LEFT)
+//                    {
+//                        reverse = Constants.Direction.RIGHT;
+//                    }     }
+//                    if (direction == Constants.Direction.RIGHT)
+//                    {
+//                        reverse = Constants.Direction.LEFT;
+//                    }
+//                    if (direction == Constants.Direction.LEFT)
+//                    {
+//                        reverse = Constants.Direction.RIGHT;
+//                    }
                     directionSet = true;
                 }//end direction not set
                 
                 if(this.canMove(direction, mapGrid, entityGrid))
                 {
                     this.setTurnAction(Constants.TurnAction.MOVE);
+                    hasMoved = true;
                 }
-                else if(this.canMove(reverse, mapGrid, entityGrid))
+                else if(this.canMove(reverse(direction), mapGrid, entityGrid))
                 {
                     this.setTurnAction(Constants.TurnAction.MOVE);
+                    hasMoved = true;
                 }
                 else
                 {
                     this.setTurnAction(Constants.TurnAction.NONE);
+                }
+                if(hasMoved && begX == cX && begY == cY)
+                {
+                    health = 1000;
+                    active = false;
+                    directionSet = false;
+                    hasMoved = false;
                 }
                               
                // this.setTurnAction(Constants.TurnAction.MOVE);
             }//end if active
     }
     
-//    public void reverse(){
-//        if (direction == Constants.Direction.DOWN)
-//        {
-//            direction = Constants.Direction.UP;
-//        }
-//        if (direction == Constants.Direction.UP)
-//        {
-//            direction = Constants.Direction.DOWN;
-//        }
-//        if (direction == Constants.Direction.RIGHT)
-//        {
-//           direction = Constants.Direction.LEFT;
-//        }
-//        if (direction == Constants.Direction.LEFT)
-//        {
-//            direction = Constants.Direction.RIGHT;
-//        }
-//    
-//    }
+    public Constants.Direction reverse(Constants.Direction direction){
+        if (direction == Constants.Direction.DOWN)
+        {
+            this.direction = Constants.Direction.UP;
+        }
+        else if (direction == Constants.Direction.UP)
+        {
+            this.direction = Constants.Direction.DOWN;
+        }
+        else if (direction == Constants.Direction.RIGHT)
+        {
+           this.direction = Constants.Direction.LEFT;
+        }
+        else if (direction == Constants.Direction.LEFT)
+        {
+            this.direction = Constants.Direction.RIGHT;
+        }
+        return this.direction;    
+    }
     
     @Override
     public void collision(Entity entity) {
