@@ -88,6 +88,9 @@ public class TextureLoader {
     public static final Texture DEATHTEXTURE = new Texture(Gdx.files.internal("death.png"));
     public static final Texture FROSTBITETEXTURE = new Texture(Gdx.files.internal("frostbite.png"));
     public static final Texture CATLADYTRANSFORMTEXTURE = new Texture(Gdx.files.internal("characters/big_cat_attack.png"));
+    public static final Texture MOONSHINERTEXTURE = new Texture(Gdx.files.internal("characters/moonshine.png"));
+    public static final Texture MOONSHINERWALKTEXTURE = new Texture(Gdx.files.internal("characters/moonshine_walk_sheet.png"));
+    public static final Texture MOONSHINERATTACKTEXTURE = new Texture(Gdx.files.internal("characters/moonshine_attack_sheet.png"));
 
     private Array<TextureRegion> catFrames;
     private Array<TextureRegion> hammerFrames;
@@ -106,6 +109,8 @@ public class TextureLoader {
     private Array<TextureRegion> catLadyTransformFrames;
     private TextureRegion[] deathFrames;
     private TextureRegion[] frostBiteFrames;
+    private Array<TextureRegion> moonshinerWalkFrames;
+    private Array<TextureRegion> moonshinerAttackFrames;
 
     public static Animation catWalk;
     public static Animation blueWalk;
@@ -124,6 +129,8 @@ public class TextureLoader {
     public static Animation catLadyAttack;
     public static Animation death;
     public static Animation frost;
+    public static Animation moonshinerAttack;
+    public static Animation moonshinerWalk;
 
     //skills
     public static final Texture MELEESKILLTEXTURE = new Texture(Gdx.files.internal("melee_sheet.png"));
@@ -472,7 +479,30 @@ public class TextureLoader {
         }
 
         meleeSkill = new Animation(0.03f, meleeSkillFrames, PlayMode.NORMAL);
-
+        
+        //====================\\
+        //     Moonshiner     \\
+        //====================\\
+        
+        moonshinerWalkFrames = new Array<TextureRegion>(2);
+        
+        for(int i = 0; i < 2; i++)
+        {
+            moonshinerWalkFrames.add(new TextureRegion(MOONSHINERWALKTEXTURE, 0, i * 100, 100, 100));
+        }
+        
+        moonshinerWalk = new Animation(0.03f, moonshinerWalkFrames, PlayMode.LOOP);
+        
+        
+        moonshinerAttackFrames = new Array<TextureRegion>(7);
+        
+                for(int i = 0; i < 2; i++)
+        {
+            moonshinerAttackFrames.add(new TextureRegion(MOONSHINERATTACKTEXTURE, 0, i * 100, 100, 100));
+        }
+        
+        moonshinerAttack = new Animation(0.03f, moonshinerAttackFrames, PlayMode.NORMAL);
+        
         //traps and items
         //Kunai Trap
         TextureRegion[][] tmp = TextureRegion.split(TextureLoader.TRAPKUNAI, TextureLoader.TRAPKUNAI.getWidth() / FRAME_COLS, TextureLoader.TRAPKUNAI.getHeight() / FRAME_ROWS);
@@ -521,7 +551,7 @@ public class TextureLoader {
 
     public void dispose() {
         //A
-        
+
         //B
         BARRIERTEXTURE.dispose();
         BERNARDTEXTURE.dispose();
@@ -534,7 +564,7 @@ public class TextureLoader {
         BLUESKILLTEXTURE.dispose();
         BLUESTEXTURE.dispose();
         BLUETEXTURE.dispose();
-        
+
         //C
         CATTEXTURE.dispose();
         CATATTACKTEXTURE.dispose();
@@ -542,7 +572,7 @@ public class TextureLoader {
         CATTYTEXTURE.dispose();
         CATLADYTEXTURE.dispose();
         CATLADYTRANSFORMTEXTURE.dispose();
-        
+
         //D
         DAMAGETEXTURE.dispose();
         DEATHTEXTURE.dispose();
@@ -551,9 +581,8 @@ public class TextureLoader {
         DRUNKATTACKTEXTURE.dispose();
         DORABERNARDJUMPTEXTURE.dispose();
         DRUNKTEXTURE.dispose();
-        
+
         //E
-        
         //F
         FROSTBITETEXTURE.dispose();
 
@@ -583,7 +612,6 @@ public class TextureLoader {
         INVENTORYGREYKEYTEXTURE.dispose();
 
         //J //K
-        
         //L
         LIGHTBARRIERTEXTURE.dispose();
         LIGHTTEXTURE.dispose();
@@ -592,9 +620,11 @@ public class TextureLoader {
         //M
         MELEEATTACKTEXTURE.dispose();
         MELEESKILLTEXTURE.dispose();
+        MOONSHINERTEXTURE.dispose();
+        MOONSHINERWALKTEXTURE.dispose();
+        MOONSHINERATTACKTEXTURE.dispose();
 
         //N //O //P //Q
-        
         //R
         RARECANDYTEXTURE.dispose();
         REDLASERTEXTURE.dispose();
@@ -622,9 +652,8 @@ public class TextureLoader {
         TRAPPOWER.dispose();
         TRAPBLIND.dispose();
         TRAPTRANSFORM.dispose();
-        
+
         //UV
-        
         //W
         WANDTEXTURE.dispose();
         WANDERTEXTURE.dispose();
@@ -633,10 +662,10 @@ public class TextureLoader {
         WREKERTEXTURE.dispose();
         WREKINGTEXTURE.dispose();
         WREKERATTACKTEXTURE.dispose();
-        
+
         //X
         XPBARFILL.dispose();
-        
+
         //YZ
     }
 }
