@@ -44,7 +44,8 @@ public class Constants {
         CLYDE,
         GREYGATE,
         REDGATE,
-        CATATTACK;
+        CATATTACK,
+        BOSS;
     }
 
     public static enum EnemyAttackType {
@@ -119,6 +120,7 @@ public class Constants {
         FREEZINGSKILL,
         LASERSKILL,
         MELEESKILL,
-        BLUESSKILL;
+        BLUESSKILL,
+        BOTTLE;
     }
 }

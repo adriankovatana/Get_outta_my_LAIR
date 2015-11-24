@@ -136,12 +136,16 @@ public class TextureLoader {
     public static final Texture MELEESKILLTEXTURE = new Texture(Gdx.files.internal("melee_sheet.png"));
     public static final Texture BLUESKILLTEXTURE = new Texture(Gdx.files.internal("blue_skill_sheet.png"));
     public static final Texture HAMMERDOWNTEXTURE = new Texture(Gdx.files.internal("hammer_down_sheet.png"));
+    public static final Texture BOTTLESKILLTEXTURE = new Texture(Gdx.files.internal("bottle_sheet.png"));
+
     private Array<TextureRegion> blueSkillFrames;
     private Array<TextureRegion> hammerDownFrames;
     private Array<TextureRegion> meleeSkillFrames;
+    private Array<TextureRegion> bottleSkillFrames;
     public static Animation blueSkill;
     public static Animation hammerDownSkill;
     public static Animation meleeSkill;
+    public static Animation bottleSkill;
     //end skills
 
     //traps and items
@@ -479,30 +483,35 @@ public class TextureLoader {
         }
 
         meleeSkill = new Animation(0.03f, meleeSkillFrames, PlayMode.NORMAL);
+
+        //bottle
+        bottleSkillFrames = new Array<TextureRegion>(22);
+        for (int i = 0; i < 22; i++) {
+            bottleSkillFrames.add(new TextureRegion(BOTTLESKILLTEXTURE, 25, i * 100, 100, 100));
+        }
+
+        bottleSkill = new Animation(0.15f, bottleSkillFrames, PlayMode.NORMAL);
+
         
         //====================\\
         //     Moonshiner     \\
         //====================\\
-        
         moonshinerWalkFrames = new Array<TextureRegion>(2);
-        
-        for(int i = 0; i < 2; i++)
-        {
+
+        for (int i = 0; i < 2; i++) {
             moonshinerWalkFrames.add(new TextureRegion(MOONSHINERWALKTEXTURE, 0, i * 100, 100, 100));
         }
-        
+
         moonshinerWalk = new Animation(0.03f, moonshinerWalkFrames, PlayMode.LOOP);
-        
-        
+
         moonshinerAttackFrames = new Array<TextureRegion>(7);
-        
-                for(int i = 0; i < 2; i++)
-        {
+
+        for (int i = 0; i < 2; i++) {
             moonshinerAttackFrames.add(new TextureRegion(MOONSHINERATTACKTEXTURE, 0, i * 100, 100, 100));
         }
-        
+
         moonshinerAttack = new Animation(0.03f, moonshinerAttackFrames, PlayMode.NORMAL);
-        
+
         //traps and items
         //Kunai Trap
         TextureRegion[][] tmp = TextureRegion.split(TextureLoader.TRAPKUNAI, TextureLoader.TRAPKUNAI.getWidth() / FRAME_COLS, TextureLoader.TRAPKUNAI.getHeight() / FRAME_ROWS);
@@ -564,6 +573,7 @@ public class TextureLoader {
         BLUESKILLTEXTURE.dispose();
         BLUESTEXTURE.dispose();
         BLUETEXTURE.dispose();
+        BOTTLESKILLTEXTURE.dispose();
 
         //C
         CATTEXTURE.dispose();

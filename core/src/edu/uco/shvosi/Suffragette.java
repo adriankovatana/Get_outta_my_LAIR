@@ -12,55 +12,35 @@ public class Suffragette extends Antagonist {
     private boolean flip = false;
     private float elapsedTime;
     private TextureRegion temp;
-    private int begX; 
+    private int xdis; 
+    private int ydis;
+    private int bernardX;
+    private int bernardY;
+    private int begX;
     private int begY;
-    private int goToX;
-    private int goToY;
-    private int targetX;
-    private int targetY;
     private Constants.Direction direction;
-    private Constants.Direction oposite;
-    private boolean arrived = false;
-    private boolean active = false;
-    private boolean thisWay = true;
-    private int distance;
+    private Constants.Direction reverse;
+    private boolean directionSet;
+    private boolean active;
+    private boolean hasMoved;
+ //   private int distance;
     
 
-    public Suffragette(int cX, int cY, Constants.Direction d, int distance) {
+    public Suffragette(int cX, int cY) {
         super(Constants.EnemyType.SUFFRAGETTE, TextureLoader.SUFFERTETEXTURE, cX, cY);
         this.name = "Suffragette";
         this.walkAnimation = TextureLoader.suffragetteWalk;
         this.begX = cX;
         this.begY = cY;
-        this.direction = d;
+        //this.direction = d;
         this.damage = 0;
         this.health = 1000;
         this.maxHealth = this.health;
-        this.distance = distance;
-        if (direction == Constants.Direction.DOWN)
-        {
-            goToX = cX;
-            goToY = cY - distance;
-            oposite = Constants.Direction.UP;
-        }
-        if (direction == Constants.Direction.UP)
-        {
-            goToX = cX;
-            goToY = cY + distance;
-            oposite = Constants.Direction.DOWN;
-        }
-        if (direction == Constants.Direction.RIGHT)
-        {
-            goToX = cX + distance;
-            goToY = cY;
-           oposite = Constants.Direction.LEFT;
-        }
-        if (direction == Constants.Direction.LEFT)
-        {
-            goToX = cX - distance;
-            goToY = cY;
-            oposite = Constants.Direction.RIGHT;
-        }
+        //this.distance = distance;
+        directionSet = false;
+        active = false;
+        hasMoved = false;
+
     }
 
     @Override
@@ -104,7 +84,7 @@ public class Suffragette extends Antagonist {
     @Override
     public void calculateTurn(Constants.MapGridCode[][] mapGrid, Constants.EntityGridCode[][] entityGrid, List<Entity> entityList) {
                 
-        Constants.Direction d = Constants.Direction.NONE;
+        //Constants.Direction d = Constants.Direction.NONE;
 
 
             if(this.health < 1000)
@@ -112,57 +92,103 @@ public class Suffragette extends Antagonist {
                 active = true;
             }
             if(active){
-                if(thisWay)//set target
+                if(!directionSet){   
+                    for(int i = 0; i < entityList.size(); i++)//get bernards location
+                    {
+                        if(entityList.get(i).getGridCode() == Constants.EntityGridCode.PLAYER){
+                            bernardX = entityList.get(i).getCX();
+                            bernardY = entityList.get(i).getCY();
+                            break;
+                        }
+                    }
+          
+                    xdis = this.getCX() - bernardX;//get dis between me and bernard on x axis
+                    ydis = this.getCY() - bernardY;//get dis between me and bernard on y axis
+                
+                    if(xdis < 0)
+                    {
+                    direction = Constants.Direction.RIGHT;
+                    }
+                    if(xdis > 0)
+                    {
+                        direction = Constants.Direction.LEFT;
+                    }
+                    if(ydis < 0)
+                    {
+                        direction = Constants.Direction.UP;
+                    }
+                    if(ydis > 0)
+                    {
+                        direction = Constants.Direction.DOWN;
+                    }                
+//                                
+//                    if (direction == Constants.Direction.DOWN)
+//                    {
+//                        reverse = Constants.Direction.UP;
+//                    }
+//                    if (direction == Constants.Direction.UP)
+//                    {
+//                        reverse = Constants.Direction.DOWN;
+//                   }
+//                    if (direction == Constants.Direction.LEFT)
+//                    {
+//                        reverse = Constants.Direction.RIGHT;
+//                    }     }
+//                    if (direction == Constants.Direction.RIGHT)
+//                    {
+//                        reverse = Constants.Direction.LEFT;
+//                    }
+//                    if (direction == Constants.Direction.LEFT)
+//                    {
+//                        reverse = Constants.Direction.RIGHT;
+//                    }
+                    directionSet = true;
+                }//end direction not set
+                
+                if(this.canMove(direction, mapGrid, entityGrid))
                 {
-                    targetX = goToX;
-                    targetY = goToY;
-                }   
+                    this.setTurnAction(Constants.TurnAction.MOVE);
+                    hasMoved = true;
+                }
+                else if(this.canMove(reverse(direction), mapGrid, entityGrid))
+                {
+                    this.setTurnAction(Constants.TurnAction.MOVE);
+                    hasMoved = true;
+                }
                 else
                 {
-                    targetX = begX;
-                    targetY = begY;
+                    this.setTurnAction(Constants.TurnAction.NONE);
                 }
-                if(this.canMove(direction,mapGrid,entityGrid))
-                    {
-                        d = direction;
-                        this.setTurnAction(Constants.TurnAction.MOVE);
-                    }
-                if(cX == goToX && cY == goToY)
+                if(hasMoved && begX == cX && begY == cY)
                 {
-                    thisWay = false;//going that way now
-                    reverse();//reverses direction
-                }
-                if(cX == begX && cY == begY)
-                {
-                    thisWay = true;
-                    reverse();
-                    active = false;
                     health = 1000;
+                    active = false;
+                    directionSet = false;
+                    hasMoved = false;
                 }
-                 
-                                
+                              
                // this.setTurnAction(Constants.TurnAction.MOVE);
-             }//end if active
+            }//end if active
     }
     
-    public void reverse(){
+    public Constants.Direction reverse(Constants.Direction direction){
         if (direction == Constants.Direction.DOWN)
         {
-            direction = Constants.Direction.UP;
+            this.direction = Constants.Direction.UP;
         }
-        if (direction == Constants.Direction.UP)
+        else if (direction == Constants.Direction.UP)
         {
-            direction = Constants.Direction.DOWN;
+            this.direction = Constants.Direction.DOWN;
         }
-        if (direction == Constants.Direction.RIGHT)
+        else if (direction == Constants.Direction.RIGHT)
         {
-           direction = Constants.Direction.LEFT;
+           this.direction = Constants.Direction.LEFT;
         }
-        if (direction == Constants.Direction.LEFT)
+        else if (direction == Constants.Direction.LEFT)
         {
-            direction = Constants.Direction.RIGHT;
+            this.direction = Constants.Direction.RIGHT;
         }
-    
+        return this.direction;    
     }
     
     @Override

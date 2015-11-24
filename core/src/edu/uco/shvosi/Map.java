@@ -312,7 +312,7 @@ public class Map {
                 entityList.add(new Hammer(cX, cY));
                 break;
             case SUFFRAGETTE:
-                entityList.add(new Suffragette(cX, cY, Constants.Direction.NONE, 0));
+                entityList.add(new Suffragette(cX, cY));
                 break;
             case GREYGATE:
                 break;
