@@ -349,7 +349,7 @@ public class TextureLoader {
         
         drunkAttackFrames = new Array<TextureRegion>(13);
         for (int i = 0; i < 13; i++) {
-            drunkAttackFrames.add(new TextureRegion(DRUNKATTACKTEXTURE, 0, i * 100, 100, 100));
+            drunkAttackFrames.add(new TextureRegion(DRUNKATTACKTEXTURE, 25, i * 100, 100, 100));
         }
 
         drunkAttack = new Animation(0.15f, drunkAttackFrames, PlayMode.NORMAL);
