@@ -77,7 +77,7 @@ public class TextureLoader {
     public static final Texture CATATTACKTEXTURE = new Texture(Gdx.files.internal("characters/catattack.png"));
     public static final Texture MELEEATTACKTEXTURE = new Texture(Gdx.files.internal("melee_sheet.png"));
     public static final Texture WANDERATTACKTEXTURE = new Texture(Gdx.files.internal("characters/wander_attack_sheet.png"));
-    public static final Texture DRUNKATTACKTEXTURE = new Texture(Gdx.files.internal("characters/drunk_attack_sheet.png"));
+    public static final Texture DRUNKATTACKTEXTURE = new Texture(Gdx.files.internal("characters/drunk_attack.png"));
     public static final Texture WREKERATTACKTEXTURE = new Texture(Gdx.files.internal("characters/wreker_attack_sheet.png"));
     public static final Texture SUFFRAGETTETEXTURE = new Texture(Gdx.files.internal("characters/suffragette_sheet.png"));
     public static final Texture HAMMERATTACKTETEXTURE = new Texture(Gdx.files.internal("characters/hammer_attack.png"));
@@ -136,7 +136,7 @@ public class TextureLoader {
     public static final Texture MELEESKILLTEXTURE = new Texture(Gdx.files.internal("melee_sheet.png"));
     public static final Texture BLUESKILLTEXTURE = new Texture(Gdx.files.internal("blue_skill_sheet.png"));
     public static final Texture HAMMERDOWNTEXTURE = new Texture(Gdx.files.internal("hammer_down_sheet.png"));
-    public static final Texture BOTTLESKILLTEXTURE = new Texture(Gdx.files.internal("bottle_sheet.png"));
+    public static final Texture BOTTLESKILLTEXTURE = new Texture(Gdx.files.internal("characters/bottle_sheet.png"));
 
     private Array<TextureRegion> blueSkillFrames;
     private Array<TextureRegion> hammerDownFrames;
