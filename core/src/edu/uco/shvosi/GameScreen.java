@@ -459,7 +459,7 @@ public class GameScreen implements Screen {
         for (int i = map.miscEntityList.size() - 1; i > -1; i--) {
             stage.addActor(map.miscEntityList.get(i));
         }
-        for (int i = map.getEntityList().size() - 1; i > -1; i--) {
+        for (int i = 0; i < map.getEntityList().size(); i++) {
             stage.addActor(map.getEntityList().get(i));
         }
         //Health Display

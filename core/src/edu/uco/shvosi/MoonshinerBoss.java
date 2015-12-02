@@ -5,7 +5,9 @@
  */
 package edu.uco.shvosi;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import edu.uco.shvosi.Constants.EntityGridCode;
 import edu.uco.shvosi.Constants.MapGridCode;
 import edu.uco.shvosi.Constants.TurnAction;
@@ -23,6 +25,13 @@ public class MoonshinerBoss extends Antagonist {
     private int[][] blocked;
     private int blockedCount;
     private int[] nextCell;
+    private DamageEntity bottleAttack;
+    private float elapsedBottle;
+    private boolean attacking;
+    private TextureRegion temp;
+    private boolean flip;
+    private int xdis;
+    private int ydis;
 
     public MoonshinerBoss(int cX, int cY) {
         super(Constants.EnemyType.BOSS, TextureLoader.MOONSHINERTEXTURE, cX, cY);
@@ -34,15 +43,67 @@ public class MoonshinerBoss extends Antagonist {
         super.health = 200;
         super.maxHealth = 200;
         super.xpValue = 500;
+        this.damage = 7;
+        elapsedBottle = 0f;
         blocked = null;
         blockedCount = 0;
-
+        bottleAttack = new DamageEntity(0, 0, damage);
+        attacking = false;
     }
 
     @Override
     public void draw(Batch batch, float alpha) {
         super.draw(batch, alpha);
+        if (attacking) {
+            batch.draw(TextureLoader.bottleSkill.getKeyFrame(elapsedBottle), bottleAttack.getX(), bottleAttack.getY());
+//            batch.draw(TextureLoader.bottleSkill.getKeyFrame(elapsedBottle), bottleAttack.getX() - Constants.TILEDIMENSION, bottleAttack.getY());
+//            batch.draw(TextureLoader.bottleSkill.getKeyFrame(elapsedBottle), bottleAttack.getX() + Constants.TILEDIMENSION, bottleAttack.getY());
+//            batch.draw(TextureLoader.bottleSkill.getKeyFrame(elapsedBottle), bottleAttack.getX(), bottleAttack.getY() - Constants.TILEDIMENSION);
+//            batch.draw(TextureLoader.bottleSkill.getKeyFrame(elapsedBottle), bottleAttack.getX(), bottleAttack.getY() + Constants.TILEDIMENSION);
+            elapsedBottle += Gdx.graphics.getDeltaTime();
+            if (TextureLoader.bottleSkill.isAnimationFinished(elapsedBottle * 2)) {
+                elapsedBottle = 0f;
+                attacking = false;
+            }
+        }
+        
+         elapsedTime += Gdx.graphics.getDeltaTime();
+            if(xdis >=0)
+            {
+                flip = true;
+            }
+            else
+            {
+                flip = false;
+            }
+            if(Math.abs(xdis) >1 ||Math.abs(ydis) >1){    
+                if (flip) {
+                    temp = walkAnimation.getKeyFrame(elapsedTime);
+                    temp.flip(true, false);
+                    super.textureRegion = temp;
+                    temp.flip(true, false);
+                } else {
+                    super.textureRegion = walkAnimation.getKeyFrame(elapsedTime);
+                }
+                if (walkAnimation.isAnimationFinished(elapsedTime)) {
+                    moving = false;
+                    elapsedTime = 0f;
+                }
+            }
 
+    }
+
+    @Override
+    public void attackAction() {
+        //Do Attack Stuffs?
+        attacking = true;
+        bottleAttack.setCX(bernardX);
+        bottleAttack.setCY(bernardY);
+        bottleAttack.setX(bernardX * Constants.TILEDIMENSION);
+        bottleAttack.setY(bernardY * Constants.TILEDIMENSION);
+        bottleAttack.setDead(false);
+        Map.miscEntityList.add(bottleAttack);
+        this.addAction(this.finishTurn());
     }
 
     @Override
@@ -77,13 +138,14 @@ public class MoonshinerBoss extends Antagonist {
                 }
             }
         }
-        System.out.println("Bernard: " + bernardX + ", " + bernardY + " Moonshiner: " + this.getCX() + ", " + this.getCY());
         nextCell = AStar.test(0, mapGrid[0].length, mapGrid.length, bernardX, bernardY, this.cX, this.cY, blocked);
-
+        xdis = bernardX - this.cX;
+        ydis = bernardY - this.cY;
         blocked = null;
         blockedCount = 0;
 
-        if (nextCell[0] == bernardX && nextCell[1] == bernardY) {
+        if ((nextCell[0] == bernardX && nextCell[1] == bernardY) || (Math.abs(xdis) < 3 && Math.abs(ydis) < 3)) {
+            this.setTurnAction(TurnAction.ATTACK);
 
         } else {
             this.cX = nextCell[0];

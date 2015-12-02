@@ -509,7 +509,7 @@ public class TextureLoader {
             moonshinerWalkFrames.add(new TextureRegion(MOONSHINERWALKTEXTURE, 0, i * 100, 100, 100));
         }
 
-        moonshinerWalk = new Animation(0.03f, moonshinerWalkFrames, PlayMode.LOOP);
+        moonshinerWalk = new Animation(0.3f, moonshinerWalkFrames, PlayMode.LOOP);
 
         moonshinerAttackFrames = new Array<TextureRegion>(7);
 
@@ -518,6 +518,13 @@ public class TextureLoader {
         }
 
         moonshinerAttack = new Animation(0.03f, moonshinerAttackFrames, PlayMode.NORMAL);
+        
+        for(int i = 0; i < 9; i++)
+        {
+          bottleSkillFrames.add(new TextureRegion(BOTTLESKILLTEXTURE, 0, i * 100, 125, 100));
+        }
+        
+        bottleSkill = new Animation(0.05f, bottleSkillFrames, PlayMode.NORMAL);
 
         //traps and items
         //Kunai Trap
