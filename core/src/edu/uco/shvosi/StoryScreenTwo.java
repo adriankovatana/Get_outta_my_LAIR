@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-public class StartScreen implements Screen {
+public class StoryScreenTwo implements Screen {
 
     private MyGdxGame game;
 
@@ -21,15 +21,13 @@ public class StartScreen implements Screen {
     private Texture splashT;
     private Image startBut;
     private Texture startT;
-    private Image quitBut;
-    private Texture quitT;
-
+    
     private Stage stage;
 
     Sound intro = Gdx.audio.newSound(Gdx.files.internal("music/Brazen.mp3"));
     Sound music = Gdx.audio.newSound(Gdx.files.internal("music/MellowDarkness.mp3"));
 
-    public StartScreen(MyGdxGame game) {
+    public StoryScreenTwo(MyGdxGame game) {
         this.game = game;
     }
 
@@ -60,34 +58,25 @@ public class StartScreen implements Screen {
         music.stop();
         intro.play(Constants.MASTERVOLUME);
         batch = new SpriteBatch();
-        splashT = new Texture(Gdx.files.internal("splash.png"));
+        splashT = new Texture(Gdx.files.internal("storyTwo.png"));
         splash = new Sprite(splashT, 1024, 576);
         splash.setPosition(0, 0);
-        startT = new Texture(Gdx.files.internal("startButtonS.png"));
+        startT = new Texture(Gdx.files.internal("startStartButton.png"));
         startBut = new Image(startT);
-        startBut.setPosition(800, 15);
+        startBut.setPosition(850, 30);
         startBut.addListener(new ClickListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 intro.stop();
                 music.loop(Constants.MASTERVOLUME);
-                game.setScreen(game.storyOne);
+                game.setScreen(game.gameScreen);
                 return true;
             }
         });
-        quitT = new Texture(Gdx.files.internal("quitButton.png"));
-        quitBut = new Image(quitT);
-        quitBut.addListener(new ClickListener() {
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                Gdx.app.exit();
-                return true;
-            }
-        });
-        quitBut.setPosition(900, 15);
+
 
         stage = new Stage();
 
         stage.addActor(startBut);
-        stage.addActor(quitBut);
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -112,7 +101,6 @@ public class StartScreen implements Screen {
         //batch.dispose();
         splashT.dispose();
         startT.dispose();
-        quitT.dispose();
     }
 
 }
