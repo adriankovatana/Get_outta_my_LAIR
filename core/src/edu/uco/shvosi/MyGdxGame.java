@@ -6,6 +6,8 @@ public class MyGdxGame extends Game {
 
     public StartScreen startScreen;
     public GameScreen gameScreen;
+    public StoryScreenOne storyOne;
+    public StoryScreenTwo storyTwo;
   
     public int mute = 0;
 
@@ -13,6 +15,9 @@ public class MyGdxGame extends Game {
     public void create() {
         startScreen = new StartScreen(this);
         gameScreen = new GameScreen(this);
+        storyOne = new StoryScreenOne(this);
+        storyTwo = new StoryScreenTwo(this);
+        
 
         setScreen(startScreen);
     }
