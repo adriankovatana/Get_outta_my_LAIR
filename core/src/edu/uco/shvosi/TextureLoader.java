@@ -192,6 +192,13 @@ public class TextureLoader {
     public static final Texture HPBARFILL = new Texture(Gdx.files.internal("ui/healthbarfill.png"));
     public static final Texture XPBARFILL = new Texture(Gdx.files.internal("ui/xpfill.png"));
     public static final Texture TARGETSQUARE = new Texture(Gdx.files.internal("ui/square.png"));
+    public static final Texture SKILLONEICON = new Texture(Gdx.files.internal("ui/icons/basiclaser.png"));
+    public static final Texture SKILLTWOICON = new Texture(Gdx.files.internal("ui/icons/rotatelaser.png"));
+    public static final Texture DETECTICON = new Texture(Gdx.files.internal("ui/icons/detect.png"));
+    public static final Texture BARRIERICON = new Texture(Gdx.files.internal("ui/icons/barrier.png"));
+    public static final Texture LIGHTINFUSEICON = new Texture(Gdx.files.internal("ui/icons/lightinfuse.png"));
+    public static final Texture REDLASERICON = new Texture(Gdx.files.internal("ui/icons/redlaser.png"));
+    public static final Texture FUSIONICON = new Texture(Gdx.files.internal("ui/icons/fuse.png"));
 
     private static final int FRAME_COLS = 5;
     private static final int FRAME_ROWS = 4;
