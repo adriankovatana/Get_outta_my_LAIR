@@ -145,6 +145,10 @@ public class CatLady extends Antagonist {
             if (active)//active charater can move and attack
             {
                 turns ++;
+                if(!isCat && health < maxHealth)
+                {
+                    turns = 10;
+                }
                 if(turns > 9)
                 {
                     range = 1;
