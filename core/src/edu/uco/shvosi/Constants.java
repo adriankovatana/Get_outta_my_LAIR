@@ -11,13 +11,13 @@ public class Constants {
     public static float MASTERVOLUME = 0.0f;
 
     public static final int SKILLONEREQ = 1;
-    public static final int SKILLTWOREQ = 3;
-    public static final int DETECTIONREQ = 7;
-    public static final int BARRIERREQ = 6;
-    public static final int LIGHTBARRIERREQ = 2;
-    public static final int REDLASERREQ = 1;
+    public static final int SKILLTWOREQ = 2;
+    public static final int DETECTIONREQ = 3;
+    public static final int BARRIERREQ = 4;
+    public static final int LIGHTBARRIERREQ = 6;
+    public static final int REDLASERREQ = 5;
     public static final int FREEZINGREQ = 10;
-    public static final int LASERREQ = 4;
+    public static final int LASERREQ = 7;
 
     public static enum MapGridCode {
 

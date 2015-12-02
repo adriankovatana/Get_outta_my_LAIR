@@ -16,6 +16,22 @@ public class GameUI implements Disposable{
     private TexturedActor xpbarFill;
     private BitmapFont levelText;
     
+    private TexturedActor basiclaserIcon;
+    private TexturedActor rotatinglaserIcon;
+    private TexturedActor detectionIcon;
+    private TexturedActor barrierIcon;
+    private TexturedActor redlaserIcon;
+    private TexturedActor lightninginfusionIcon;
+    private TexturedActor fusionIcon;
+//    private TexturedActor blizzardIcon;
+    
+    private BitmapFont detectionText;
+    private BitmapFont barrierText;
+    private BitmapFont redlaserText;
+    private BitmapFont lightningText;
+    private BitmapFont fusionText;
+//    private BitmapFont blizzardText;
+    
     public GameUI(GameScreen screen){
         this.screen = screen;
         hud = new TexturedActor(TextureLoader.HUD,0,0);
@@ -45,6 +61,34 @@ public class GameUI implements Disposable{
         };
         levelText = new BitmapFont();
         levelText.setColor(Color.WHITE);
+        
+        basiclaserIcon = new TexturedActor(TextureLoader.SKILLONEICON, 194, 6);
+        
+        rotatinglaserIcon = new TexturedActor(TextureLoader.SKILLTWOICON, 262, 6);
+        
+        detectionIcon = new TexturedActor(TextureLoader.DETECTICON, 328, 6);
+        detectionText = new BitmapFont();
+        detectionText.setColor(Color.WHITE);
+        
+        barrierIcon = new TexturedActor(TextureLoader.BARRIERICON, 394, 6);
+        barrierText = new BitmapFont();
+        barrierText.setColor(Color.WHITE);
+        
+        redlaserIcon = new TexturedActor(TextureLoader.REDLASERICON, 460, 6);
+        redlaserText = new BitmapFont();
+        redlaserText.setColor(Color.WHITE);
+        
+        lightninginfusionIcon = new TexturedActor(TextureLoader.LIGHTINFUSEICON, 526, 6);
+        lightningText = new BitmapFont();
+        lightningText.setColor(Color.WHITE);
+        
+        fusionIcon = new TexturedActor(TextureLoader.FUSIONICON, 592, 6);
+        fusionText = new BitmapFont();
+        fusionText.setColor(Color.WHITE);
+        
+//        blizzardIcon = new TexturedActor(TextureLoader.SKILLONEICON, 194, 6);
+//        detectionText = new BitmapFont();
+//        detectionText.setColor(Color.WHITE);
     }
     
     public void draw(Batch batch, float alpha){
@@ -54,8 +98,65 @@ public class GameUI implements Disposable{
         healthText.draw(batch, screen.map.bernard.getHealth()+" / "+screen.map.bernard.getMaxHealth(), 115, 65);
         
         //Skill Icons
+        /*if(screen.map.bernard.getLevel() >= Constants.DETECTIONREQ &&
+                screen.map.bernard.barrierCooldown > 0)
+            detectionIcon.draw(batch, alpha);*/
+//        if(screen.map.bernard.getLevel() >= Constants.BARRIERREQ &&
+//                screen.map.bernard.barrierCooldown > 0)
+//            barrierIcon.draw(batch, alpha);
+//        if(screen.map.bernard.getLevel() >= Constants.REDLASERREQ &&
+//                screen.map.bernard.redLaserCooldown > 0)
+//            redlaserIcon.draw(batch, alpha);
         
         hud.draw(batch, alpha);
+        
+        if(screen.map.bernard.getLevel() >= Constants.SKILLONEREQ) /*&&
+                screen.map.bernard.barrierCooldown > 0)*/
+            basiclaserIcon.draw(batch, alpha);
+        
+        if(screen.map.bernard.getLevel() >= Constants.SKILLTWOREQ) /*&&
+                screen.map.bernard.barrierCooldown > 0)*/
+            rotatinglaserIcon.draw(batch, alpha);
+        
+        if(screen.map.bernard.getLevel() >= Constants.DETECTIONREQ) /*&&
+                screen.map.bernard.barrierCooldown > 0)*/
+            detectionIcon.draw(batch, alpha);
+        
+        if(screen.map.bernard.getLevel() >= Constants.BARRIERREQ){
+            if(screen.map.bernard.barrierCooldown <= 0)
+                barrierIcon.draw(batch, alpha);
+            else
+                barrierText.draw(batch, ""+screen.map.bernard.barrierCooldown, 426, 33);
+        }
+        
+        if(screen.map.bernard.getLevel() >= Constants.REDLASERREQ){
+            if(screen.map.bernard.redLaserCooldown <= 0)
+                redlaserIcon.draw(batch, alpha);
+            else
+                redlaserText.draw(batch, ""+screen.map.bernard.redLaserCooldown, 492, 33);
+        }
+        
+        if(screen.map.bernard.getLevel() >= Constants.LIGHTBARRIERREQ){
+            if(screen.map.bernard.lightningInfusionCooldown <= 0)
+                lightninginfusionIcon.draw(batch, alpha);
+            else
+                lightningText.draw(batch, ""+screen.map.bernard.lightningInfusionCooldown, 558, 33);
+        }
+        
+        if(screen.map.bernard.getLevel() >= Constants.LASERREQ){
+            if(screen.map.bernard.fusionCooldown <= 0)
+                fusionIcon.draw(batch, alpha);
+            else
+                fusionText.draw(batch, ""+screen.map.bernard.fusionCooldown, 624, 33);
+        }
+        
+//        if(screen.map.bernard.getLevel() >= Constants.FREEZINGREQ){
+//            if(screen.map.bernard.freezingCooldown <= 0)
+//                blizzardIcon.draw(batch, alpha);
+//            else
+//                blizzardText.draw(batch, ""+screen.map.bernard.freezingCooldown, 558, 33);
+//        }
+        
         screen.invent.draw(batch, alpha);
     }
 
