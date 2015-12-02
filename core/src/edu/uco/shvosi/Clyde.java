@@ -7,122 +7,110 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import java.util.List;
 
-public class CatLady extends Antagonist {
+public class Clyde extends Antagonist {
     
-    private Animation catLadyWalk; 
-    private Animation catLadyAttack; 
+    private Animation clydeWalk;
+    private Animation clydeAttack;
+    private boolean moving = false;
     private boolean flip = false;
     private float elapsedTime;
     private TextureRegion temp;
-    private int bernardX; 
-    private int bernardY; 
-    private String XorY; 
-    private int xdis; 
-    private int ydis; 
-    private int damage = 10; 
+    private int bernardX;
+    private int bernardY;
+    private String XorY;
+    private int xdis;
+    private int ydis;
+    private int damage = 5;
     private boolean active = false;
-    private boolean moved = false;
-    private DamageEntity melee; 
-    private DamageEntity self; 
-    private int turns= 0;
-    private boolean isCat = false;
-    
-    public CatLady(int cX, int cY) {
-        super(Constants.EnemyType.CATLADY, TextureLoader.CATLADYTEXTURE, cX, cY);
-        catLadyWalk = TextureLoader.catLadyWalk;
-        catLadyAttack = TextureLoader.catLadyAttack;
-        this.range = 2;
-        this.name = "CatLady";
-        super.xpValue = 100;
-        this.health = 70; 
-        this.maxHealth = this.health; 
-        this.damage = damage; 
-        melee = new DamageEntity(0,0,this.damage); 
-        //self = new DamageEntity(0,0, this.damage); 
+    private DamageEntity melee;
+        
+
+    public Clyde(int cX, int cY) {
+        super(Constants.EnemyType.CLYDE, TextureLoader.CLYDETEXTURE, cX, cY);
+        clydeWalk = TextureLoader.clydeWalk;
+        clydeAttack = TextureLoader.clydeAttack;
+        this.damage = damage;
+        melee = new DamageEntity(0,0,this.damage);
+        
+        this.name = "Clyde";
+        
+        this.xpValue = 100;
+
     }
 
     @Override
     public void attackAction() {
         //Do Attack Stuffs?
-        
-        melee.setCX(bernardX);
-        melee.setCY(bernardY);
-        //self.setCX(this.cX);
-        //self.setCY(this.cY);
+        if(!flip)
+        {
+           melee.setCX(this.cX + 1);
+           melee.setCY(this.cY);
+        }
+        else
+        {
+           melee.setCX(this.cX - 1);
+           melee.setCY(this.cY);
+        }
+
         melee.setDead(false);
-        //self.setDead(false);
         Map.miscEntityList.add(melee);
-        //Map.miscEntityList.add(self);
-        
         this.addAction(this.finishTurn());
+        
     }
     
         @Override
     public void draw(Batch batch, float alpha) {
         super.draw(batch, alpha);
-    
-                
+        
+                         
             elapsedTime += Gdx.graphics.getDeltaTime();
-            if(range == 1 && Math.abs(xdis) <=range && Math.abs(ydis) <=range)
+            if(xdis >=0)
             {
-                isCat = true;
+                flip = true;
             }
-            if(isCat)
+            else
             {
-                if(xdis >=0)
-                {
-                    flip = true;
-                }
-                else
-                {
-                    flip = false;
-                }
-                
+                flip = false;
+            }
+            if(Math.abs(xdis) >1 || Math.abs(ydis) >0){    
                 if (flip) {
-                    temp = this.catLadyAttack.getKeyFrame(elapsedTime);
+                    temp = clydeWalk.getKeyFrame(elapsedTime);
                     temp.flip(true, false);
                     batch.draw(temp, this.getX(),getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
                     temp.flip(true, false);
                 } else {
-                    batch.draw(catLadyAttack.getKeyFrame(elapsedTime), this.getX(), this.getY(), Constants.TILEDIMENSION , Constants.TILEDIMENSION);
+                    batch.draw(clydeWalk.getKeyFrame(elapsedTime), this.getX(), this.getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
                 }
-                if (catLadyAttack.isAnimationFinished(elapsedTime)) {
+                if (clydeWalk.isAnimationFinished(elapsedTime)) {
                     moving = false;
                     elapsedTime = 0f;
                 }
-            }  
-            
-            else{          
-                if(xdis >=0)
-                {
-                    flip = true;
-                }
-                else
-                {
-                    flip = false;
-                }
-                
+            }
+            if(Math.abs(xdis) <=1 && Math.abs(ydis) <=0){    
                 if (flip) {
-                    temp = catLadyWalk.getKeyFrame(elapsedTime);
+                    temp = clydeAttack.getKeyFrame(elapsedTime);
                     temp.flip(true, false);
                     batch.draw(temp, this.getX(),getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
                     temp.flip(true, false);
                 } else {
-                    batch.draw(catLadyWalk.getKeyFrame(elapsedTime), this.getX(), this.getY(), Constants.TILEDIMENSION , Constants.TILEDIMENSION);
+                    batch.draw(clydeAttack.getKeyFrame(elapsedTime), this.getX(), this.getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
                 }
-                if (catLadyWalk.isAnimationFinished(elapsedTime)) {
+                if (clydeAttack.isAnimationFinished(elapsedTime)) {
                     moving = false;
                     elapsedTime = 0f;
                 }
-            }       
+            }
+        
     }
 
     
     @Override
     public void calculateTurn(Constants.MapGridCode[][] mapGrid, Constants.EntityGridCode[][] entityGrid, List<Entity> entityList) {
-        //Random movement
-        int tries = 0;
+        
         Constants.Direction d = Constants.Direction.NONE;
+
+//        getBluesCount(entityList);
+//        damage = damage + bluesCount;
 
             for(int i = 0; i < entityList.size(); i++)//get bernards location
             {
@@ -144,34 +132,12 @@ public class CatLady extends Antagonist {
         
             if (active)//active charater can move and attack
             {
-                turns ++;
-                if(!isCat && health < maxHealth)
-                {
-                    turns = 10;
-                }
-                if(turns > 9)
-                {
-                    range = 1;
-                    if(health < maxHealth)
-                    {
-                        if(health > 50)
-                        {
-                            health = maxHealth;
-                        }
-                        else
-                        {
-                            health +=20;
-                        }
-                        turns = 0;
-                    }//end tutn > 9
-                       
-                }
                 int distanceDown = 0;
                 int distanceUp = 0;
                 int distanceRight = 0;
                 int distanceLeft = 0;
                 
-                if(Math.abs(xdis)> range || Math.abs(ydis)> range)//moves to attack position
+                if(Math.abs(xdis)> 1 || Math.abs(ydis)> 0)//moves to attack position
                 {
                     if(Math.abs(xdis) > Math.abs(ydis))
                     {
@@ -182,7 +148,7 @@ public class CatLady extends Antagonist {
                         XorY="Y";
                     }
                     
-                if("X".equals(XorY) && xdis > range)//need to go left
+                if("X".equals(XorY) && xdis > 1)//need to go left
                 {
                 for(distanceDown=0; distanceDown < 5; distanceDown++)//get shortest distance around verticle obstacle
                 {
@@ -226,7 +192,7 @@ public class CatLady extends Antagonist {
                 }
             }//end try to go left
                     
-            if("X".equals(XorY) && xdis < range)//need to go right
+            if("X".equals(XorY) && xdis < 1)//need to go right
             {
                 for(distanceDown=0; distanceDown < 5; distanceDown++)//get shortest distance around verticle obstacle
                 {
@@ -270,7 +236,7 @@ public class CatLady extends Antagonist {
                 }
                      
                 }//end go right
-                if("Y".equals(XorY) && ydis > range)//need to go down
+                if("Y".equals(XorY) && ydis > 0)//need to go down
                  {
                     for(distanceRight=0; distanceRight < 5; distanceRight++)//get shortest distance around verticle obstacle
                     {
@@ -314,7 +280,7 @@ public class CatLady extends Antagonist {
                         }
                         
                 }//end down
-                if("Y".equals(XorY) && ydis < range)//need to go up
+                if("Y".equals(XorY) && ydis < 0)//need to go up
                 {
                     for(distanceRight=0; distanceRight < 5; distanceRight++)//get shortest distance around verticle obstacle
                     {
@@ -360,7 +326,7 @@ public class CatLady extends Antagonist {
         }//end up
             this.setTurnAction(Constants.TurnAction.MOVE);
             }//end move to one spot away
-               if(range == 1 && Math.abs(xdis) <=range && Math.abs(ydis) <=range)
+                if(Math.abs(xdis) <=1 && Math.abs(ydis) <=0)
                 {
                    this.setTurnAction(Constants.TurnAction.ATTACK);
 
@@ -368,30 +334,4 @@ public class CatLady extends Antagonist {
                  
             }//end if active
     }//end function
-    
-    @Override
-    public void collision(Entity entity){
-        
-    }
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}    
