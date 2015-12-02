@@ -570,6 +570,7 @@ public class TextureLoader {
 
         //B
         BARRIERTEXTURE.dispose();
+        BARRIERICON.dispose();
         BERNARDTEXTURE.dispose();
         BERNARDDEATHTEXTURE.dispose();
         BERNARDGLANCETEXTURE.dispose();
@@ -593,6 +594,7 @@ public class TextureLoader {
         //D
         DAMAGETEXTURE.dispose();
         DEATHTEXTURE.dispose();
+        DETECTICON.dispose();
         DETECTIONTEXTURE.dispose();
         DRUNKENTEXTURE.dispose();
         DRUNKATTACKTEXTURE.dispose();
@@ -602,6 +604,7 @@ public class TextureLoader {
         //E
         //F
         FROSTBITETEXTURE.dispose();
+        FUSIONICON.dispose();
 
         //G
         GREYGATELTEXTURE.dispose();
@@ -631,6 +634,7 @@ public class TextureLoader {
         //J //K
         //L
         LIGHTBARRIERTEXTURE.dispose();
+        LIGHTINFUSEICON.dispose();
         LIGHTTEXTURE.dispose();
         LIGHTTEXTURE2.dispose();
 
@@ -644,6 +648,7 @@ public class TextureLoader {
         //N //O //P //Q
         //R
         RARECANDYTEXTURE.dispose();
+        REDLASERICON.dispose();
         REDLASERTEXTURE.dispose();
         REDGATELTEXTURE.dispose();
         REDGATERTEXTURE.dispose();
@@ -653,6 +658,8 @@ public class TextureLoader {
         SHIELDTEXTURE.dispose();
         SKIN.dispose();
         SKILLONETEXTURE.dispose();
+        SKILLONEICON.dispose();
+        SKILLTWOICON.dispose();
         SLIDELEFT.dispose();
         SLIDERIGHT.dispose();
         SLIDEUP.dispose();
