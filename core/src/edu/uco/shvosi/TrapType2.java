@@ -51,6 +51,7 @@ public class TrapType2 extends Trap {
 //                } else {
                 bernard.takeDamage(this.damage);
                 this.turnFinished = true;
+                bernard.setPowerReduce(true);
             }
             if (bernard.getActiveSkill() != null && bernard.getActiveSkill().getName() == Constants.SkillName.DETECTION
                     && bernard.getDetectionCollisionBox().intersects(this.getCX(), this.getCY(), 3, 3)) {

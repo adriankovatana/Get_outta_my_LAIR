@@ -475,7 +475,7 @@ public class Map {
 
            // tempAntagList.add(new Suffragette(5, 7, Constants.Direction.UP, 2));
             //tempAntagList.add(new Wreker(9,3));
-            tempAntagList.add(new MoonshinerBoss(10,3));
+//            tempAntagList.add(new MoonshinerBoss(10,3));
             
             tempMiscList.add(new ItemRareCandy(8,1));
             tempMiscList.add(new ItemDamage(9,1));
@@ -484,7 +484,7 @@ public class Map {
         else if (GameScreen.level == 1) {
             Gdx.app.log("Map", "Adding entities for map level=1");
             
-            entityList.add(new MoonshinerBoss(5, 12));
+//            entityList.add(new MoonshinerBoss(5, 12));
         } //Add for Cole's Map
         else if (GameScreen.level == 2) {
             Gdx.app.log("Map", "Adding entities for map level=2");
