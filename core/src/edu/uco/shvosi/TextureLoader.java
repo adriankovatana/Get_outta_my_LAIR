@@ -57,6 +57,8 @@ public class TextureLoader {
     public static Animation light2;
 
     //antagonist
+    public static final Texture CLYDETEXTURE = new Texture(Gdx.files.internal("characters/blank.png"));
+    public static final Texture BONNIETEXTURE = new Texture(Gdx.files.internal("characters/blank.png"));
     public static final Texture SUFFERTETEXTURE = new Texture(Gdx.files.internal("characters/blank.png"));
     public static final Texture HAMMERTETEXTURE = new Texture(Gdx.files.internal("characters/blank.png"));
     public static final Texture BLUESTEXTURE = new Texture(Gdx.files.internal("characters/blank.png"));
@@ -91,8 +93,14 @@ public class TextureLoader {
     public static final Texture MOONSHINERTEXTURE = new Texture(Gdx.files.internal("characters/moonshine.png"));
     public static final Texture MOONSHINERWALKTEXTURE = new Texture(Gdx.files.internal("characters/moonshine_walk_sheet.png"));
     public static final Texture MOONSHINERATTACKTEXTURE = new Texture(Gdx.files.internal("characters/moonshine_attack_sheet.png"));
+    public static final Texture BONNIEWALKTEXTURE = new Texture(Gdx.files.internal("characters/bonnie_walk.png"));
+    public static final Texture BONNIEATTACKTEXTURE = new Texture(Gdx.files.internal("characters/bonnie_attack.png"));
+    public static final Texture CLYDEWALKTEXTURE = new Texture(Gdx.files.internal("characters/clyde_walk_sheet.png"));
+    public static final Texture CLYDEATTACKTEXTURE = new Texture(Gdx.files.internal("characters/clyde_attack_sheet.png"));
 
     private Array<TextureRegion> catFrames;
+    private Array<TextureRegion> bonnieFrames;
+    private Array<TextureRegion> clydeFrames;
     private Array<TextureRegion> hammerFrames;
     private Array<TextureRegion> blueFrames;
     private Array<TextureRegion> drunkFrames;
@@ -101,6 +109,8 @@ public class TextureLoader {
     private Array<TextureRegion> wrekerFrames;
     private Array<TextureRegion> meleeFrames;
     private Array<TextureRegion> wanderAttackFrames;
+    private Array<TextureRegion> bonnieAttackFrames;
+    private Array<TextureRegion> clydeAttackFrames;
     private Array<TextureRegion> wrekerAttackFrames;
     private Array<TextureRegion> drunkAttackFrames;
     private Array<TextureRegion> suffragetteFrames;
@@ -113,6 +123,8 @@ public class TextureLoader {
     private Array<TextureRegion> moonshinerAttackFrames;
 
     public static Animation catWalk;
+    public static Animation bonnieWalk;
+    public static Animation clydeWalk;
     public static Animation blueWalk;
     public static Animation hammerWalk;
     public static Animation catLadyWalk;
@@ -131,6 +143,9 @@ public class TextureLoader {
     public static Animation frost;
     public static Animation moonshinerAttack;
     public static Animation moonshinerWalk;
+    public static Animation bonnieAttack;
+    public static Animation clydeAttack;
+
 
     //skills
     public static final Texture MELEESKILLTEXTURE = new Texture(Gdx.files.internal("melee_sheet.png"));
@@ -366,7 +381,32 @@ public class TextureLoader {
         }
 
         drunkAttack = new Animation(0.10f, drunkAttackFrames, PlayMode.LOOP);
+        //Antagonist Bonnie
+        bonnieFrames = new Array<TextureRegion>(2);
+        for (int i = 0; i < 2; i++) {
+        bonnieFrames.add(new TextureRegion(BONNIEWALKTEXTURE, 25, i * 100, 100, 100));
+        }
 
+        bonnieWalk = new Animation(0.50f, bonnieFrames, PlayMode.LOOP);
+        bonnieAttackFrames = new Array<TextureRegion>(5);
+        for (int i = 0; i < 5; i++) {
+            bonnieAttackFrames.add(new TextureRegion(BONNIEATTACKTEXTURE, 25, i * 100, 100, 100));
+        }
+
+        bonnieAttack = new Animation(0.10f, bonnieAttackFrames, PlayMode.LOOP);
+        //Antagonist Clyde
+        clydeFrames = new Array<TextureRegion>(2);
+        for (int i = 0; i < 2; i++) {
+        clydeFrames.add(new TextureRegion(CLYDEWALKTEXTURE, 25, i * 100, 100, 100));
+        }
+
+        clydeWalk = new Animation(0.50f, clydeFrames, PlayMode.LOOP);
+        clydeAttackFrames = new Array<TextureRegion>(5);
+        for (int i = 0; i < 5; i++) {
+            clydeAttackFrames.add(new TextureRegion(CLYDEATTACKTEXTURE, 25, i * 100, 100, 100));
+        }
+
+        clydeAttack = new Animation(0.10f, clydeAttackFrames, PlayMode.LOOP);        
         //Antagonist Blues
         blueFrames = new Array<TextureRegion>(5);
         for (int i = 0; i < 5; i++) {
@@ -582,6 +622,9 @@ public class TextureLoader {
         BLUESTEXTURE.dispose();
         BLUETEXTURE.dispose();
         BOTTLESKILLTEXTURE.dispose();
+        BONNIETEXTURE.dispose();
+        BONNIEWALKTEXTURE.dispose();
+        BONNIEATTACKTEXTURE.dispose();
 
         //C
         CATTEXTURE.dispose();
@@ -590,6 +633,9 @@ public class TextureLoader {
         CATTYTEXTURE.dispose();
         CATLADYTEXTURE.dispose();
         CATLADYTRANSFORMTEXTURE.dispose();
+        CLYDETEXTURE.dispose();
+        CLYDEWALKTEXTURE.dispose();
+        CLYDEATTACKTEXTURE.dispose();
 
         //D
         DAMAGETEXTURE.dispose();
