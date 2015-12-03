@@ -66,6 +66,7 @@ public class HelpScreen implements Screen {
                     page = 3;
                 }
                 else{
+                    page = 1;
                     screen.resume();
                 }
                 return true;

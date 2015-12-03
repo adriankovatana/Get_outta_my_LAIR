@@ -337,10 +337,10 @@ public class Map {
                 miscEntityList.add(new ItemWhistle(cX, cY));
                 break;
             case REDKEY:
-                miscEntityList.add(new RedKey(cX, cY));
+                miscEntityList.add(new ItemRedKey(cX, cY));
                 break;
             case GREYKEY:
-                miscEntityList.add(new GreyKey(cX, cY));
+                miscEntityList.add(new ItemGreyKey(cX, cY));
                 break;
             case RARECANDY:
                 miscEntityList.add(new ItemRareCandy(cX, cY));
@@ -477,8 +477,8 @@ public class Map {
             //tempAntagList.add(new Wreker(9,3));
             tempAntagList.add(new MoonshinerBoss(10,3));
             
-            tempMiscList.add(new ItemRareCandy(8,1));
-            tempMiscList.add(new ItemDamage(9,1));
+ //           tempMiscList.add(new ItemRareCandy(8,1));
+   //         tempMiscList.add(new ItemDamage(9,1));
 
         } //Add for testmap 2
         else if (GameScreen.level == 1) {

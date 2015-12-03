@@ -158,7 +158,7 @@ public class PauseScreen implements Screen {
                 invX = invX + 150;
                 stage.addActor(itemI[index]);   
             }
-             else if (i instanceof GreyKey){
+             else if (i instanceof ItemGreyKey){
  //               Gdx.app.log("ITEM", "3");
                 itemT[index] = TextureLoader.GREYKEYTEXTURE;
                 itemI[index] = new Image(itemT[index]);
@@ -172,7 +172,7 @@ public class PauseScreen implements Screen {
                 invX = invX + 150;
                 stage.addActor(itemI[index]);   
             }
-             else if(i instanceof RedKey){
+             else if(i instanceof ItemRedKey){
  //               Gdx.app.log("ITEM", "4");
                 itemT[index] = TextureLoader.REDKEYTEXTURE;
                 itemI[index] = new Image(itemT[index]);

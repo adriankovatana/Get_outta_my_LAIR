@@ -52,10 +52,12 @@ public class DamageEntity extends Entity {
         if (entity instanceof Protagonist) {
             Protagonist bernard = (Protagonist) entity;
             if (bernard.getCX() == this.getCX() && bernard.getCY() == this.getCY()) {
-                bernard.takeDamage(this.damage);
-                Gdx.app.log(this.name, "Did " + this.damage + " to " + bernard.getName());
-//                this.setDead(true);
-//                this.turnFinished = true;
+                int adjustedDamage = this.damage - bernard.getDefense();
+                if (adjustedDamage < 1){
+                    adjustedDamage = 1;
+                }               
+                bernard.takeDamage(adjustedDamage);
+                Gdx.app.log(this.name, "Did " + adjustedDamage + " to " + bernard.getName());
             }
         } else if (entity instanceof Antagonist) {
             Antagonist enemy = (Antagonist) entity;

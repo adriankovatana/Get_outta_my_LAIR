@@ -49,6 +49,7 @@ public class GameScreen implements Screen {
         this.game = game;
     }
 
+    
     @Override
     public void render(float delta) {
         if (!paused) {
