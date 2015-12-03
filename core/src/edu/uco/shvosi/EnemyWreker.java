@@ -7,10 +7,10 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import java.util.List;
 
-public class Wanderer extends Antagonist {
+public class EnemyWreker extends Antagonist {
     
-    private Animation wanderWalk;
-    private Animation wanderAttack;
+    private Animation wrekerWalk;
+    private Animation wrekerAttack;
     private boolean moving = false;
     private boolean flip = false;
     private float elapsedTime;
@@ -20,42 +20,37 @@ public class Wanderer extends Antagonist {
     private String XorY;
     private int xdis;
     private int ydis;
-    private int damage = 5;
+    private int damage = 10;
     private boolean active = false;
+    private int [] directions;
+    private boolean moved = false;
     private DamageEntity melee;
-        
+    private int range;
+    
 
-    public Wanderer(int cX, int cY) {
-        super(Constants.EnemyType.WANDERER, TextureLoader.WANDERTEXTURE, cX, cY);
-        wanderWalk = TextureLoader.wanderWalk;
-        wanderAttack = TextureLoader.wanderAttack;
+    public EnemyWreker(int cX, int cY) {
+        super(Constants.EnemyType.WREKER, TextureLoader.WREKERTEXTURE, cX, cY);
+        this.name = "Wreker";
+        wrekerWalk = TextureLoader.wrekerWalk;
+        wrekerAttack = TextureLoader.wrekerAttack;
+        health = 70;
+        maxHealth = 70;
+        range = 1;
+        this.xpValue = 100;
+      
         this.damage = damage;
         melee = new DamageEntity(0,0,this.damage);
-        
-        this.name = "Wanderer";
-        
-        this.xpValue = 100;
-
     }
 
     @Override
     public void attackAction() {
         //Do Attack Stuffs?
-        if(!flip)
-        {
-           melee.setCX(this.cX + 1);
-           melee.setCY(this.cY);
-        }
-        else
-        {
-           melee.setCX(this.cX - 1);
-           melee.setCY(this.cY);
-        }
 
+        melee.setCX(bernardX);
+        melee.setCY(bernardY);
         melee.setDead(false);
         Map.miscEntityList.add(melee);
         this.addAction(this.finishTurn());
-        
     }
     
         @Override
@@ -72,30 +67,30 @@ public class Wanderer extends Antagonist {
             {
                 flip = false;
             }
-            if(Math.abs(xdis) >1 || Math.abs(ydis) >0){    
+            if(Math.abs(xdis) >1 ||Math.abs(ydis) >1){    
                 if (flip) {
-                    temp = wanderWalk.getKeyFrame(elapsedTime);
+                    temp = wrekerWalk.getKeyFrame(elapsedTime);
                     temp.flip(true, false);
                     batch.draw(temp, this.getX(),getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
                     temp.flip(true, false);
                 } else {
-                    batch.draw(wanderWalk.getKeyFrame(elapsedTime), this.getX(), this.getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
+                    batch.draw(wrekerWalk.getKeyFrame(elapsedTime), this.getX(), this.getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
                 }
-                if (wanderWalk.isAnimationFinished(elapsedTime)) {
+                if (wrekerWalk.isAnimationFinished(elapsedTime)) {
                     moving = false;
                     elapsedTime = 0f;
                 }
             }
-            if(Math.abs(xdis) <=1 && Math.abs(ydis) <=0){    
+            if(Math.abs(xdis) <=1 && Math.abs(ydis) <=1){    
                 if (flip) {
-                    temp = wanderAttack.getKeyFrame(elapsedTime);
+                    temp = wrekerAttack.getKeyFrame(elapsedTime);
                     temp.flip(true, false);
                     batch.draw(temp, this.getX(),getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
                     temp.flip(true, false);
                 } else {
-                    batch.draw(wanderAttack.getKeyFrame(elapsedTime), this.getX(), this.getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
+                    batch.draw(wrekerAttack.getKeyFrame(elapsedTime), this.getX(), this.getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
                 }
-                if (wanderAttack.isAnimationFinished(elapsedTime)) {
+                if (wrekerAttack.isAnimationFinished(elapsedTime)) {
                     moving = false;
                     elapsedTime = 0f;
                 }
@@ -104,7 +99,7 @@ public class Wanderer extends Antagonist {
     }
 
     
-    @Override
+       @Override
     public void calculateTurn(Constants.MapGridCode[][] mapGrid, Constants.EntityGridCode[][] entityGrid, List<Entity> entityList) {
         
         Constants.Direction d = Constants.Direction.NONE;
@@ -137,7 +132,7 @@ public class Wanderer extends Antagonist {
                 int distanceRight = 0;
                 int distanceLeft = 0;
                 
-                if(Math.abs(xdis)> 1 || Math.abs(ydis)> 0)//moves to attack position
+                if(Math.abs(xdis)> range || Math.abs(ydis)> range)//moves to attack position
                 {
                     if(Math.abs(xdis) > Math.abs(ydis))
                     {
@@ -148,7 +143,7 @@ public class Wanderer extends Antagonist {
                         XorY="Y";
                     }
                     
-                if("X".equals(XorY) && xdis > 1)//need to go left
+                if("X".equals(XorY) && xdis > range)//need to go left
                 {
                 for(distanceDown=0; distanceDown < 5; distanceDown++)//get shortest distance around verticle obstacle
                 {
@@ -192,7 +187,7 @@ public class Wanderer extends Antagonist {
                 }
             }//end try to go left
                     
-            if("X".equals(XorY) && xdis < 1)//need to go right
+            if("X".equals(XorY) && xdis < range)//need to go right
             {
                 for(distanceDown=0; distanceDown < 5; distanceDown++)//get shortest distance around verticle obstacle
                 {
@@ -236,7 +231,7 @@ public class Wanderer extends Antagonist {
                 }
                      
                 }//end go right
-                if("Y".equals(XorY) && ydis > 0)//need to go down
+                if("Y".equals(XorY) && ydis > range)//need to go down
                  {
                     for(distanceRight=0; distanceRight < 5; distanceRight++)//get shortest distance around verticle obstacle
                     {
@@ -280,7 +275,7 @@ public class Wanderer extends Antagonist {
                         }
                         
                 }//end down
-                if("Y".equals(XorY) && ydis < 0)//need to go up
+                if("Y".equals(XorY) && ydis < range)//need to go up
                 {
                     for(distanceRight=0; distanceRight < 5; distanceRight++)//get shortest distance around verticle obstacle
                     {
@@ -326,7 +321,7 @@ public class Wanderer extends Antagonist {
         }//end up
             this.setTurnAction(Constants.TurnAction.MOVE);
             }//end move to one spot away
-                if(Math.abs(xdis) <=1 && Math.abs(ydis) <=0)
+                if(Math.abs(xdis) <=range && Math.abs(ydis) <=range)
                 {
                    this.setTurnAction(Constants.TurnAction.ATTACK);
 
@@ -334,4 +329,9 @@ public class Wanderer extends Antagonist {
                  
             }//end if active
     }//end function
-}    
+
+    
+    @Override
+    public void collision(Entity entity) {
+    }
+}

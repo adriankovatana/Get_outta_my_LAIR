@@ -281,6 +281,8 @@ public class GameScreen implements Screen {
                 initNewLevel();
                 return;
             }
+            
+            
 
             //Check if dead
             for (int i = 0; i < map.getEntityList().size(); i++) {
@@ -440,13 +442,13 @@ public class GameScreen implements Screen {
     public void initNewLevel() {
         //Test Level
         if (level == 0) {
-            map = new Map(this.bernard, "maps/testmap.tmx");
+            map = new Map(this.bernard, "maps/map1.tmx");
             level = 1;
         } else if (level == 1) {
-            map = new Map(this.bernard, "maps/testmap2.tmx");
+            map = new Map(this.bernard, "maps/map2.tmx");
             level = 2;
         } else if (level == 2) {
-            map = new Map(this.bernard, "colemap/colemap.tmx");
+            map = new Map(this.bernard, "maps/map3.tmx");
             level = 0;
         }
         map.bernard.setCurrentMap(map.getMapGrid());

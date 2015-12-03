@@ -7,10 +7,11 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import java.util.List;
 
-public class Hammer extends Antagonist {
+public class EnemyWanderer extends Antagonist {
     
-    private Animation hammerWalk;
-    private Animation hammerAttack;
+    private Animation wanderWalk;
+    private Animation wanderAttack;
+    private boolean moving = false;
     private boolean flip = false;
     private float elapsedTime;
     private TextureRegion temp;
@@ -21,27 +22,25 @@ public class Hammer extends Antagonist {
     private int ydis;
     private int damage = 5;
     private boolean active = false;
-    private boolean moved = false;
     private DamageEntity melee;
-    private DamageEntity oneAway;
- 
+        
 
-    public Hammer(int cX, int cY) {
-        super(Constants.EnemyType.HAMMER, TextureLoader.HAMMERTETEXTURE, cX, cY);
-        this.name = "Hammer";
-        health = 30;
-        maxHealth = 30;
-        hammerWalk = TextureLoader.hammerWalk;
-        hammerAttack = TextureLoader.hammerAttack;
+    public EnemyWanderer(int cX, int cY) {
+        super(Constants.EnemyType.WANDERER, TextureLoader.WANDERTEXTURE, cX, cY);
+        wanderWalk = TextureLoader.wanderWalk;
+        wanderAttack = TextureLoader.wanderAttack;
         this.damage = damage;
         melee = new DamageEntity(0,0,this.damage);
-        oneAway = new DamageEntity(0,0,this.damage);
-        range = 2;
-        this.xpValue = 100;
+        
+        this.name = "Wanderer";
+        
+        this.xpValue = 25;
+
     }
 
     @Override
     public void attackAction() {
+        //Do Attack Stuffs?
         if(!flip)
         {
            melee.setCX(this.cX + 1);
@@ -54,13 +53,9 @@ public class Hammer extends Antagonist {
         }
 
         melee.setDead(false);
-        oneAway.setCX(bernardX);
-        oneAway.setCY(bernardY);
-        oneAway.setDead(false);
         Map.miscEntityList.add(melee);
-        Map.miscEntityList.add(oneAway);
-
         this.addAction(this.finishTurn());
+        
     }
     
         @Override
@@ -77,37 +72,37 @@ public class Hammer extends Antagonist {
             {
                 flip = false;
             }
-            if(Math.abs(xdis) >2 || Math.abs(ydis) >2){    
+            if(Math.abs(xdis) >1 || Math.abs(ydis) >0){    
                 if (flip) {
-                    temp = hammerWalk.getKeyFrame(elapsedTime);
+                    temp = wanderWalk.getKeyFrame(elapsedTime);
                     temp.flip(true, false);
                     batch.draw(temp, this.getX(),getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
                     temp.flip(true, false);
                 } else {
-                    batch.draw(hammerWalk.getKeyFrame(elapsedTime), this.getX(), this.getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
+                    batch.draw(wanderWalk.getKeyFrame(elapsedTime), this.getX(), this.getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
                 }
-                if (hammerWalk.isAnimationFinished(elapsedTime)) {
+                if (wanderWalk.isAnimationFinished(elapsedTime)) {
                     moving = false;
                     elapsedTime = 0f;
                 }
             }
-            if(Math.abs(xdis) <= 2 && Math.abs(ydis) <= 2){
-                batch.draw(TextureLoader.hammerDownSkill.getKeyFrame(elapsedTime), this.getX()-200, this.getY()-200, Constants.TILEDIMENSION*5 , Constants.TILEDIMENSION*5);
+            if(Math.abs(xdis) <=1 && Math.abs(ydis) <=0){    
                 if (flip) {
-                    temp = hammerAttack.getKeyFrame(elapsedTime);
+                    temp = wanderAttack.getKeyFrame(elapsedTime);
                     temp.flip(true, false);
                     batch.draw(temp, this.getX(),getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
                     temp.flip(true, false);
                 } else {
-                    batch.draw(hammerAttack.getKeyFrame(elapsedTime), this.getX(), this.getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
+                    batch.draw(wanderAttack.getKeyFrame(elapsedTime), this.getX(), this.getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
                 }
-                if (hammerAttack.isAnimationFinished(elapsedTime)) {
+                if (wanderAttack.isAnimationFinished(elapsedTime)) {
                     moving = false;
                     elapsedTime = 0f;
                 }
             }
         
-    }      
+    }
+
     
     @Override
     public void calculateTurn(Constants.MapGridCode[][] mapGrid, Constants.EntityGridCode[][] entityGrid, List<Entity> entityList) {
@@ -142,7 +137,7 @@ public class Hammer extends Antagonist {
                 int distanceRight = 0;
                 int distanceLeft = 0;
                 
-                if(Math.abs(xdis)> range || Math.abs(ydis)> range)//moves to attack position
+                if(Math.abs(xdis)> 1 || Math.abs(ydis)> 0)//moves to attack position
                 {
                     if(Math.abs(xdis) > Math.abs(ydis))
                     {
@@ -153,7 +148,7 @@ public class Hammer extends Antagonist {
                         XorY="Y";
                     }
                     
-                if("X".equals(XorY) && xdis > range)//need to go left
+                if("X".equals(XorY) && xdis > 1)//need to go left
                 {
                 for(distanceDown=0; distanceDown < 5; distanceDown++)//get shortest distance around verticle obstacle
                 {
@@ -197,7 +192,7 @@ public class Hammer extends Antagonist {
                 }
             }//end try to go left
                     
-            if("X".equals(XorY) && xdis < range)//need to go right
+            if("X".equals(XorY) && xdis < 1)//need to go right
             {
                 for(distanceDown=0; distanceDown < 5; distanceDown++)//get shortest distance around verticle obstacle
                 {
@@ -241,7 +236,7 @@ public class Hammer extends Antagonist {
                 }
                      
                 }//end go right
-                if("Y".equals(XorY) && ydis > range)//need to go down
+                if("Y".equals(XorY) && ydis > 0)//need to go down
                  {
                     for(distanceRight=0; distanceRight < 5; distanceRight++)//get shortest distance around verticle obstacle
                     {
@@ -285,7 +280,7 @@ public class Hammer extends Antagonist {
                         }
                         
                 }//end down
-                if("Y".equals(XorY) && ydis < range)//need to go up
+                if("Y".equals(XorY) && ydis < 0)//need to go up
                 {
                     for(distanceRight=0; distanceRight < 5; distanceRight++)//get shortest distance around verticle obstacle
                     {
@@ -331,7 +326,7 @@ public class Hammer extends Antagonist {
         }//end up
             this.setTurnAction(Constants.TurnAction.MOVE);
             }//end move to one spot away
-                if(Math.abs(xdis) <=range && Math.abs(ydis) <=range)
+                if(Math.abs(xdis) <=1 && Math.abs(ydis) <=0)
                 {
                    this.setTurnAction(Constants.TurnAction.ATTACK);
 
@@ -339,10 +334,4 @@ public class Hammer extends Antagonist {
                  
             }//end if active
     }//end function
-    
-    @Override
-    public void collision(Entity entity) {
-        
-    }
-}
-
+}    

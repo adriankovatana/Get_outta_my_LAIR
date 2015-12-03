@@ -884,6 +884,10 @@ public class Protagonist extends Entity {
     public void addDamage() {
         strengthMod *= 1.1f;
     }
+    
+    public void addDefense() {
+        defense += 1;
+    }
 
     void addInventory(Entity i) {
         inventory.add(i);

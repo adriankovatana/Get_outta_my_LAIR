@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import java.util.List;
 
-public class Suffragette extends Antagonist {
+public class EnemySuffragette extends Antagonist {
     private boolean moving = false;
     private boolean flip = false;
     private float elapsedTime;
@@ -26,7 +26,7 @@ public class Suffragette extends Antagonist {
  //   private int distance;
     
 
-    public Suffragette(int cX, int cY) {
+    public EnemySuffragette(int cX, int cY) {
         super(Constants.EnemyType.SUFFRAGETTE, TextureLoader.SUFFERTETEXTURE, cX, cY);
         this.name = "Suffragette";
         this.walkAnimation = TextureLoader.suffragetteWalk;

@@ -23,6 +23,11 @@
    <property name="Hammer" value="5"/>
   </properties>
  </tile>
+ <tile id="10">
+  <properties>
+   <property name="ENEMY" value="2"/>
+  </properties>
+ </tile>
  <tile id="16">
   <properties>
    <property name="Drunk" value="1"/>
@@ -33,6 +38,11 @@
   <properties>
    <property name="ENEMY" value="2"/>
    <property name="Suffragette" value="6"/>
+  </properties>
+ </tile>
+ <tile id="18">
+  <properties>
+   <property name="ENEMY" value="2"/>
   </properties>
  </tile>
  <tile id="24">
@@ -79,6 +89,11 @@
   <properties>
    <property name="ENEMY" value="2"/>
    <property name="Wreker" value="4"/>
+  </properties>
+ </tile>
+ <tile id="41">
+  <properties>
+   <property name="ENEMY" value="2"/>
   </properties>
  </tile>
 </tileset>

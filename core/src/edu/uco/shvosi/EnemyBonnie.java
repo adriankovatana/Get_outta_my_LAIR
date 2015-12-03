@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import java.util.List;
 
-public class Bonnie extends Antagonist {
+public class EnemyBonnie extends Antagonist {
     
     private Animation bonnieWalk;
     private Animation bonnieAttack;
@@ -25,7 +25,7 @@ public class Bonnie extends Antagonist {
     private DamageEntity melee;
         
 
-    public Bonnie(int cX, int cY) {
+    public EnemyBonnie(int cX, int cY) {
         super(Constants.EnemyType.BONNIE, TextureLoader.BONNIETEXTURE, cX, cY);
         bonnieWalk = TextureLoader.bonnieWalk;
         bonnieAttack = TextureLoader.bonnieAttack;

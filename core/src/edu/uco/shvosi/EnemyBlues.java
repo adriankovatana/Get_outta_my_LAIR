@@ -5,264 +5,97 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import java.util.List;
 
-public class Drunk extends Antagonist {
-
-    private Animation drunkWalk;
-    private Animation drunkAttack;
-    private Animation bottleFall;
-    private boolean moving = false;
+public class EnemyBlues extends Antagonist {
+    
     private boolean flip = false;
     private float elapsedTime;
     private TextureRegion temp;
-    private int bernardX;
-    private int bernardY;
-    private String XorY;
-    private int xdis;
-    private int ydis;
+    private int bernardX; 
+    private int bernardY; 
+    private String XorY; 
+    private int xdis; 
+    private int ydis; 
     private boolean active = false;
-    private DamageEntity bottleDamage;
-    private BottleSkill bottleSkill;
-    private int bottleX;
-    private int bottleY;
-        
-    public Drunk(int cX, int cY) {
-        super(Constants.EnemyType.DRUNK, TextureLoader.DRUNKTEXTURE, cX, cY);
-        drunkWalk = TextureLoader.drunkWalk;
-        drunkAttack = TextureLoader.drunkAttack;
-        bottleFall = TextureLoader.bottleSkill;
-        this.walkAnimation = TextureLoader.drunkWalk;
-        this.attackAnimation = TextureLoader.drunkAttack;
-        health = 30;
-        maxHealth = 30;
-        range = 2;
-        this.damage = 10;
-        BottleSkill bottle = new BottleSkill();
-        bottleDamage = new DamageEntity(0,0,this.damage);
-        bottleDamage.setDamage(damage);
-        this.attacking = false;
-        this.name = "Drunk";
-        
+    private BluesSkill bluesSkill;
+    private int enemyX;
+    private int enemyY;
+    private DamageEntity blueDamage;
+    
+    
+    public EnemyBlues(int cX, int cY) {
+        super(Constants.EnemyType.BLUES, TextureLoader.BLUESTEXTURE, cX, cY);
+        this.name = "Blues";
+        this.walkAnimation = TextureLoader.blueWalk;
+        BluesSkill bluesSkill = new BluesSkill();
+        this.range = 3;
+        this.damage = 1;
+        blueDamage = new DamageEntity(0,0,this.damage);
+        this.xpValue = 100;
+
     }
 
     @Override
     public void attackAction() {
-        //Do Attack Stuffs?
-        int random;
-        random = (int) (Math.random() * 51);
-        switch (random % 32) {
-//            case 1:
-//                bottleDamage.setCX(this.cX -range);
-//                bottleDamage.setCY(this.cY + range);
-//                bottleX = -200;
-//                bottleY= 200;
-//                break;
-//            case 2:
-//                bottleDamage.setCX(this.cX - range/range);
-//                bottleDamage.setCY(this.cY + range);
-//                bottleX = -100;
-//                bottleY= 200;
-//                break;
-//            case 3:
-//                bottleDamage.setCX(this.cX);
-//                bottleDamage.setCY(this.cY + range);
-//                bottleX = 0;
-//                bottleY= 200;
-//                break;
-//            case 4:
-//                bottleDamage.setCX(this.cX + range/range);
-//                bottleDamage.setCY(this.cY + range);
-//                bottleX = 100;
-//                bottleY= 200;
-//                break;
-//            case 5:
-//                bottleDamage.setCX(this.cX + range);
-//                bottleDamage.setCY(this.cY + range);
-//                bottleX = 200;
-//                bottleY= 200;                
-//                break;
-//            case 6:
-//                bottleDamage.setCX(this.cX + range);
-//                bottleDamage.setCY(this.cY + range/range);           
-//                bottleX = 200;
-//                bottleY= 100;
-//                break;
-//            case 7:
-//                bottleDamage.setCX(this.cX + range);
-//                bottleDamage.setCY(this.cY);           
-//                bottleX = 200;
-//                bottleY= 0;
-//                break;
-//            case 8:
-//                bottleDamage.setCX(this.cX + range);
-//                bottleDamage.setCY(this.cY + range/range);           
-//                bottleX = 200;
-//                bottleY= 100;
-//                break;
-//            case 9:
-//                bottleDamage.setCX(this.cX + range);
-//                bottleDamage.setCY(this.cY - range);
-//                bottleX = 200;
-//                bottleY= -200;
-//                break;
-//            case 10:
-//                bottleDamage.setCX(this.cX + range/range);
-//                bottleDamage.setCY(this.cY - range);           
-//                bottleX = 100;
-//                bottleY= -200;                break;
-//            case 11:
-//                bottleDamage.setCX(this.cX);
-//                bottleDamage.setCY(this.cY - range);           
-//                bottleX = 0;
-//                bottleY= -200;
-//                break;
-//            case 12:
-//                bottleDamage.setCX(this.cX - range/range);
-//                bottleDamage.setCY(this.cY - range);           
-//                bottleX = -100;
-//                bottleY= -200;
-//                break;
-//            case 13:
-//                bottleDamage.setCX(this.cX -range);
-//                bottleDamage.setCY(this.cY - range);
-//                bottleX = -200;
-//                bottleY= -200;
-//                break;
-//            case 14:
-//                bottleDamage.setCX(this.cX - range);
-//                bottleDamage.setCY(this.cY + range/range);           
-//                bottleX = -200;
-//                bottleY= 100;
-//                break;
-//            case 15:
-//                bottleDamage.setCX(this.cX - range);
-//                bottleDamage.setCY(this.cY);           
-//                bottleX = -200;
-//                bottleY= 0;
-//                break;
-//            case 16:
-//                bottleDamage.setCX(this.cX - range);
-//                bottleDamage.setCY(this.cY + range/range);
-//                bottleX = -200;
-//                bottleY= 100;
-//                break;   
-            case 1:
-                bottleDamage.setCX(this.cX -range/range);
-                bottleDamage.setCY(this.cY + range/range);
-                bottleX = -100;
-                bottleY= 100;
-                break;
-            case 2:
-                bottleDamage.setCX(this.cX );
-                bottleDamage.setCY(this.cY + range/range);
-                bottleX = 0;
-                bottleY= 100;
-                break;
-            case 3:
-                bottleDamage.setCX(this.cX + range/range);
-                bottleDamage.setCY(this.cY + range/range);
-                bottleX = 100;
-                bottleY= 100;
-                break;
-            case 4:
-                bottleDamage.setCX(this.cX + range/range);
-                bottleDamage.setCY(this.cY );
-                bottleX = 100;
-                bottleY= 0;
-                break;
-            case 5:
-                bottleDamage.setCX(this.cX + range/range);
-                bottleDamage.setCY(this.cY - range/range);
-                bottleX = 100;
-                bottleY= -100;                
-                break;
-            case 6:
-                bottleDamage.setCX(this.cX);
-                bottleDamage.setCY(this.cY - range/range);           
-                bottleX = 0;
-                bottleY= -100;
-                break;
-            case 7:
-                bottleDamage.setCX(this.cX - range/range);
-                bottleDamage.setCY(this.cY - range/range);           
-                bottleX = -100;
-                bottleY= -100;
-                break;
-            case 8:
-                bottleDamage.setCX(this.cX - range/range);
-                bottleDamage.setCY(this.cY);           
-                bottleX = -100;
-                bottleY= 0;
-                break;                
-            default:
-                bottleDamage.setCX(this.bernardX);
-                bottleDamage.setCY(this.bernardY); 
-                bottleX = -(xdis*100);
-                bottleY = -(ydis*100);
-                break;                
-        }//end switch
-        bottleDamage.setDead(false);
-        Map.miscEntityList.add(bottleDamage);
+        blueDamage.setCX(bernardX);
+        blueDamage.setCY(bernardY);
+        blueDamage.setDamage(this.damage);
+        blueDamage.setDead(false);
+        Map.miscEntityList.add(blueDamage);
         this.addAction(this.finishTurn());
     }
-
+    
     @Override
     public void draw(Batch batch, float alpha) {
         super.draw(batch, alpha);
-
-        elapsedTime += Gdx.graphics.getDeltaTime();        
- 
-        if(!attacking){
-            if (flip) {
-                temp = drunkWalk.getKeyFrame(elapsedTime);
-                temp.flip(true, false);
-                batch.draw(temp, this.getX(), getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
-                temp.flip(true, false);
-            } else {
-                batch.draw(drunkWalk.getKeyFrame(elapsedTime), this.getX(), this.getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
-            }
-            if (drunkWalk.isAnimationFinished(elapsedTime)) {
-                moving = false;
-                elapsedTime = 0f;
-            }
-        }
                 
-        if(attacking){
-            batch.draw(drunkAttack.getKeyFrame(elapsedTime), this.getX(), this.getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
-            
-            //batch.draw(TextureLoader.hammerDownSkill.getKeyFrame(elapsedTime), bernardX, bernardY, Constants.TILEDIMENSION, Constants.TILEDIMENSION);
+                                 
+                elapsedTime += Gdx.graphics.getDeltaTime();
+           //if(random == 0)
+           //{
+                if (flip) {
+                    temp = this.walkAnimation.getKeyFrame(elapsedTime);
+                    temp.flip(true, false);
+                    batch.draw(temp, this.getX(),getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
+                    temp.flip(true, false);
+                    
+                } else {
+                    batch.draw(this.walkAnimation.getKeyFrame(elapsedTime), this.getX(), this.getY(), Constants.TILEDIMENSION , Constants.TILEDIMENSION);
+                }
+                TextureLoader.blueSkill.setFrameDuration(0.5f);
+                
+                
+                //bluesSkill.draw(batch, alpha, this);
+                
+                //batch.draw(this.bluesSkill.animation.getKeyFrame(elapsedTime), this.cX, this.cY, Constants.TILEDIMENSION*3 , Constants.TILEDIMENSION*3);
+                batch.draw(TextureLoader.blueSkill.getKeyFrame(elapsedTime), this.getX()-150, this.getY()-150, Constants.TILEDIMENSION*4 , Constants.TILEDIMENSION*4);
 
-            if (drunkAttack.isAnimationFinished(elapsedTime)) {
-                TextureLoader.bottleSkill.setFrameDuration(0.15f);
-                batch.draw(bottleFall.getKeyFrame(elapsedTime),this.getX() + bottleX, this.getY() + bottleY, Constants.TILEDIMENSION, Constants.TILEDIMENSION);
-            }
-            if(bottleFall.isAnimationFinished(elapsedTime)){
-                moving = false;
-                attacking = false;
-                elapsedTime = 0f;
-            }
-        }
-        
 
     }
 
-    @Override
+@Override
     public void calculateTurn(Constants.MapGridCode[][] mapGrid, Constants.EntityGridCode[][] entityGrid, List<Entity> entityList) {
-        
+
         int random = 0;
-        int tries = 0;
         Constants.Direction d = Constants.Direction.NONE;
-        
-//        getBluesCount(entityList);
-//        damage = damage + bluesCount;
 
         for (int i = 0; i < entityList.size(); i++) {
             if (entityList.get(i).getGridCode() == Constants.EntityGridCode.PLAYER) {
                 bernardX = entityList.get(i).getCX();
                 bernardY = entityList.get(i).getCY();
                 break;
+            }
+        }
+        damage = 1;
+        for (int i = 0; i < entityList.size(); i++) {
+            if (entityList.get(i).getGridCode() == Constants.EntityGridCode.ENEMY) {
+                enemyX = entityList.get(i).getCX();
+                enemyY = entityList.get(i).getCY();
+                if(Math.abs(this.getCX() - enemyX) < range && Math.abs(this.getCY() - enemyY) < range)
+                   {damage = damage * 2;}
             }
         }
 
@@ -272,45 +105,42 @@ public class Drunk extends Antagonist {
             active = true;
         }
         if (active) {
-            //System.out.println(Math.abs(xdis) + " " + Math.abs(ydis));
-            if (Math.abs(xdis) < range && Math.abs(ydis) < range) {
-                while (!canMove(d, mapGrid, entityGrid)) {
+            if (Math.abs(xdis) <= range && Math.abs(ydis) <= range) {
+                if(this.damage == 2){
+                    int tries = 0;
+                    while (tries < 5) {
                     random = (int) (Math.random() * entityGrid.length);
-                    switch (random % 16) {
+                    switch (random % 4) {
                         case 1:
-                            d = Constants.Direction.UP;
+                            if(this.canMove(Constants.Direction.UP,mapGrid,entityGrid))
+                                {d = Constants.Direction.UP;}
                             break;
                         case 2:
-                            d = Constants.Direction.DOWN;
+                            if(this.canMove(Constants.Direction.DOWN,mapGrid,entityGrid))
+                                {d = Constants.Direction.DOWN;}
                             break;
                         case 3:
-                            d = Constants.Direction.LEFT;
-                            flip = true;
+                            if(this.canMove(Constants.Direction.UP,mapGrid,entityGrid))
+                                {d = Constants.Direction.LEFT;}
+                                flip = true;
                             break;
                         case 4:
-                            d = Constants.Direction.RIGHT;
-                            flip = false;
+                            if(this.canMove(Constants.Direction.UP,mapGrid,entityGrid))
+                                {d = Constants.Direction.RIGHT;}
+                                flip = false;
                             break;
-			default:
-                            //this.setTurnAction(Constants.TurnAction.ATTACK);
-                            tries = 5;
-                            break;
-                    }
-                      
-                    tries++;
-                    if(tries > 5){
-                        this.setTurnAction(Constants.TurnAction.ATTACK);
-                        attacking = true;
-                        return;
-                    }
+                        default:
+                            d = Constants.Direction.NONE;                           
+                    }//end switch
+                    tries ++;
                 }//end while
-            if(tries <= 5)
-            {
                 this.setTurnAction(Constants.TurnAction.MOVE);
-            }
+                }//end damage < 2
+                else{
+                    this.setTurnAction(Constants.TurnAction.ATTACK);
+                    }
             }//end in range
-            
-           else if (Math.abs(xdis) > range || Math.abs(ydis) > range) {
+            else if (Math.abs(xdis) > range || Math.abs(ydis) > range) {
 
                 int distanceDown = 0;
                 int distanceUp = 0;
@@ -502,15 +332,14 @@ public class Drunk extends Antagonist {
                         }
                        
                 }//end up
-            this.setTurnAction(Constants.TurnAction.MOVE);
-            }//end out of range
+                this.setTurnAction(Constants.TurnAction.MOVE);
+            }
         }//end if active
     }
-
+    
     @Override
-    public void moveAction() {
-        super.moveAction();
-        moving = true;
-
+    public void dispose() {
+        super.dispose();
+        //bluesSkill.dispose();
     }
 }
