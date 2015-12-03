@@ -83,6 +83,7 @@ public class Protagonist extends Entity {
     static Entity active = null;
     protected int sightRadius;
     int defense = 0;
+    Constants.EntityGridCode[][] entityGrid;
 
     public Protagonist(int cX, int cY) {
         super(Constants.EntityGridCode.PLAYER, TextureLoader.BERNARDTEXTURE, cX, cY);
@@ -383,7 +384,7 @@ public class Protagonist extends Entity {
     }
 
     public int getMaxHealth() {
-        return this.maxHealth;
+        return maxHealth;
     }
 
     public float getHealthPercentage() {
@@ -893,6 +894,10 @@ public class Protagonist extends Entity {
         inventory.add(i);
         index++;
     }
+    
+    public void setHealth(int health){
+        this.health = health;
+    }
 
     static ArrayList<Entity> getInventory() {
         return inventory;
@@ -928,17 +933,29 @@ public class Protagonist extends Entity {
             redLaserCooldown = 0;
             removeItem();
         } else if (active instanceof ItemGreyKey) {
-            if (GreyGate.isCollision(this)) {
+            if (entityGrid[this.getCX()][this.getCY() + 1] == Constants.EntityGridCode.GREYGATE) {
                 Map.miscEntityList.add(new DamageEntity(this.getCX() + 1, this.getCY() + 1, 100000));
                 Map.miscEntityList.add(new DamageEntity(this.getCX() - 1, this.getCY() + 1, 100000));
                 Map.miscEntityList.add(new DamageEntity(this.getCX(), this.getCY() + 1, 100000));
                 removeItem();
             }
+            else if(entityGrid[this.getCX()][this.getCY() - 1] == Constants.EntityGridCode.GREYGATE){
+                Map.miscEntityList.add(new DamageEntity(this.getCX() + 1, this.getCY() - 1, 100000));
+                Map.miscEntityList.add(new DamageEntity(this.getCX() - 1, this.getCY() - 1, 100000));
+                Map.miscEntityList.add(new DamageEntity(this.getCX(), this.getCY() - 1, 100000));
+                removeItem();
+            }
         } else if (active instanceof ItemRedKey) {
-            if (RedGate.isCollision(this)) {
+            if (entityGrid[this.getCX()][this.getCY() + 1] == Constants.EntityGridCode.REDGATE) {
                 Map.miscEntityList.add(new DamageEntity(this.getCX() + 1, this.getCY() + 1, 100000));
                 Map.miscEntityList.add(new DamageEntity(this.getCX() - 1, this.getCY() + 1, 100000));
                 Map.miscEntityList.add(new DamageEntity(this.getCX(), this.getCY() + 1, 100000));
+                removeItem();
+            }
+            else if (entityGrid[this.getCX()][this.getCY() - 1] == Constants.EntityGridCode.REDGATE) {
+                Map.miscEntityList.add(new DamageEntity(this.getCX() + 1, this.getCY() - 1, 100000));
+                Map.miscEntityList.add(new DamageEntity(this.getCX() - 1, this.getCY() - 1, 100000));
+                Map.miscEntityList.add(new DamageEntity(this.getCX(), this.getCY() - 1, 100000));
                 removeItem();
             }
         }
@@ -1009,5 +1026,9 @@ public class Protagonist extends Entity {
         for (Skill s : skills.values()) {
             s.dispose();
         }
+    }
+    
+    public void setEntityGrid(Constants.EntityGridCode[][] entityGrid) {
+        this.entityGrid = entityGrid;
     }
 }

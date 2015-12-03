@@ -33,7 +33,7 @@ public class SlideTile extends Trap {
                     bernard.slideCounter = 0;
                     bernard.slideCounter++;
                     bernard.slideDirection = this.direction;
-                    //bernard.seqAction.addAction(bernard.normalMoveToAction());
+                    bernard.seqAction.addAction(bernard.normalMoveToAction());
                     this.sound.play(Constants.MASTERVOLUME);
                 } else if (bernard.slideDirection != this.direction) {
                     bernard.setSliding(true);

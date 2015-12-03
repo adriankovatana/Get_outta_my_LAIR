@@ -20,7 +20,7 @@ public class EnemyWreker extends Antagonist {
     private String XorY;
     private int xdis;
     private int ydis;
-    private int damage = 10;
+    private int damage = 9;
     private boolean active = false;
     private int [] directions;
     private boolean moved = false;
@@ -36,7 +36,7 @@ public class EnemyWreker extends Antagonist {
         health = 70;
         maxHealth = 70;
         range = 1;
-        this.xpValue = 100;
+        this.xpValue = 50;
       
         this.damage = damage;
         melee = new DamageEntity(0,0,this.damage);

@@ -11,6 +11,12 @@
    <property name="PLAYER" value="1"/>
   </properties>
  </tile>
+ <tile id="2">
+  <properties>
+   <property name="Fountain" value="11"/>
+   <property name="ITEM" value="3"/>
+  </properties>
+ </tile>
  <tile id="8">
   <properties>
    <property name="CatLady" value="0"/>
@@ -25,6 +31,7 @@
  </tile>
  <tile id="10">
   <properties>
+   <property name="Bonnie" value="7"/>
    <property name="ENEMY" value="2"/>
   </properties>
  </tile>
@@ -42,6 +49,7 @@
  </tile>
  <tile id="18">
   <properties>
+   <property name="Clyde" value="8"/>
    <property name="ENEMY" value="2"/>
   </properties>
  </tile>
@@ -53,15 +61,13 @@
  </tile>
  <tile id="25">
   <properties>
-   <property name="ENEMY" value="2"/>
-   <property name="GreyGate" value="7"/>
+   <property name="GREYGATE" value="0"/>
    <property name="Left" value="0"/>
   </properties>
  </tile>
  <tile id="26">
   <properties>
-   <property name="ENEMY" value="2"/>
-   <property name="GreyGate" value="7"/>
+   <property name="GREYGATE" value="0"/>
    <property name="Right" value="1"/>
   </properties>
  </tile>
@@ -73,15 +79,13 @@
  </tile>
  <tile id="33">
   <properties>
-   <property name="ENEMY" value="2"/>
    <property name="Left" value="0"/>
-   <property name="RedGate" value="8"/>
+   <property name="REDGATE" value="8"/>
   </properties>
  </tile>
  <tile id="34">
   <properties>
-   <property name="ENEMY" value="2"/>
-   <property name="RedGate" value="8"/>
+   <property name="REDGATE" value="8"/>
    <property name="Right" value="1"/>
   </properties>
  </tile>
@@ -93,6 +97,13 @@
  </tile>
  <tile id="41">
   <properties>
+   <property name="ENEMY" value="2"/>
+   <property name="Moonshiner" value="9"/>
+  </properties>
+ </tile>
+ <tile id="42">
+  <properties>
+   <property name="Cat" value="10"/>
    <property name="ENEMY" value="2"/>
   </properties>
  </tile>

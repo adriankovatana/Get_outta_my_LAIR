@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import java.util.List;
 
-public class CatAttack extends Antagonist {
+public class EnemyCat extends Antagonist {
     
     private Animation catWalk;
     private Animation catAttack;
@@ -28,8 +28,8 @@ public class CatAttack extends Antagonist {
     private DamageEntity self;
         
 
-    public CatAttack(int cX, int cY) {
-        super(Constants.EnemyType.CATATTACK, TextureLoader.CATTEXTURE, cX, cY);
+    public EnemyCat(int cX, int cY) {
+        super(Constants.EnemyType.CAT, TextureLoader.CATTEXTURE, cX, cY);
         this.name = "CatAttack";
         catWalk = TextureLoader.catWalk;
         catAttack = TextureLoader.catWalk;

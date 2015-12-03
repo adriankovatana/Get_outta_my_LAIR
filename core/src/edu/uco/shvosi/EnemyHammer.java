@@ -19,7 +19,7 @@ public class EnemyHammer extends Antagonist {
     private String XorY;
     private int xdis;
     private int ydis;
-    private int damage = 5;
+    private int damage = 7;
     private boolean active = false;
     private boolean moved = false;
     private DamageEntity melee;
@@ -37,7 +37,7 @@ public class EnemyHammer extends Antagonist {
         melee = new DamageEntity(0,0,this.damage);
         oneAway = new DamageEntity(0,0,this.damage);
         range = 2;
-        this.xpValue = 100;
+        this.xpValue = 50;
     }
 
     @Override

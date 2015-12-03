@@ -31,6 +31,12 @@
    <property name="Whistle" value="2"/>
   </properties>
  </tile>
+ <tile id="17">
+  <properties>
+   <property name="Defense" value="7"/>
+   <property name="ITEM" value="3"/>
+  </properties>
+ </tile>
  <tile id="24">
   <properties>
    <property name="GreyKey" value="3"/>

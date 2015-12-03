@@ -449,8 +449,20 @@ public class GameScreen implements Screen {
             level = 2;
         } else if (level == 2) {
             map = new Map(this.bernard, "maps/map3.tmx");
+            level = 3;
+        } else if (level == 3) {
+            map = new Map(this.bernard, "maps/map4.tmx");
+            level = 4;
+        }
+        else if (level == 4) {
+            map = new Map(this.bernard, "maps/map5.tmx");
+            level = 5;
+        }
+        else if (level == 5) {
+            map = new Map(this.bernard, "maps/map6.tmx");
             level = 0;
         }
+
         map.bernard.setCurrentMap(map.getMapGrid());
         activeEntity = bernard;
 

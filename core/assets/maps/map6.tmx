@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="63" height="63" tilewidth="100" tileheight="100" nextobjectid="12">
+ <tileset firstgid="1" source="../colemap/Traps.tsx"/>
+ <tileset firstgid="49" source="Map.tsx"/>
+ <tileset firstgid="145" source="Items.tsx"/>
+ <tileset firstgid="193" name="Characters" tilewidth="100" tileheight="100" tilecount="48">
+  <image source="EntitySheet.png" width="800" height="600"/>
+  <tile id="0">
+   <properties>
+    <property name="NONE" value="0"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="PLAYER" value="1"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="Fountain" value="11"/>
+    <property name="ITEM" value="3"/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="CatLady" value="0"/>
+    <property name="ENEMY" value="2"/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="ENEMY" value="2"/>
+    <property name="Hammer" value="5"/>
+   </properties>
+  </tile>
+  <tile id="10">
+   <properties>
+    <property name="Bonnie" value="7"/>
+    <property name="ENEMY" value="2"/>
+   </properties>
+  </tile>
+  <tile id="16">
+   <properties>
+    <property name="Drunk" value="1"/>
+    <property name="ENEMY" value="2"/>
+   </properties>
+  </tile>
+  <tile id="17">
+   <properties>
+    <property name="ENEMY" value="2"/>
+    <property name="Suffragette" value="6"/>
+   </properties>
+  </tile>
+  <tile id="18">
+   <properties>
+    <property name="Clyde" value="8"/>
+    <property name="ENEMY" value="2"/>
+   </properties>
+  </tile>
+  <tile id="24">
+   <properties>
+    <property name="ENEMY" value="2"/>
+    <property name="Wanderer" value="2"/>
+   </properties>
+  </tile>
+  <tile id="25">
+   <properties>
+    <property name="GREYGATE" value="0"/>
+    <property name="Left" value="0"/>
+   </properties>
+  </tile>
+  <tile id="26">
+   <properties>
+    <property name="GREYGATE" value="0"/>
+    <property name="Right" value="1"/>
+   </properties>
+  </tile>
+  <tile id="32">
+   <properties>
+    <property name="Blues" value="3"/>
+    <property name="ENEMY" value="2"/>
+   </properties>
+  </tile>
+  <tile id="33">
+   <properties>
+    <property name="Left" value="0"/>
+    <property name="REDGATE" value="8"/>
+   </properties>
+  </tile>
+  <tile id="34">
+   <properties>
+    <property name="REDGATE" value="8"/>
+    <property name="Right" value="1"/>
+   </properties>
+  </tile>
+  <tile id="40">
+   <properties>
+    <property name="ENEMY" value="2"/>
+    <property name="Wreker" value="4"/>
+   </properties>
+  </tile>
+  <tile id="41">
+   <properties>
+    <property name="ENEMY" value="2"/>
+    <property name="Moonshiner" value="9"/>
+   </properties>
+  </tile>
+  <tile id="42">
+   <properties>
+    <property name="Cat" value="10"/>
+    <property name="ENEMY" value="2"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Map" width="63" height="63">
+  <data encoding="base64" compression="zlib">
+   eJztm1lP3DAQgPOX+kwfeSvQA9pCLxZIRUsphR4qLaCqy4LE8aM7UWUpsmY8R4jHyfLwSZsD2188Y1tOOK6q6ljBrFA0Dlaaem4zMRPUd5PZ/UEmZsL6PNwnGd3jGPd25/qJys1wfRlYAR4DTwbi/hR4pnCPczRcfw68AF4C60p3r7FuA3ilcKfi5C3wDtgEamA3UR42Bnq4Yx5fDO4xn5hnGcDmg1zun5H2LArctc8ileOBgwL6XeKqdY9jPFWvl/sqsJZw3Te6a55pLvdHwFKr7tfAmw79vgA8HIg7lY9ad27e0vydlzs1f8fHsQO3jufK8Rjn4zbUrXOavLXeV1LMW8esMblPO9JlHMntHudh0/5rI1OkXCr/S3CPadr/18g0Ue69exnuVFu6undZJ+Ryp+bxeXDvK+aH7k7RdqSg1odDcE/NYcE9dc8QxrpQ5wRp57kRyhtbR5TgTvWP1pvrV0kc3Lvnc6fafFfumvNjcefGe+z8WNylse7pTvVL3+7YPv5Yxzoqzxt25sQ9jjOPfufG4b7cm98fnd25cbhPdyrePGK+RtrIETsP1R3L9zg/uf177b5+Ce6a8TgwIX5b5vWS3Kl+7Eqop3nf/A34DvwADgtyl+aCFKyeE+AUOCus3zl37fd1VP5j36Z4u1PPQvqMuuTEPLp/KNSdy19LvrepW9dzu0v3U7l5Xfv+rc2+kzsX25JYryvcRRsnpbq/Z/y5clKxkdvdmqdYHGwL3FPPJ7e7NU/D8Y6y30tyx9qyaOj3I+BrVE6NeEnmilLznTr+BfxOlJNa610Al8CVk7vWNRzHe42WmI/vz+1ueV/aPg7fmh4M0F0a81Ik7tg33CW4a9dvlnVc4KezuzY272qMbPgzx+6BXWd36RwszW+Ne/hfldzu2n1Y6b4MNX9sRd7breveY11fBPej6v86cA+5Pnb3sA70fA9bIhaXfwWfSD0=
+  </data>
+ </layer>
+ <layer name="Entities" width="63" height="63" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJztm71y2zAMx3ketTXdMmrL4ypbk6ndmq2P4G5Jpl6ntlPbqc1L1Lwj7lAYIECKFGjHvzucFUaW+BcIgh9yCBcu2LhNnx9R2XKw62RzsivBLCzo+JrYXFvxDjyEdtpfmLKdcO63msoOStT9GI71S9rvk23NPn0+d7i2pP2BlHtpLwFitzZeo/Z7YiH4a/9acC6n/SXwMY6J2nF/MYr2NUB8W6G+P2XtEc3nmFPV/sW7Ao2A/D3CfRbl/63ZBTnnWpiS9b5PD7y0/zrY7xX3bYFVu5TPp3A8RgfDzwTuI42FPxzsXUnFG7BWe0431Z6bB8Tr3pRUvAG94tAaC7ger1X7XHh+b6Sc88nwHa4fyGmLz3+kubyk/a9QDnP/iBb/FE+/l7bR1tf39DtXt5pxlvSdEf0OdcVjzoV81lyPMrLfezOi3yNxnfAuHbeao0X/4zVObS7j7XdYK82ty4KOCPTf3LiOru++D/kYGi2/R6I/sD48Lt+hMm3NWlvf8/C7pS1O4X+d+BnE/12hMglNu4ff6ZiWm4NM6DzwD/b3jrlOTT229nuJ9jkct4Epla/VfhPG9zscQ59H2wSlZB1/NL9DX46147+1Nj/iniNA11No30f9zuWzFvHugbaeQrVz+R7rPydoDsfxjts7HNdA9yVHQfI12JtkWn7XOKf991NAG9dpfD/Yj8rveu9taTkO2Hq/aAus2s8Rqp3GQKt2OeIzLcnLa56Dpt0j9mvbvLQXJZnWp3rkeE27VGdpfJvTzuGZ1y3zOC4mSsewpxDvr1E7HqdatJcyqvbce7I12n8yZSNq17Bo57RScu9nvF1TwY6U+v1JKM+9n+GlXRun91yTgDgYxe/cmpWm/U/lvby1azmtZT9P+1J4zvtknxvcp7ROJdqXYJvP0vbDaY/siW2JNs6u9bs0ZrpoP8ZDO62jNAexzFXu0HVK54ejap+Zcm2epmm3/MaiN1qbtrZ5rc/k/M79jmpLPLV7k9trwnk4tz9heZ9m7Vp4D7R9l4hFewvOcR18C/4BPxd0XA==
+  </data>
+ </layer>
+ <layer name="ThinFog" width="63" height="63">
+  <data encoding="base64" compression="zlib">
+   eJztw0ENAAAMA6GzVv+mZmMPSFg1VVVVVVVVVVVVVVVVVVVVXzyD2e/v
+  </data>
+ </layer>
+ <layer name="ThickFog" width="63" height="63">
+  <data encoding="base64" compression="zlib">
+   eJztw0ENAAAMA6GzVf/GZmMPSFg1VVVVVVVVVVVVVVVVVVVVXzy6QXPn
+  </data>
+ </layer>
+</map>

@@ -6,8 +6,8 @@ import java.util.List;
 
 public class GreyGate extends Antagonist {
     
-    private static int x;
-    private static int y;
+    private int x;
+    private int y;
 
     public GreyGate(int cX, int cY, Constants.Direction direction) {
         super(Constants.EnemyType.GREYGATE, TextureLoader.GREYGATELTEXTURE, cX, cY);
@@ -31,19 +31,19 @@ public class GreyGate extends Antagonist {
         
     }
     
-
-    public static boolean isCollision(Entity entity) {
+/*
+    public boolean isCollision(Entity entity) {
         if (entity instanceof Protagonist) {
             Protagonist bernard = (Protagonist) entity;
             Integer xCoordinate = bernard.getCX();
             Integer yCoordinate = bernard.getCY() + 1;
-            if ((xCoordinate == GreyGate.x && yCoordinate == GreyGate.y)|| (xCoordinate == GreyGate.x - 1 && yCoordinate == GreyGate.y)) {
+            if ((xCoordinate == this.x && yCoordinate == this.y)|| (xCoordinate == this.x - 1 && yCoordinate == this.y)) {
                 return true;
             }
         }
         return false;
     }
-    
+*/    
     @Override
     public void takeDamage(int damage){
         if(damage == 100000){

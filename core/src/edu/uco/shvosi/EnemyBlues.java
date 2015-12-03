@@ -34,7 +34,7 @@ public class EnemyBlues extends Antagonist {
         this.range = 3;
         this.damage = 1;
         blueDamage = new DamageEntity(0,0,this.damage);
-        this.xpValue = 100;
+        this.xpValue = 25;
 
     }
 

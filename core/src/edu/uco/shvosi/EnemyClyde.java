@@ -20,7 +20,7 @@ public class EnemyClyde extends Antagonist {
     private String XorY;
     private int xdis;
     private int ydis;
-    private int damage = 5;
+    private int damage = 12;
     private boolean active = false;
     private DamageEntity melee;
         
@@ -30,6 +30,8 @@ public class EnemyClyde extends Antagonist {
         clydeWalk = TextureLoader.clydeWalk;
         clydeAttack = TextureLoader.clydeAttack;
         this.damage = damage;
+        super.xpValue = 120;
+        this.health = 120; 
         melee = new DamageEntity(0,0,this.damage);
         
         this.name = "Clyde";

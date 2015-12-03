@@ -120,8 +120,12 @@ public class BossMoonshiner extends Antagonist {
 
         if (blocked == null) {
             blocked = new int[mapGrid[0].length * mapGrid.length][2];
-            for (int i = 0; i < mapGrid[0].length - 1; i++) {
-                for (int j = 0; j < mapGrid.length - 1; j++) {
+
+            Gdx.app.log("with 0 it is ", Integer.toString(mapGrid[0].length));
+            Gdx.app.log("without 0 it is ", Integer.toString(mapGrid.length));
+            
+            for (int i = 0; i < mapGrid.length - 10; i++) {
+                for (int j = 0; j < mapGrid[0].length - 10; j++) {
                     if (mapGrid[i][j] != MapGridCode.FLOOR) {
                         blocked[blockedCount][0] = i;
                         blocked[blockedCount][1] = j;
@@ -138,7 +142,7 @@ public class BossMoonshiner extends Antagonist {
                 }
             }
         }
-        nextCell = AStar.test(0, mapGrid[0].length, mapGrid.length, bernardX, bernardY, this.cX, this.cY, blocked);
+        nextCell = AStar.test(0, mapGrid[0].length - 1, mapGrid.length -1, bernardX, bernardY, this.cX, this.cY, blocked);
         xdis = bernardX - this.cX;
         ydis = bernardY - this.cY;
         blocked = null;

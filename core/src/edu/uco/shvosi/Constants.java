@@ -7,7 +7,7 @@ public class Constants {
     public static final int TILEDIMENSION = 100;
     public static final int SCREENWIDTH = 1024;
     public static final int SCREENHEIGHT = 576;
-    public static final float MOVEACTIONDURATION = 0.2f;
+    public static final float MOVEACTIONDURATION = 0.15f;
     public static float MASTERVOLUME = 0.0f;
 
     public static final int SKILLONEREQ = 1;
@@ -26,7 +26,7 @@ public class Constants {
 
     public static enum EntityGridCode {
 
-        NONE, PLAYER, ENEMY, ITEM, TRAP;
+        NONE, PLAYER, ENEMY, ITEM, TRAP, GREYGATE, REDGATE;
     }
 
     public static enum EnemyType {
@@ -44,8 +44,8 @@ public class Constants {
         CLYDE,
         GREYGATE,
         REDGATE,
-        CATATTACK,
-        BOSS;
+        CAT,
+        BOSS, 
     }
 
     public static enum EnemyAttackType {
@@ -64,7 +64,8 @@ public class Constants {
         GREYKEY,
         DAMAGE,
         RARECANDY,
-        DEFENSE;
+        DEFENSE,
+        FOUNTAIN;
     }
 
     public static enum TrapType {

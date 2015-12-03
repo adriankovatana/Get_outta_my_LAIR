@@ -2,6 +2,8 @@ package edu.uco.shvosi;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
@@ -14,11 +16,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Map {
+   
 
     private TiledMap tiledMap;
     private TiledMapRenderer renderer;
     private Constants.MapGridCode[][] mapGrid;
-    private Constants.EntityGridCode[][] entityGrid;
+    Constants.EntityGridCode[][] entityGrid;
     private List<Entity> entityList;
     private int tileDimension;
     private int width;
@@ -67,6 +70,7 @@ public class Map {
         miscEntityList = new ArrayList<Entity>();
         entityList = new ArrayList<Entity>();
         entityGrid = new Constants.EntityGridCode[entityLayer.getWidth()][entityLayer.getHeight()];
+              
         for (int x = 0; x < entityLayer.getWidth(); x++) {
             for (int y = 0; y < entityLayer.getHeight(); y++) {
                 TiledMapTileLayer.Cell cell = entityLayer.getCell(x, y);
@@ -77,12 +81,12 @@ public class Map {
                 MapProperties properties = cell.getTile().getProperties();
                 if (properties.get("PLAYER") != null) {
                     entityGrid[x][y] = Constants.EntityGridCode.PLAYER;
-                    initBernard(x, y);
+                    initBernard(x, y);                  
                 } else if (properties.get("ENEMY") != null) {
                     if (properties.get("CatLady") != null) {
                         initEnemy(x, y, Constants.EnemyType.CATLADY);
                     } else if (properties.get("CatAttack") != null) {
-                        initEnemy(x, y, Constants.EnemyType.CATATTACK);
+                        initEnemy(x, y, Constants.EnemyType.CAT);
                     } else if (properties.get("Drunk") != null) {
                         initEnemy(x, y, Constants.EnemyType.DRUNK);
                     } else if (properties.get("Wanderer") != null) {
@@ -101,34 +105,31 @@ public class Map {
                         initEnemy(x, y, Constants.EnemyType.CLYDE);
                     } else if (properties.get("Moonshiner") != null) {
                         initEnemy(x, y, Constants.EnemyType.BOSS);
-                    }
-                    else if (properties.get("GreyGate") != null) {
-                        if (properties.get("Left") != null) {
-                            initGreyGate(x, y, Constants.GateType.LEFT);
-                        } else if (properties.get("Right") != null) {
-                            initGreyGate(x, y, Constants.GateType.RIGHT);
-                        } else {
-                            Gdx.app.log("MAP CREATION", "ENEMY type at entityLayer(" + x + ")(" + y + ") is unknown. Creation skipped.");
-                            entityGrid[x][y] = Constants.EntityGridCode.NONE;
-                            continue;
-                        }
-                    } else if (properties.get("RedGate") != null) {
-                        if (properties.get("Left") != null) {
-                            initRedGate(x, y, Constants.GateType.LEFT);
-                        } else if (properties.get("Right") != null) {
-                            initRedGate(x, y, Constants.GateType.RIGHT);
-                        } else {
-                            Gdx.app.log("MAP CREATION", "ENEMY type at entityLayer(" + x + ")(" + y + ") is unknown. Creation skipped.");
-                            entityGrid[x][y] = Constants.EntityGridCode.NONE;
-                            continue;
-                        }
+                    } else if (properties.get("Cat") != null) {
+                        initEnemy(x, y, Constants.EnemyType.CAT);
                     } else {
                         Gdx.app.log("MAP CREATION", "ENEMY type at entityLayer(" + x + ")(" + y + ") is unknown. Creation skipped.");
                         entityGrid[x][y] = Constants.EntityGridCode.NONE;
                         continue;
                     }
                     entityGrid[x][y] = Constants.EntityGridCode.ENEMY;
-                } else if (properties.get("ITEM") != null) {
+                    
+                } else if (properties.get("GREYGATE") != null) {
+                        if (properties.get("Left") != null) {
+                           initGreyGate(x, y, Constants.GateType.LEFT);
+                        } else if (properties.get("Right") != null) {
+                           initGreyGate(x, y, Constants.GateType.RIGHT);
+                        }
+                        entityGrid[x][y] = Constants.EntityGridCode.GREYGATE;
+                } else if (properties.get("REDGATE") != null) {
+                        if (properties.get("Left") != null) {
+                           initRedGate(x, y, Constants.GateType.LEFT);
+                        } else if (properties.get("Right") != null) {
+                           initRedGate(x, y, Constants.GateType.RIGHT);                               
+                        }    
+                        entityGrid[x][y] = Constants.EntityGridCode.REDGATE;
+                        
+                }  else if (properties.get("ITEM") != null) {
                     if (properties.get("Health") != null) {
                         initItem(x, y, Constants.ItemType.HEALTH);
                     } else if (properties.get("Shield") != null) {
@@ -145,6 +146,8 @@ public class Map {
                         initItem(x, y, Constants.ItemType.DAMAGE);
                     } else if (properties.get("Defense") != null) {
                         initItem(x, y, Constants.ItemType.DEFENSE);
+                    } else if (properties.get("Fountain") != null) {
+                        initItem(x, y, Constants.ItemType.FOUNTAIN);
                     } else {
                         Gdx.app.log("MAP CREATION", "ITEM type at entityLayer(" + x + ")(" + y + ") is unknown. Creation skipped.");
                         entityGrid[x][y] = Constants.EntityGridCode.NONE;
@@ -209,6 +212,8 @@ public class Map {
         this.cameraMiniMap.zoom = 5.0f;
         this.cameraMiniMap.translate(-this.width * 1.12f, this.height * 2.45f);
         this.cameraMiniMap.update();
+        
+        bernard.setEntityGrid(entityGrid);
     }
 
     public void render(OrthographicCamera camera) {
@@ -301,8 +306,8 @@ public class Map {
             case CATLADY:
                 entityList.add(new EnemyCatLady(cX, cY));
                 break;
-            case CATATTACK:
-                entityList.add(new CatAttack(cX, cY));
+            case CAT:
+                entityList.add(new EnemyCat(cX, cY));
                 break;
             case DRUNK:
                 entityList.add(new EnemyDrunk(cX, cY));
@@ -367,6 +372,9 @@ public class Map {
                 break;
             case DEFENSE:
                 miscEntityList.add(new ItemDefense(cX, cY));
+                break;
+            case FOUNTAIN:
+                miscEntityList.add(new Fountain(cX, cY));
                 break;
             default:
                 //ERROR
@@ -685,7 +693,7 @@ public class Map {
             }
         }
     }
-
+    
     public void playTurn(Entity entity) {
         if (entity instanceof Protagonist) {
             if (entity.getTurnAction() == Constants.TurnAction.MOVE) {

@@ -72,7 +72,7 @@ public class TextureLoader {
     public static final Texture WANDTEXTURE = new Texture(Gdx.files.internal("characters/wander_sheet.png"));
     public static final Texture BLUETEXTURE = new Texture(Gdx.files.internal("characters/blues_sheet.png"));
     public static final Texture BLANKTEXTURE = new Texture(Gdx.files.internal("characters/blank.png"));
-    public static final Texture CATLADYTEXTURE = new Texture(Gdx.files.internal("characters/CatLady.png"));
+    public static final Texture CATLADYTEXTURE = new Texture(Gdx.files.internal("characters/blank.png"));
     public static final Texture CATTYTEXTURE = new Texture(Gdx.files.internal("characters/catLady_sheet.png"));
     public static final Texture CATTEXTURE = new Texture(Gdx.files.internal("characters/blank.png"));
     public static final Texture CATWALKTEXTURE = new Texture(Gdx.files.internal("characters/catwalk.png"));
@@ -179,6 +179,7 @@ public class TextureLoader {
     public static final Texture REDKEYTEXTURE = new Texture(Gdx.files.internal("items/redkey.png"));
     public static final Texture GREYKEYTEXTURE = new Texture(Gdx.files.internal("items/greykey.png"));
     public static final Texture BLOCKERTEXTURE = new Texture(Gdx.files.internal("traps/stop.png"));
+    public static final Texture FOUNTAINTEXTURE = new Texture(Gdx.files.internal("fountain.png"));
 
     public static final Texture INVENTORYTEXTURE = new Texture(Gdx.files.internal("invent/Inventory.png"));
     public static final Texture INVENTORYSHIELDTEXTURE = new Texture(Gdx.files.internal("invent/InventoryShield.png"));

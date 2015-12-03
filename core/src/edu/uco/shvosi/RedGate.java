@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 
 public class RedGate extends Antagonist {
     
-    private static int x;
-    private static int y;
+    private int x;
+    private int y;
 
 
     public RedGate(int cX, int cY, Constants.Direction direction) {
@@ -26,17 +26,18 @@ public class RedGate extends Antagonist {
         batch.draw(textureRegion, this.getX(), this.getY());
     }
     
-    public static boolean isCollision(Entity entity) {
+ /*   public boolean isCollision(Entity entity) {
         if (entity instanceof Protagonist) {
             Protagonist bernard = (Protagonist) entity;
             Integer xCoordinate = bernard.getCX();
             Integer yCoordinate = bernard.getCY() + 1;
-            if ((xCoordinate == RedGate.x && yCoordinate == RedGate.y)|| (xCoordinate == RedGate.x - 1 && yCoordinate == RedGate.y)) {
+            if ((xCoordinate == this.x && yCoordinate == this.y)|| (xCoordinate == this.x - 1 && yCoordinate == this.y)) {
                 return true;
             }
         }
         return false;
     }
+*/
     
     @Override
     public void takeDamage(int damage){

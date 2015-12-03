@@ -38,7 +38,8 @@ public class EnemyDrunk extends Antagonist {
         health = 30;
         maxHealth = 30;
         range = 2;
-        this.damage = 10;
+        this.damage = 12;
+        this.xpValue = 40;
         BottleSkill bottle = new BottleSkill();
         bottleDamage = new DamageEntity(0,0,this.damage);
         bottleDamage.setDamage(damage);

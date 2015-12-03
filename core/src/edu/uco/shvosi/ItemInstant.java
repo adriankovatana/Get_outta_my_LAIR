@@ -16,7 +16,9 @@ public class ItemInstant extends Item{
             Integer xCoordinate = bernard.getCX();
             Integer yCoordinate = bernard.getCY();
             if (xCoordinate == this.getCX() && yCoordinate == this.getCY() && this.state == 0) {
-                super.kill();
+                if ( a == 0){                   
+                    super.kill();
+                }
                 return(bernard);
             }
         }

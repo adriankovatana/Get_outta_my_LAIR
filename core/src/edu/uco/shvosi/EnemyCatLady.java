@@ -19,7 +19,7 @@ public class EnemyCatLady extends Antagonist {
     private String XorY; 
     private int xdis; 
     private int ydis; 
-    private int damage = 10; 
+    private int damage = 6; 
     private boolean active = false;
     private boolean moved = false;
     private DamageEntity melee; 
@@ -33,8 +33,8 @@ public class EnemyCatLady extends Antagonist {
         catLadyAttack = TextureLoader.catLadyAttack;
         this.range = 2;
         this.name = "CatLady";
-        super.xpValue = 100;
-        this.health = 70; 
+        super.xpValue = 30;
+        this.health = 60; 
         this.maxHealth = this.health; 
         this.damage = damage; 
         melee = new DamageEntity(0,0,this.damage); 

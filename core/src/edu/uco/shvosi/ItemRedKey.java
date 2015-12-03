@@ -4,7 +4,7 @@ public class ItemRedKey extends ItemHeld {
     
     ItemRedKey(int cX, int cY){
         super(Constants.EntityGridCode.ITEM, TextureLoader.REDKEYTEXTURE, cX, cY);       
-        this.name = "RedKey";
+        this.name = "ItemRedKey";
     }
 }
 

@@ -2,16 +2,233 @@
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="48" height="17" tilewidth="100" tileheight="100" nextobjectid="1">
  <tileset firstgid="1" source="Characters.tsx"/>
  <tileset firstgid="49" source="Items.tsx"/>
- <tileset firstgid="97" source="Map.tsx"/>
- <tileset firstgid="145" source="Traps.tsx"/>
+ <tileset firstgid="97" name="Map" tilewidth="100" tileheight="100" tilecount="96">
+  <image source="TileSheet.png" width="800" height="1200"/>
+  <tile id="0">
+   <properties>
+    <property name="FLOOR" value="0"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="WALL" value="1"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="WALL" value="1"/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="WALL" value="1"/>
+   </properties>
+  </tile>
+  <tile id="6">
+   <properties>
+    <property name="WALL" value="1"/>
+   </properties>
+  </tile>
+  <tile id="7">
+   <properties>
+    <property name="WALL" value="1"/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="NONE" value="10"/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="WALL" value="1"/>
+   </properties>
+  </tile>
+  <tile id="12">
+   <properties>
+    <property name="WALL" value="1"/>
+   </properties>
+  </tile>
+  <tile id="13">
+   <properties>
+    <property name="WALL" value="1"/>
+   </properties>
+  </tile>
+  <tile id="14">
+   <properties>
+    <property name="WALL" value="1"/>
+   </properties>
+  </tile>
+  <tile id="15">
+   <properties>
+    <property name="WALL" value="1"/>
+   </properties>
+  </tile>
+  <tile id="17">
+   <properties>
+    <property name="EXIT" value="3"/>
+   </properties>
+  </tile>
+  <tile id="18">
+   <properties>
+    <property name="WALL" value="1"/>
+   </properties>
+  </tile>
+  <tile id="19">
+   <properties>
+    <property name="WALL" value="1"/>
+   </properties>
+  </tile>
+  <tile id="20">
+   <properties>
+    <property name="WALL" value="1"/>
+   </properties>
+  </tile>
+  <tile id="21">
+   <properties>
+    <property name="WALL" value="1"/>
+   </properties>
+  </tile>
+  <tile id="22">
+   <properties>
+    <property name="WALL" value="1"/>
+   </properties>
+  </tile>
+  <tile id="23">
+   <properties>
+    <property name="WALL" value="1"/>
+   </properties>
+  </tile>
+  <tile id="24">
+   <properties>
+    <property name="WALL" value="1"/>
+   </properties>
+  </tile>
+  <tile id="25">
+   <properties>
+    <property name="WALL" value="1"/>
+   </properties>
+  </tile>
+  <tile id="26">
+   <properties>
+    <property name="FLOOR" value="0"/>
+   </properties>
+  </tile>
+  <tile id="27">
+   <properties>
+    <property name="FLOOR" value="0"/>
+   </properties>
+  </tile>
+  <tile id="28">
+   <properties>
+    <property name="FLOOR" value="0"/>
+   </properties>
+  </tile>
+  <tile id="29">
+   <properties>
+    <property name="WALL" value="1"/>
+   </properties>
+  </tile>
+  <tile id="30">
+   <properties>
+    <property name="WALL" value="1"/>
+   </properties>
+  </tile>
+  <tile id="31">
+   <properties>
+    <property name="WALL" value="1"/>
+   </properties>
+  </tile>
+  <tile id="32">
+   <properties>
+    <property name="WALL" value="1"/>
+   </properties>
+  </tile>
+  <tile id="33">
+   <properties>
+    <property name="WALL" value="1"/>
+   </properties>
+  </tile>
+  <tile id="34">
+   <properties>
+    <property name="WALL" value="1"/>
+   </properties>
+  </tile>
+  <tile id="35">
+   <properties>
+    <property name="WALL" value="1"/>
+   </properties>
+  </tile>
+  <tile id="36">
+   <properties>
+    <property name="WALL" value="1"/>
+   </properties>
+  </tile>
+  <tile id="37">
+   <properties>
+    <property name="WALL" value="1"/>
+   </properties>
+  </tile>
+  <tile id="38">
+   <properties>
+    <property name="WALL" value="1"/>
+   </properties>
+  </tile>
+  <tile id="39">
+   <properties>
+    <property name="WALL" value="1"/>
+   </properties>
+  </tile>
+  <tile id="40">
+   <properties>
+    <property name="WALL" value="1"/>
+   </properties>
+  </tile>
+  <tile id="41">
+   <properties>
+    <property name="WALL" value="1"/>
+   </properties>
+  </tile>
+  <tile id="42">
+   <properties>
+    <property name="WALL" value="1"/>
+   </properties>
+  </tile>
+  <tile id="43">
+   <properties>
+    <property name="WALL" value="1"/>
+   </properties>
+  </tile>
+  <tile id="44">
+   <properties>
+    <property name="WALL" value="1"/>
+   </properties>
+  </tile>
+  <tile id="45">
+   <properties>
+    <property name="WALL" value="1"/>
+   </properties>
+  </tile>
+  <tile id="46">
+   <properties>
+    <property name="WALL" value="1"/>
+   </properties>
+  </tile>
+  <tile id="47">
+   <properties>
+    <property name="WALL" value="1"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="193" source="Traps.tsx"/>
  <layer name="Map" width="48" height="17">
   <data encoding="base64" compression="zlib">
-   eJztlk0PgyAMhvmr4g1vy27u4sdlbj96JVlj04DSSqYsHJ6kvmB5EiDaGmPaSiUDthD2/DvAfbGk5mjHJGCfm8C/IfjnCZhZfg/M9QzAGBnTYFmt8X8B70T/J7BczD+ld8q62uyoP9IDD5alOuB5xoyebZo59q4L9Jb4u8janK35sX3S5FL/3GfYM5j1jmNdkj+941jn9L86/+qf43v5C87+z6qsfABAeT6A
+   eJztlssKgCAQRf3VWgq1qHa16bHp8SF9ZiM0JEOWTtILFwf0auOBRmoWQsyBgAfij3DmnwMJkK5zaYC75gLWyRz8Iw01b4GO5MXOXkUNNIY1DjEZc/xHYLL074HhZf42tW3O5WZX/ZESqEhm64D9jJne23omybNyp7aLvzScTTnab3pPnNzV33cPK2qx3XEcf8lfv+M49un/dv7q7+N7eQdP/2cFNhamBZKn
   </data>
  </layer>
  <layer name="Entities" width="48" height="17" visible="0">
   <data encoding="base64" compression="zlib">
-   eJwzZmBgMB7Fo3gUDxvMhEPcEotYIBKbEU3OkEJ3UKofHYPcp4hDnIuG4SkFxNJUDgdPHGFOi3AbKKwExMpoYpugmJA6WmBsdlMax+jx5zgIwh0XVoS6F1ua08QhPlgwrJwyxONOkP88aWT/KB7Fo3jwYQAtp6H/
+   eJwzZmBgMB7Fo3gUDxvMhEPcEotYIBKbEU3Oi0J3GFKonxmND3KfIhZ1IHEuGoanFBBLU6AfWzh6Qmls7qY03AYzfgTFyGJKQKw8QHbji2Ni3IWeZxwHQRjjcysMo8tp4hAfLBhWTinicSdIzpNG9o/iUTyKBx8GAEGjopo=
   </data>
  </layer>
  <layer name="ThinFog" width="48" height="17">
