@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import java.util.List;
 
-public class CatLady extends Antagonist {
+public class EnemyCatLady extends Antagonist {
     
     private Animation catLadyWalk; 
     private Animation catLadyAttack; 
@@ -27,7 +27,7 @@ public class CatLady extends Antagonist {
     private int turns= 0;
     private boolean isCat = false;
     
-    public CatLady(int cX, int cY) {
+    public EnemyCatLady(int cX, int cY) {
         super(Constants.EnemyType.CATLADY, TextureLoader.CATLADYTEXTURE, cX, cY);
         catLadyWalk = TextureLoader.catLadyWalk;
         catLadyAttack = TextureLoader.catLadyAttack;

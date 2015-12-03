@@ -72,7 +72,7 @@ public class TextureLoader {
     public static final Texture WANDTEXTURE = new Texture(Gdx.files.internal("characters/wander_sheet.png"));
     public static final Texture BLUETEXTURE = new Texture(Gdx.files.internal("characters/blues_sheet.png"));
     public static final Texture BLANKTEXTURE = new Texture(Gdx.files.internal("characters/blank.png"));
-    public static final Texture CATLADYTEXTURE = new Texture(Gdx.files.internal("characters/blank.png"));
+    public static final Texture CATLADYTEXTURE = new Texture(Gdx.files.internal("characters/CatLady.png"));
     public static final Texture CATTYTEXTURE = new Texture(Gdx.files.internal("characters/catLady_sheet.png"));
     public static final Texture CATTEXTURE = new Texture(Gdx.files.internal("characters/blank.png"));
     public static final Texture CATWALKTEXTURE = new Texture(Gdx.files.internal("characters/catwalk.png"));
@@ -172,6 +172,7 @@ public class TextureLoader {
     public static final Texture TRAPBLIND = new Texture(Gdx.files.internal("traps/smoke.png"));
     public static final Texture TRAPTRANSFORM = new Texture(Gdx.files.internal("traps/transform.png"));
     public static final Texture SHIELDTEXTURE = new Texture(Gdx.files.internal("items/shield.png"));
+    public static final Texture DEFENSETEXTURE = new Texture(Gdx.files.internal("items/defense.png"));
     public static final Texture DAMAGETEXTURE = new Texture(Gdx.files.internal("items/damage.png"));
     public static final Texture RARECANDYTEXTURE = new Texture(Gdx.files.internal("items/rarecandy.png"));
     public static final Texture WHISTLETEXTURE = new Texture(Gdx.files.internal("items/whistle.png"));
@@ -549,7 +550,7 @@ public class TextureLoader {
             moonshinerWalkFrames.add(new TextureRegion(MOONSHINERWALKTEXTURE, 0, i * 100, 100, 100));
         }
 
-        moonshinerWalk = new Animation(0.03f, moonshinerWalkFrames, PlayMode.LOOP);
+        moonshinerWalk = new Animation(0.3f, moonshinerWalkFrames, PlayMode.LOOP);
 
         moonshinerAttackFrames = new Array<TextureRegion>(7);
 
@@ -558,6 +559,13 @@ public class TextureLoader {
         }
 
         moonshinerAttack = new Animation(0.03f, moonshinerAttackFrames, PlayMode.NORMAL);
+        
+                for(int i = 0; i < 9; i++)
+        {
+          bottleSkillFrames.add(new TextureRegion(BOTTLESKILLTEXTURE, 0, i * 100, 125, 100));
+        }
+        
+        bottleSkill = new Animation(0.05f, bottleSkillFrames, PlayMode.NORMAL);
 
         //traps and items
         //Kunai Trap
@@ -640,6 +648,7 @@ public class TextureLoader {
         //D
         DAMAGETEXTURE.dispose();
         DEATHTEXTURE.dispose();
+        DEFENSETEXTURE.dispose();
         DETECTICON.dispose();
         DETECTIONTEXTURE.dispose();
         DRUNKENTEXTURE.dispose();

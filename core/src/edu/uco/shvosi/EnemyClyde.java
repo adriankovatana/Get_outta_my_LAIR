@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import java.util.List;
 
-public class Clyde extends Antagonist {
+public class EnemyClyde extends Antagonist {
     
     private Animation clydeWalk;
     private Animation clydeAttack;
@@ -25,7 +25,7 @@ public class Clyde extends Antagonist {
     private DamageEntity melee;
         
 
-    public Clyde(int cX, int cY) {
+    public EnemyClyde(int cX, int cY) {
         super(Constants.EnemyType.CLYDE, TextureLoader.CLYDETEXTURE, cX, cY);
         clydeWalk = TextureLoader.clydeWalk;
         clydeAttack = TextureLoader.clydeAttack;

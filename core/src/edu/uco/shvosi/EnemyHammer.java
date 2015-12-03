@@ -7,11 +7,10 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import java.util.List;
 
-public class Wreker extends Antagonist {
+public class EnemyHammer extends Antagonist {
     
-    private Animation wrekerWalk;
-    private Animation wrekerAttack;
-    private boolean moving = false;
+    private Animation hammerWalk;
+    private Animation hammerAttack;
     private boolean flip = false;
     private float elapsedTime;
     private TextureRegion temp;
@@ -20,36 +19,47 @@ public class Wreker extends Antagonist {
     private String XorY;
     private int xdis;
     private int ydis;
-    private int damage = 10;
+    private int damage = 5;
     private boolean active = false;
-    private int [] directions;
     private boolean moved = false;
     private DamageEntity melee;
-    private int range;
-    
+    private DamageEntity oneAway;
+ 
 
-    public Wreker(int cX, int cY) {
-        super(Constants.EnemyType.WREKER, TextureLoader.WREKERTEXTURE, cX, cY);
-        this.name = "Wreker";
-        wrekerWalk = TextureLoader.wrekerWalk;
-        wrekerAttack = TextureLoader.wrekerAttack;
-        health = 70;
-        maxHealth = 70;
-        range = 1;
-        this.xpValue = 100;
-      
+    public EnemyHammer(int cX, int cY) {
+        super(Constants.EnemyType.HAMMER, TextureLoader.HAMMERTETEXTURE, cX, cY);
+        this.name = "Hammer";
+        health = 30;
+        maxHealth = 30;
+        hammerWalk = TextureLoader.hammerWalk;
+        hammerAttack = TextureLoader.hammerAttack;
         this.damage = damage;
         melee = new DamageEntity(0,0,this.damage);
+        oneAway = new DamageEntity(0,0,this.damage);
+        range = 2;
+        this.xpValue = 100;
     }
 
     @Override
     public void attackAction() {
-        //Do Attack Stuffs?
+        if(!flip)
+        {
+           melee.setCX(this.cX + 1);
+           melee.setCY(this.cY);
+        }
+        else
+        {
+           melee.setCX(this.cX - 1);
+           melee.setCY(this.cY);
+        }
 
-        melee.setCX(bernardX);
-        melee.setCY(bernardY);
         melee.setDead(false);
+        oneAway.setCX(bernardX);
+        oneAway.setCY(bernardY);
+        oneAway.setDead(false);
         Map.miscEntityList.add(melee);
+        Map.miscEntityList.add(oneAway);
+
         this.addAction(this.finishTurn());
     }
     
@@ -67,39 +77,39 @@ public class Wreker extends Antagonist {
             {
                 flip = false;
             }
-            if(Math.abs(xdis) >1 ||Math.abs(ydis) >1){    
+            if(Math.abs(xdis) >2 || Math.abs(ydis) >2){    
                 if (flip) {
-                    temp = wrekerWalk.getKeyFrame(elapsedTime);
+                    temp = hammerWalk.getKeyFrame(elapsedTime);
                     temp.flip(true, false);
                     batch.draw(temp, this.getX(),getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
                     temp.flip(true, false);
                 } else {
-                    batch.draw(wrekerWalk.getKeyFrame(elapsedTime), this.getX(), this.getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
+                    batch.draw(hammerWalk.getKeyFrame(elapsedTime), this.getX(), this.getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
                 }
-                if (wrekerWalk.isAnimationFinished(elapsedTime)) {
+                if (hammerWalk.isAnimationFinished(elapsedTime)) {
                     moving = false;
                     elapsedTime = 0f;
                 }
             }
-            if(Math.abs(xdis) <=1 && Math.abs(ydis) <=1){    
+            if(Math.abs(xdis) <= 2 && Math.abs(ydis) <= 2){
+                batch.draw(TextureLoader.hammerDownSkill.getKeyFrame(elapsedTime), this.getX()-200, this.getY()-200, Constants.TILEDIMENSION*5 , Constants.TILEDIMENSION*5);
                 if (flip) {
-                    temp = wrekerAttack.getKeyFrame(elapsedTime);
+                    temp = hammerAttack.getKeyFrame(elapsedTime);
                     temp.flip(true, false);
                     batch.draw(temp, this.getX(),getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
                     temp.flip(true, false);
                 } else {
-                    batch.draw(wrekerAttack.getKeyFrame(elapsedTime), this.getX(), this.getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
+                    batch.draw(hammerAttack.getKeyFrame(elapsedTime), this.getX(), this.getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
                 }
-                if (wrekerAttack.isAnimationFinished(elapsedTime)) {
+                if (hammerAttack.isAnimationFinished(elapsedTime)) {
                     moving = false;
                     elapsedTime = 0f;
                 }
             }
         
-    }
-
+    }      
     
-       @Override
+    @Override
     public void calculateTurn(Constants.MapGridCode[][] mapGrid, Constants.EntityGridCode[][] entityGrid, List<Entity> entityList) {
         
         Constants.Direction d = Constants.Direction.NONE;
@@ -329,9 +339,10 @@ public class Wreker extends Antagonist {
                  
             }//end if active
     }//end function
-
     
     @Override
     public void collision(Entity entity) {
+        
     }
 }
+

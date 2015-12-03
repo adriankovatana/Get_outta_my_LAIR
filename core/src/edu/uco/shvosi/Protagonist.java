@@ -77,11 +77,12 @@ public class Protagonist extends Entity {
     private int barrierDamage = 0;
     private boolean healEffect;
     String levelup = "You are now level " + level + "!";
-    String textlevel = "Choose to upgrade Health or Damage\n" + levelup;
+    String textlevel = "Choose to upgrade HP, Damage, or Defense\n" + levelup;
     static ArrayList<Entity> inventory = new ArrayList<Entity>();
     private int index = 0;
     static Entity active = null;
     protected int sightRadius;
+    int defense = 0;
 
     public Protagonist(int cX, int cY) {
         super(Constants.EntityGridCode.PLAYER, TextureLoader.BERNARDTEXTURE, cX, cY);
@@ -126,13 +127,15 @@ public class Protagonist extends Entity {
 
             @Override
             protected void result(Object obj) {
-                if (obj.toString() == "true") {
+                if (obj.toString() == "health") {
                     Protagonist.this.maxHealth += 10;
-                } else {
+                } else if (obj.toString() == "damage"){
                     strengthMod += 0.1f;
                     for (Skill s : Protagonist.this.skills.values()) {
                         s.setDamage((int) (s.getBaseDamage() * strengthMod));
                     }
+                } else {
+                    Protagonist.this.defense += 1;
                 }
                 Protagonist.this.levelUpCounter--;
             }
@@ -144,7 +147,7 @@ public class Protagonist extends Entity {
                 }
             }
 
-        }.text(textlevel).button("Health", true).button("Damage", false);
+        }.text(textlevel).button("Health", "health").button("Damage", "damage").button("Defense", "defense");
 
         levelUpDialog.setMovable(
                 false);
@@ -845,7 +848,7 @@ public class Protagonist extends Entity {
     private void levelUp() {
         this.level++;
         levelup = "You are now level " + level + "!";
-        textlevel = "Choose to upgrade Health or Damage\n" + levelup;
+        textlevel = "Upgrade Health, Damage, or Defense\n" + levelup;
         ((Label) levelUpDialog.getContentTable().getCells().get(0).getActor()).setText(textlevel);
         levelUpDialog.setModal(true);
         levelUpDialog.setX(this.getX() - levelUpDialog.getWidth() / 2 + this.getWidth() / 2);
@@ -869,6 +872,10 @@ public class Protagonist extends Entity {
     int getLevel() {
         return this.level;
     }
+    
+    int getDefense() {
+        return this.defense;
+    }
 
     int getExpToLevel() {
         return xpToNextLevel;
@@ -876,6 +883,10 @@ public class Protagonist extends Entity {
 
     public void addDamage() {
         strengthMod *= 1.1f;
+    }
+    
+    public void addDefense() {
+        defense += 1;
     }
 
     void addInventory(Entity i) {
@@ -898,10 +909,10 @@ public class Protagonist extends Entity {
         if (i instanceof ItemWhistle) {
             GameScreen.invent.setImage(TextureLoader.INVENTORYWHISTLETEXTURE);
         }
-        if (i instanceof GreyKey) {
+        if (i instanceof ItemGreyKey) {
             GameScreen.invent.setImage(TextureLoader.INVENTORYGREYKEYTEXTURE);
         }
-        if (i instanceof RedKey) {
+        if (i instanceof ItemRedKey) {
             GameScreen.invent.setImage(TextureLoader.INVENTORYREDKEYTEXTURE);
         }
     }
@@ -916,14 +927,14 @@ public class Protagonist extends Entity {
             lightningInfusionCooldown = 0;
             redLaserCooldown = 0;
             removeItem();
-        } else if (active instanceof GreyKey) {
+        } else if (active instanceof ItemGreyKey) {
             if (GreyGate.isCollision(this)) {
                 Map.miscEntityList.add(new DamageEntity(this.getCX() + 1, this.getCY() + 1, 100000));
                 Map.miscEntityList.add(new DamageEntity(this.getCX() - 1, this.getCY() + 1, 100000));
                 Map.miscEntityList.add(new DamageEntity(this.getCX(), this.getCY() + 1, 100000));
                 removeItem();
             }
-        } else if (active instanceof RedKey) {
+        } else if (active instanceof ItemRedKey) {
             if (RedGate.isCollision(this)) {
                 Map.miscEntityList.add(new DamageEntity(this.getCX() + 1, this.getCY() + 1, 100000));
                 Map.miscEntityList.add(new DamageEntity(this.getCX() - 1, this.getCY() + 1, 100000));

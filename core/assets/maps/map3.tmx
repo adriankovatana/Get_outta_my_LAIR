@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="48" height="17" tilewidth="100" tileheight="100" nextobjectid="1">
+ <tileset firstgid="1" source="Characters.tsx"/>
+ <tileset firstgid="49" source="Items.tsx"/>
+ <tileset firstgid="97" source="Map.tsx"/>
+ <tileset firstgid="145" source="Traps.tsx"/>
+ <layer name="Map" width="48" height="17">
+  <data encoding="base64" compression="zlib">
+   eJztlk0PgyAMhvmr4g1vy27u4sdlbj96JVlj04DSSqYsHJ6kvmB5EiDaGmPaSiUDthD2/DvAfbGk5mjHJGCfm8C/IfjnCZhZfg/M9QzAGBnTYFmt8X8B70T/J7BczD+ld8q62uyoP9IDD5alOuB5xoyebZo59q4L9Jb4u8janK35sX3S5FL/3GfYM5j1jmNdkj+941jn9L86/+qf43v5C87+z6qsfABAeT6A
+  </data>
+ </layer>
+ <layer name="Entities" width="48" height="17" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJwzZmBgMB7Fo3gUDxvMhEPcEotYIBKbEU3OkEJ3UKofHYPcp4hDnIuG4SkFxNJUDgdPHGFOi3AbKKwExMpoYpugmJA6WmBsdlMax+jx5zgIwh0XVoS6F1ua08QhPlgwrJwyxONOkP88aWT/KB7Fo3jwYQAtp6H/
+  </data>
+ </layer>
+ <layer name="ThinFog" width="48" height="17">
+  <data encoding="base64" compression="zlib">
+   eJztw8EJAAAMA6FbOft/OkdBwVVTVVV98ACV1WhA
+  </data>
+ </layer>
+ <layer name="ThickFog" width="48" height="17">
+  <data encoding="base64" compression="zlib">
+   eJztwwEJAAAMBKGr+/0LLMdAwVVTVVV98ADJSE7A
+  </data>
+ </layer>
+</map>

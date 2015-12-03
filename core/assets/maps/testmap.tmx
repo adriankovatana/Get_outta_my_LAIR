@@ -17,95 +17,18 @@
     <property name="WALL" value="1"/>
    </properties>
   </tile>
+  <tile id="10">
+   <properties>
+    <property name="WALL" value="1"/>
+   </properties>
+  </tile>
   <tile id="17">
    <properties>
     <property name="EXIT" value="3"/>
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="49" name="Characters" tilewidth="100" tileheight="100" tilecount="48">
-  <image source="EntitySheet.png" width="800" height="600"/>
-  <tile id="0">
-   <properties>
-    <property name="NONE" value="0"/>
-   </properties>
-  </tile>
-  <tile id="1">
-   <properties>
-    <property name="PLAYER" value="1"/>
-   </properties>
-  </tile>
-  <tile id="8">
-   <properties>
-    <property name="CatLady" value="0"/>
-    <property name="ENEMY" value="2"/>
-   </properties>
-  </tile>
-  <tile id="9">
-   <properties>
-    <property name="ENEMY" value="2"/>
-    <property name="Hammer" value="5"/>
-   </properties>
-  </tile>
-  <tile id="16">
-   <properties>
-    <property name="Drunk" value="1"/>
-    <property name="ENEMY" value="2"/>
-   </properties>
-  </tile>
-  <tile id="17">
-   <properties>
-    <property name="ENEMY" value="2"/>
-    <property name="Suffragette" value="6"/>
-   </properties>
-  </tile>
-  <tile id="24">
-   <properties>
-    <property name="ENEMY" value="2"/>
-    <property name="Wanderer" value="2"/>
-   </properties>
-  </tile>
-  <tile id="25">
-   <properties>
-    <property name="ENEMY" value="2"/>
-    <property name="GreyGate" value="7"/>
-    <property name="Left" value="0"/>
-   </properties>
-  </tile>
-  <tile id="26">
-   <properties>
-    <property name="ENEMY" value="2"/>
-    <property name="GreyGate" value="7"/>
-    <property name="Right" value="1"/>
-   </properties>
-  </tile>
-  <tile id="32">
-   <properties>
-    <property name="Blues" value="3"/>
-    <property name="ENEMY" value="2"/>
-   </properties>
-  </tile>
-  <tile id="33">
-   <properties>
-    <property name="ENEMY" value="2"/>
-    <property name="Left" value="0"/>
-    <property name="RedGate" value="8"/>
-   </properties>
-  </tile>
-  <tile id="34">
-   <properties>
-    <property name="ENEMY" value="2"/>
-    <property name="RedGate" value="8"/>
-    <property name="Right" value="1"/>
-   </properties>
-  </tile>
-  <tile id="40">
-   <properties>
-    <property name="ENEMY" value="2"/>
-    <property name="Wreker" value="4"/>
-   </properties>
-  </tile>
- </tileset>
+ <tileset firstgid="49" source="Characters.tsx"/>
  <tileset firstgid="97" name="Items" tilewidth="100" tileheight="100" tilecount="48">
   <image source="ItemSheet.png" width="800" height="600"/>
   <tile id="0">
@@ -218,10 +141,9 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="193" source="../colemap/Gates.tsx"/>
  <layer name="Map" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJztmbsOgCAMRZHRkf//WBdNTGMfkKIXc4cTg1T0AK0DtZSyL0492RaHHljQAwt6YEEPLOiBBT2woAcW9MCCHljQAwt6YEEPLOiBBT2woAcW9MCiBumJ/RLv3GoLxPBc7d19FYkf3X9ZHs1Ztyte62+377HWXmv3zu/MeuWNI/uteCtnUTy0a4/jqh4y/9700NojHi0Qn12vZnhE4q16deXbPd6rV1ke2jxZ9U3bK/KZpzFm7Cuv/q+SHyPvzvKQ8yXH3cV92Z7p0fPv8p7NGNPz+AMHzCIQkQ==
+   eJztmTEOgCAMRZGRkfsf1kUT01haSMGP+cOLQSr6gNaBnFIqm5Mvjs2hBxb0wIIeWNADC3pgQQ8s6IEFPbCgBxb0wIIeWNADC3pgQQ8s6IEFPbDITnpiv8Q6tzocMTxXW7uvPPGj+y/Koxrrdsdr/fXxPa2119q98zuzXlnjyP5WfCtnUTy0a4/jrh4y/1Z6aO0Rj+qIj65XMzw88VZOFRFv1asoD22eWvVN2yvymbcxZuwrq/7vkh8j747ykPMlxy3ivmzP9Oj5d1nPRoxpefyBE6bCEIk=
   </data>
  </layer>
  <layer name="Entities" width="50" height="50" visible="0">
@@ -229,7 +151,7 @@
    eJzt1rEOgjAQBuA+k2+hbvoEuOnG6Ogj0E023GSTJ7RN2uSEcr2rLjX/l1yAtIX7UxIwBgAAAAAAAAAAAAAAAADg0yioSTgvta4P9VBUnC91CpXTK+6ZWqvJYsNcq3jGwdVR2EspmiPHmrIcml6+WVt7jt4sc6y9X15tOcbZPS051pTDmt/m2LnaC/spkcrh98L3OJF5Ne5HiiRHk6joSs47V3dXg6unq9esnxKaHHGfNPuxZcaGlX5K0Azcdz/2n/sOnleesyHnLdPPxIxxJBm4PBHtvw3XXbj2/yMXV7dML01mnFPyT0Yz/ZM3tEyGag==
   </data>
  </layer>
- <layer name="ThinFog" width="50" height="50">
+ <layer name="ThinFog" width="50" height="50" opacity="0.9">
   <data encoding="base64" compression="zlib">
    eJztwwEJAAAMBKGr8P3LLsdAwVVTVVVVVVVVVVXV5w+vTKYF
   </data>

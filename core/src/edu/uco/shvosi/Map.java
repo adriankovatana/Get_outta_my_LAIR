@@ -10,7 +10,6 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,7 +95,14 @@ public class Map {
                         initEnemy(x, y, Constants.EnemyType.HAMMER);
                     } else if (properties.get("Suffragette") != null) {
                         initEnemy(x, y, Constants.EnemyType.SUFFRAGETTE);
-                    } else if (properties.get("GreyGate") != null) {
+                    } else if (properties.get("Bonnie") != null) {
+                        initEnemy(x, y, Constants.EnemyType.BONNIE);
+                    } else if (properties.get("Clyde") != null) {
+                        initEnemy(x, y, Constants.EnemyType.CLYDE);
+                    } else if (properties.get("Moonshiner") != null) {
+                        initEnemy(x, y, Constants.EnemyType.BOSS);
+                    }
+                    else if (properties.get("GreyGate") != null) {
                         if (properties.get("Left") != null) {
                             initGreyGate(x, y, Constants.GateType.LEFT);
                         } else if (properties.get("Right") != null) {
@@ -137,6 +143,8 @@ public class Map {
                         initItem(x, y, Constants.ItemType.RARECANDY);
                     } else if (properties.get("Damage") != null) {
                         initItem(x, y, Constants.ItemType.DAMAGE);
+                    } else if (properties.get("Defense") != null) {
+                        initItem(x, y, Constants.ItemType.DEFENSE);
                     } else {
                         Gdx.app.log("MAP CREATION", "ITEM type at entityLayer(" + x + ")(" + y + ") is unknown. Creation skipped.");
                         entityGrid[x][y] = Constants.EntityGridCode.NONE;
@@ -291,28 +299,37 @@ public class Map {
     private void initEnemy(int cX, int cY, Constants.EnemyType enemyType) {
         switch (enemyType) {
             case CATLADY:
-                entityList.add(new CatLady(cX, cY));
+                entityList.add(new EnemyCatLady(cX, cY));
                 break;
             case CATATTACK:
                 entityList.add(new CatAttack(cX, cY));
                 break;
             case DRUNK:
-                entityList.add(new Drunk(cX, cY));
+                entityList.add(new EnemyDrunk(cX, cY));
                 break;
             case WANDERER:
-                entityList.add(new Wanderer(cX, cY));
+                entityList.add(new EnemyWanderer(cX, cY));
                 break;
             case BLUES:
-                entityList.add(new Blues(cX, cY));
+                entityList.add(new EnemyBlues(cX, cY));
                 break;
             case WREKER:
-                entityList.add(new Wreker(cX, cY));
+                entityList.add(new EnemyWreker(cX, cY));
                 break;
             case HAMMER:
-                entityList.add(new Hammer(cX, cY));
+                entityList.add(new EnemyHammer(cX, cY));
                 break;
             case SUFFRAGETTE:
-                entityList.add(new Suffragette(cX, cY));
+                entityList.add(new EnemySuffragette(cX, cY));
+                break;
+            case BONNIE:
+                entityList.add(new EnemyBonnie(cX, cY));
+                break;
+            case CLYDE:
+                entityList.add(new EnemyClyde(cX, cY));
+                break;
+            case BOSS:
+                entityList.add(new BossMoonshiner(cX, cY));
                 break;
             case GREYGATE:
                 break;
@@ -337,16 +354,19 @@ public class Map {
                 miscEntityList.add(new ItemWhistle(cX, cY));
                 break;
             case REDKEY:
-                miscEntityList.add(new RedKey(cX, cY));
+                miscEntityList.add(new ItemRedKey(cX, cY));
                 break;
             case GREYKEY:
-                miscEntityList.add(new GreyKey(cX, cY));
+                miscEntityList.add(new ItemGreyKey(cX, cY));
                 break;
             case RARECANDY:
                 miscEntityList.add(new ItemRareCandy(cX, cY));
                 break;
             case DAMAGE:
                 miscEntityList.add(new ItemDamage(cX, cY));
+                break;
+            case DEFENSE:
+                miscEntityList.add(new ItemDefense(cX, cY));
                 break;
             default:
                 //ERROR
@@ -373,7 +393,7 @@ public class Map {
                 miscEntityList.add(new TrapType5(cX, cY));
                 break;
             case BLOCKER:
-                miscEntityList.add(new Blocker(cX, cY));
+                miscEntityList.add(new TrapBlocker(cX, cY));
                 break;
             default:
                 //ERROR
@@ -460,31 +480,31 @@ public class Map {
         //Add for testmap 1
         if (GameScreen.level == 0) {
             Gdx.app.log("Map", "Adding entities for map level=0");
-            tempAntagList.add(new CatLady(10, 21));
-            tempAntagList.add(new CatAttack(9, 22));
-            tempAntagList.add(new CatAttack(9, 20));
-            tempAntagList.add(new CatAttack(8, 21));
-            tempAntagList.add(new CatAttack(10, 22));
-            tempAntagList.add(new CatAttack(8, 22));
-            tempAntagList.add(new CatAttack(10, 20));
-            tempAntagList.add(new CatAttack(9, 19));
-            tempAntagList.add(new CatAttack(8, 19));
-            tempAntagList.add(new CatAttack(10, 19));
+       //     tempAntagList.add(new EnemyCatLady(10, 21));
+       //     tempAntagList.add(new CatAttack(9, 22));
+       //     tempAntagList.add(new CatAttack(9, 20));
+       //     tempAntagList.add(new CatAttack(8, 21));
+       //     tempAntagList.add(new CatAttack(10, 22));
+       //     tempAntagList.add(new CatAttack(8, 22));
+       //     tempAntagList.add(new CatAttack(10, 20));
+       //     tempAntagList.add(new CatAttack(9, 19));
+       //     tempAntagList.add(new CatAttack(8, 19));
+       //     tempAntagList.add(new CatAttack(10, 19));
 
             //tempAntagList.add(new Wanderer(9, 4));
 
            // tempAntagList.add(new Suffragette(5, 7, Constants.Direction.UP, 2));
             //tempAntagList.add(new Wreker(9,3));
-//            tempAntagList.add(new MoonshinerBoss(10,3));
+       //     tempAntagList.add(new BossMoonshiner(10,3));
             
-            tempMiscList.add(new ItemRareCandy(8,1));
-            tempMiscList.add(new ItemDamage(9,1));
+ //           tempMiscList.add(new ItemRareCandy(8,1));
+   //         tempMiscList.add(new ItemDamage(9,1));
 
         } //Add for testmap 2
         else if (GameScreen.level == 1) {
             Gdx.app.log("Map", "Adding entities for map level=1");
             
-//            entityList.add(new MoonshinerBoss(5, 12));
+ //           entityList.add(new BossMoonshiner(5, 12));
         } //Add for Cole's Map
         else if (GameScreen.level == 2) {
             Gdx.app.log("Map", "Adding entities for map level=2");

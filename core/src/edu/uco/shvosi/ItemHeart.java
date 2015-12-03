@@ -6,33 +6,26 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-public class ItemHeart extends Entity {
-
-    private int type;
-    private int healAmount;
-    private int state = 0;
+public class ItemHeart extends ItemInstant {
 
     private boolean activateHeal;
     private float elapsedHeal;
     private Animation heal;
-    private TextureRegion temp;
     Sound health = Gdx.audio.newSound(Gdx.files.internal("sounds/health.mp3"));
 
     public ItemHeart(int cX, int cY) {
         super(Constants.EntityGridCode.ITEM, TextureLoader.HEALTHTEXTURE, cX, cY);
-        this.healAmount = 25;
+        this.name = "ItemHeart";
         heal = TextureLoader.heal;
         activateHeal = false;
         elapsedHeal = 0f;
-
-        this.name = "ItemHeart";
     }
 
     @Override
     public void draw(Batch batch, float alpha) {
         if (activateHeal) {
             elapsedHeal += Gdx.graphics.getDeltaTime();
-            temp = heal.getKeyFrame(elapsedHeal);
+            TextureRegion temp = heal.getKeyFrame(elapsedHeal);
             batch.draw(heal.getKeyFrame(elapsedHeal), this.getX(), this.getY(), Constants.TILEDIMENSION, Constants.TILEDIMENSION);
             if (heal.isAnimationFinished(elapsedHeal)) {
                 activateHeal = false;
@@ -47,28 +40,9 @@ public class ItemHeart extends Entity {
 
     @Override
     public void collision(Entity entity) {
-        if (entity instanceof Protagonist && !this.turnFinished) {
-            Protagonist bernard = (Protagonist) entity;
-            Integer xCoordinate = bernard.getCX();
-            Integer yCoordinate = bernard.getCY();
-            if (xCoordinate == this.getCX() && yCoordinate == this.getCY() && this.state == 0) {
-                //  if (game.mute == 0)
-                health.play(Constants.MASTERVOLUME);
-                bernard.heal(this.healAmount);
-                activateHeal = true;
-                this.turnFinished = true;
+            Protagonist bernard = super.collision(entity, 0);
+            if (bernard != null){
+                bernard.heal(25);
             }
-        }
-    }
-
-    @Override
-    public void performActions() {
-        this.turnFinished = true;
-    }
-    
-    @Override
-    public void dispose() {
-        super.dispose();
-        health.dispose();
     }
 }
