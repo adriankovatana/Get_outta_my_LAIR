@@ -52,102 +52,8 @@ public class Drunk extends Antagonist {
         //Do Attack Stuffs?
         int random;
         random = (int) (Math.random() * 51);
-        switch (random % 32) {
-//            case 1:
-//                bottleDamage.setCX(this.cX -range);
-//                bottleDamage.setCY(this.cY + range);
-//                bottleX = -200;
-//                bottleY= 200;
-//                break;
-//            case 2:
-//                bottleDamage.setCX(this.cX - range/range);
-//                bottleDamage.setCY(this.cY + range);
-//                bottleX = -100;
-//                bottleY= 200;
-//                break;
-//            case 3:
-//                bottleDamage.setCX(this.cX);
-//                bottleDamage.setCY(this.cY + range);
-//                bottleX = 0;
-//                bottleY= 200;
-//                break;
-//            case 4:
-//                bottleDamage.setCX(this.cX + range/range);
-//                bottleDamage.setCY(this.cY + range);
-//                bottleX = 100;
-//                bottleY= 200;
-//                break;
-//            case 5:
-//                bottleDamage.setCX(this.cX + range);
-//                bottleDamage.setCY(this.cY + range);
-//                bottleX = 200;
-//                bottleY= 200;                
-//                break;
-//            case 6:
-//                bottleDamage.setCX(this.cX + range);
-//                bottleDamage.setCY(this.cY + range/range);           
-//                bottleX = 200;
-//                bottleY= 100;
-//                break;
-//            case 7:
-//                bottleDamage.setCX(this.cX + range);
-//                bottleDamage.setCY(this.cY);           
-//                bottleX = 200;
-//                bottleY= 0;
-//                break;
-//            case 8:
-//                bottleDamage.setCX(this.cX + range);
-//                bottleDamage.setCY(this.cY + range/range);           
-//                bottleX = 200;
-//                bottleY= 100;
-//                break;
-//            case 9:
-//                bottleDamage.setCX(this.cX + range);
-//                bottleDamage.setCY(this.cY - range);
-//                bottleX = 200;
-//                bottleY= -200;
-//                break;
-//            case 10:
-//                bottleDamage.setCX(this.cX + range/range);
-//                bottleDamage.setCY(this.cY - range);           
-//                bottleX = 100;
-//                bottleY= -200;                break;
-//            case 11:
-//                bottleDamage.setCX(this.cX);
-//                bottleDamage.setCY(this.cY - range);           
-//                bottleX = 0;
-//                bottleY= -200;
-//                break;
-//            case 12:
-//                bottleDamage.setCX(this.cX - range/range);
-//                bottleDamage.setCY(this.cY - range);           
-//                bottleX = -100;
-//                bottleY= -200;
-//                break;
-//            case 13:
-//                bottleDamage.setCX(this.cX -range);
-//                bottleDamage.setCY(this.cY - range);
-//                bottleX = -200;
-//                bottleY= -200;
-//                break;
-//            case 14:
-//                bottleDamage.setCX(this.cX - range);
-//                bottleDamage.setCY(this.cY + range/range);           
-//                bottleX = -200;
-//                bottleY= 100;
-//                break;
-//            case 15:
-//                bottleDamage.setCX(this.cX - range);
-//                bottleDamage.setCY(this.cY);           
-//                bottleX = -200;
-//                bottleY= 0;
-//                break;
-//            case 16:
-//                bottleDamage.setCX(this.cX - range);
-//                bottleDamage.setCY(this.cY + range/range);
-//                bottleX = -200;
-//                bottleY= 100;
-//                break;   
+        switch (random % 8) {
+
             case 1:
                 bottleDamage.setCX(this.cX -range/range);
                 bottleDamage.setCY(this.cY + range/range);
@@ -190,18 +96,18 @@ public class Drunk extends Antagonist {
                 bottleX = -100;
                 bottleY= -100;
                 break;
-            case 8:
+            default:
                 bottleDamage.setCX(this.cX - range/range);
                 bottleDamage.setCY(this.cY);           
                 bottleX = -100;
                 bottleY= 0;
                 break;                
-            default:
-                bottleDamage.setCX(this.bernardX);
-                bottleDamage.setCY(this.bernardY); 
-                bottleX = -(xdis*100);
-                bottleY = -(ydis*100);
-                break;                
+//            default:
+//                bottleDamage.setCX(this.bernardX);
+//                bottleDamage.setCY(this.bernardY); 
+//                bottleX = -(xdis*100);
+//                bottleY = -(ydis*100);
+//                break;                
         }//end switch
         bottleDamage.setDead(false);
         Map.miscEntityList.add(bottleDamage);
