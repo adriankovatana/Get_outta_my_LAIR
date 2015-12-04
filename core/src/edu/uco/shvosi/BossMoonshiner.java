@@ -66,30 +66,27 @@ public class BossMoonshiner extends Antagonist {
                 attacking = false;
             }
         }
-        
-         elapsedTime += Gdx.graphics.getDeltaTime();
-            if(xdis >=0)
-            {
-                flip = true;
+
+        elapsedTime += Gdx.graphics.getDeltaTime();
+        if (xdis >= 0) {
+            flip = true;
+        } else {
+            flip = false;
+        }
+        if (Math.abs(xdis) > 1 || Math.abs(ydis) > 1) {
+            if (flip) {
+                temp = walkAnimation.getKeyFrame(elapsedTime);
+                temp.flip(true, false);
+                super.textureRegion = temp;
+                temp.flip(true, false);
+            } else {
+                super.textureRegion = walkAnimation.getKeyFrame(elapsedTime);
             }
-            else
-            {
-                flip = false;
+            if (walkAnimation.isAnimationFinished(elapsedTime)) {
+                moving = false;
+                elapsedTime = 0f;
             }
-            if(Math.abs(xdis) >1 ||Math.abs(ydis) >1){    
-                if (flip) {
-                    temp = walkAnimation.getKeyFrame(elapsedTime);
-                    temp.flip(true, false);
-                    super.textureRegion = temp;
-                    temp.flip(true, false);
-                } else {
-                    super.textureRegion = walkAnimation.getKeyFrame(elapsedTime);
-                }
-                if (walkAnimation.isAnimationFinished(elapsedTime)) {
-                    moving = false;
-                    elapsedTime = 0f;
-                }
-            }
+        }
 
     }
 
@@ -118,45 +115,46 @@ public class BossMoonshiner extends Antagonist {
             }
         }
 
-        if (blocked == null) {
-            blocked = new int[mapGrid[0].length * mapGrid.length][2];
+        if (xdis < 5 && ydis < 5) {
+            if (blocked == null) {
+                blocked = new int[49][2];
 
-            Gdx.app.log("with 0 it is ", Integer.toString(mapGrid[0].length));
-            Gdx.app.log("without 0 it is ", Integer.toString(mapGrid.length));
-            
-            for (int i = 0; i < mapGrid.length - 10; i++) {
-                for (int j = 0; j < mapGrid[0].length - 10; j++) {
-                    if (mapGrid[i][j] != MapGridCode.FLOOR) {
-                        blocked[blockedCount][0] = i;
-                        blocked[blockedCount][1] = j;
+                Gdx.app.log("with 0 it is ", Integer.toString(mapGrid[0].length));
+                Gdx.app.log("without 0 it is ", Integer.toString(mapGrid.length));
+
+                for (int i = this.cX - 3; i < this.cX + 3; i++) {
+                    for (int j = this.cY - 3; j < this.cY + 3; j++) {
+                        if (mapGrid[i][j] != MapGridCode.FLOOR) {
+                            blocked[blockedCount][0] = i;
+                            blocked[blockedCount][1] = j;
+                            blockedCount++;
+                        }
+                    }
+                }
+
+                for (Entity e : entityList) {
+                    if (!(e instanceof Protagonist) && e != this && e.cX - bernardX <= 3 && e.cY - bernardY <= 3 ) {
+                        blocked[blockedCount][0] = e.getCX();
+                        blocked[blockedCount][1] = e.getCY();
                         blockedCount++;
                     }
                 }
             }
+            nextCell = AStar.test(0, 7, 7, bernardX, bernardY, this.cX, this.cY, blocked);
+            xdis = bernardX - this.cX;
+            ydis = bernardY - this.cY;
+            blocked = null;
+            blockedCount = 0;
 
-            for (Entity e : entityList) {
-                if (!(e instanceof Protagonist) && e != this) {
-                    blocked[blockedCount][0] = e.getCX();
-                    blocked[blockedCount][1] = e.getCY();
-                    blockedCount++;
-                }
+            if ((nextCell[0] == bernardX && nextCell[1] == bernardY) || (Math.abs(xdis) < 3 && Math.abs(ydis) < 3)) {
+                this.setTurnAction(TurnAction.ATTACK);
+
+            } else {
+                this.cX = nextCell[0];
+                this.cY = nextCell[1];
+
+                this.setTurnAction(TurnAction.MOVE);
             }
         }
-        nextCell = AStar.test(0, mapGrid[0].length - 1, mapGrid.length -1, bernardX, bernardY, this.cX, this.cY, blocked);
-        xdis = bernardX - this.cX;
-        ydis = bernardY - this.cY;
-        blocked = null;
-        blockedCount = 0;
-
-        if ((nextCell[0] == bernardX && nextCell[1] == bernardY) || (Math.abs(xdis) < 3 && Math.abs(ydis) < 3)) {
-            this.setTurnAction(TurnAction.ATTACK);
-
-        } else {
-            this.cX = nextCell[0];
-            this.cY = nextCell[1];
-
-            this.setTurnAction(TurnAction.MOVE);
-        }
-
     }
 }
