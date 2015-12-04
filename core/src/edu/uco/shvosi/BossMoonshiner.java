@@ -49,6 +49,7 @@ public class BossMoonshiner extends Antagonist {
         blockedCount = 0;
         bottleAttack = new DamageEntity(0, 0, damage);
         attacking = false;
+        xdis = ydis = 10;
     }
 
     @Override
@@ -115,9 +116,9 @@ public class BossMoonshiner extends Antagonist {
             }
         }
 
-        if (xdis < 5 && ydis < 5) {
+        if (Math.abs(xdis) < 5 && Math.abs(ydis) < 5) {
             if (blocked == null) {
-                blocked = new int[49][2];
+                blocked = new int[mapGrid.length * mapGrid[0].length][2];
 
                 Gdx.app.log("with 0 it is ", Integer.toString(mapGrid[0].length));
                 Gdx.app.log("without 0 it is ", Integer.toString(mapGrid.length));
@@ -133,18 +134,14 @@ public class BossMoonshiner extends Antagonist {
                 }
 
                 for (Entity e : entityList) {
-                    if (!(e instanceof Protagonist) && e != this && e.cX - bernardX <= 3 && e.cY - bernardY <= 3 ) {
+                    if (!(e instanceof Protagonist) && e != this && Math.abs(e.cX - this.cX) <= 3 && Math.abs(e.cY - this.cY) <= 3) {
                         blocked[blockedCount][0] = e.getCX();
                         blocked[blockedCount][1] = e.getCY();
                         blockedCount++;
                     }
                 }
             }
-            nextCell = AStar.test(0, 7, 7, bernardX, bernardY, this.cX, this.cY, blocked);
-            xdis = bernardX - this.cX;
-            ydis = bernardY - this.cY;
-            blocked = null;
-            blockedCount = 0;
+            nextCell = AStar.test(0, mapGrid[0].length, mapGrid.length, bernardX, bernardY, this.cX, this.cY, blocked);
 
             if ((nextCell[0] == bernardX && nextCell[1] == bernardY) || (Math.abs(xdis) < 3 && Math.abs(ydis) < 3)) {
                 this.setTurnAction(TurnAction.ATTACK);
@@ -156,5 +153,9 @@ public class BossMoonshiner extends Antagonist {
                 this.setTurnAction(TurnAction.MOVE);
             }
         }
+        xdis = bernardX - this.cX;
+        ydis = bernardY - this.cY;
+        blocked = null;
+        blockedCount = 0;
     }
 }
